@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9112267B846C008C93C7 /* AppDelegate.swift */; };
+		1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9114267B846C008C93C7 /* SceneDelegate.swift */; };
+		1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9116267B846C008C93C7 /* ViewController.swift */; };
+		1FCB911A267B846C008C93C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB9118267B846C008C93C7 /* Main.storyboard */; };
+		1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */; };
+		1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB911E267B846F008C93C7 /* Assets.xcassets */; };
+		1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */; };
+		1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */; };
+		1FCB9138267B8470008C93C7 /* WineCalenderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1FCB9129267B8470008C93C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCB9107267B846C008C93C7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FCB910E267B846C008C93C7;
+			remoteInfo = WineCalender;
+		};
+		1FCB9134267B8470008C93C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FCB9107267B846C008C93C7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FCB910E267B846C008C93C7;
+			remoteInfo = WineCalender;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1FCB910F267B846C008C93C7 /* WineCalender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineCalender.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FCB9112267B846C008C93C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1FCB9114267B846C008C93C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		1FCB9116267B846C008C93C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1FCB9119267B846C008C93C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1FCB911C267B846C008C93C7 /* WineCalender.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WineCalender.xcdatamodel; sourceTree = "<group>"; };
+		1FCB911E267B846F008C93C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1FCB9121267B846F008C93C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1FCB9123267B846F008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FCB9128267B8470008C93C7 /* WineCalenderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WineCalenderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderTests.swift; sourceTree = "<group>"; };
+		1FCB912E267B8470008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FCB9133267B8470008C93C7 /* WineCalenderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WineCalenderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderUITests.swift; sourceTree = "<group>"; };
+		1FCB9139267B8470008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1FCB910C267B846C008C93C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB9125267B8470008C93C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB9130267B8470008C93C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1FCB9106267B846C008C93C7 = {
+			isa = PBXGroup;
+			children = (
+				1FCB9111267B846C008C93C7 /* WineCalender */,
+				1FCB912B267B8470008C93C7 /* WineCalenderTests */,
+				1FCB9136267B8470008C93C7 /* WineCalenderUITests */,
+				1FCB9110267B846C008C93C7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1FCB9110267B846C008C93C7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FCB910F267B846C008C93C7 /* WineCalender.app */,
+				1FCB9128267B8470008C93C7 /* WineCalenderTests.xctest */,
+				1FCB9133267B8470008C93C7 /* WineCalenderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FCB9111267B846C008C93C7 /* WineCalender */ = {
+			isa = PBXGroup;
+			children = (
+				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
+				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
+				1FCB9116267B846C008C93C7 /* ViewController.swift */,
+				1FCB9118267B846C008C93C7 /* Main.storyboard */,
+				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
+				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
+				1FCB9123267B846F008C93C7 /* Info.plist */,
+				1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */,
+			);
+			path = WineCalender;
+			sourceTree = "<group>";
+		};
+		1FCB912B267B8470008C93C7 /* WineCalenderTests */ = {
+			isa = PBXGroup;
+			children = (
+				1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */,
+				1FCB912E267B8470008C93C7 /* Info.plist */,
+			);
+			path = WineCalenderTests;
+			sourceTree = "<group>";
+		};
+		1FCB9136267B8470008C93C7 /* WineCalenderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */,
+				1FCB9139267B8470008C93C7 /* Info.plist */,
+			);
+			path = WineCalenderUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FCB910E267B846C008C93C7 /* WineCalender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FCB913C267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalender" */;
+			buildPhases = (
+				1FCB910B267B846C008C93C7 /* Sources */,
+				1FCB910C267B846C008C93C7 /* Frameworks */,
+				1FCB910D267B846C008C93C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WineCalender;
+			productName = WineCalender;
+			productReference = 1FCB910F267B846C008C93C7 /* WineCalender.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1FCB9127267B8470008C93C7 /* WineCalenderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FCB913F267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalenderTests" */;
+			buildPhases = (
+				1FCB9124267B8470008C93C7 /* Sources */,
+				1FCB9125267B8470008C93C7 /* Frameworks */,
+				1FCB9126267B8470008C93C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FCB912A267B8470008C93C7 /* PBXTargetDependency */,
+			);
+			name = WineCalenderTests;
+			productName = WineCalenderTests;
+			productReference = 1FCB9128267B8470008C93C7 /* WineCalenderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1FCB9132267B8470008C93C7 /* WineCalenderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FCB9142267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalenderUITests" */;
+			buildPhases = (
+				1FCB912F267B8470008C93C7 /* Sources */,
+				1FCB9130267B8470008C93C7 /* Frameworks */,
+				1FCB9131267B8470008C93C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FCB9135267B8470008C93C7 /* PBXTargetDependency */,
+			);
+			name = WineCalenderUITests;
+			productName = WineCalenderUITests;
+			productReference = 1FCB9133267B8470008C93C7 /* WineCalenderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1FCB9107267B846C008C93C7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					1FCB910E267B846C008C93C7 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					1FCB9127267B8470008C93C7 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 1FCB910E267B846C008C93C7;
+					};
+					1FCB9132267B8470008C93C7 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 1FCB910E267B846C008C93C7;
+					};
+				};
+			};
+			buildConfigurationList = 1FCB910A267B846C008C93C7 /* Build configuration list for PBXProject "WineCalender" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1FCB9106267B846C008C93C7;
+			productRefGroup = 1FCB9110267B846C008C93C7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FCB910E267B846C008C93C7 /* WineCalender */,
+				1FCB9127267B8470008C93C7 /* WineCalenderTests */,
+				1FCB9132267B8470008C93C7 /* WineCalenderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1FCB910D267B846C008C93C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */,
+				1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */,
+				1FCB911A267B846C008C93C7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB9126267B8470008C93C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB9131267B8470008C93C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FCB910B267B846C008C93C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
+				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
+				1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */,
+				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB9124267B8470008C93C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCB912F267B8470008C93C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FCB9138267B8470008C93C7 /* WineCalenderUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1FCB912A267B8470008C93C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FCB910E267B846C008C93C7 /* WineCalender */;
+			targetProxy = 1FCB9129267B8470008C93C7 /* PBXContainerItemProxy */;
+		};
+		1FCB9135267B8470008C93C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FCB910E267B846C008C93C7 /* WineCalender */;
+			targetProxy = 1FCB9134267B8470008C93C7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1FCB9118267B846C008C93C7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FCB9119267B846C008C93C7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FCB9121267B846F008C93C7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1FCB913A267B8470008C93C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1FCB913B267B8470008C93C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1FCB913D267B8470008C93C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalender/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalender;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1FCB913E267B8470008C93C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalender/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalender;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1FCB9140267B8470008C93C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalenderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WineCalender.app/WineCalender";
+			};
+			name = Debug;
+		};
+		1FCB9141267B8470008C93C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalenderTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WineCalender.app/WineCalender";
+			};
+			name = Release;
+		};
+		1FCB9143267B8470008C93C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalenderUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WineCalender;
+			};
+			name = Debug;
+		};
+		1FCB9144267B8470008C93C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				INFOPLIST_FILE = WineCalenderUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WineCalender;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FCB910A267B846C008C93C7 /* Build configuration list for PBXProject "WineCalender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FCB913A267B8470008C93C7 /* Debug */,
+				1FCB913B267B8470008C93C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FCB913C267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FCB913D267B8470008C93C7 /* Debug */,
+				1FCB913E267B8470008C93C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FCB913F267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalenderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FCB9140267B8470008C93C7 /* Debug */,
+				1FCB9141267B8470008C93C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FCB9142267B8470008C93C7 /* Build configuration list for PBXNativeTarget "WineCalenderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FCB9143267B8470008C93C7 /* Debug */,
+				1FCB9144267B8470008C93C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1FCB911C267B846C008C93C7 /* WineCalender.xcdatamodel */,
+			);
+			currentVersion = 1FCB911C267B846C008C93C7 /* WineCalender.xcdatamodel */;
+			path = WineCalender.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 1FCB9107267B846C008C93C7 /* Project object */;
+}
