@@ -16,6 +16,7 @@
 		1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */; };
 		1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */; };
 		1FCB9138267B8470008C93C7 /* WineCalenderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */; };
+		1FCB9146267B8A44008C93C7 /* CameraTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9145267B8A44008C93C7 /* CameraTabViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		1FCB9133267B8470008C93C7 /* WineCalenderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WineCalenderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderUITests.swift; sourceTree = "<group>"; };
 		1FCB9139267B8470008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FCB9145267B8A44008C93C7 /* CameraTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTabViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
 				1FCB9123267B846F008C93C7 /* Info.plist */,
 				1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */,
+				1FCB9145267B8A44008C93C7 /* CameraTabViewController.swift */,
 			);
 			path = WineCalender;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
 				1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */,
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
+				1FCB9146267B8A44008C93C7 /* CameraTabViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
