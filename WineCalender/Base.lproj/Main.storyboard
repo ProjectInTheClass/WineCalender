@@ -27,18 +27,35 @@
         <!--카메라-->
         <scene sceneID="5MP-bv-NLI">
             <objects>
-                <viewController id="dGK-DU-0e9" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Yzg-DM-G8N">
+                <viewController id="dGK-DU-0e9" customClass="CameraTabViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <imageView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Z4P-0n-3jj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="hF7-4v-3t6"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <tabBarItem key="tabBarItem" title="카메라" id="vdZ-5G-p31"/>
+                    <connections>
+                        <segue destination="2bP-Sh-6NZ" kind="show" id="P4W-2I-Kor"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJ8-8Y-QEw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="251" y="984"/>
+            <point key="canvasLocation" x="250.72463768115944" y="983.70535714285711"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Bbn-7B-ljg">
+            <objects>
+                <viewController id="2bP-Sh-6NZ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wnu-Uy-pJZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4Ue-og-AhP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BJo-IF-dcF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwn-FG-n66" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1193" y="997"/>
         </scene>
         <!--캘린더-->
         <scene sceneID="bsV-3C-Agb">
