@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--이전 데이터-->
+        <!--My Wines-->
         <scene sceneID="vcI-ty-4PD">
             <objects>
                 <viewController id="U8X-As-bua" sceneMemberID="viewController">
@@ -18,13 +18,13 @@
                         <viewLayoutGuide key="safeArea" id="zFR-ta-t3f"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="이전 데이터" id="dWI-yK-pDf"/>
+                    <tabBarItem key="tabBarItem" title="My Wines" image="MyWinesTabBarItem" id="dWI-yK-pDf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogt-Ep-BgZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="251" y="131"/>
         </scene>
-        <!--카메라-->
+        <!--Wine Search-->
         <scene sceneID="5MP-bv-NLI">
             <objects>
                 <viewController id="dGK-DU-0e9" customClass="CameraTabViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <tabBarItem key="tabBarItem" title="카메라" id="vdZ-5G-p31"/>
+                    <tabBarItem key="tabBarItem" title="Wine Search" image="magnifyingglass" catalog="system" id="vdZ-5G-p31"/>
                     <connections>
                         <segue destination="2bP-Sh-6NZ" kind="show" id="P4W-2I-Kor"/>
                     </connections>
@@ -57,7 +57,7 @@
             </objects>
             <point key="canvasLocation" x="1193" y="997"/>
         </scene>
-        <!--캘린더-->
+        <!--Calendar-->
         <scene sceneID="bsV-3C-Agb">
             <objects>
                 <viewController id="mBO-Hx-9Kg" sceneMemberID="viewController">
@@ -67,7 +67,7 @@
                         <viewLayoutGuide key="safeArea" id="zzE-Yd-f0u"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="캘린더" id="JSa-WD-hje"/>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="JSa-WD-hje"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDk-45-d74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -81,6 +81,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemRedColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="jNm-zo-Wkv"/>
@@ -94,8 +95,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="MyWinesTabBarItem" width="25" height="25"/>
+        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
