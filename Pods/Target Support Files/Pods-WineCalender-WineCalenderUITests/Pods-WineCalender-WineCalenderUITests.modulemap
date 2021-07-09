@@ -1,0 +1,6 @@
+framework module Pods_WineCalender_WineCalenderUITests {
+  umbrella header "Pods-WineCalender-WineCalenderUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
