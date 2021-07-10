@@ -28,6 +28,7 @@ class CalendarViewController: UIViewController {
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
         let panGesture = UIPanGestureRecognizer(target: self.calendarView, action: #selector(self.calendarView.handleScopeGesture(_:)))
+        panGesture.delegate = self
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 2
         return panGesture
@@ -106,13 +107,6 @@ class CalendarViewController: UIViewController {
         calendarTableView.reloadData()
     }
 
-// MARK: - Gesture
-    
-    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        self.calendarHeightConstraint.constant = bounds.height
-        self.view.layoutIfNeeded()
-    }
-    
 // MARK: - Navigation
     
     @IBAction func unwindToCalendarView(_ unwindSegue: UIStoryboardSegue) {
@@ -171,6 +165,31 @@ class CalendarViewController: UIViewController {
     
     func sortSampleDatas() {
         sampleDatas.sort { $0.scheduleAndMyWinesDate < $1.scheduleAndMyWinesDate }
+    }
+}
+
+// MARK: - Gesture
+    
+extension CalendarViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let shouldBegin = self.calendarTableView.contentOffset.y <= -self.calendarTableView.contentInset.top
+        if shouldBegin {
+            let velocity = self.scopeGesture.velocity(in: self.view)
+            switch self.calendarView.scope {
+            case .month:
+                return velocity.y < 0
+            case .week:
+                return velocity.y > 0
+            @unknown default:
+                break
+            }
+        }
+        return shouldBegin
+    }
+
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        self.calendarHeightConstraint.constant = bounds.height
+        self.view.layoutIfNeeded()
     }
 }
 
