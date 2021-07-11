@@ -14,16 +14,13 @@ class CalendarViewController: UIViewController {
     @IBOutlet weak var calendarTableView: UITableView!
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
     
-    let fullDateFormatter = DateFormatter()
+    let dateFormatter = DateFormatter()
+    let timeFormatter = DateFormatter()
     let monthFormatter = DateFormatter()
-    let headDateFormatter = DateFormatter()
-    var headerDate : String?
-    var selectedPageMonth : String?
+    let headerDateFormatter = DateFormatter()
+    var headerDate: String?
+    static var selectedPageMonth: String?
     var selectedDate = Date()
-    
-    var sampleDatas : [ScheduleAndMyWinesData] = []
-    var currentPageMonthSampleDatas : [ScheduleAndMyWinesData] = []
-    var currentPageMonthSampleDataDic : [Date:UIImage] = [:]
     
     fileprivate lazy var scopeGesture: UIPanGestureRecognizer = {
         [unowned self] in
@@ -33,6 +30,8 @@ class CalendarViewController: UIViewController {
         panGesture.maximumNumberOfTouches = 2
         return panGesture
     }()
+    
+    var token: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,28 +46,31 @@ class CalendarViewController: UIViewController {
         self.calendarTableView.panGestureRecognizer.require(toFail: self.scopeGesture)
         
         configureUI()
-        
-        setDateFormat()
  
-        //샘플 데이터
+        //샘플 데이터 (앱 실행할 때마다 추가됨)
         setUpSampleData()
         
-        updateCurrentPageMonthUI()
+        DataManager.shared.fetchEvent()
+        
+        token = NotificationCenter.default.addObserver(forName: AddScheduleTableViewController.newScheduleDidInsert, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            
+            self?.updateSelectedPageMonthUI()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        DataManager.shared.fetchEvent()
+    }
+    
+    deinit {
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
     
 // MARK: - UI
-    
-    func setDateFormat() {
-        fullDateFormatter.locale = Locale(identifier: "ko_KR")
-        fullDateFormatter.dateFormat = "yyyy-MM-dd E"
-        monthFormatter.dateFormat = "M"
-    }
-    
-    func setHeaderDate(){
-        headDateFormatter.dateFormat = "yyyy년 M월"
-        headerDate = headDateFormatter.string(from: calendarView.currentPage)
-        calendarView.appearance.headerDateFormat = headerDate
-    }
     
     func configureUI() {
         calendarView.scope = .month
@@ -96,75 +98,65 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.selectionColor = .lightGray
 
         calendarView.placeholderType = .none
+        
+        setHeaderDate()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy-MM-dd E"
+        timeFormatter.locale = Locale(identifier: "ko_KR")
+        timeFormatter.timeStyle = .short
+        monthFormatter.dateFormat = "M"
+        CalendarViewController.selectedPageMonth = monthFormatter.string(from: selectedDate)
     }
     
-    func updateCurrentPageMonthUI() {
+    func setHeaderDate(){
+        headerDateFormatter.dateFormat = "yyyy년 M월"
+        headerDate = headerDateFormatter.string(from: calendarView.currentPage)
+        calendarView.appearance.headerDateFormat = headerDate
+    }
+    
+    func updateSelectedPageMonthUI() {
         setHeaderDate()
-
-        selectedPageMonth = monthFormatter.string(from: calendarView.currentPage)
-        currentPageMonthSampleDatas = []
-        currentPageMonthSampleDatas = sampleDatas.filter{ monthFormatter.string(from: $0.scheduleAndMyWinesDate ) == selectedPageMonth}
+        CalendarViewController.selectedPageMonth = monthFormatter.string(from: calendarView.currentPage)
+        DataManager.shared.fetchEvent()
+        calendarView.reloadData()
         calendarTableView.reloadData()
     }
 
 // MARK: - Navigation
     
     @IBAction func unwindToCalendarView(_ unwindSegue: UIStoryboardSegue) {
-        guard unwindSegue.identifier == "saveUnwind", let sourceViewController = unwindSegue.source as? AddScheduleTableViewController, let sampleData = sourceViewController.sampleData else { return }
-        
-        sampleDatas.append(sampleData)
-        sortSampleDatas()
-        currentPageMonthSampleDataDic[sampleData.scheduleAndMyWinesDate] = Categories.Schedule.categoryImage
-        calendarView.reloadData()
-        updateCurrentPageMonthUI()
+//        guard unwindSegue.identifier == "saveUnwind", let sourceViewController = unwindSegue.source as? AddScheduleTableViewController, let sampleData = sourceViewController.sampleData else { return }
+//
+//        sampleDatas.append(sampleData)
+//        sortSampleDatas()
+//        currentPageMonthSampleDataDic[sampleData.scheduleAndMyWinesDate] = Categories.Schedule.categoryImage
+//        calendarView.reloadData()
+//        updateCurrentPageMonthUI()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navController = segue.destination as? UINavigationController,
-           let calendarAddTableViewController = navController.topViewController as? AddScheduleTableViewController {
-            calendarAddTableViewController.receivedDateAndTime = selectedDate
+           let AddScheduleTableViewController = navController.topViewController as? AddScheduleTableViewController {
+            if segue.identifier == "AddScheduleSegue" {
+                AddScheduleTableViewController.receivedDateAndTime = selectedDate
+            } else if segue.identifier == "EditScheduleSegue",
+            let cell = sender as? UITableViewCell,
+            let indexPath = calendarTableView.indexPath(for: cell) {
+                AddScheduleTableViewController.event = DataManager.shared.eventList[indexPath.row]
+            }
         }
     }
 // MARK: - Sample Data
     
     func setUpSampleData() {
-        let sample1 = fullDateFormatter.date(from: "2021-06-11 금")!
-        setUpEvent(date: sample1, scheduleDescription: "", wineName: "세인트 프란시스, 피노 누아", wineCategory: "Red")
-        let sample2 = fullDateFormatter.date(from: "2021-06-02 수")!
-        setUpEvent(date: sample2, scheduleDescription: "", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바", wineCategory: "White")
-        let sample3 = fullDateFormatter.date(from: "2021-06-19 토")!
-        setUpEvent(date: sample3, scheduleDescription: "", wineName: "마스카 델 타코, 로시 피노 네로 로사토", wineCategory: "Rose")
-        let sample4 = fullDateFormatter.date(from: "2021-06-27 일")!
-        setUpEvent(date: sample4, scheduleDescription: "오후 7시 / 청담 / 대학모임 ", wineName: "", wineCategory: "Schedule")
-        let sample5 = fullDateFormatter.date(from: "2021-06-22 화")!
-        setUpEvent(date: sample5, scheduleDescription: "", wineName: "도멘 생그라, 엘 몰리", wineCategory: "Red")
-        let sample6 = fullDateFormatter.date(from: "2021-07-09 금")!
-        setUpEvent(date: sample6, scheduleDescription: "", wineName: "마스카 델 타코, 로시 피노 네로 로사토", wineCategory: "Rose")
-        //print(sampleDatas)
-    }
-    
-    func setUpEvent(date: Date, scheduleDescription: String, wineName: String, wineCategory: String) {
-        switch wineCategory {
-        case "Red":
-            sampleDatas.append(ScheduleAndMyWinesData(scheduleAndMyWinesDate: date, scheduleDescription: scheduleDescription, wineName: wineName, category: Categories.Red))
-            currentPageMonthSampleDataDic[date] = Categories.Red.categoryImage
-        case "White":
-            sampleDatas.append(ScheduleAndMyWinesData(scheduleAndMyWinesDate: date, scheduleDescription: scheduleDescription, wineName: wineName, category: Categories.White))
-            currentPageMonthSampleDataDic[date] = Categories.White.categoryImage
-        case "Rose":
-            sampleDatas.append(ScheduleAndMyWinesData(scheduleAndMyWinesDate: date, scheduleDescription: scheduleDescription, wineName: wineName, category: Categories.Rose))
-            currentPageMonthSampleDataDic[date] = Categories.Rose.categoryImage
-        case "Schedule":
-            sampleDatas.append(ScheduleAndMyWinesData(scheduleAndMyWinesDate: date, scheduleDescription: scheduleDescription, wineName: wineName, category: Categories.Schedule))
-            currentPageMonthSampleDataDic[date] = Categories.Schedule.categoryImage
-        default:
-            break
-        }
-        sortSampleDatas()
-    }
-    
-    func sortSampleDatas() {
-        sampleDatas.sort { $0.scheduleAndMyWinesDate < $1.scheduleAndMyWinesDate }
+        let sample1 = dateFormatter.date(from: "2021-06-11 금")!
+        DataManager.shared.addEvent(eventDate: sample1, eventDescription: "", wineName: "세인트 프란시스, 피노 누아", category: "Red")
+        let sample2 = dateFormatter.date(from: "2021-06-02 수")!
+        DataManager.shared.addEvent(eventDate: sample2, eventDescription: "", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바", category: "White")
+        let sample3 = dateFormatter.date(from: "2021-07-25 일")!
+        DataManager.shared.addEvent(eventDate: sample3, eventDescription: "청담 / 대학모임", wineName: "", category: "Schedule")
+        let sample4 = dateFormatter.date(from: "2021-07-10 토")!
+        DataManager.shared.addEvent(eventDate: sample4, eventDescription: "", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바", category: "Rose")
     }
 }
 
@@ -197,7 +189,7 @@ extension CalendarViewController: UIGestureRecognizerDelegate {
 
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
-        currentPageMonthSampleDataDic[date]
+        DataManager.shared.eventDic[date]
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
@@ -206,7 +198,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        updateCurrentPageMonthUI()
+        updateSelectedPageMonthUI()
     }
 }
 
@@ -214,26 +206,49 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
 
 extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        currentPageMonthSampleDatas.count
+        return DataManager.shared.selectedPageMonthEventList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CalendarTableViewCell", for: indexPath) as! CalendarTableViewCell
-        //샘플 데이터
-        cell.calendarImageView.image = currentPageMonthSampleDatas[indexPath.row].categoryImage
         
-        let calendarAndMyWinesdate = currentPageMonthSampleDatas[indexPath.row].scheduleAndMyWinesDate
-        cell.calendarDateLabel.text = fullDateFormatter.string(from: calendarAndMyWinesdate)
+        let target = DataManager.shared.selectedPageMonthEventList[indexPath.row]
         
-        if currentPageMonthSampleDatas[indexPath.row].category == Categories.Schedule {
-            cell.calendarDescriptionLabel.text = currentPageMonthSampleDatas[indexPath.row].scheduleDescription
-        } else {
-            cell.calendarDescriptionLabel.text = currentPageMonthSampleDatas[indexPath.row].wineName
+        switch target.category {
+        case Categories.Red.rawValue:
+            cell.calendarImageView.image = Categories.Red.categoryImage
+        case Categories.White.rawValue:
+            cell.calendarImageView.image = Categories.White.categoryImage
+        case Categories.Rose.rawValue:
+            cell.calendarImageView.image = Categories.Rose.categoryImage
+        case Categories.Schedule.rawValue:
+            cell.calendarImageView.image = Categories.Schedule.categoryImage
+        default:
+            break
         }
+
+        cell.calendarDateLabel.text = dateFormatter.string(for: target.eventDate)
+        
+        if target.category == Categories.Schedule.rawValue {
+            cell.calendarTimeLabel.text = timeFormatter.string(for: target.eventDate)
+        } else {
+            cell.calendarTimeLabel.text = ""
+        }
+        
+        if target.category == Categories.Schedule.rawValue {
+            cell.calendarDescriptionLabel.text = target.eventDescription
+        } else {
+            cell.calendarDescriptionLabel.text = target.wineName
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
