@@ -1,16 +1,20 @@
 PODS:
   - FSCalendar (2.8.2)
+  - SwiftyCam (4.0.0)
 
 DEPENDENCIES:
   - FSCalendar
+  - SwiftyCam
 
 SPEC REPOS:
   trunk:
     - FSCalendar
+    - SwiftyCam
 
 SPEC CHECKSUMS:
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
 
-PODFILE CHECKSUM: 65e5710185cb389ce724fa8dd9e50800f6a41730
+PODFILE CHECKSUM: b880129bfbe6fd6c5ea4c7b8bb29e0f50014a29a
 
 COCOAPODS: 1.10.1
