@@ -12,6 +12,7 @@
 		12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */; };
 		12C9D6BC26984D0000911CF0 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BB26984D0000911CF0 /* Calendar.swift */; };
 		12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */; };
+		1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */; };
 		1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9112267B846C008C93C7 /* AppDelegate.swift */; };
 		1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9114267B846C008C93C7 /* SceneDelegate.swift */; };
 		1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9116267B846C008C93C7 /* ViewController.swift */; };
@@ -50,6 +51,7 @@
 		12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		12C9D6BB26984D0000911CF0 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleTableViewController.swift; sourceTree = "<group>"; };
+		1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		1FCB910F267B846C008C93C7 /* WineCalender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineCalender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCB9112267B846C008C93C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FCB9114267B846C008C93C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				1FCB9123267B846F008C93C7 /* Info.plist */,
 				1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */,
 				1FCB9145267B8A44008C93C7 /* SearchViewController.swift */,
+				1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */,
 			);
 			path = WineCalender;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */,
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchViewController.swift in Sources */,
+				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
