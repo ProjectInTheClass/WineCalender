@@ -53,7 +53,6 @@ class CalendarViewController: UIViewController {
         DataManager.shared.fetchEvent()
         
         token = NotificationCenter.default.addObserver(forName: AddScheduleTableViewController.newScheduleDidInsert, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            
             self?.updateSelectedPageMonthUI()
         }
     }
@@ -142,7 +141,7 @@ class CalendarViewController: UIViewController {
             } else if segue.identifier == "EditScheduleSegue",
             let cell = sender as? UITableViewCell,
             let indexPath = calendarTableView.indexPath(for: cell) {
-                AddScheduleTableViewController.event = DataManager.shared.eventList[indexPath.row]
+                AddScheduleTableViewController.event = DataManager.shared.selectedPageMonthEventList[indexPath.row]
             }
         }
     }
@@ -156,7 +155,7 @@ class CalendarViewController: UIViewController {
         let sample3 = dateFormatter.date(from: "2021-07-25 일")!
         DataManager.shared.addEvent(eventDate: sample3, eventDescription: "청담 / 대학모임", wineName: "", category: "Schedule")
         let sample4 = dateFormatter.date(from: "2021-07-10 토")!
-        DataManager.shared.addEvent(eventDate: sample4, eventDescription: "", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바", category: "Rose")
+        DataManager.shared.addEvent(eventDate: sample4, eventDescription: "", wineName: "마스카 델 타코, 로시 피노 네로 로사토", category: "Rose")
     }
 }
 

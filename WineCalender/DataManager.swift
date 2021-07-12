@@ -18,7 +18,6 @@ class DataManager {
         return persistentContainer.viewContext
     }
     
-    var eventList = [Event]()
     var selectedPageMonthEventList = [Event]()
     var eventDic = [Date:UIImage]()
 
@@ -29,11 +28,10 @@ class DataManager {
         let request: NSFetchRequest<Event> = Event.fetchRequest()
         let sortByASC = NSSortDescriptor(key: "eventDate", ascending: true)
         request.sortDescriptors = [sortByASC]
-        
         do {
-            eventList = try mainContext.fetch(request)
+            let eventList = try mainContext.fetch(request)
+            selectedPageMonthEventList = eventList.filter{ monthFormatter.string(from: $0.eventDate!) == CalendarViewController.selectedPageMonth }
             updateSelectedPageMonth()
-            
         } catch {
             print(error)
         }
@@ -45,19 +43,14 @@ class DataManager {
         newEvent.eventDescription = eventDescription
         newEvent.wineName = wineName
         newEvent.category = category
-        
-        eventList.append(newEvent)
-        updateEventDic(date: eventDate, category: category)
         saveContext()
     }
     
     func updateSelectedPageMonth() {
         monthFormatter.dateFormat = "M"
-        selectedPageMonthEventList = []
-        selectedPageMonthEventList = eventList.filter{ monthFormatter.string(from: $0.eventDate!) == CalendarViewController.selectedPageMonth }
-        let count = selectedPageMonthEventList.count - 1
-        if selectedPageMonthEventList.count != 0 {
-            for i in 0...count {
+        let count = selectedPageMonthEventList.count
+        if count != 0 {
+            for i in 0...count - 1 {
                 if let date = selectedPageMonthEventList[i].eventDate,
                 let category = selectedPageMonthEventList[i].category {
                     updateEventDic(date: date, category: category)
