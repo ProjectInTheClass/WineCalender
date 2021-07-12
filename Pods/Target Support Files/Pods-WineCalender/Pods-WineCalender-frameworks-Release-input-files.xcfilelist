@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-WineCalender/Pods-WineCalender-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework
+${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework

@@ -25,37 +25,144 @@
             <point key="canvasLocation" x="251" y="131"/>
         </scene>
         <!--Wine Search-->
-        <scene sceneID="5MP-bv-NLI">
+        <scene sceneID="oSQ-hV-ofj">
             <objects>
-                <viewController id="dGK-DU-0e9" customClass="CameraTabViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <imageView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Z4P-0n-3jj">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
-                    <tabBarItem key="tabBarItem" title="Wine Search" image="magnifyingglass" catalog="system" id="vdZ-5G-p31"/>
+                <navigationController wantsFullScreenLayout="YES" id="Jdn-pO-Cc9" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Wine Search" image="magnifyingglass" catalog="system" id="kKQ-5i-OkK"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cZl-u2-tUy">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
                     <connections>
-                        <segue destination="2bP-Sh-6NZ" kind="show" id="P4W-2I-Kor"/>
+                        <segue destination="vfV-Q6-i5R" kind="relationship" relationship="rootViewController" id="o5l-1K-RCa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="auG-td-iwH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="251" y="883"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="tWU-fb-mxK">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="vfV-Q6-i5R" customClass="SearchViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MnG-f7-1Vt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17s-OZ-cvk" customClass="SwiftyCamButton" customModule="SwiftyCam">
+                                <rect key="frame" x="169.5" y="708" width="75" height="75"/>
+                                <color key="backgroundColor" red="0.86087566609999999" green="0.57344839209999998" blue="0.16693033539999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.86087566609999999" green="0.68575024429999998" blue="0.44950426360000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="cYV-qN-5rh"/>
+                                    <constraint firstAttribute="width" constant="75" id="dhs-hE-cbn"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSO-Pj-GlL">
+                                <rect key="frame" x="89.5" y="734" width="30" height="23"/>
+                                <state key="normal" image="flipCamera"/>
+                                <connections>
+                                    <action selector="cameraSwitchTapped:" destination="vfV-Q6-i5R" eventType="touchUpInside" id="tuO-SS-gk0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lk9-xR-SHP">
+                                <rect key="frame" x="294.5" y="729.5" width="18" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0Ze-iO-w8m"/>
+                                    <constraint firstAttribute="width" constant="18" id="wwn-f8-CJ8"/>
+                                </constraints>
+                                <state key="normal" image="flashOutline"/>
+                                <connections>
+                                    <action selector="toggleFlashTapped:" destination="vfV-Q6-i5R" eventType="touchUpInside" id="MXX-c8-bwg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="HC7-SC-7pm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lk9-xR-SHP" firstAttribute="leading" secondItem="17s-OZ-cvk" secondAttribute="trailing" constant="50" id="8ld-y8-ASa"/>
+                            <constraint firstItem="17s-OZ-cvk" firstAttribute="centerX" secondItem="MnG-f7-1Vt" secondAttribute="centerX" id="RNE-OG-rte"/>
+                            <constraint firstItem="HC7-SC-7pm" firstAttribute="bottom" secondItem="17s-OZ-cvk" secondAttribute="bottom" constant="30" id="UHo-db-fU8"/>
+                            <constraint firstItem="lk9-xR-SHP" firstAttribute="centerY" secondItem="17s-OZ-cvk" secondAttribute="centerY" id="jbH-3z-fKW"/>
+                            <constraint firstItem="17s-OZ-cvk" firstAttribute="leading" secondItem="nSO-Pj-GlL" secondAttribute="trailing" constant="50" id="nVy-1g-CZh"/>
+                            <constraint firstItem="nSO-Pj-GlL" firstAttribute="centerY" secondItem="17s-OZ-cvk" secondAttribute="centerY" id="yoD-S6-7AH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="rDe-G7-fr2"/>
+                    <connections>
+                        <outlet property="captureButton" destination="17s-OZ-cvk" id="tZm-Cz-GYL"/>
+                        <outlet property="flashButton" destination="lk9-xR-SHP" id="Gbb-ab-afC"/>
+                        <outlet property="flipCameraButton" destination="nSO-Pj-GlL" id="eil-ZQ-ZrT"/>
+                        <segue destination="73v-ai-POA" kind="show" identifier="photoSegue" id="Zws-Lg-rM4"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZJ8-8Y-QEw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o1E-WJ-ryc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250.72463768115944" y="983.70535714285711"/>
+            <point key="canvasLocation" x="1160.8695652173915" y="895.98214285714278"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="mkb-Q8-6dv">
+            <objects>
+                <viewController id="73v-ai-POA" customClass="PhotoViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bno-xv-khu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MGo-4N-Yam">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="122" translatesAutoresizingMaskIntoConstraints="NO" id="9cm-Su-9BB">
+                                <rect key="frame" x="100" y="720" width="214" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stU-bz-zEC">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1P-OE-SCT">
+                                        <rect key="frame" x="168" y="0.0" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dWF-Pr-JGh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MGo-4N-Yam" firstAttribute="leading" secondItem="dWF-Pr-JGh" secondAttribute="leading" id="JQC-uV-tcD"/>
+                            <constraint firstItem="MGo-4N-Yam" firstAttribute="top" secondItem="dWF-Pr-JGh" secondAttribute="top" id="KqC-Kn-Lmq"/>
+                            <constraint firstItem="MGo-4N-Yam" firstAttribute="centerX" secondItem="bno-xv-khu" secondAttribute="centerX" id="NH8-0T-1PK"/>
+                            <constraint firstItem="dWF-Pr-JGh" firstAttribute="bottom" secondItem="MGo-4N-Yam" secondAttribute="bottom" id="dvv-eD-reD"/>
+                            <constraint firstItem="9cm-Su-9BB" firstAttribute="centerY" secondItem="bno-xv-khu" secondAttribute="centerY" constant="287" id="jjo-UW-XKr"/>
+                            <constraint firstItem="dWF-Pr-JGh" firstAttribute="trailing" secondItem="MGo-4N-Yam" secondAttribute="trailing" id="nj9-cA-0U7"/>
+                            <constraint firstItem="9cm-Su-9BB" firstAttribute="centerX" secondItem="bno-xv-khu" secondAttribute="centerX" id="yjV-dA-Hhn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="WP4-Qv-BsG"/>
+                    <connections>
+                        <outlet property="wineImageView" destination="MGo-4N-Yam" id="uga-kv-4YO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FL0-aM-mj4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2223" y="907"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="Bbn-7B-ljg">
+        <scene sceneID="uFd-EN-bpZ">
             <objects>
-                <viewController id="2bP-Sh-6NZ" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Wnu-Uy-pJZ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                <viewController id="QGg-qN-bWH" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KrD-Jh-Xbl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="4Ue-og-AhP"/>
+                        <viewLayoutGuide key="safeArea" id="qzx-pW-5U3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="BJo-IF-dcF"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwn-FG-n66" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qlf-Lg-2sL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1193" y="997"/>
+            <point key="canvasLocation" x="3087" y="896"/>
         </scene>
         <!--Calendar View Controller-->
         <scene sceneID="bsV-3C-Agb">
@@ -304,7 +411,7 @@
                     <connections>
                         <segue destination="cNB-vM-kdx" kind="relationship" relationship="viewControllers" id="jNm-zo-Wkv"/>
                         <segue destination="U8X-As-bua" kind="relationship" relationship="viewControllers" id="axg-ak-bko"/>
-                        <segue destination="dGK-DU-0e9" kind="relationship" relationship="viewControllers" id="8os-Ud-MfL"/>
+                        <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69b-eg-bGC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -352,6 +459,8 @@
     <resources>
         <image name="MyWinesTabBarItem" width="25" height="25"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="flashOutline" width="18" height="30"/>
+        <image name="flipCamera" width="30" height="23"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
