@@ -37,12 +37,28 @@ class DataManager {
         }
     }
     
-    func addEvent(eventDate: Date, eventDescription: String, wineName: String, category: String) {
-        let newEvent = Event(context: mainContext)
-        newEvent.eventDate = eventDate
-        newEvent.eventDescription = eventDescription
-        newEvent.wineName = wineName
-        newEvent.category = category
+//    func addEvent(eventDate: Date, eventDescription: String, wineName: String, category: String) {
+//        let newEvent = Event(context: mainContext)
+//        newEvent.eventDate = eventDate
+//        newEvent.eventDescription = eventDescription
+//        newEvent.wineName = wineName
+//        newEvent.category = category
+//        saveContext()
+//    }
+    
+    func addSchedule(date: Date, category: String, scheduleDescription: String){
+        let object = NSEntityDescription.insertNewObject(forEntityName: "Schedule", into: mainContext)
+            object.setValue(date, forKey: "eventDate")
+            object.setValue(category, forKey: "eventCategory")
+            object.setValue(scheduleDescription, forKey: "eventDescription")
+        saveContext()
+    }
+    
+    func addMyWine(date: Date, category: String, wineName: String){
+        let object = NSEntityDescription.insertNewObject(forEntityName: "MyWine", into: mainContext)
+            object.setValue(date, forKey: "eventDate")
+            object.setValue(category, forKey: "eventCategory")
+            object.setValue(wineName, forKey: "eventDescription")
         saveContext()
     }
     
@@ -52,7 +68,7 @@ class DataManager {
         if count != 0 {
             for i in 0...count - 1 {
                 if let date = selectedPageMonthEventList[i].eventDate,
-                let category = selectedPageMonthEventList[i].category {
+                   let category = selectedPageMonthEventList[i].eventCategory{
                     updateEventDic(date: date, category: category)
                 }
             }

@@ -1,63 +1,26 @@
 //
-//  AddScheduleTableViewController.swift
+//  DetailMyWinesTableViewController.swift
 //  WineCalender
 //
-//  Created by Minju Lee on 2021/07/09.
+//  Created by Minju Lee on 2021/07/13.
 //
 
 import UIKit
 
-class AddScheduleTableViewController: UITableViewController {
+class DetailMyWinesTableViewController: UITableViewController {
 
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var placeTextField: UITextField!
-    @IBOutlet weak var descriptionTextField: UITextField!
-    
-    var receivedDateAndTime = Date()
-    let receivedDateFormatter = DateFormatter()
-    let dateFormatter = DateFormatter()
-    var event: Event?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "일정 추가"
-        
-        receivedDateFormatter.locale = Locale(identifier: "ko_KR")
-        receivedDateFormatter.dateFormat = "yyyy-MM-dd E a h:00"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .short
 
-        let receivedDateAndTimeStr = receivedDateFormatter.string(from: receivedDateAndTime)
-        datePicker.date = receivedDateFormatter.date(from: receivedDateAndTimeStr)!
-        dateLabel.text = dateFormatter.string(from: datePicker.date)
-    }
-    
-    @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
-        dateLabel.text = dateFormatter.string(from: sender.date)
-    }
-    
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        let dateStr = dateLabel.text ?? ""
-        let date = dateFormatter.date(from: dateStr)!
-        let place = placeTextField.text ?? ""
-        let description = descriptionTextField.text ?? ""
-        let fullDescription = "\(place) / \(description)"
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
 
-        DataManager.shared.addSchedule(date: date, category: "Schedule", scheduleDescription: fullDescription)
-        
-        NotificationCenter.default.post(name: AddScheduleTableViewController.newScheduleDidInsert, object: nil)
-        
-        dismiss(animated: true, completion: nil)
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-    }
-    /*
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
@@ -67,8 +30,7 @@ class AddScheduleTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
-    */
-    
+
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -124,8 +86,4 @@ class AddScheduleTableViewController: UITableViewController {
     }
     */
 
-}
-
-extension AddScheduleTableViewController {
-    static let newScheduleDidInsert = Notification.Name(rawValue: "newScheduleDidInsert")
 }

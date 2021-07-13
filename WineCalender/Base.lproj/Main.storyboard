@@ -244,7 +244,6 @@
                                             <outlet property="calendarDescriptionLabel" destination="hbU-8d-DxY" id="zZB-7g-dqA"/>
                                             <outlet property="calendarImageView" destination="XKk-PV-7cS" id="vcz-Po-47S"/>
                                             <outlet property="calendarTimeLabel" destination="yf8-rZ-lP2" id="lw7-TP-eb7"/>
-                                            <segue destination="ktC-t3-EMS" kind="presentation" identifier="EditScheduleSegue" id="JoL-uZ-wbI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -278,7 +277,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDk-45-d74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="-739"/>
+            <point key="canvasLocation" x="1161" y="-1055"/>
         </scene>
         <!--Add Schedule Table View Controller-->
         <scene sceneID="Y9O-YK-i92">
@@ -405,7 +404,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XW6-Bo-Dex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="dtv-Wq-gO5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2820" y="-956"/>
+            <point key="canvasLocation" x="3062" y="-1686"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hd1-h3-Xcb">
@@ -444,7 +443,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l26-Qp-wTO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="250.72463768115944" y="-739.28571428571422"/>
+            <point key="canvasLocation" x="251" y="-1055"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xmx-ss-UBG">
@@ -462,12 +461,103 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0o-4S-vsc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2017" y="-956"/>
+            <point key="canvasLocation" x="2135" y="-1686"/>
+        </scene>
+        <!--DetailSchedule-->
+        <scene sceneID="4Qb-Oa-U9E">
+            <objects>
+                <tableViewController storyboardIdentifier="DetailSchedule" id="3MI-ZE-m17" customClass="DetailSheduleTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cdB-0F-VPd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="jdI-L5-cqs">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jdI-L5-cqs" id="0B9-mq-Qit">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3MI-ZE-m17" id="iUc-n2-qYW"/>
+                            <outlet property="delegate" destination="3MI-ZE-m17" id="fgt-7i-LaX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="DetailSchedule" id="s8J-eX-n7v"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vsT-Ou-YHD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3044.9275362318845" y="-919.41964285714278"/>
+        </scene>
+        <!--DetailMyWines-->
+        <scene sceneID="8kR-27-Mz7">
+            <objects>
+                <tableViewController storyboardIdentifier="DetailMyWines" id="7SD-Kt-u08" customClass="DetailMyWinesTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wBa-4h-hzL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bGd-2A-smx">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bGd-2A-smx" id="656-jS-6wq">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7SD-Kt-u08" id="h53-e8-Qc4"/>
+                            <outlet property="delegate" destination="7SD-Kt-u08" id="BEj-ZO-Siv"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="DetailMyWines" id="gBZ-Yb-wvF"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wMf-Ia-bcv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3044.9275362318845" y="-189.50892857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7dL-B6-7VK">
+            <objects>
+                <navigationController storyboardIdentifier="DetailScheduleNav" automaticallyAdjustsScrollViewInsets="NO" id="Gqn-eE-8iG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8p6-uF-AgC">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3MI-ZE-m17" kind="relationship" relationship="rootViewController" id="8Jm-QE-FHD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XF6-cr-k4F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2134.7826086956525" y="-919.41964285714278"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SvF-eB-1An">
+            <objects>
+                <navigationController storyboardIdentifier="DetailMyWinesNav" automaticallyAdjustsScrollViewInsets="NO" id="FPQ-TQ-nB3" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mpO-Uu-PaN">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7SD-Kt-u08" kind="relationship" relationship="rootViewController" id="24V-WK-ylv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u3v-gA-E0w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2134.7826086956525" y="-189.50892857142856"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="JoL-uZ-wbI"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="MyWinesTabBarItem" width="25" height="25"/>
         <image name="calendar" catalog="system" width="128" height="106"/>

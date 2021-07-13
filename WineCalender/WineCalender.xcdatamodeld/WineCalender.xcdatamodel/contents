@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
-        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="eventCategory" optional="YES" attributeType="String"/>
         <attribute name="eventDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eventDescription" optional="YES" attributeType="String"/>
-        <attribute name="wineName" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="MyWine" representedClassName="MyWine" parentEntity="Event" syncable="YES" codeGenerationType="class"/>
+    <entity name="Schedule" representedClassName="Schedule" parentEntity="Event" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="Event" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="Event" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="MyWine" positionX="-54" positionY="18" width="128" height="29"/>
+        <element name="Schedule" positionX="-36" positionY="27" width="128" height="29"/>
     </elements>
 </model>

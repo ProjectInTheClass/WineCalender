@@ -138,10 +138,6 @@ class CalendarViewController: UIViewController {
            let AddScheduleTableViewController = navController.topViewController as? AddScheduleTableViewController {
             if segue.identifier == "AddScheduleSegue" {
                 AddScheduleTableViewController.receivedDateAndTime = selectedDate
-            } else if segue.identifier == "EditScheduleSegue",
-            let cell = sender as? UITableViewCell,
-            let indexPath = calendarTableView.indexPath(for: cell) {
-                AddScheduleTableViewController.event = DataManager.shared.selectedPageMonthEventList[indexPath.row]
             }
         }
     }
@@ -149,13 +145,13 @@ class CalendarViewController: UIViewController {
     
     func setUpSampleData() {
         let sample1 = dateFormatter.date(from: "2021-06-11 금")!
-        DataManager.shared.addEvent(eventDate: sample1, eventDescription: "", wineName: "세인트 프란시스, 피노 누아", category: "Red")
+        DataManager.shared.addMyWine(date: sample1, category: "Red", wineName: "세인트 프란시스, 피노 누아")
         let sample2 = dateFormatter.date(from: "2021-06-02 수")!
-        DataManager.shared.addEvent(eventDate: sample2, eventDescription: "", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바", category: "White")
+        DataManager.shared.addMyWine(date: sample2, category: "White", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바")
         let sample3 = dateFormatter.date(from: "2021-07-25 일")!
-        DataManager.shared.addEvent(eventDate: sample3, eventDescription: "청담 / 대학모임", wineName: "", category: "Schedule")
+        DataManager.shared.addSchedule(date: sample3, category: "Schedule", scheduleDescription: "청담 / 대학모임")
         let sample4 = dateFormatter.date(from: "2021-07-10 토")!
-        DataManager.shared.addEvent(eventDate: sample4, eventDescription: "", wineName: "마스카 델 타코, 로시 피노 네로 로사토", category: "Rose")
+        DataManager.shared.addMyWine(date: sample4, category: "Rose", wineName: "마스카 델 타코, 로시 피노 네로 로사토")
     }
 }
 
@@ -213,7 +209,7 @@ extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
         
         let target = DataManager.shared.selectedPageMonthEventList[indexPath.row]
         
-        switch target.category {
+        switch target.eventCategory {
         case Categories.Red.rawValue:
             cell.calendarImageView.image = Categories.Red.categoryImage
         case Categories.White.rawValue:
@@ -228,17 +224,13 @@ extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
 
         cell.calendarDateLabel.text = dateFormatter.string(for: target.eventDate)
         
-        if target.category == Categories.Schedule.rawValue {
+        if target.eventCategory == Categories.Schedule.rawValue {
             cell.calendarTimeLabel.text = timeFormatter.string(for: target.eventDate)
         } else {
             cell.calendarTimeLabel.text = ""
         }
         
-        if target.category == Categories.Schedule.rawValue {
-            cell.calendarDescriptionLabel.text = target.eventDescription
-        } else {
-            cell.calendarDescriptionLabel.text = target.wineName
-        }
+        cell.calendarDescriptionLabel.text = target.eventDescription
         
         return cell
     }
@@ -249,5 +241,15 @@ extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        if DataManager.shared.selectedPageMonthEventList[indexPath.row].eventCategory == "Schedule" {
+            if let detailSchedule = storyboard?.instantiateViewController(withIdentifier: "DetailScheduleNav") {
+                present(detailSchedule, animated: true, completion: nil)
+            }
+        } else {
+            if let detailMyWines  = storyboard?.instantiateViewController(withIdentifier: "DetailMyWinesNav"){
+                present(detailMyWines, animated: true, completion: nil)
+            }
+        }
     }
 }
