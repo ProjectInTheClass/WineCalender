@@ -12,7 +12,7 @@
 		12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */; };
 		12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BB26984D0000911CF0 /* Categories.swift */; };
 		12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */; };
-		12DF7CF6269DC3A90083AE2B /* DetailSheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF5269DC3A90083AE2B /* DetailSheduleTableViewController.swift */; };
+		12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */; };
 		12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */; };
 		12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EEA68E269AD9FC00D850F0 /* DataManager.swift */; };
 		1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */; };
@@ -54,7 +54,7 @@
 		12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		12C9D6BB26984D0000911CF0 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleTableViewController.swift; sourceTree = "<group>"; };
-		12DF7CF5269DC3A90083AE2B /* DetailSheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSheduleTableViewController.swift; sourceTree = "<group>"; };
+		12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleTableViewController.swift; sourceTree = "<group>"; };
 		12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWinesTableViewController.swift; sourceTree = "<group>"; };
 		12EEA68E269AD9FC00D850F0 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 				12578E792697517500F2FF20 /* CalendarViewController.swift */,
 				12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */,
 				12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */,
-				12DF7CF5269DC3A90083AE2B /* DetailSheduleTableViewController.swift */,
+				12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */,
 				12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */,
 				1FCB9118267B846C008C93C7 /* Main.storyboard */,
 				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
@@ -448,7 +448,7 @@
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
-				12DF7CF6269DC3A90083AE2B /* DetailSheduleTableViewController.swift in Sources */,
+				12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

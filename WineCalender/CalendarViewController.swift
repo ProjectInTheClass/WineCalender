@@ -55,6 +55,9 @@ class CalendarViewController: UIViewController {
         token = NotificationCenter.default.addObserver(forName: AddScheduleTableViewController.newScheduleDidInsert, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             self?.updateSelectedPageMonthUI()
         }
+        token = NotificationCenter.default.addObserver(forName: DetailScheduleTableViewController.scheduleDidChange, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.updateSelectedPageMonthUI()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +90,7 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.weekdayFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
         calendarView.appearance.weekdayTextColor = UIColor.systemRed
         calendarView.appearance.titleFont = UIFont.systemFont(ofSize: 12)
+        calendarView.appearance.titleDefaultColor = UIColor.systemGray
 
         calendarView.appearance.titleOffset = .init(x: 0, y: 3)
         calendarView.appearance.imageOffset = .init(x: -1, y: -7)
@@ -135,10 +139,9 @@ class CalendarViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navController = segue.destination as? UINavigationController,
-           let AddScheduleTableViewController = navController.topViewController as? AddScheduleTableViewController {
-            if segue.identifier == "AddScheduleSegue" {
-                AddScheduleTableViewController.receivedDateAndTime = selectedDate
-            }
+           let AddScheduleTableViewController = navController.topViewController as? AddScheduleTableViewController,
+           segue.identifier == "AddScheduleSegue" {
+            AddScheduleTableViewController.receivedDateAndTime = selectedDate
         }
     }
 // MARK: - Sample Data
@@ -149,7 +152,7 @@ class CalendarViewController: UIViewController {
         let sample2 = dateFormatter.date(from: "2021-06-02 수")!
         DataManager.shared.addMyWine(date: sample2, category: "White", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바")
         let sample3 = dateFormatter.date(from: "2021-07-25 일")!
-        DataManager.shared.addSchedule(date: sample3, category: "Schedule", scheduleDescription: "청담 / 대학모임")
+        DataManager.shared.addSchedule(date: sample3, category: "Schedule", place: "청담", description: "대학모임")
         let sample4 = dateFormatter.date(from: "2021-07-10 토")!
         DataManager.shared.addMyWine(date: sample4, category: "Rose", wineName: "마스카 델 타코, 로시 피노 네로 로사토")
     }
@@ -189,7 +192,6 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
-        //print("선택한 날짜 \(selectedDate)")
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
@@ -227,10 +229,19 @@ extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
         if target.eventCategory == Categories.Schedule.rawValue {
             cell.calendarTimeLabel.text = timeFormatter.string(for: target.eventDate)
         } else {
-            cell.calendarTimeLabel.text = ""
+            cell.calendarTimeLabel.text = nil
         }
         
-        cell.calendarDescriptionLabel.text = target.eventDescription
+        if target.eventCategory == Categories.Schedule.rawValue {
+            let schedule = DataManager.shared.selectedPageMonthEventList as! [Schedule]
+            if let schedulePlace = schedule[indexPath.row].schedulePlace,
+               let scheduleDescription = schedule[indexPath.row].scheduleDescription {
+                cell.calendarDescriptionLabel.text = schedulePlace + " / " + scheduleDescription
+            }
+        } else {
+            let myWine = DataManager.shared.selectedPageMonthEventList as! [MyWine]
+            cell.calendarDescriptionLabel.text = myWine[indexPath.row].wineName
+        }
         
         return cell
     }
@@ -243,12 +254,14 @@ extension CalendarViewController : UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         
         if DataManager.shared.selectedPageMonthEventList[indexPath.row].eventCategory == "Schedule" {
-            if let detailSchedule = storyboard?.instantiateViewController(withIdentifier: "DetailScheduleNav") {
-                present(detailSchedule, animated: true, completion: nil)
+            if let detailScheduleNav = storyboard?.instantiateViewController(withIdentifier: "DetailScheduleNav"),
+               let detailScheduleVC = detailScheduleNav.children.first as? DetailScheduleTableViewController {
+                detailScheduleVC.schedule = DataManager.shared.selectedPageMonthEventList[indexPath.row] as? Schedule
+                present(detailScheduleNav, animated: true, completion: nil)
             }
         } else {
-            if let detailMyWines  = storyboard?.instantiateViewController(withIdentifier: "DetailMyWinesNav"){
-                present(detailMyWines, animated: true, completion: nil)
+            if let detailMyWinesNav  = storyboard?.instantiateViewController(withIdentifier: "DetailMyWinesNav"){
+                present(detailMyWinesNav, animated: true, completion: nil)
             }
         }
     }

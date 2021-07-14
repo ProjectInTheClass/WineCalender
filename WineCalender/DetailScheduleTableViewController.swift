@@ -1,5 +1,5 @@
 //
-//  DetailSheduleTableViewController.swift
+//  DetailScheduleTableViewController.swift
 //  WineCalender
 //
 //  Created by Minju Lee on 2021/07/13.
@@ -7,20 +7,53 @@
 
 import UIKit
 
-class DetailSheduleTableViewController: UITableViewController {
+class DetailScheduleTableViewController: UITableViewController {
 
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var placeTextField: UITextField!
+    @IBOutlet weak var descriptionTextField: UITextField!
+    
+    var schedule: Schedule?
+    
+    let dateFormatter = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        if let schedule = schedule {
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.dateStyle = .full
+            dateFormatter.timeStyle = .short
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+            datePicker.date = schedule.eventDate!
+            dateLabel.text = dateFormatter.string(from: datePicker.date)
+            placeTextField.text = schedule.schedulePlace
+            descriptionTextField.text = schedule.scheduleDescription
+        }
     }
-
+    
+    @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
+        dateLabel.text = dateFormatter.string(from: sender.date)
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        let date = datePicker.date
+        let place = placeTextField.text ?? ""
+        let description = descriptionTextField.text ?? ""
+        
+        if let schedule = schedule {
+            schedule.eventDate = date
+            schedule.schedulePlace = place
+            schedule.scheduleDescription = description
+            DataManager.shared.saveContext()
+        }
+        NotificationCenter.default.post(name: DetailScheduleTableViewController.scheduleDidChange , object: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Table view data source
-
+/*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
@@ -30,7 +63,7 @@ class DetailSheduleTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
-
+*/
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -86,4 +119,8 @@ class DetailSheduleTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension DetailScheduleTableViewController {
+    static let scheduleDidChange = Notification.Name(rawValue: "scheduleDidChnage")
 }

@@ -25,6 +25,7 @@ class DataManager {
     let dateFormatter = DateFormatter()
     
     func fetchEvent() {
+        eventDic = [:]
         let request: NSFetchRequest<Event> = Event.fetchRequest()
         let sortByASC = NSSortDescriptor(key: "eventDate", ascending: true)
         request.sortDescriptors = [sortByASC]
@@ -37,28 +38,20 @@ class DataManager {
         }
     }
     
-//    func addEvent(eventDate: Date, eventDescription: String, wineName: String, category: String) {
-//        let newEvent = Event(context: mainContext)
-//        newEvent.eventDate = eventDate
-//        newEvent.eventDescription = eventDescription
-//        newEvent.wineName = wineName
-//        newEvent.category = category
-//        saveContext()
-//    }
-    
-    func addSchedule(date: Date, category: String, scheduleDescription: String){
+    func addSchedule(date: Date, category: String, place: String, description: String){
         let object = NSEntityDescription.insertNewObject(forEntityName: "Schedule", into: mainContext)
-            object.setValue(date, forKey: "eventDate")
-            object.setValue(category, forKey: "eventCategory")
-            object.setValue(scheduleDescription, forKey: "eventDescription")
+        object.setValue(date, forKey: "eventDate")
+        object.setValue(category, forKey: "eventCategory")
+        object.setValue(place, forKey: "schedulePlace")
+        object.setValue(description, forKey: "scheduleDescription")
         saveContext()
     }
     
     func addMyWine(date: Date, category: String, wineName: String){
         let object = NSEntityDescription.insertNewObject(forEntityName: "MyWine", into: mainContext)
-            object.setValue(date, forKey: "eventDate")
-            object.setValue(category, forKey: "eventCategory")
-            object.setValue(wineName, forKey: "eventDescription")
+        object.setValue(date, forKey: "eventDate")
+        object.setValue(category, forKey: "eventCategory")
+        object.setValue(wineName, forKey: "wineName")
         saveContext()
     }
     

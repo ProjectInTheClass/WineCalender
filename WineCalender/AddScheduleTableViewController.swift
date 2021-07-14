@@ -17,12 +17,9 @@ class AddScheduleTableViewController: UITableViewController {
     var receivedDateAndTime = Date()
     let receivedDateFormatter = DateFormatter()
     let dateFormatter = DateFormatter()
-    var event: Event?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "일정 추가"
         
         receivedDateFormatter.locale = Locale(identifier: "ko_KR")
         receivedDateFormatter.dateFormat = "yyyy-MM-dd E a h:00"
@@ -44,9 +41,8 @@ class AddScheduleTableViewController: UITableViewController {
         let date = dateFormatter.date(from: dateStr)!
         let place = placeTextField.text ?? ""
         let description = descriptionTextField.text ?? ""
-        let fullDescription = "\(place) / \(description)"
 
-        DataManager.shared.addSchedule(date: date, category: "Schedule", scheduleDescription: fullDescription)
+        DataManager.shared.addSchedule(date: date, category: "Schedule", place: place, description: description)
         
         NotificationCenter.default.post(name: AddScheduleTableViewController.newScheduleDidInsert, object: nil)
         
