@@ -55,6 +55,13 @@ class DataManager {
         saveContext()
     }
     
+    func deleteSchedule(schedule: Schedule?) {
+        if let schedule = schedule {
+            mainContext.delete(schedule)
+            saveContext()
+        }
+    }
+    
     func updateSelectedPageMonth() {
         monthFormatter.dateFormat = "M"
         let count = selectedPageMonthEventList.count

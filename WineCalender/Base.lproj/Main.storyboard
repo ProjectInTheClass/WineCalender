@@ -283,7 +283,7 @@
         <scene sceneID="Y9O-YK-i92">
             <objects>
                 <tableViewController id="H2O-4U-im9" customClass="AddScheduleTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5My-LZ-Grb">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="5My-LZ-Grb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
@@ -395,6 +395,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addTableView" destination="5My-LZ-Grb" id="jed-bL-o1c"/>
                         <outlet property="dateLabel" destination="0aH-fY-5Qc" id="wgs-kJ-EpK"/>
                         <outlet property="datePicker" destination="s5y-hk-fhS" id="Dq0-GB-ZSv"/>
                         <outlet property="descriptionTextField" destination="OWZ-LS-b5c" id="Znx-Qd-VrH"/>
@@ -532,7 +533,7 @@
         <scene sceneID="cIJ-38-4h4">
             <objects>
                 <tableViewController storyboardIdentifier="DetailSchedule" id="MyQ-CS-y8P" customClass="DetailScheduleTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8sK-oM-H0f">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8sK-oM-H0f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <sections>
@@ -621,6 +622,28 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="3UA-SU-9nz">
+                                        <rect key="frame" x="20" y="353" width="374" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3UA-SU-9nz" id="kyJ-Zr-Zl1">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9f-6n-yCK">
+                                                    <rect key="frame" x="177" y="14" width="20" height="22"/>
+                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                    <state key="normal" image="trash" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="deleteButtonTapped:" destination="MyQ-CS-y8P" eventType="touchUpInside" id="9Ui-Gb-MJb"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="s9f-6n-yCK" firstAttribute="centerY" secondItem="kyJ-Zr-Zl1" secondAttribute="centerY" id="6sg-8F-HeS"/>
+                                                <constraint firstItem="s9f-6n-yCK" firstAttribute="centerX" secondItem="kyJ-Zr-Zl1" secondAttribute="centerX" id="Jl2-5e-Cd5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -647,6 +670,7 @@
                         <outlet property="dateLabel" destination="uvb-d9-H6G" id="Hqr-jg-ycM"/>
                         <outlet property="datePicker" destination="gKQ-j3-ek5" id="ipP-qE-seZ"/>
                         <outlet property="descriptionTextField" destination="kQS-it-CVn" id="Isn-va-WWj"/>
+                        <outlet property="detailTableView" destination="8sK-oM-H0f" id="pL4-XB-6fS"/>
                         <outlet property="placeTextField" destination="m6o-uS-ce5" id="N41-9h-jkx"/>
                     </connections>
                 </tableViewController>
@@ -662,6 +686,7 @@
         <image name="flashOutline" width="18" height="30"/>
         <image name="flipCamera" width="30" height="23"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

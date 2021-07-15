@@ -9,6 +9,7 @@ import UIKit
 
 class AddScheduleTableViewController: UITableViewController {
 
+    @IBOutlet weak var addTableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var placeTextField: UITextField!
@@ -30,6 +31,16 @@ class AddScheduleTableViewController: UITableViewController {
         let receivedDateAndTimeStr = receivedDateFormatter.string(from: receivedDateAndTime)
         datePicker.date = receivedDateFormatter.date(from: receivedDateAndTimeStr)!
         dateLabel.text = dateFormatter.string(from: datePicker.date)
+        
+        addTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
