@@ -9,6 +9,7 @@ import UIKit
 
 class DetailScheduleTableViewController: UITableViewController {
 
+    @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var placeTextField: UITextField!
@@ -31,6 +32,16 @@ class DetailScheduleTableViewController: UITableViewController {
             placeTextField.text = schedule.schedulePlace
             descriptionTextField.text = schedule.scheduleDescription
         }
+        
+        detailTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
     
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -50,6 +61,17 @@ class DetailScheduleTableViewController: UITableViewController {
         }
         NotificationCenter.default.post(name: DetailScheduleTableViewController.scheduleDidChange , object: nil)
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func deleteButtonTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "삭제", message: "일정을 삭제하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] (action) in
+            DataManager.shared.deleteSchedule(schedule: self?.schedule)
+            NotificationCenter.default.post(name: DetailScheduleTableViewController.scheduleDidChange, object: nil)
+            self?.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
