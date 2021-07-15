@@ -16,6 +16,7 @@
 		12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */; };
 		12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EEA68E269AD9FC00D850F0 /* DataManager.swift */; };
 		1F215B23269ED11800F0E526 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F215B22269ED11800F0E526 /* SearchController.swift */; };
+		1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F215B2626A0069800F0E526 /* SearchViewController.swift */; };
 		1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */; };
 		1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9112267B846C008C93C7 /* AppDelegate.swift */; };
 		1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9114267B846C008C93C7 /* SceneDelegate.swift */; };
@@ -27,6 +28,7 @@
 		1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */; };
 		1FCB9138267B8470008C93C7 /* WineCalenderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */; };
 		1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9145267B8A44008C93C7 /* SearchPhotoViewController.swift */; };
+		1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */; };
 		2D44FD482C6F8C9A9A8B5A3B /* Pods_WineCalender_WineCalenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */; };
 		5C04E5E602073F713F4D418D /* Pods_WineCalender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F6D26CAC0A65D404A6CDCF /* Pods_WineCalender.framework */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,7 @@
 		12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWinesTableViewController.swift; sourceTree = "<group>"; };
 		12EEA68E269AD9FC00D850F0 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		1F215B22269ED11800F0E526 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		1F215B2626A0069800F0E526 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1FBF148D269BF25E00B8C59D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		1FCB910F267B846C008C93C7 /* WineCalender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WineCalender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCB9112267B846C008C93C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderUITests.swift; sourceTree = "<group>"; };
 		1FCB9139267B8470008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FCB9145267B8A44008C93C7 /* SearchPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoViewController.swift; sourceTree = "<group>"; };
+		1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		21883CBE2ABA51F7A43023E7 /* Pods-WineCalender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender.release.xcconfig"; path = "Target Support Files/Pods-WineCalender/Pods-WineCalender.release.xcconfig"; sourceTree = "<group>"; };
 		22C743C658C7C294A97A0BA6 /* Pods-WineCalenderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.release.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AD1389320F08F52A5BF1AB6 /* Pods-WineCalender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender/Pods-WineCalender.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +144,23 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		1F215B2426A0063E00F0E526 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				1F215B22269ED11800F0E526 /* SearchController.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		1F215B2526A0067200F0E526 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1F215B2626A0069800F0E526 /* SearchViewController.swift */,
+				1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		1FCB9106267B846C008C93C7 = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +170,7 @@
 				1FCB9110267B846C008C93C7 /* Products */,
 				A11C588FF0DFF0C9F898EB65 /* Pods */,
 				67439B2F11CD3C4F4C9DE439 /* Frameworks */,
+				1F215B2426A0063E00F0E526 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,6 +187,7 @@
 		1FCB9111267B846C008C93C7 /* WineCalender */ = {
 			isa = PBXGroup;
 			children = (
+				1F215B2526A0067200F0E526 /* Search */,
 				1F215B1F269EB8A300F0E526 /* Calendar */,
 				1F215B1E269EB89B00F0E526 /* Data */,
 				1F215B1D269EB85B00F0E526 /* Camera */,
@@ -462,11 +485,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */,
 				12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
 				1F215B23269ED11800F0E526 /* SearchController.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
+				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
 				12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */,
 				12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */,
