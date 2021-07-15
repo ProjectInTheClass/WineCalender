@@ -7,7 +7,7 @@
 import UIKit
 import SwiftyCam
 
-class SearchViewController: SwiftyCamViewController, SwiftyCamViewControllerDelegate {
+class SearchPhotoViewController: SwiftyCamViewController, SwiftyCamViewControllerDelegate {
     
     @IBOutlet weak var captureButton: SwiftyCamButton!
     @IBOutlet weak var flashButton: UIButton!
