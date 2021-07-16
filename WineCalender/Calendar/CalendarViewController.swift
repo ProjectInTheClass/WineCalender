@@ -16,7 +16,6 @@ class CalendarViewController: UIViewController {
     
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
-    let monthFormatter = DateFormatter()
     let headerDateFormatter = DateFormatter()
     var headerDate: String?
     static var selectedPageMonth: String?
@@ -107,8 +106,7 @@ class CalendarViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd E"
         timeFormatter.locale = Locale(identifier: "ko_KR")
         timeFormatter.timeStyle = .short
-        monthFormatter.dateFormat = "M"
-        CalendarViewController.selectedPageMonth = monthFormatter.string(from: selectedDate)
+        CalendarViewController.selectedPageMonth = headerDateFormatter.string(from: selectedDate)
     }
     
     func setHeaderDate(){
@@ -119,7 +117,7 @@ class CalendarViewController: UIViewController {
     
     func updateSelectedPageMonthUI() {
         setHeaderDate()
-        CalendarViewController.selectedPageMonth = monthFormatter.string(from: calendarView.currentPage)
+        CalendarViewController.selectedPageMonth = headerDateFormatter.string(from: calendarView.currentPage)
         DataManager.shared.fetchEvent()
         calendarView.reloadData()
         calendarTableView.reloadData()
@@ -192,6 +190,12 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
+        let target = DataManager.shared.selectedPageMonthEventList.map{ $0.eventDate }
+        if DataManager.shared.eventDic.keys.contains(date),
+           target.contains(date) {
+            let index = target.firstIndex(of: date)!
+            calendarTableView.scrollToRow(at: [0,index], at: .top, animated: true)
+        }
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {

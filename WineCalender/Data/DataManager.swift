@@ -21,8 +21,12 @@ class DataManager {
     var selectedPageMonthEventList = [Event]()
     var eventDic = [Date:UIImage]()
 
-    let monthFormatter = DateFormatter()
     let dateFormatter = DateFormatter()
+    let monthFormatter: DateFormatter = {
+        let m = DateFormatter()
+        m.dateFormat = "yyyy년 M월"
+        return m
+    }()
     
     func fetchEvent() {
         eventDic = [:]
@@ -63,7 +67,6 @@ class DataManager {
     }
     
     func updateSelectedPageMonth() {
-        monthFormatter.dateFormat = "M"
         let count = selectedPageMonthEventList.count
         if count != 0 {
             for i in 0...count - 1 {

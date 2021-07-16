@@ -140,6 +140,7 @@
 				12C9D6BB26984D0000911CF0 /* Categories.swift */,
 				12578E792697517500F2FF20 /* CalendarViewController.swift */,
 				12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */,
+				12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -194,7 +195,6 @@
 				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
-				12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */,
 				12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */,
 				12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */,
 				1FCB9118267B846C008C93C7 /* Main.storyboard */,
