@@ -89,7 +89,7 @@ class CalendarViewController: UIViewController {
         calendarView.appearance.weekdayFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
         calendarView.appearance.weekdayTextColor = UIColor.systemRed
         calendarView.appearance.titleFont = UIFont.systemFont(ofSize: 12)
-        calendarView.appearance.titleDefaultColor = UIColor.systemGray
+        calendarView.appearance.titleDefaultColor = UIColor(named: "blackAndWhite")
 
         calendarView.appearance.titleOffset = .init(x: 0, y: 3)
         calendarView.appearance.imageOffset = .init(x: -1, y: -7)
@@ -126,13 +126,6 @@ class CalendarViewController: UIViewController {
 // MARK: - Navigation
     
     @IBAction func unwindToCalendarView(_ unwindSegue: UIStoryboardSegue) {
-//        guard unwindSegue.identifier == "saveUnwind", let sourceViewController = unwindSegue.source as? AddScheduleTableViewController, let sampleData = sourceViewController.sampleData else { return }
-//
-//        sampleDatas.append(sampleData)
-//        sortSampleDatas()
-//        currentPageMonthSampleDataDic[sampleData.scheduleAndMyWinesDate] = Categories.Schedule.categoryImage
-//        calendarView.reloadData()
-//        updateCurrentPageMonthUI()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -165,8 +158,10 @@ extension CalendarViewController: UIGestureRecognizerDelegate {
             let velocity = self.scopeGesture.velocity(in: self.view)
             switch self.calendarView.scope {
             case .month:
+                //calendarView.scrollEnabled = true
                 return velocity.y < 0
             case .week:
+                //calendarView.scrollEnabled = false
                 return velocity.y > 0
             @unknown default:
                 break
@@ -190,10 +185,16 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDate = date
-        let target = DataManager.shared.selectedPageMonthEventList.map{ $0.eventDate }
-        if DataManager.shared.eventDic.keys.contains(date),
-           target.contains(date) {
-            let index = target.firstIndex(of: date)!
+        guard DataManager.shared.eventDic.isEmpty == false,
+              DataManager.shared.selectedPageMonthEventList.isEmpty == false else { return }
+        let dateAndTime = DataManager.shared.selectedPageMonthEventList.map{ $0.eventDate }
+        let onlyDateStr = dateAndTime.map{ dateFormatter.string(from: $0!) }
+        let onlyDate = onlyDateStr.map{ dateFormatter.date(from: $0) }
+        let selctedDateStr = dateFormatter.string(from: selectedDate)
+        if let selcted = dateFormatter.date(from: selctedDateStr),
+           DataManager.shared.eventDic.keys.contains(selcted),
+           onlyDate.contains(selcted),
+           let index = onlyDate.firstIndex(of: selcted) {
             calendarTableView.scrollToRow(at: [0,index], at: .top, animated: true)
         }
     }

@@ -33,7 +33,7 @@ class DetailScheduleTableViewController: UITableViewController {
             descriptionTextField.text = schedule.scheduleDescription
         }
         
-       // detailTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        detailTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
     @objc func hideKeyboard() {
