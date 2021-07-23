@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "MyWinesTabBarItem.png",
+      "filename" : "wine_gray.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MyWinesTabBarItem2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

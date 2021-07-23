@@ -7,12 +7,15 @@
 
 import UIKit
 import FSCalendar
+import JJFloatingActionButton
 
 class CalendarViewController: UIViewController {
 
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var calendarTableView: UITableView!
     @IBOutlet weak var calendarHeightConstraint: NSLayoutConstraint!
+    
+    let actionButton = JJFloatingActionButton()
     
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
@@ -85,9 +88,9 @@ class CalendarViewController: UIViewController {
         
         calendarView.locale = Locale(identifier: "ko_KR")
         calendarView.appearance.headerTitleFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        calendarView.appearance.headerTitleColor = UIColor.systemRed
+        calendarView.appearance.headerTitleColor = UIColor(named: "blackAndWhite")
         calendarView.appearance.weekdayFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        calendarView.appearance.weekdayTextColor = UIColor.systemRed
+        calendarView.appearance.weekdayTextColor = UIColor(named: "blackAndWhite")
         calendarView.appearance.titleFont = UIFont.systemFont(ofSize: 12)
         calendarView.appearance.titleDefaultColor = UIColor(named: "blackAndWhite")
 
@@ -96,8 +99,8 @@ class CalendarViewController: UIViewController {
         
         calendarView.appearance.borderRadius = 1
         
-        calendarView.appearance.todayColor = .systemRed
-        calendarView.appearance.selectionColor = .lightGray
+        calendarView.appearance.todayColor = UIColor(named: "wine1")
+        calendarView.appearance.selectionColor = .systemGray2
 
         calendarView.placeholderType = .none
         
@@ -107,12 +110,41 @@ class CalendarViewController: UIViewController {
         timeFormatter.locale = Locale(identifier: "ko_KR")
         timeFormatter.timeStyle = .short
         CalendarViewController.selectedPageMonth = headerDateFormatter.string(from: selectedDate)
+        
+        floatingButton()
     }
     
     func setHeaderDate(){
         headerDateFormatter.dateFormat = "yyyy년 M월"
         headerDate = headerDateFormatter.string(from: calendarView.currentPage)
         calendarView.appearance.headerDateFormat = headerDate
+    }
+    
+    func floatingButton() {
+        actionButton.addItem(title: "일정 추가", image: UIImage(systemName: "calendar.badge.plus")?.withRenderingMode(.alwaysOriginal)) { action in
+            if let addScheduleNav = self.storyboard?.instantiateViewController(identifier: "AddScheduleNav") , let addScheduleVC = addScheduleNav.children.first as? AddScheduleTableViewController{
+                addScheduleVC.receivedDateAndTime = self.selectedDate
+                self.present(addScheduleNav, animated: true, completion: nil)
+            }
+        }
+        actionButton.addItem(title: "와인 기록 추가", image: UIImage(named: "wine_black")?.withRenderingMode(.alwaysOriginal), action: nil)
+        
+        actionButton.display(inViewController: self)
+        actionButton.itemAnimationConfiguration = .popUp()
+        actionButton.buttonColor = UIColor(named: "wine1")!
+        actionButton.buttonImageColor = .white
+        
+        actionButton.itemSizeRatio = CGFloat(0.75)
+        actionButton.configureDefaultItem { item in
+            item.titleLabel.font = .boldSystemFont(ofSize: UIFont.systemFontSize)
+            item.titleLabel.textColor = .white
+            item.buttonColor = .white
+
+            item.layer.shadowColor = UIColor.black.cgColor
+            item.layer.shadowOffset = CGSize(width: 0, height: 1)
+            item.layer.shadowOpacity = Float(0.4)
+            item.layer.shadowRadius = CGFloat(2)
+        }
     }
     
     func updateSelectedPageMonthUI() {
@@ -158,10 +190,10 @@ extension CalendarViewController: UIGestureRecognizerDelegate {
             let velocity = self.scopeGesture.velocity(in: self.view)
             switch self.calendarView.scope {
             case .month:
-                //calendarView.scrollEnabled = true
+                calendarView.scrollEnabled = true
                 return velocity.y < 0
             case .week:
-                //calendarView.scrollEnabled = false
+                calendarView.scrollEnabled = false
                 return velocity.y > 0
             @unknown default:
                 break

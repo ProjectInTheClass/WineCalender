@@ -8,6 +8,7 @@ target 'WineCalender' do
   # Pods for WineCalender
   pod 'FSCalendar'
   pod "SwiftyCam"
+  pod 'JJFloatingActionButton'
 
   target 'WineCalenderTests' do
     inherit! :search_paths

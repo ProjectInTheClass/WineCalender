@@ -382,7 +382,7 @@
             </objects>
             <point key="canvasLocation" x="3045" y="1732"/>
         </scene>
-        <!--Calendar View Controller-->
+        <!--Calendar-->
         <scene sceneID="bsV-3C-Agb">
             <objects>
                 <viewController id="mBO-Hx-9Kg" customClass="CalendarViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
@@ -391,14 +391,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lb5-ft-pXi" customClass="FSCalendar">
-                                <rect key="frame" x="10" y="88" width="394" height="400"/>
+                                <rect key="frame" x="10" y="44" width="394" height="400"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="ufF-gG-cos"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xXL-Bp-W00">
-                                <rect key="frame" x="10" y="493" width="394" height="320"/>
+                                <rect key="frame" x="10" y="449" width="394" height="364"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CalendarTableViewCell" rowHeight="65" id="esh-Yg-qfD" customClass="CalendarTableViewCell" customModule="WineCalender" customModuleProvider="target">
@@ -479,6 +479,7 @@
                             <constraint firstItem="xXL-Bp-W00" firstAttribute="leading" secondItem="lb5-ft-pXi" secondAttribute="leading" id="zaX-s9-L5y"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="drZ-e8-Eol"/>
                     <navigationItem key="navigationItem" id="hwQ-gb-eeg">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="khX-ty-Y3x">
                             <color key="tintColor" systemColor="systemRedColor"/>
@@ -636,7 +637,7 @@
                         <color key="selectedImageTintColor" systemColor="systemRedColor"/>
                     </tabBar>
                     <connections>
-                        <segue destination="cNB-vM-kdx" kind="relationship" relationship="viewControllers" id="jNm-zo-Wkv"/>
+                        <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="Kul-dW-WOQ"/>
                         <segue destination="U8X-As-bua" kind="relationship" relationship="viewControllers" id="axg-ak-bko"/>
                         <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
                         <segue destination="vfV-Q6-i5R" kind="relationship" relationship="viewControllers" id="ST7-T3-qtf"/>
@@ -646,29 +647,10 @@
             </objects>
             <point key="canvasLocation" x="-517" y="-63"/>
         </scene>
-        <!--Calendar-->
-        <scene sceneID="CCv-bb-pAv">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cNB-vM-kdx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="JSa-WD-hje"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rb1-Ek-3NJ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="rootViewController" id="HqD-NG-iIu"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="l26-Qp-wTO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="251" y="-1055"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xmx-ss-UBG">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ktC-t3-EMS" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddScheduleNav" automaticallyAdjustsScrollViewInsets="NO" id="ktC-t3-EMS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WoD-rd-hX1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
