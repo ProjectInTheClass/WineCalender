@@ -18,7 +18,7 @@ enum Categories : String {
         case .Red: return UIImage(named: "wine_red") ?? UIImage()
         case .White: return UIImage(named: "wine_white") ?? UIImage()
         case .Rose: return UIImage(named: "wine_rose") ?? UIImage()
-        case .Schedule: return UIImage(named: "wine_black") ?? UIImage()
+        case .Schedule: return UIImage(named: "wine_gray") ?? UIImage()
         }
     }
 }

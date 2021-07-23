@@ -1,20 +1,24 @@
 PODS:
   - FSCalendar (2.8.2)
+  - JJFloatingActionButton (2.5.0)
   - SwiftyCam (4.0.0)
 
 DEPENDENCIES:
   - FSCalendar
+  - JJFloatingActionButton
   - SwiftyCam
 
 SPEC REPOS:
   trunk:
     - FSCalendar
+    - JJFloatingActionButton
     - SwiftyCam
 
 SPEC CHECKSUMS:
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
+  JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
 
-PODFILE CHECKSUM: b880129bfbe6fd6c5ea4c7b8bb29e0f50014a29a
+PODFILE CHECKSUM: 602733e2ac288fe19ac651221299430770139cee
 
 COCOAPODS: 1.10.1
