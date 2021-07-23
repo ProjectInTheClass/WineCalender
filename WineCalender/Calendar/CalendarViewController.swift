@@ -88,9 +88,9 @@ class CalendarViewController: UIViewController {
         
         calendarView.locale = Locale(identifier: "ko_KR")
         calendarView.appearance.headerTitleFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        calendarView.appearance.headerTitleColor = UIColor(named: "blackAndWhite")
+        calendarView.appearance.headerTitleColor = .systemPink
         calendarView.appearance.weekdayFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        calendarView.appearance.weekdayTextColor = UIColor(named: "blackAndWhite")
+        calendarView.appearance.weekdayTextColor = .systemPink
         calendarView.appearance.titleFont = UIFont.systemFont(ofSize: 12)
         calendarView.appearance.titleDefaultColor = UIColor(named: "blackAndWhite")
 

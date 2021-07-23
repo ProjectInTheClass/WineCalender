@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -493,6 +494,8 @@
                         <outlet property="calendarHeightConstraint" destination="ufF-gG-cos" id="dut-MB-qF5"/>
                         <outlet property="calendarTableView" destination="xXL-Bp-W00" id="sZn-tU-pe6"/>
                         <outlet property="calendarView" destination="lb5-ft-pXi" id="pXI-MY-Z8s"/>
+                        <segue destination="Gqn-eE-8iG" kind="presentation" id="nQx-ho-na9"/>
+                        <segue destination="FPQ-TQ-nB3" kind="presentation" id="QAm-9f-n1j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDk-45-d74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -671,7 +674,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="DetailMyWines" id="7SD-Kt-u08" customClass="DetailMyWinesTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wBa-4h-hzL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -701,7 +704,7 @@
                 <navigationController storyboardIdentifier="DetailScheduleNav" automaticallyAdjustsScrollViewInsets="NO" id="Gqn-eE-8iG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8p6-uF-AgC">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -719,7 +722,7 @@
                 <navigationController storyboardIdentifier="DetailMyWinesNav" automaticallyAdjustsScrollViewInsets="NO" id="FPQ-TQ-nB3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mpO-Uu-PaN">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -736,8 +739,38 @@
             <objects>
                 <tableViewController storyboardIdentifier="DetailSchedule" id="MyQ-CS-y8P" customClass="DetailScheduleTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8sK-oM-H0f">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <stackView key="tableFooterView" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" id="8vY-bP-tih">
+                            <rect key="frame" x="0.0" y="371" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOP-KH-mKf">
+                                    <rect key="frame" x="0.0" y="0.0" width="194.5" height="44"/>
+                                    <color key="tintColor" name="wine1"/>
+                                    <state key="normal" title=" 삭제" image="trash" catalog="system">
+                                        <color key="titleColor" name="wine1"/>
+                                    </state>
+                                    <state key="selected">
+                                        <color key="titleColor" name="wine1"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="deleteButtonTapped:" destination="MyQ-CS-y8P" eventType="touchUpInside" id="o8i-ok-ffN"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psr-dG-Mwf">
+                                    <rect key="frame" x="219.5" y="0.0" width="194.5" height="44"/>
+                                    <color key="tintColor" name="wine1"/>
+                                    <state key="normal" title=" 와인 기록" image="square.and.pencil" catalog="system">
+                                        <color key="titleColor" name="wine1"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="CFc-dZ-Ccj" kind="presentation" id="xJX-Kv-AXO"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                        </stackView>
                         <sections>
                             <tableViewSection id="x7t-tG-68v">
                                 <cells>
@@ -824,28 +857,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="3UA-SU-9nz">
-                                        <rect key="frame" x="20" y="353" width="374" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3UA-SU-9nz" id="kyJ-Zr-Zl1">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9f-6n-yCK">
-                                                    <rect key="frame" x="177" y="14" width="20" height="22"/>
-                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                    <state key="normal" image="trash" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="deleteButtonTapped:" destination="MyQ-CS-y8P" eventType="touchUpInside" id="9Ui-Gb-MJb"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="s9f-6n-yCK" firstAttribute="centerY" secondItem="kyJ-Zr-Zl1" secondAttribute="centerY" id="6sg-8F-HeS"/>
-                                                <constraint firstItem="s9f-6n-yCK" firstAttribute="centerX" secondItem="kyJ-Zr-Zl1" secondAttribute="centerX" id="Jl2-5e-Cd5"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -881,6 +892,51 @@
             </objects>
             <point key="canvasLocation" x="3157" y="-919"/>
         </scene>
+        <!--Root View Controller-->
+        <scene sceneID="6Z3-kw-iRt">
+            <objects>
+                <tableViewController id="OwA-e4-icj" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="55w-we-VL9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="LRJ-OF-30k">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LRJ-OF-30k" id="d0E-uS-dwA">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OwA-e4-icj" id="1lk-tb-k9N"/>
+                            <outlet property="delegate" destination="OwA-e4-icj" id="Por-Um-mxa"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="8Mf-7x-SWZ"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1rH-QY-8ql" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4945" y="-994"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6r9-IE-bOs">
+            <objects>
+                <navigationController id="CFc-dZ-Ccj" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8Sr-rG-YZc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="OwA-e4-icj" kind="relationship" relationship="rootViewController" id="HpM-XQ-vJQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SKD-Ci-iHS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4054" y="-994"/>
+        </scene>
     </scenes>
     <resources>
         <image name="MyWinesTabBarItem" width="25" height="25"/>
@@ -890,7 +946,11 @@
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="trash" catalog="system" width="121" height="128"/>
+        <namedColor name="wine1">
+            <color red="0.75" green="0.098999999463558197" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
