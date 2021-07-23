@@ -141,7 +141,7 @@
                                     <outlet property="cellSubTitle" destination="3PI-R5-eQ4" id="VJw-oJ-Q92"/>
                                     <outlet property="cellTitle" destination="Ppp-wa-PT6" id="igw-gt-dRX"/>
                                     <outlet property="leftBtn" destination="4KZ-Nn-t5l" id="WvE-ud-A1E"/>
-                                    <segue destination="VOj-cm-mPB" kind="showDetail" id="Zbb-rJ-GIz"/>
+                                    <segue destination="VOj-cm-mPB" kind="show" id="Zbb-rJ-GIz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -162,13 +162,14 @@
         <!--Search Detail View Controller-->
         <scene sceneID="KQ3-dv-4ct">
             <objects>
-                <viewController id="VOj-cm-mPB" customClass="SearchDetailViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="VOj-cm-mPB" customClass="SearchDetailViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kcw-ci-xIm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="DGz-eN-qHf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="w0A-oN-ICX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYC-hc-A9b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

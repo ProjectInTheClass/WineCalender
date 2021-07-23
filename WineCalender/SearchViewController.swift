@@ -47,7 +47,7 @@ class SearchViewController : UITableViewController,UISearchResultsUpdating, UISe
     override func viewDidLoad() {
         wineTableView.dataSource = self
         wineTableView.delegate = self
-        title = "Search"
+        title = "Wine Search"
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search Wines"
@@ -100,15 +100,14 @@ extension SearchViewController  {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell",for:indexPath) as! SearchTableViewCell
         let wine:Wine
-        let WineData = wines[indexPath.row]
         
         if isFiltering(){
             wine = filteredWines[indexPath.row]
         }else {
             wine = wines[indexPath.row]
         }
-        cell.cellTitle.text = WineData.name
-        cell.cellSubTitle.text = WineData.category
+        cell.cellTitle.text = wine.name
+        cell.cellSubTitle.text = wine.category
         
         cell.SearchView.layer.cornerRadius = cell.SearchView.frame.height / 5
         cell.cellImage.layer.cornerRadius = cell.cellImage.frame.height / 2
