@@ -25,22 +25,6 @@
             </objects>
             <point key="canvasLocation" x="1412" y="386"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="n8s-IO-4Ji">
-            <objects>
-                <viewController id="jgB-k0-C5A" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="H8p-Oi-pKx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="pFr-hO-frV"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="6T5-Fe-mtp"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DSH-Cn-ly0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1668" y="3197"/>
-        </scene>
         <!--Wine Search-->
         <scene sceneID="oSQ-hV-ofj">
             <objects>
@@ -92,9 +76,9 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="20" id="JLr-9x-xAC"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemGray2Color"/>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
                                                             <state key="normal" image="heart" catalog="system">
-                                                                <color key="titleColor" systemColor="systemGray2Color"/>
+                                                                <color key="titleColor" systemColor="systemRedColor"/>
                                                             </state>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aRZ-GF-1lS">
@@ -131,7 +115,7 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.072596599328228081" green="0.037152261985843836" blue="0.10550074571186729" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" name="themeDarkItemColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="vg1-on-dHg" secondAttribute="bottom" constant="5" id="6j3-8m-Rmt"/>
                                                 <constraint firstItem="rdu-Dr-Y2W" firstAttribute="leading" secondItem="s9z-76-wzj" secondAttribute="leading" id="898-wV-lss"/>
@@ -660,7 +644,6 @@
                         <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="Kul-dW-WOQ"/>
                         <segue destination="U8X-As-bua" kind="relationship" relationship="viewControllers" id="axg-ak-bko"/>
                         <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
-                        <segue destination="jgB-k0-C5A" kind="relationship" relationship="viewControllers" id="tzI-MI-Ub0"/>
                         <segue destination="MUZ-EU-hAR" kind="relationship" relationship="viewControllers" id="IcV-99-KIw"/>
                     </connections>
                 </tabBarController>
@@ -991,6 +974,9 @@
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="trash" catalog="system" width="121" height="128"/>
+        <namedColor name="themeDarkItemColor">
+            <color red="0.92526680230000002" green="0.95092195270000002" blue="0.75682628149999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="wine1">
             <color red="0.75" green="0.098999999463558197" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
