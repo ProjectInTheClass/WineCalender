@@ -18,6 +18,6 @@
 
 ### 랜딩페이지
 
-https://projectintheclass.github.io/WineCallender/
+https://projectintheclass.github.io/WineCalender/
 
 ---
