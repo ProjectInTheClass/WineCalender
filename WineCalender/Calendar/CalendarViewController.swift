@@ -88,7 +88,7 @@ class CalendarViewController: UIViewController {
         
         calendarView.locale = Locale(identifier: "ko_KR")
         calendarView.appearance.headerTitleFont = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        calendarView.appearance.headerTitleColor = .systemPink
+        calendarView.appearance.headerTitleColor = UIColor(named: "blackAndWhite")
         calendarView.appearance.weekdayFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
         calendarView.appearance.weekdayTextColor = .systemPink
         calendarView.appearance.titleFont = UIFont.systemFont(ofSize: 12)
@@ -170,13 +170,13 @@ class CalendarViewController: UIViewController {
 // MARK: - Sample Data
     
     func setUpSampleData() {
-        let sample1 = dateFormatter.date(from: "2021-06-11 금")!
+        let sample1 = dateFormatter.date(from: "2021-07-20 화")!
         DataManager.shared.addMyWine(date: sample1, category: "Red", wineName: "세인트 프란시스, 피노 누아")
-        let sample2 = dateFormatter.date(from: "2021-06-02 수")!
+        let sample2 = dateFormatter.date(from: "2021-07-02 금")!
         DataManager.shared.addMyWine(date: sample2, category: "White", wineName: "미구엘 토레스, 안디카 소비뇽 블랑 리제르바")
-        let sample3 = dateFormatter.date(from: "2021-07-25 일")!
+        let sample3 = dateFormatter.date(from: "2021-07-31 토")!
         DataManager.shared.addSchedule(date: sample3, category: "Schedule", place: "청담", description: "대학모임")
-        let sample4 = dateFormatter.date(from: "2021-07-10 토")!
+        let sample4 = dateFormatter.date(from: "2021-07-11 일")!
         DataManager.shared.addMyWine(date: sample4, category: "Rose", wineName: "마스카 델 타코, 로시 피노 네로 로사토")
     }
 }
