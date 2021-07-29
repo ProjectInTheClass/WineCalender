@@ -958,31 +958,22 @@
         <scene sceneID="07v-qx-jNX">
             <objects>
                 <viewController id="MUZ-EU-hAR" customClass="ComuVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jXO-A1-9gJ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="6Sd-2E-Bxh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" restorationIdentifier="Scroll Frame View" translatesAutoresizingMaskIntoConstraints="NO" id="B1F-Z0-bq3">
-                                <rect key="frame" x="0.0" y="44" width="414" height="200"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="Bby-Ww-vDZ"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Vmo-UQ-zZG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="B1F-Z0-bq3" firstAttribute="leading" secondItem="Vmo-UQ-zZG" secondAttribute="leading" id="AGQ-HX-Tkn"/>
-                            <constraint firstItem="B1F-Z0-bq3" firstAttribute="top" secondItem="Vmo-UQ-zZG" secondAttribute="top" id="C8U-T7-CEj"/>
-                            <constraint firstItem="B1F-Z0-bq3" firstAttribute="centerX" secondItem="jXO-A1-9gJ" secondAttribute="centerX" id="e2F-a2-6de"/>
-                            <constraint firstItem="B1F-Z0-bq3" firstAttribute="trailing" secondItem="Vmo-UQ-zZG" secondAttribute="trailing" id="klF-dR-iVi"/>
-                        </constraints>
-                    </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SlideCell" rowHeight="190" id="urs-V9-TpB">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="190"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="urs-V9-TpB" id="nft-TW-5d2">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="190"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
                     <tabBarItem key="tabBarItem" title="Comunity" image="paperplane.fill" catalog="system" id="abq-TG-T7v"/>
-                    <connections>
-                        <outlet property="ScrollFrameView" destination="B1F-Z0-bq3" id="NUf-Aa-pGn"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0et-X2-mgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
