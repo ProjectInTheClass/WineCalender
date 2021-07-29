@@ -99,7 +99,7 @@ class CalendarViewController: UIViewController {
         
         calendarView.appearance.borderRadius = 1
         
-        calendarView.appearance.todayColor = UIColor(named: "wine1")
+        calendarView.appearance.todayColor = UIColor(named: "themeDarkItemColor")
         calendarView.appearance.selectionColor = .systemGray2
 
         calendarView.placeholderType = .none

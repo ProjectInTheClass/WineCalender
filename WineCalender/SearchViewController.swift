@@ -61,6 +61,7 @@ class SearchViewController : UITableViewController,UISearchResultsUpdating, UISe
         guard let text = searchController.searchBar.text else { return }
         let vc = searchController.searchResultsController as? ResultsVC
         filterContentForSearchText(searchController.searchBar.text!)
+    
 
         print(text)
     }
@@ -78,7 +79,7 @@ class SearchViewController : UITableViewController,UISearchResultsUpdating, UISe
         })
         tableView.reloadData()
     }
-    
+
     
     
 }

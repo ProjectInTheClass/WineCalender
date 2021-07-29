@@ -103,7 +103,7 @@
                                                                 <constraint firstAttribute="width" constant="150" id="41M-l2-tpJ"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="13"/>
-                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3PI-R5-eQ4">
@@ -115,7 +115,7 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.92526680230000002" green="0.95092195270000002" blue="0.75682628149999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" name="themeDarkItemColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="vg1-on-dHg" secondAttribute="bottom" constant="5" id="6j3-8m-Rmt"/>
                                                 <constraint firstItem="rdu-Dr-Y2W" firstAttribute="leading" secondItem="s9z-76-wzj" secondAttribute="leading" id="898-wV-lss"/>
@@ -974,6 +974,9 @@
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="trash" catalog="system" width="121" height="128"/>
+        <namedColor name="themeDarkItemColor">
+            <color red="0.92526680230000002" green="0.95092195270000002" blue="0.75682628149999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="wine1">
             <color red="0.75" green="0.098999999463558197" blue="0.21500000357627869" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
