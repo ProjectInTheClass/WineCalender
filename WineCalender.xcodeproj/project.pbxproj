@@ -34,6 +34,8 @@
 		1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */; };
 		2D44FD482C6F8C9A9A8B5A3B /* Pods_WineCalender_WineCalenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */; };
 		5C04E5E602073F713F4D418D /* Pods_WineCalender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F6D26CAC0A65D404A6CDCF /* Pods_WineCalender.framework */; };
+		C767CAEF26BCFB4100BD827A /* MyWinesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */; };
+		C767CAF126BCFB6300BD827A /* MyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		54B44FEDB34CF45CA63EB7CC /* Pods-WineCalender-WineCalenderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender-WineCalenderUITests.release.xcconfig"; path = "Target Support Files/Pods-WineCalender-WineCalenderUITests/Pods-WineCalender-WineCalenderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		82F6D26CAC0A65D404A6CDCF /* Pods_WineCalender.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WineCalender.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WineCalender_WineCalenderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesTableViewCell.swift; sourceTree = "<group>"; };
+		C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesTableViewController.swift; sourceTree = "<group>"; };
 		EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WineCalenderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -209,6 +213,7 @@
 				1F215B1F269EB8A300F0E526 /* Calendar */,
 				1F215B1E269EB89B00F0E526 /* Data */,
 				1F215B1D269EB85B00F0E526 /* Camera */,
+				C7E30AF826BD2F8600151A44 /* MyWines */,
 				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
@@ -262,6 +267,15 @@
 				22C743C658C7C294A97A0BA6 /* Pods-WineCalenderTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C7E30AF826BD2F8600151A44 /* MyWines */ = {
+			isa = PBXGroup;
+			children = (
+				C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */,
+				C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */,
+			);
+			path = MyWines;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -505,7 +519,9 @@
 				1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */,
 				12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
+				C767CAF126BCFB6300BD827A /* MyWinesTableViewController.swift in Sources */,
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
+				C767CAEF26BCFB4100BD827A /* MyWinesTableViewCell.swift in Sources */,
 				1F215B23269ED11800F0E526 /* SearchController.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
 				1F21DD0226AE96CC000C6A59 /* ComuVC.swift in Sources */,
