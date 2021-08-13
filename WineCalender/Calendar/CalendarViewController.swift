@@ -122,12 +122,18 @@ class CalendarViewController: UIViewController {
     
     func floatingButton() {
         actionButton.addItem(title: "일정 추가", image: UIImage(systemName: "calendar.badge.plus")?.withRenderingMode(.alwaysOriginal)) { action in
-            if let addScheduleNav = self.storyboard?.instantiateViewController(identifier: "AddScheduleNav") , let addScheduleVC = addScheduleNav.children.first as? AddScheduleTableViewController{
+            if let addScheduleNav = self.storyboard?.instantiateViewController(identifier: "AddScheduleNav"),
+               let addScheduleVC = addScheduleNav.children.first as? AddScheduleTableViewController {
                 addScheduleVC.receivedDateAndTime = self.selectedDate
                 self.present(addScheduleNav, animated: true, completion: nil)
             }
         }
-        actionButton.addItem(title: "와인 기록 추가", image: UIImage(named: "wine_black")?.withRenderingMode(.alwaysOriginal), action: nil)
+        actionButton.addItem(title: "테이스팅 노트 작성", image: UIImage(named: "wine_black")?.withRenderingMode(.alwaysOriginal)) { action in
+            if let addTastingNoteNav = self.storyboard?.instantiateViewController(identifier: "AddTastingNoteNav") {
+                addTastingNoteNav.modalPresentationStyle = .fullScreen
+                self.present(addTastingNoteNav, animated: true, completion: nil)
+            }
+        }
         
         actionButton.display(inViewController: self)
         actionButton.itemAnimationConfiguration = .popUp()
