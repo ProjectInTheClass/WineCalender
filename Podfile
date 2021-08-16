@@ -10,6 +10,7 @@ target 'WineCalender' do
   pod "SwiftyCam"
   pod 'JJFloatingActionButton'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Parchment', '~> 3.0'
   
   target 'WineCalenderTests' do
     inherit! :search_paths

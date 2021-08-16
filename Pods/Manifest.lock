@@ -1,12 +1,14 @@
 PODS:
   - FSCalendar (2.8.2)
   - JJFloatingActionButton (2.5.0)
+  - Parchment (3.0.1)
   - SnapKit (5.0.1)
   - SwiftyCam (4.0.0)
 
 DEPENDENCIES:
   - FSCalendar
   - JJFloatingActionButton
+  - Parchment (~> 3.0)
   - SnapKit (~> 5.0.0)
   - SwiftyCam
 
@@ -14,15 +16,17 @@ SPEC REPOS:
   trunk:
     - FSCalendar
     - JJFloatingActionButton
+    - Parchment
     - SnapKit
     - SwiftyCam
 
 SPEC CHECKSUMS:
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
 
-PODFILE CHECKSUM: 40dd268a3a41e0d5e320af2ec2e30b47db0c619b
+PODFILE CHECKSUM: 2ce0720907a397769fad486ee427c980ee2bec17
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2
