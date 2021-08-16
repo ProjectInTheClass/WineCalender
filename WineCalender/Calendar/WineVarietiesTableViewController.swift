@@ -9,24 +9,17 @@ import UIKit
 
 class WineVarietiesTableViewController: UITableViewController {
 
-    lazy var selectedItem: Set<String> = []{
-        didSet {
-            seletedWineVarieties = selectedItem.sorted()
-        }
-    }
-    
-    lazy var seletedWineVarieties: [String] = []
+    lazy var selectedWineVarieties: [String] = []
     
     var completionHandler: (([String]) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        seletedWineVarieties.map{ selectedItem.insert($0) }
     }
     
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         if let completionHandler = completionHandler {
-            completionHandler(seletedWineVarieties)
+            completionHandler(selectedWineVarieties)
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -38,20 +31,22 @@ class WineVarietiesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return WineVarieties.allCases.count
         return WineVarieties.sortedWineVarieties.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WineVarietiesTableViewCell", for: indexPath)
-        //let wineVarieties = WineVarieties.allCases[indexPath.row].name
         let wineVarieties = WineVarieties.sortedWineVarieties[indexPath.row].name
         cell.textLabel?.text = wineVarieties
         
-        if self.seletedWineVarieties.contains(wineVarieties) {
+        if self.selectedWineVarieties.contains(wineVarieties) {
+            cell.textLabel?.textColor = UIColor(named: "blackAndWhite")
             cell.accessoryType = .checkmark
+            cell.isSelected = true
         } else {
+            cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .none
+            cell.isSelected = false
         }
         tableView.allowsMultipleSelection = true
         cell.selectionStyle = .none
@@ -61,21 +56,29 @@ class WineVarietiesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        if cell.accessoryType == .checkmark {
-            cell.accessoryType = .none
-            //selectedItem.remove(WineVarieties.allCases[indexPath.row].name)
-            selectedItem.remove(WineVarieties.sortedWineVarieties[indexPath.row].name)
-        } else {
+        if cell.accessoryType == .none {
+            cell.textLabel?.textColor = UIColor(named: "blackAndWhite")
             cell.accessoryType = .checkmark
-            //selectedItem.insert(WineVarieties.allCases[indexPath.row].name)
-            selectedItem.insert(WineVarieties.sortedWineVarieties[indexPath.row].name)
+            cell.isSelected = true
+            selectedWineVarieties.append(WineVarieties.sortedWineVarieties[indexPath.row].name)
+        } else {
+            cell.textLabel?.textColor = .systemGray2
+            cell.accessoryType = .none
+            cell.isSelected = false
+            if let index = selectedWineVarieties.firstIndex(of:WineVarieties.sortedWineVarieties[indexPath.row].name) {
+                selectedWineVarieties.remove(at: index)
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        cell.textLabel?.textColor = .systemGray2
         cell.accessoryType = .none
-        selectedItem.remove(WineVarieties.allCases[indexPath.row].name)
+        cell.isSelected = false
+        if let index = selectedWineVarieties.firstIndex(of:WineVarieties.sortedWineVarieties[indexPath.row].name) {
+            selectedWineVarieties.remove(at: index)
+        }
     }
 
     /*

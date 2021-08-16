@@ -36,8 +36,10 @@ class WineProducingCountriesTableViewController: UITableViewController {
         cell.textLabel?.text = country
         
         if self.selectedCountry == country {
+            cell.textLabel?.textColor = UIColor(named: "blackAndWhite")
             cell.accessoryType = .checkmark
         } else {
+            cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .none
         }
         tableView.allowsMultipleSelection = false

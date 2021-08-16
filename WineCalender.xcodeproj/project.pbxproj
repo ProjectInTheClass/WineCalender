@@ -15,6 +15,9 @@
 		123DEC4926C44AFD00DE45F7 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEC4826C44AFD00DE45F7 /* Countries.swift */; };
 		12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E792697517500F2FF20 /* CalendarViewController.swift */; };
 		12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */; };
+		125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */; };
+		125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */; };
+		125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */; };
 		12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BB26984D0000911CF0 /* Categories.swift */; };
 		12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */; };
 		12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */; };
@@ -70,6 +73,9 @@
 		123DEC4826C44AFD00DE45F7 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		12578E792697517500F2FF20 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavors.swift; sourceTree = "<group>"; };
+		125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewController.swift; sourceTree = "<group>"; };
+		125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewCell.swift; sourceTree = "<group>"; };
 		12C9D6BB26984D0000911CF0 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleTableViewController.swift; sourceTree = "<group>"; };
 		12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -160,12 +166,15 @@
 				12C9D6BB26984D0000911CF0 /* Categories.swift */,
 				122536DE26C3A20200190CA1 /* WineVarieties.swift */,
 				123DEC4826C44AFD00DE45F7 /* Countries.swift */,
+				125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */,
 				12578E792697517500F2FF20 /* CalendarViewController.swift */,
 				12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */,
 				12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */,
 				122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */,
 				122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */,
 				123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */,
+				125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */,
+				125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -533,6 +542,7 @@
 			files = (
 				1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */,
 				12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */,
+				125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
 				2240FCAA26CA5F920074C145 /* ComuDetailVC.swift in Sources */,
 				C767CAF126BCFB6300BD827A /* MyWinesTableViewController.swift in Sources */,
@@ -540,6 +550,7 @@
 				122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */,
 				123DEC4926C44AFD00DE45F7 /* Countries.swift in Sources */,
 				123DEC4726C449B600DE45F7 /* WineProducingCountriesTableViewController.swift in Sources */,
+				125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */,
 				C767CAEF26BCFB4100BD827A /* MyWinesTableViewCell.swift in Sources */,
 				1F215B23269ED11800F0E526 /* SearchController.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
@@ -556,6 +567,7 @@
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
+				125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */,
 				12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
