@@ -66,5 +66,7 @@
 	<string>Please allow to take photo.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Please allow to record audio.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow to use Image.</string>
 </dict>
 </plist>

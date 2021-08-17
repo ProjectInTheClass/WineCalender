@@ -11,6 +11,7 @@ target 'WineCalender' do
   pod 'JJFloatingActionButton'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Parchment', '~> 3.0'
+  pod 'YPImagePicker'
   
   target 'WineCalenderTests' do
     inherit! :search_paths

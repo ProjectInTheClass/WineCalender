@@ -6,23 +6,41 @@
 //
 
 import UIKit
+import YPImagePicker
 
-class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-
+class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate {
+    
+    var selectedImages: [UIImage]?
+    var selectedCateory: String?
     var selectedWineVarieties: [String]?
     var selectedWineProducingCountry: String?
     var selectedVintage: String?
     var selectedWineAromasAndFlavors: [String]?
     
+    var price: Int32?
+    var alcoholContent: Float?
+    
     @IBOutlet weak var addTastingNoteScrollView: UIScrollView!
+    @IBOutlet weak var wineTastingdate: UIDatePicker!
+    @IBOutlet weak var wineTastingPlaceTextField: UITextField!
+    @IBOutlet weak var firstImageView: UIImageView!
+    @IBOutlet weak var secondImageView: UIImageView!
+    @IBOutlet weak var thirdImageView: UIImageView!
     @IBOutlet weak var wineNameTextField: UITextField!
     @IBOutlet weak var wineCategorySegmentedControl: UISegmentedControl!
     @IBOutlet weak var wineVarietiesLabel: UILabel!
     @IBOutlet weak var wineProducingCountryLabel: UILabel!
+    @IBOutlet weak var wineProducerTextField: UITextField!
     @IBOutlet weak var wineVintageLabel: UILabel!
     @IBOutlet weak var winePriceTextField: UITextField!
+    @IBOutlet weak var wineAlcoholContentTextField: UITextField!
+    @IBOutlet weak var sweetSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var aciditySegmentedControl: UISegmentedControl!
+    @IBOutlet weak var tanninSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var bodySegmentedControl: UISegmentedControl!
     @IBOutlet weak var wineAromasAndFlavorsLabel: UILabel!
     @IBOutlet weak var wineMemoTextView: UITextView!
+    @IBOutlet weak var ratingSegmentedControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,18 +53,6 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         addTastingNoteScrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
-
-//    @objc func adjustScrollView(noti: Notification) {
-//        guard let userInfo = noti.userInfo,
-//              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-//        if noti.name == UIResponder.keyboardWillShowNotification {
-//            let keyboardHeight = keyboardFrame.size.height
-//            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight, right: 0.0)
-//            addTastingNoteScrollView.contentInset = contentInsets
-//        } else if noti.name == UIResponder.keyboardWillShowNotification {
-//            addTastingNoteScrollView.contentInset = UIEdgeInsets.zero
-//        }
-//    }
     
     @objc func keyboardWillShow(noti: Notification) {
         guard let userInfo = noti.userInfo,
@@ -70,6 +76,71 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
         sender.resignFirstResponder()
     }
     
+    @IBAction func addImageButtonTapped(_ sender: UIButton) {
+        var config = YPImagePickerConfiguration()
+        config.library.mediaType = .photo
+        config.library.itemOverlayType = .grid
+        config.usesFrontCamera = false
+        config.shouldSaveNewPicturesToAlbum = false
+        config.startOnScreen = .library
+        config.screens = [.library, .photo]
+        config.wordings.libraryTitle = "Gallery"
+        config.hidesStatusBar = false
+        config.hidesBottomBar = false
+        config.maxCameraZoomFactor = 2.0
+        config.library.maxNumberOfItems = 3
+        config.gallery.hidesRemoveButton = false
+        
+        let picker = YPImagePicker(configuration: config)
+        picker.imagePickerDelegate = self
+        picker.didFinishPicking { [weak picker] items, cancelled in
+            if cancelled {
+                print("Picker was canceled")
+                picker?.dismiss(animated: true, completion: nil)
+                return
+            }
+
+            var selectedItems = [UIImage]()
+            for item in items {
+                switch item {
+                case .photo(let photo):
+                    selectedItems.append(photo.image)
+                    let count = selectedItems.count
+                    if count == 1 {
+                        self.firstImageView.image = selectedItems[0]
+                        self.secondImageView.image = nil
+                        self.thirdImageView.image = nil
+                    } else if count == 2 {
+                        self.firstImageView.image = selectedItems[0]
+                        self.secondImageView.image = selectedItems[1]
+                        self.thirdImageView.image = nil
+                    } else if count == 3 {
+                        self.firstImageView.image = selectedItems[0]
+                        self.secondImageView.image = selectedItems[1]
+                        self.thirdImageView.image = selectedItems[2]
+                    } else {
+                        return
+                    }
+                    picker?.dismiss(animated: true, completion: {
+                        self.selectedImages = selectedItems
+                        //print("갯수 : \(selectedItems.count)")
+                    })
+                case .video:
+                    print("video")
+                }
+            }
+        }
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func noPhotos() {
+        print("noPhotos")
+    }
+    
+    func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool {
+        return true
+    }
+    
     @IBAction func resetWineCategorybuttonTapped(_ sender: UIButton) {
         wineCategorySegmentedControl.selectedSegmentIndex = -1
     }
@@ -88,7 +159,8 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     self.wineVarietiesLabel.textColor = UIColor(named: "blackAndWhite")
                     self.wineVarietiesLabel.text = "  " + self.selectedWineVarieties!.first!
                 } else {
-                    if let wineVarietiesString = self.selectedWineVarieties?.reduce("", { $0 + "  " + $1 + "\n" }) {
+//                    if let wineVarietiesString = self.selectedWineVarieties?.reduce("", { $0 + "  " + $1 + "\n" }) {
+                    if let wineVarietiesString = self.selectedWineVarieties?.joined(separator: "\n") {
                         self.wineVarietiesLabel.textColor = UIColor(named: "blackAndWhite")
                         self.wineVarietiesLabel.text = wineVarietiesString
                     }
@@ -153,13 +225,57 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     self.wineAromasAndFlavorsLabel.textColor = UIColor(named: "blackAndWhite")
                     self.wineAromasAndFlavorsLabel.text = "  " + self.selectedWineAromasAndFlavors!.first!
                 } else {
-                    if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.reduce("", { $0 + "  " + $1 + "\n" }) {
+//                    if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.reduce("", { $0 + "  " + $1 + "\n" }) {
+                    if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.joined(separator: ", ") {
                         self.wineAromasAndFlavorsLabel.textColor = UIColor(named: "blackAndWhite")
                         self.wineAromasAndFlavorsLabel.text = wineAromasAndFlavorsString
                     }
                 }
             }
         }
+    }
+    
+    @IBAction func doneButtonTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "테이스팅 노트 등록", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [self] action in
+            let date = wineTastingdate.date
+            let place = wineTastingPlaceTextField.text
+            let name = wineNameTextField.text
+            if wineCategorySegmentedControl.isSelected {
+                if let selectedCategoryIndex = wineCategorySegmentedControl?.selectedSegmentIndex {
+                    selectedCateory = wineCategorySegmentedControl.titleForSegment(at: selectedCategoryIndex)
+                }
+            }
+            let producer = wineProducerTextField.text
+            if let priceString = winePriceTextField.text {
+                if let p = Int32(priceString) {
+                    price = p
+                } else {
+                    print("가격 입력 오류")
+                }
+            }
+            if let alcoholContentString = wineAlcoholContentTextField.text {
+                if let a = Float(alcoholContentString) {
+                    alcoholContent = a
+                } else {
+                    print("알코올 도수 입력 오류")
+                }
+            }
+            let sweet = sweetSegmentedControl.selectedSegmentIndex + 1
+            let acidity = aciditySegmentedControl.selectedSegmentIndex + 1
+            let tannin = tanninSegmentedControl.selectedSegmentIndex + 1
+            let body = bodySegmentedControl.selectedSegmentIndex + 1
+            let memo = wineMemoTextView.text
+            let rating = ratingSegmentedControl.selectedSegmentIndex + 1
+            let wineTastingNotes = WineTastingNotes(date: date, place: place, image: selectedImages, name: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price ?? 0, alcoholContent: alcoholContent ?? 0, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: Int16(rating))
+            
+            print(wineTastingNotes)
+            
+            DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes)
+            dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {

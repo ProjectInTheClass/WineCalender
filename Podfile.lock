@@ -2,8 +2,13 @@ PODS:
   - FSCalendar (2.8.2)
   - JJFloatingActionButton (2.5.0)
   - Parchment (3.0.1)
+  - PryntTrimmerView (4.0.2)
   - SnapKit (5.0.1)
+  - SteviaLayout (4.7.3)
   - SwiftyCam (4.0.0)
+  - YPImagePicker (4.5.0):
+    - PryntTrimmerView (~> 4.0.2)
+    - SteviaLayout (~> 4.7.3)
 
 DEPENDENCIES:
   - FSCalendar
@@ -11,22 +16,29 @@ DEPENDENCIES:
   - Parchment (~> 3.0)
   - SnapKit (~> 5.0.0)
   - SwiftyCam
+  - YPImagePicker
 
 SPEC REPOS:
   trunk:
     - FSCalendar
     - JJFloatingActionButton
     - Parchment
+    - PryntTrimmerView
     - SnapKit
+    - SteviaLayout
     - SwiftyCam
+    - YPImagePicker
 
 SPEC CHECKSUMS:
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
+  PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
+  YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: 2ce0720907a397769fad486ee427c980ee2bec17
+PODFILE CHECKSUM: 004decd2c9b21ff1cd371521cdcafec1949c415a
 
 COCOAPODS: 1.10.1

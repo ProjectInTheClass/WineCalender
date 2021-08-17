@@ -2,5 +2,8 @@ ${PODS_ROOT}/Target Support Files/Pods-WineCalender/Pods-WineCalender-frameworks
 ${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework
 ${BUILT_PRODUCTS_DIR}/JJFloatingActionButton/JJFloatingActionButton.framework
 ${BUILT_PRODUCTS_DIR}/Parchment/Parchment.framework
+${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
+${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyCam/SwiftyCam.framework
+${BUILT_PRODUCTS_DIR}/YPImagePicker/YPImagePicker.framework

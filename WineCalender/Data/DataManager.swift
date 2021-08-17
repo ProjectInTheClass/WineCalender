@@ -18,6 +18,43 @@ class DataManager {
         return persistentContainer.viewContext
     }
     
+    // MARK: - WineTastingNote Data
+    
+    var wineTastingNoteList = [WineTastingNote]()
+
+    func fetchWineTastingNote() {
+        let request: NSFetchRequest<WineTastingNote> = WineTastingNote.fetchRequest()
+        do {
+            wineTastingNoteList = try mainContext.fetch(request)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addWineTastingNote(wineTastingNotes: WineTastingNotes){
+        let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
+        object.setValue(wineTastingNotes.date, forKey: "date")
+        object.setValue(wineTastingNotes.place, forKey: "place")
+        object.setValue(wineTastingNotes.image, forKey: "image")
+        object.setValue(wineTastingNotes.name, forKey: "name")
+        object.setValue(wineTastingNotes.category, forKey: "category")
+        object.setValue(wineTastingNotes.varieties, forKey: "varieties")
+        object.setValue(wineTastingNotes.producingCountry, forKey: "producingCountry")
+        object.setValue(wineTastingNotes.producer, forKey: "producer")
+        object.setValue(wineTastingNotes.vintage, forKey: "vintage")
+        object.setValue(wineTastingNotes.price, forKey: "price")
+        object.setValue(wineTastingNotes.alcoholContent, forKey: "alcoholContent")
+        object.setValue(wineTastingNotes.sweet, forKey: "sweet")
+        object.setValue(wineTastingNotes.acidity, forKey: "acidity")
+        object.setValue(wineTastingNotes.tannin, forKey: "tannin")
+        object.setValue(wineTastingNotes.body, forKey: "body")
+        object.setValue(wineTastingNotes.aromasAndFlavors, forKey: "aromasAndFlavors")
+        object.setValue(wineTastingNotes.memo, forKey: "memo")
+        object.setValue(wineTastingNotes.rating, forKey: "rating")
+    }
+    
+    // MARK: - Calendar Data
+    
     var selectedPageMonthEventList = [Event]()
     var eventDic = [Date:UIImage]()
 
