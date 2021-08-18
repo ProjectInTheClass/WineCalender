@@ -14,11 +14,11 @@
     <entity name="WineTastingNote" representedClassName="WineTastingNote" syncable="YES">
         <attribute name="acidity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="alcoholContent" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="aromasAndFlavors" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="aromasAndFlavors" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="body" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="image" optional="YES" attributeType="Transformable" customClassName="[UIImage]"/>
+        <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[UIImage]"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="place" optional="YES" attributeType="String"/>
@@ -28,7 +28,7 @@
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sweet" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="tannin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="varieties" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="varieties" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="vintage" optional="YES" attributeType="String"/>
     </entity>
     <elements>

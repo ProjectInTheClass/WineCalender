@@ -8,7 +8,7 @@
 import UIKit
 import YPImagePicker
 
-class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate {
+class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate {
     
     var selectedImages: [UIImage]?
     var selectedCateory: String?
@@ -44,8 +44,15 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setLabelIndent()
         registerForKeyboard()
+    }
+    
+    func setLabelIndent() {
+        wineVarietiesLabel.attributedText = wineVarietiesLabel.labelIndent(string: "품종을 선택해 주세요.")
+        wineProducingCountryLabel.attributedText = wineProducingCountryLabel.labelIndent(string: "생산국을 선택해 주세요.")
+        wineVintageLabel.attributedText = wineVintageLabel.labelIndent(string: "빈티지를 선택해 주세요.")
+        wineAromasAndFlavorsLabel.attributedText = wineAromasAndFlavorsLabel.labelIndent(string: "향, 맛을 선택해 주세요.")
     }
     
     func registerForKeyboard() {
@@ -61,11 +68,13 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
             let keyboardHeight = keyboardFrame.size.height
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight, right: 0.0)
             addTastingNoteScrollView.contentInset = contentInsets
+            addTastingNoteScrollView.scrollIndicatorInsets = contentInsets
         }
     }
     
     @objc func keyboardWillHide(noti: Notification) {
-            addTastingNoteScrollView.contentInset = UIEdgeInsets.zero
+        addTastingNoteScrollView.contentInset = UIEdgeInsets.zero
+        addTastingNoteScrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
     
     @objc func hideKeyboard() {
@@ -123,7 +132,6 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     }
                     picker?.dismiss(animated: true, completion: {
                         self.selectedImages = selectedItems
-                        //print("갯수 : \(selectedItems.count)")
                     })
                 case .video:
                     print("video")
@@ -154,12 +162,11 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.selectedWineVarieties = wineVarieties
                 if self.selectedWineVarieties == [] {
                     self.wineVarietiesLabel.textColor = .systemGray2
-                    self.wineVarietiesLabel.text = "  품종을 선택해 주세요."
+                    self.wineVarietiesLabel.text = "품종을 선택해 주세요."
                 } else if self.selectedWineVarieties?.count == 1 {
                     self.wineVarietiesLabel.textColor = UIColor(named: "blackAndWhite")
-                    self.wineVarietiesLabel.text = "  " + self.selectedWineVarieties!.first!
+                    self.wineVarietiesLabel.text = self.selectedWineVarieties!.first!
                 } else {
-//                    if let wineVarietiesString = self.selectedWineVarieties?.reduce("", { $0 + "  " + $1 + "\n" }) {
                     if let wineVarietiesString = self.selectedWineVarieties?.joined(separator: "\n") {
                         self.wineVarietiesLabel.textColor = UIColor(named: "blackAndWhite")
                         self.wineVarietiesLabel.text = wineVarietiesString
@@ -178,7 +185,7 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.selectedWineProducingCountry = country
                 if let country = self.selectedWineProducingCountry {
                     self.wineProducingCountryLabel.textColor = UIColor(named: "blackAndWhite")
-                    self.wineProducingCountryLabel.text = "  " + country
+                    self.wineProducingCountryLabel.text = country
                 }
             }
         }
@@ -204,7 +211,7 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
             self.selectedVintage = self.winevintageList[vintagePickerView.selectedRow(inComponent: 0)]
             if let selectedVintage = self.selectedVintage {
                 self.wineVintageLabel.textColor = UIColor(named: "blackAndWhite")
-                self.wineVintageLabel.text = "  " + selectedVintage
+                self.wineVintageLabel.text = selectedVintage
             }
         }))
         present(alert, animated: true, completion: nil)
@@ -220,18 +227,31 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 if self.selectedWineAromasAndFlavors == [] {
                     self.wineAromasAndFlavorsLabel.textColor = .systemGray2
                     self.wineAromasAndFlavorsLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-                    self.wineAromasAndFlavorsLabel.text = "  향, 맛을 선택해 주세요."
+                    self.wineAromasAndFlavorsLabel.text = "향, 맛을 선택해 주세요."
                 } else if self.selectedWineAromasAndFlavors?.count == 1 {
                     self.wineAromasAndFlavorsLabel.textColor = UIColor(named: "blackAndWhite")
-                    self.wineAromasAndFlavorsLabel.text = "  " + self.selectedWineAromasAndFlavors!.first!
+                    self.wineAromasAndFlavorsLabel.text = self.selectedWineAromasAndFlavors!.first!
                 } else {
-//                    if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.reduce("", { $0 + "  " + $1 + "\n" }) {
                     if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.joined(separator: ", ") {
                         self.wineAromasAndFlavorsLabel.textColor = UIColor(named: "blackAndWhite")
                         self.wineAromasAndFlavorsLabel.text = wineAromasAndFlavorsString
                     }
                 }
             }
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "메모를 입력해 주세요." {
+            textView.text = ""
+            textView.textColor = UIColor(named: "blackAndWhite")
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" || textView.text == "메모를 입력해 주세요." {
+            textView.text = "메모를 입력해 주세요."
+            textView.textColor = UIColor.systemGray2
         }
     }
     
@@ -242,9 +262,11 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
             let date = wineTastingdate.date
             let place = wineTastingPlaceTextField.text
             let name = wineNameTextField.text
-            if wineCategorySegmentedControl.isSelected {
-                if let selectedCategoryIndex = wineCategorySegmentedControl?.selectedSegmentIndex {
-                    selectedCateory = wineCategorySegmentedControl.titleForSegment(at: selectedCategoryIndex)
+            if let index = wineCategorySegmentedControl?.selectedSegmentIndex{
+                if index > -1 && index < 5 {
+                    selectedCateory = wineCategorySegmentedControl.titleForSegment(at: index)
+                } else {
+                    selectedCateory = nil
                 }
             }
             let producer = wineProducerTextField.text
@@ -266,8 +288,17 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
             let acidity = aciditySegmentedControl.selectedSegmentIndex + 1
             let tannin = tanninSegmentedControl.selectedSegmentIndex + 1
             let body = bodySegmentedControl.selectedSegmentIndex + 1
-            let memo = wineMemoTextView.text
+            let memo: String? = {
+            if wineMemoTextView.text == "메모를 입력해 주세요." {
+                let text: String? = nil
+                return text
+            } else {
+                let text = wineMemoTextView.text
+                return text
+            }
+            }()
             let rating = ratingSegmentedControl.selectedSegmentIndex + 1
+            
             let wineTastingNotes = WineTastingNotes(date: date, place: place, image: selectedImages, name: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price ?? 0, alcoholContent: alcoholContent ?? 0, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: Int16(rating))
             
             print(wineTastingNotes)
