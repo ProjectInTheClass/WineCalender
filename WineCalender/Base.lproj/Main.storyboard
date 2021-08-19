@@ -688,7 +688,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="hd1-h3-Xcb">
             <objects>
-                <tabBarController id="WwS-YP-Gis" sceneMemberID="viewController">
+                <tabBarController id="WwS-YP-Gis" customClass="TabBarController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LJv-Im-aRb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2142,27 +2142,67 @@
             </objects>
             <point key="canvasLocation" x="1224.6376811594205" y="2315.625"/>
         </scene>
-        <!--View Controller-->
+        <!--Comu DetailVC-->
         <scene sceneID="cgx-HG-8eo">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="J1V-b9-rvV" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="ComuDetailVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FZD-k1-Lkv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ma-W2-tAO">
-                                <rect key="frame" x="0.0" y="168" width="414" height="355"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ma-W2-tAO">
+                                <rect key="frame" x="0.0" y="194.5" width="414" height="355"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="355" id="fAh-PS-3Mw"/>
+                                </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ND6-0w-BOO">
-                                <rect key="frame" x="20" y="72" width="75" height="78"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ez-VZ-IFB">
+                                <rect key="frame" x="20" y="557" width="374" height="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-gm-DbW">
+                                <rect key="frame" x="15" y="105" width="76" height="77"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="76" id="2ue-n4-a14"/>
+                                </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Enz-4H-gxj">
+                                <rect key="frame" x="263" y="133" width="131" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="131" id="ORA-Dw-cwG"/>
+                                    <constraint firstAttribute="height" constant="21" id="gRX-Zi-GM9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rXa-eF-zv1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Ma-W2-tAO" firstAttribute="top" secondItem="eDs-gm-DbW" secondAttribute="bottom" constant="12.5" id="4eY-6h-O99"/>
+                            <constraint firstItem="eDs-gm-DbW" firstAttribute="centerY" secondItem="Enz-4H-gxj" secondAttribute="centerY" id="FQ9-mA-c13"/>
+                            <constraint firstItem="Enz-4H-gxj" firstAttribute="trailing" secondItem="4ez-VZ-IFB" secondAttribute="trailing" id="Gnr-Xd-gJ2"/>
+                            <constraint firstItem="6Ma-W2-tAO" firstAttribute="centerX" secondItem="4ez-VZ-IFB" secondAttribute="centerX" id="NhZ-yd-2fJ"/>
+                            <constraint firstItem="rXa-eF-zv1" firstAttribute="bottom" secondItem="4ez-VZ-IFB" secondAttribute="bottom" constant="230" id="Ta0-R6-M6d"/>
+                            <constraint firstItem="eDs-gm-DbW" firstAttribute="top" secondItem="rXa-eF-zv1" secondAttribute="top" constant="17" id="hoL-8Y-xQz"/>
+                            <constraint firstItem="Enz-4H-gxj" firstAttribute="trailing" secondItem="FZD-k1-Lkv" secondAttribute="trailingMargin" id="nR0-rc-vBQ"/>
+                            <constraint firstItem="eDs-gm-DbW" firstAttribute="leading" secondItem="rXa-eF-zv1" secondAttribute="leading" constant="15" id="ov6-Ab-zhi"/>
+                            <constraint firstItem="4ez-VZ-IFB" firstAttribute="leading" secondItem="FZD-k1-Lkv" secondAttribute="leadingMargin" id="pAR-4g-DbI"/>
+                            <constraint firstItem="Enz-4H-gxj" firstAttribute="top" secondItem="rXa-eF-zv1" secondAttribute="top" constant="45" id="sGs-A3-VNX"/>
+                            <constraint firstItem="6Ma-W2-tAO" firstAttribute="leading" secondItem="rXa-eF-zv1" secondAttribute="leading" id="vK9-jr-CD1"/>
+                            <constraint firstItem="4ez-VZ-IFB" firstAttribute="top" secondItem="6Ma-W2-tAO" secondAttribute="bottom" constant="7.5" id="zlg-eG-KRI"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bLI-rz-obb"/>
+                    <connections>
+                        <outlet property="detailMainImg" destination="6Ma-W2-tAO" id="gQ8-uU-eg9"/>
+                        <outlet property="detailProfile" destination="eDs-gm-DbW" id="KhE-TJ-Q5N"/>
+                        <outlet property="memoTxt" destination="4ez-VZ-IFB" id="Qbl-So-wSh"/>
+                        <outlet property="userName" destination="Enz-4H-gxj" id="vpu-3b-WR3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="An8-CM-304" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

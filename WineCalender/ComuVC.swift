@@ -10,29 +10,27 @@ import UIKit
 import Parchment
 
 struct UserData {
-    let postId : String
     var userName : String
     var followed : Bool
     var postText : String
-    
 }
 
 class ComuVC : UIViewController{
     @IBOutlet var collectionView: UICollectionView!
     
     var posts:[UserData] = [
-        UserData(postId: "0",userName: "JaeKwon", followed: false,postText: "Test 1"),
-        UserData(postId: "1",userName: "MJ", followed: false,postText: "Test 2"),
-        UserData(postId: "2",userName: "METAOX", followed: false,postText: "Test 3"),
-        UserData(postId: "3",userName: "Zenn K", followed: false,postText: "Test 4"),
-        UserData(postId: "4",userName: "JaeKwon", followed: false,postText: "Test 5"),
-        UserData(postId: "5",userName: "MJ", followed: false,postText: "Test 6"),
-        UserData(postId: "6",userName: "METAOX", followed: false,postText: "Test 7"),
-        UserData(postId: "7",userName: "Zenn K", followed: false,postText: "Test 8"),
-        UserData(postId: "8",userName: "Jaekwon", followed: false,postText: "Test 9"),
-        UserData(postId: "9",userName: "MJ", followed: false,postText: "Test 10"),
-        UserData(postId: "10",userName: "METAOX", followed: false,postText: "Test 11"),
-        UserData(postId: "11",userName: "Zenn K", followed: false,postText: "Test 12"),
+        UserData(userName: "JaeKwon", followed: false,postText: "Test 1"),
+        UserData(userName: "MJ", followed: false,postText: "Test 2"),
+        UserData(userName: "METAOX", followed: false,postText: "Test 3"),
+        UserData(userName: "Zenn K", followed: false,postText: "Test 4"),
+        UserData(userName: "JaeKwon", followed: false,postText: "Test 5"),
+        UserData(userName: "MJ", followed: false,postText: "Test 6"),
+        UserData(userName: "METAOX", followed: false,postText: "Test 7"),
+        UserData(userName: "Zenn K", followed: false,postText: "Test 8"),
+        UserData(userName: "Jaekwon", followed: false,postText: "Test 9"),
+        UserData(userName: "MJ", followed: false,postText: "Test 10"),
+        UserData(userName: "METAOX", followed: false,postText: "Test 11"),
+        UserData(userName: "Zenn K", followed: false,postText: "Test 12"),
     ]
     
     
@@ -64,9 +62,9 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! defaultCell
         cell.cellImage.image = UIImage(named: "AppIcon")
         cell.cellImage.frame.size = CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.width/2)
-        cell.mainTitle.text = "Post Title"
-        cell.subTitle.text = "Wine Name"
-        cell.profileName.text = "User Name"
+        cell.mainTitle.text = posts[indexPath.row].postText
+        cell.subTitle.text = posts[indexPath.row].postText
+        cell.profileName.text = posts[indexPath.row].userName
         cell.profileImage.image = UIImage(named: "wine_red")
         cell.profileImage.backgroundColor = .lightGray
         cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
@@ -78,14 +76,19 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "collectionDetail", sender: collectionView.cellForItem(at: indexPath))
-            collectionView.deselectItem(at: indexPath, animated: true)
+//        self.performSegue(withIdentifier: "collectionDetail", sender: collectionView.cellForItem(at: indexPath))
+//            collectionView.deselectItem(at: indexPath, animated: true)
+        self.performSegue(withIdentifier: "collectionDetail", sender: posts[indexPath.row])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
-        let indexPath = collectionView.indexPathsForSelectedItems
-        
+        guard let item = sender as? UserData else { return }
+        ComuDetailVC.post = item
+         
+//        let selectedItem = collectionView.indexPathsForSelectedItems!
+//        ComuDetailVC.post = posts[selectedItem]
+//        print(selectedItem.count)
         
     }
 }
