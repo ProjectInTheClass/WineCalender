@@ -79,6 +79,100 @@
             </objects>
             <point key="canvasLocation" x="421.73913043478262" y="193.52678571428569"/>
         </scene>
+        <!--My Wines-->
+        <scene sceneID="294-XA-c4D">
+            <objects>
+                <viewController storyboardIdentifier="MyWines" id="NNa-q7-PN9" customClass="MyWinesViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IWa-Jy-ajf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NN0-96-5be">
+                                <rect key="frame" x="0.0" y="344" width="414" height="552"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="winesCell" rowHeight="100" id="hcC-EM-qYt" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hcC-EM-qYt" id="XAr-Q6-4lg" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ezA-Xb-yrd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oHQ-QY-HbE">
+                                                            <rect key="frame" x="10" y="10" width="394" height="80"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wc-icon120" translatesAutoresizingMaskIntoConstraints="NO" id="cQ2-it-LnD">
+                                                                    <rect key="frame" x="5" y="5" width="70" height="70"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nT9-EE-QJ1">
+                                                                    <rect key="frame" x="86" y="5" width="300" height="38"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BRK-kc-boy">
+                                                                    <rect key="frame" x="86" y="37" width="300" height="38"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <color key="backgroundColor" name="themeDarkItemColor"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="wineCategoryLabel" destination="BRK-kc-boy" id="Wj3-LH-09B"/>
+                                            <outlet property="wineCellBG" destination="oHQ-QY-HbE" id="QII-wN-pff"/>
+                                            <outlet property="wineImageView" destination="cQ2-it-LnD" id="x4p-gO-PcQ"/>
+                                            <outlet property="wineNameLabel" destination="nT9-EE-QJ1" id="lx3-ap-y6A"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="NNa-q7-PN9" id="HaJ-b8-miq"/>
+                                    <outlet property="delegate" destination="NNa-q7-PN9" id="51U-gq-qH3"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9e-sU-BeN">
+                                <rect key="frame" x="369" y="54" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="BQK-ry-IQB"/>
+                                    <constraint firstAttribute="width" constant="35" id="KT5-dN-Zu5"/>
+                                </constraints>
+                                <state key="normal" image="gearshape" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DpP-Z4-fFC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="M9e-sU-BeN" firstAttribute="top" secondItem="DpP-Z4-fFC" secondAttribute="top" constant="10" id="4ry-ib-yfG"/>
+                            <constraint firstItem="NN0-96-5be" firstAttribute="leading" secondItem="DpP-Z4-fFC" secondAttribute="leading" id="8wX-lp-E6h"/>
+                            <constraint firstAttribute="bottom" secondItem="NN0-96-5be" secondAttribute="bottom" id="9L8-0Y-Rqz"/>
+                            <constraint firstItem="DpP-Z4-fFC" firstAttribute="trailing" secondItem="M9e-sU-BeN" secondAttribute="trailing" constant="10" id="I4U-e3-Y1T"/>
+                            <constraint firstItem="NN0-96-5be" firstAttribute="trailing" secondItem="DpP-Z4-fFC" secondAttribute="trailing" id="We6-5I-qZR"/>
+                            <constraint firstItem="NN0-96-5be" firstAttribute="top" secondItem="DpP-Z4-fFC" secondAttribute="top" constant="300" id="Xd6-sa-9De"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Wines" image="MyWinesTabBarItem" id="gND-mk-LiJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fPQ-aE-5Iw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1225" y="194"/>
+        </scene>
         <!--Wine Search-->
         <scene sceneID="oSQ-hV-ofj">
             <objects>
@@ -696,10 +790,11 @@
                         <color key="selectedImageTintColor" systemColor="systemRedColor"/>
                     </tabBar>
                     <connections>
-                        <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="Kul-dW-WOQ"/>
+                        <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="Paq-mP-Ba9"/>
+                        <segue destination="F0Q-84-XNh" kind="relationship" relationship="viewControllers" id="Y4k-DZ-NGw"/>
+                        <segue destination="GM0-Sn-St6" kind="relationship" relationship="viewControllers" id="g9h-JP-JED"/>
                         <segue destination="DZv-Fd-3AE" kind="relationship" relationship="viewControllers" id="KqJ-xL-3Pm"/>
                         <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
-                        <segue destination="F0Q-84-XNh" kind="relationship" relationship="viewControllers" id="Y4k-DZ-NGw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69b-eg-bGC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2212,6 +2307,7 @@
         <scene sceneID="bND-eF-GNm">
             <objects>
                 <navigationController storyboardIdentifier="AddTastingNoteNav" automaticallyAdjustsScrollViewInsets="NO" id="GM0-Sn-St6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="plus" catalog="system" id="ggt-jh-cKg"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="O8t-4I-vTj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9rF-vx-FKb">
@@ -2230,7 +2326,7 @@
         <!--Comunity-->
         <scene sceneID="GhS-ZQ-uZH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F0Q-84-XNh" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Community" automaticallyAdjustsScrollViewInsets="NO" id="F0Q-84-XNh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Comunity" image="paperplane.fill" catalog="system" id="abq-TG-T7v"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GtP-wn-weQ">
@@ -2247,6 +2343,9 @@
             <point key="canvasLocation" x="314.49275362318843" y="2315.625"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Lfq-pS-ZUy"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
         <image name="MyWinesTabBarItem" width="25" height="25"/>
@@ -2254,6 +2353,7 @@
         <image name="cancel" width="30" height="30"/>
         <image name="flashOutline" width="18" height="30"/>
         <image name="flipCamera" width="30" height="23"/>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="paperplane.fill" catalog="system" width="128" height="118"/>

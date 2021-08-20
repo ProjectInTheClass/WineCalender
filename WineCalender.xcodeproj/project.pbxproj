@@ -25,6 +25,7 @@
 		12E188C326CBACBC0035964F /* WineTastingNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */; };
 		12E188C426CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */; };
 		12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C526CBB1F00035964F /* WineTastingNotes.swift */; };
+		12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */; };
 		12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EEA68E269AD9FC00D850F0 /* DataManager.swift */; };
 		12FF458526CC248F005EB491 /* UILabel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF458426CC248F005EB491 /* UILabel+Helpers.swift */; };
 		1F215B23269ED11800F0E526 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F215B22269ED11800F0E526 /* SearchController.swift */; };
@@ -88,6 +89,7 @@
 		12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WineTastingNote+CoreDataClass.swift"; sourceTree = "<group>"; };
 		12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WineTastingNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		12E188C526CBB1F00035964F /* WineTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineTastingNotes.swift; sourceTree = "<group>"; };
+		12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesViewController.swift; sourceTree = "<group>"; };
 		12EEA68E269AD9FC00D850F0 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		12FF458426CC248F005EB491 /* UILabel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Helpers.swift"; sourceTree = "<group>"; };
 		1F215B22269ED11800F0E526 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			children = (
 				C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */,
 				C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */,
+				12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				1F21DCFF26AA7E2D000C6A59 /* SearchTableViewCell.swift in Sources */,
 				12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */,
 				22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */,
+				12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */,
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
