@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		08A5EC76E616238FE4A1344C /* Pods_WineCalenderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */; };
+		1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */; };
+		1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */; };
+		1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396726CFC10A00B7FB74 /* SignInViewController.swift */; };
+		1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396926CFC38900B7FB74 /* AuthenticationManager.swift */; };
+		1223396C26CFC5AF00B7FB74 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */; };
 		122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */; };
 		122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */; };
 		122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DE26C3A20200190CA1 /* WineVarieties.swift */; };
@@ -74,6 +79,11 @@
 /* Begin PBXFileReference section */
 		0DE066646E2C02D2B6FC876E /* Pods-WineCalenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		11236921FC67ADC3A00258B4 /* Pods-WineCalender-WineCalenderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender-WineCalenderUITests/Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		1223396726CFC10A00B7FB74 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		1223396926CFC38900B7FB74 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTastingNoteViewController.swift; sourceTree = "<group>"; };
 		122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarietiesTableViewController.swift; sourceTree = "<group>"; };
 		122536DE26C3A20200190CA1 /* WineVarieties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarieties.swift; sourceTree = "<group>"; };
@@ -159,6 +169,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1223396426CFA22700B7FB74 /* AddTastingNote */ = {
+			isa = PBXGroup;
+			children = (
+				12FF458426CC248F005EB491 /* UILabel+Helpers.swift */,
+				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
+				122536DE26C3A20200190CA1 /* WineVarieties.swift */,
+				123DEC4826C44AFD00DE45F7 /* Countries.swift */,
+				125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */,
+				122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */,
+				122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */,
+				123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */,
+				125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */,
+				125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */,
+			);
+			path = AddTastingNote;
+			sourceTree = "<group>";
+		};
+		1223396526CFA2AA00B7FB74 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				12EEA68E269AD9FC00D850F0 /* DataManager.swift */,
+				12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */,
+				12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		1223396626CFA2B900B7FB74 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				1223396926CFC38900B7FB74 /* AuthenticationManager.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		1F215B1D269EB85B00F0E526 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,9 +216,8 @@
 		1F215B1E269EB89B00F0E526 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				12EEA68E269AD9FC00D850F0 /* DataManager.swift */,
-				12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */,
-				12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */,
+				1223396526CFA2AA00B7FB74 /* CoreData */,
+				1223396626CFA2B900B7FB74 /* Firebase */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -181,20 +225,12 @@
 		1F215B1F269EB8A300F0E526 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				12FF458426CC248F005EB491 /* UILabel+Helpers.swift */,
 				12C9D6BB26984D0000911CF0 /* Categories.swift */,
-				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
-				122536DE26C3A20200190CA1 /* WineVarieties.swift */,
-				123DEC4826C44AFD00DE45F7 /* Countries.swift */,
-				125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */,
 				12578E792697517500F2FF20 /* CalendarViewController.swift */,
 				12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */,
 				12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */,
-				122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */,
-				122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */,
-				123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */,
-				125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */,
-				125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */,
+				12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */,
+				12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -254,22 +290,22 @@
 		1FCB9111267B846C008C93C7 /* WineCalender */ = {
 			isa = PBXGroup;
 			children = (
+				1F215B1E269EB89B00F0E526 /* Data */,
 				1F21DD0026AE9655000C6A59 /* Comunity */,
+				1223396426CFA22700B7FB74 /* AddTastingNote */,
+				C7E30AF826BD2F8600151A44 /* MyWines */,
 				1F215B2526A0067200F0E526 /* Search */,
 				1F215B1F269EB8A300F0E526 /* Calendar */,
-				1F215B1E269EB89B00F0E526 /* Data */,
 				1F215B1D269EB85B00F0E526 /* Camera */,
-				C7E30AF826BD2F8600151A44 /* MyWines */,
-				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				22AF411526CE54A900F0D123 /* TapBarController.swift */,
+				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
-				12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */,
-				12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */,
 				1FCB9118267B846C008C93C7 /* Main.storyboard */,
-				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
 				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
+				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
 				1FCB9123267B846F008C93C7 /* Info.plist */,
+				1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */,
 				1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */,
 			);
 			path = WineCalender;
@@ -322,6 +358,9 @@
 				C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */,
 				C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */,
 				12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */,
+				1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */,
+				1223396726CFC10A00B7FB74 /* SignInViewController.swift */,
+				1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -435,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */,
+				1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */,
 				1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */,
 				1FCB911A267B846C008C93C7 /* Main.storyboard in Resources */,
 			);
@@ -569,8 +609,10 @@
 				12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */,
 				125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
+				1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */,
 				2240FCAA26CA5F920074C145 /* ComuDetailVC.swift in Sources */,
 				C767CAF126BCFB6300BD827A /* MyWinesTableViewController.swift in Sources */,
+				1223396C26CFC5AF00B7FB74 /* SignUpViewController.swift in Sources */,
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
 				12E188C326CBACBC0035964F /* WineTastingNote+CoreDataClass.swift in Sources */,
 				122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */,
@@ -580,6 +622,7 @@
 				C767CAEF26BCFB4100BD827A /* MyWinesTableViewCell.swift in Sources */,
 				1F215B23269ED11800F0E526 /* SearchController.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
+				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,
 				1F21DD0226AE96CC000C6A59 /* ComuVC.swift in Sources */,
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */,
@@ -595,6 +638,7 @@
 				22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */,
 				12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */,
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
+				1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
 				125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */,

@@ -6,17 +6,28 @@
 //
 
 import UIKit
+import Firebase
 
 class MyWinesViewController: UIViewController {
     
+    @IBOutlet weak var nicknameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        updateNicknameLabel()
+        
+        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.updateNicknameLabel()
+        }
+    }
+    
+    func updateNicknameLabel() {
+        if Auth.auth().currentUser != nil {
+            nicknameLabel.text = Auth.auth().currentUser?.email
+        } else {
+            nicknameLabel.text = "비회원"
+        }
     }
 }
 

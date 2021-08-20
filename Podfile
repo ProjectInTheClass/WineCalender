@@ -12,6 +12,8 @@ target 'WineCalender' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Parchment', '~> 3.0'
   pod 'YPImagePicker'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
   
   target 'WineCalenderTests' do
     inherit! :search_paths
