@@ -11,32 +11,36 @@ import Parchment
 
 struct UserData {
     var userName : String
+    var profileImageName : String
     var followed : Bool
     var postText : String
+    var userPostImages : [String]
+    var hashTag: String?
 }
 
 class ComuVC : UIViewController{
     @IBOutlet var collectionView: UICollectionView!
     
     var posts:[UserData] = [
-        UserData(userName: "JaeKwon", followed: false,postText: "Test 1"),
-        UserData(userName: "MJ", followed: false,postText: "Test 2"),
-        UserData(userName: "METAOX", followed: false,postText: "Test 3"),
-        UserData(userName: "Zenn K", followed: false,postText: "Test 4"),
-        UserData(userName: "JaeKwon", followed: false,postText: "Test 5"),
-        UserData(userName: "MJ", followed: false,postText: "Test 6"),
-        UserData(userName: "METAOX", followed: false,postText: "Test 7"),
-        UserData(userName: "Zenn K", followed: false,postText: "Test 8"),
-        UserData(userName: "Jaekwon", followed: false,postText: "Test 9"),
-        UserData(userName: "MJ", followed: false,postText: "Test 10"),
-        UserData(userName: "METAOX", followed: false,postText: "Test 11"),
-        UserData(userName: "Zenn K", followed: false,postText: "Test 12"),
+        UserData(userName: "JaeKwon",profileImageName:"jk", followed: false,postText: "오늘 먹은 와인이 어쩌고 저쩌고",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"],hashTag: "#오늘#했다#혼술#많이"),
+        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 2",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 3",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 4",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "JaeKwon",profileImageName:"jk", followed: false,postText: "Test 5",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 6",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 7",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 8",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "Jaekwon",profileImageName:"jk", followed: false,postText: "Test 9",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 10",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 11",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
+        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 12",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
     ]
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -60,13 +64,15 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! defaultCell
-        cell.cellImage.image = UIImage(named: "AppIcon")
+        
+        cell.cellImage.image = UIImage(named: posts[indexPath.row].userPostImages[0])
         cell.cellImage.frame.size = CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.width/2)
+        cell.cellImage.layer.cornerRadius = 10
         cell.mainTitle.text = posts[indexPath.row].postText
-        cell.subTitle.text = posts[indexPath.row].postText
+        cell.subTitle.text = posts[indexPath.row].hashTag
         cell.profileName.text = posts[indexPath.row].userName
-        cell.profileImage.image = UIImage(named: "wine_red")
-        cell.profileImage.backgroundColor = .lightGray
+        cell.profileImage.image = UIImage(named: posts[indexPath.row].profileImageName)
+        cell.profileImage.backgroundColor = .white
         cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
         cell.profileImage.layer.borderWidth = 1
         cell.profileImage.layer.borderColor = UIColor.clear.cgColor
@@ -84,7 +90,7 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
         guard let item = sender as? UserData else { return }
-        ComuDetailVC.post = item
+        ComuDetailVC.postData = item
          
 //        let selectedItem = collectionView.indexPathsForSelectedItems!
 //        ComuDetailVC.post = posts[selectedItem]
@@ -108,4 +114,5 @@ extension ComuVC : UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: width, height: 200)
         return size
     }
+    
 }

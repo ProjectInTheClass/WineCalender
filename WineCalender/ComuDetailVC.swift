@@ -8,23 +8,70 @@
 import Foundation
 import UIKit
 
-class ComuDetailVC : UIViewController {
+class ComuDetailVC : UIViewController{
     @IBOutlet weak var detailProfile: UIImageView!
-    @IBOutlet weak var detailMainImg: UIImageView!
+    @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var memoTxt: UILabel!
+    @IBOutlet weak var followBtn: UIButton!
     @IBOutlet weak var userName: UILabel!
     
+    var currentCelIndex = 0
     
-    var post : UserData?
+    var arrProductPhotos = [
+            UIImage(named: "postImage01"),
+            UIImage(named: "postImage02"),
+            UIImage(named: "postImage03"),
+            UIImage(named: "postImage04"),
+            UIImage(named: "postImage05")
+       ]
+    var postData : UserData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        detailProfile.image = UIImage(named: "wine_red")
-        detailMainImg.image = UIImage(named: "AppIcon")
-        memoTxt.text = post?.postText
-        userName.text = post?.userName
+        postCollection.delegate = self
+        postCollection.dataSource = self
+        
+        detailProfile.image = UIImage(named: postData?.profileImageName ?? "AppIcon")
+        detailProfile.layer.cornerRadius = detailProfile.frame.height/2
+        detailProfile.layer.borderWidth = 1
+        
+//        detailMainImg.image = UIImage(named: "AppIcon")
+        memoTxt.text = postData?.postText
+        userName.text = postData?.userName
         
         
+        
+    
+    }
+    
+    @IBAction func followBtnTap(_ sender: Any) {
+        
+    }
+  
+}
+
+extension ComuDetailVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
+    func MoveToNextIndex(){
+        currentCelIndex += 1
+        postCollection.scrollToItem(at: IndexPath(item: currentCelIndex, section: 0), at: .centeredHorizontally, animated: true)
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        arrProductPhotos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
+        postCell.postImage.image = arrProductPhotos[indexPath.row]
+        return postCell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: postCollection.frame.width, height: postCollection.frame.height)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
