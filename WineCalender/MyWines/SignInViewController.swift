@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 class SignInViewController: UIViewController {
 
@@ -18,6 +17,15 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "로그인"
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
     @IBAction func signInButtonTapped(_ sender: UIButton) {

@@ -20,6 +20,15 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "회원가입"
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+        sender.resignFirstResponder()
     }
     
     @IBAction func imageButtonTapped(_ sender: UIButton) {
