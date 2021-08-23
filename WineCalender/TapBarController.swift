@@ -36,7 +36,7 @@ class TabBarController: UITabBarController {
         
         // Make sure you add the PagingViewController as a child view
         // controller and contrain it to the edges of the view.
-//        addChild(pagingViewController)
+        addChild(pagingViewController)
         view.addSubview(pagingViewController.view)
 //        view.constrainToEdges(pagingViewController.view)
         pagingViewController.didMove(toParent: self)

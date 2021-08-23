@@ -8,10 +8,11 @@
 import Foundation
 import UIKit
 
-class ComuDetailVC : UIViewController{
+class ComuDetailVC : UIViewController,UIGestureRecognizerDelegate{
     @IBOutlet weak var detailProfile: UIImageView!
     @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var memoTxt: UILabel!
+    @IBOutlet weak var hashTag: UILabel!
     @IBOutlet weak var followBtn: UIButton!
     @IBOutlet weak var userName: UILabel!
     
@@ -28,26 +29,30 @@ class ComuDetailVC : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         postCollection.delegate = self
         postCollection.dataSource = self
         
         detailProfile.image = UIImage(named: postData?.profileImageName ?? "AppIcon")
         detailProfile.layer.cornerRadius = detailProfile.frame.height/2
-        detailProfile.layer.borderWidth = 1
+        detailProfile.layer.borderWidth = 0.1
+        detailProfile.layer.borderColor = UIColor.lightGray.cgColor
         
 //        detailMainImg.image = UIImage(named: "AppIcon")
         memoTxt.text = postData?.postText
+        memoTxt.font = UIFont.systemFont(ofSize: 16)
+        hashTag.text = postData?.hashTag
+        hashTag.font = UIFont.boldSystemFont(ofSize: 13)
         userName.text = postData?.userName
         
+        followBtn.layer.cornerRadius = 5
         
-        
-    
     }
-    
     @IBAction func followBtnTap(_ sender: Any) {
         
     }
+    
   
 }
 

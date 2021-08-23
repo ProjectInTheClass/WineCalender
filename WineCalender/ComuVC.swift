@@ -44,6 +44,11 @@ class ComuVC : UIViewController{
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        
     }
 }
 
@@ -57,6 +62,10 @@ class defaultCell : UICollectionViewCell {
 
 
 extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//    }
+    // 컬렉션 뷰의 마진설정
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
@@ -74,8 +83,8 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
         cell.profileImage.image = UIImage(named: posts[indexPath.row].profileImageName)
         cell.profileImage.backgroundColor = .white
         cell.profileImage.layer.cornerRadius = cell.profileImage.frame.height/2
-        cell.profileImage.layer.borderWidth = 1
-        cell.profileImage.layer.borderColor = UIColor.clear.cgColor
+        cell.profileImage.layer.borderWidth = 0.1
+        cell.profileImage.layer.borderColor = UIColor.lightGray.cgColor
         // 뷰의 경계에 맞춰준다
         cell.profileImage.clipsToBounds = true
         
