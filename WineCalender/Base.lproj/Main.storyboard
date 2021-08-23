@@ -88,8 +88,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-jh-jtY">
+                                <rect key="frame" x="157" y="117" width="100" height="98.666666666666671"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Ygv-ZJ-WqH"/>
+                                    <constraint firstAttribute="width" constant="100" id="l2o-Pc-DEs"/>
+                                </constraints>
+                                <imageReference key="image" image="person.circle.fill" catalog="system" symbolScale="default"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cw-pV-8gc">
+                                <rect key="frame" x="40" y="236" width="334" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NN0-96-5be">
-                                <rect key="frame" x="0.0" y="344" width="414" height="392"/>
+                                <rect key="frame" x="0.0" y="396" width="414" height="340"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="winesCell" rowHeight="100" id="hcC-EM-qYt" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
@@ -146,23 +168,19 @@
                                     <outlet property="delegate" destination="NNa-q7-PN9" id="51U-gq-qH3"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비회원" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cw-pV-8gc">
-                                <rect key="frame" x="40" y="100" width="334" height="27.666666666666671"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Jhq-N0-KEg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="1cw-pV-8gc" firstAttribute="top" secondItem="IWa-Jy-ajf" secondAttribute="top" constant="100" id="5vH-R9-ANC"/>
                             <constraint firstItem="NN0-96-5be" firstAttribute="leading" secondItem="Jhq-N0-KEg" secondAttribute="leading" id="8wX-lp-E6h"/>
                             <constraint firstAttribute="bottom" secondItem="NN0-96-5be" secondAttribute="bottom" id="9L8-0Y-Rqz"/>
                             <constraint firstItem="1cw-pV-8gc" firstAttribute="leading" secondItem="IWa-Jy-ajf" secondAttribute="leading" constant="40" id="Gif-aP-uuR"/>
                             <constraint firstAttribute="trailing" secondItem="1cw-pV-8gc" secondAttribute="trailing" constant="40" id="MXo-Ac-1Za"/>
                             <constraint firstItem="NN0-96-5be" firstAttribute="trailing" secondItem="Jhq-N0-KEg" secondAttribute="trailing" id="We6-5I-qZR"/>
                             <constraint firstItem="NN0-96-5be" firstAttribute="top" secondItem="Jhq-N0-KEg" secondAttribute="top" constant="300" id="Xd6-sa-9De"/>
+                            <constraint firstItem="1cw-pV-8gc" firstAttribute="top" secondItem="XAl-jh-jtY" secondAttribute="bottom" constant="20" id="lRk-p2-2fa"/>
+                            <constraint firstItem="XAl-jh-jtY" firstAttribute="centerX" secondItem="IWa-Jy-ajf" secondAttribute="centerX" id="tcn-d8-hJN"/>
+                            <constraint firstItem="XAl-jh-jtY" firstAttribute="top" secondItem="Jhq-N0-KEg" secondAttribute="top" constant="20" id="yP3-K8-C0A"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="u0M-g3-xQV">
@@ -174,11 +192,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="nicknameLabel" destination="1cw-pV-8gc" id="fBf-H6-gFz"/>
+                        <outlet property="profileImageView" destination="XAl-jh-jtY" id="0TW-Qt-pZh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPQ-aE-5Iw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2518.840579710145" y="300.66964285714283"/>
+            <point key="canvasLocation" x="2297" y="193"/>
         </scene>
         <!--설정-->
         <scene sceneID="hj2-eW-47w">
@@ -208,7 +227,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="El7-sD-b0d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3464" y="301"/>
+            <point key="canvasLocation" x="3232" y="192"/>
         </scene>
         <!--Wine Search-->
         <scene sceneID="oSQ-hV-ofj">
@@ -686,7 +705,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDk-45-d74" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="317" y="-1399"/>
+            <point key="canvasLocation" x="314" y="-1819"/>
         </scene>
         <!--일정 추가-->
         <scene sceneID="Y9O-YK-i92">
@@ -814,7 +833,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XW6-Bo-Dex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="dtv-Wq-gO5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2339" y="-2111"/>
+            <point key="canvasLocation" x="2338" y="-2456"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hd1-h3-Xcb">
@@ -1634,7 +1653,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="eJS-t8-3Y3"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvA-th-Udc">
-                                <rect key="frame" x="10" y="2391" width="394" height="50"/>
+                                <rect key="frame" x="10" y="2440" width="394" height="50"/>
                                 <color key="backgroundColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="616-DT-DUh"/>
@@ -1702,7 +1721,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cb5-VI-saV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2518.840579710145" y="-3607.3660714285711"/>
+            <point key="canvasLocation" x="2557" y="-4260"/>
         </scene>
         <!--품종 선택-->
         <scene sceneID="d0W-b7-R0v">
@@ -1742,7 +1761,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qDw-e1-Eue" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3783" y="-4479"/>
+            <point key="canvasLocation" x="3783" y="-5129"/>
         </scene>
         <!--생산국 선택-->
         <scene sceneID="dix-bi-Ohc">
@@ -1777,7 +1796,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHK-QB-mWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3783" y="-3757"/>
+            <point key="canvasLocation" x="3783" y="-4375"/>
         </scene>
         <!--향, 맛 선택-->
         <scene sceneID="WP9-Fy-KzE">
@@ -1852,7 +1871,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6Y-Zh-ERV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3783" y="-3037"/>
+            <point key="canvasLocation" x="3783" y="-3635"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xmx-ss-UBG">
@@ -1870,7 +1889,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0o-4S-vsc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1509" y="-2111"/>
+            <point key="canvasLocation" x="1532" y="-2456"/>
         </scene>
         <!--DetailMyWines-->
         <scene sceneID="8kR-27-Mz7">
@@ -1899,7 +1918,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wMf-Ia-bcv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2374" y="-565"/>
+            <point key="canvasLocation" x="2374" y="-772"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7dL-B6-7VK">
@@ -1917,7 +1936,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XF6-cr-k4F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1509" y="-1400"/>
+            <point key="canvasLocation" x="1509" y="-1637"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SvF-eB-1An">
@@ -1935,7 +1954,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u3v-gA-E0w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1509" y="-565"/>
+            <point key="canvasLocation" x="1509" y="-772"/>
         </scene>
         <!--일정 편집-->
         <scene sceneID="cIJ-38-4h4">
@@ -2093,7 +2112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dvI-dc-TPP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="nM7-vT-50L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2338" y="-1400"/>
+            <point key="canvasLocation" x="2374" y="-1638"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="6Z3-kw-iRt">
@@ -2122,7 +2141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rH-QY-8ql" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4096" y="-1400"/>
+            <point key="canvasLocation" x="4081" y="-1638"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6r9-IE-bOs">
@@ -2138,7 +2157,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKD-Ci-iHS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3204" y="-1400"/>
+            <point key="canvasLocation" x="3233" y="-1639"/>
         </scene>
         <!--추천게시글-->
         <scene sceneID="07v-qx-jNX">
@@ -2485,7 +2504,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFy-XS-hra" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="-3607"/>
+            <point key="canvasLocation" x="1509" y="-4260"/>
         </scene>
         <!--Comunity-->
         <scene sceneID="GhS-ZQ-uZH">
@@ -2528,7 +2547,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGZ-XS-WgA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="302"/>
+            <point key="canvasLocation" x="1354" y="193"/>
         </scene>
         <!--로그인-->
         <scene sceneID="yut-NJ-NzP">
@@ -2633,7 +2652,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hog-II-FSa" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5510.144927536232" y="300.66964285714283"/>
+            <point key="canvasLocation" x="4162" y="-188"/>
         </scene>
         <!--회원가입-->
         <scene sceneID="qAB-af-Zq3">
@@ -2762,11 +2781,117 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOs-Fw-sQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6400.0000000000009" y="517.63392857142856"/>
+            <point key="canvasLocation" x="5167" y="-577"/>
+        </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="WO6-j9-Sml">
+            <objects>
+                <viewController storyboardIdentifier="EditProfileViewController" id="dl1-AY-HOZ" customClass="EditProfileViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pnC-D6-1YX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bsu-ZR-4eV">
+                                <rect key="frame" x="157" y="51.000000000000007" width="100" height="98.666666666666671"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemPurpleColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Bsu-ZR-4eV" secondAttribute="height" multiplier="1:1" id="2sW-Cf-fAf"/>
+                                    <constraint firstAttribute="width" constant="100" id="YbD-sw-2km"/>
+                                    <constraint firstAttribute="height" constant="100" id="q3l-Rw-vMB"/>
+                                </constraints>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvW-Wz-n3S">
+                                <rect key="frame" x="157" y="50" width="100" height="100"/>
+                                <connections>
+                                    <action selector="profileImageButtonTapped:" destination="dl1-AY-HOZ" eventType="touchUpInside" id="o11-AZ-2bu"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1qw-fK-wYA">
+                                <rect key="frame" x="60" y="160" width="294" height="159"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuA-He-RK1">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="g3A-U2-KP3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="닉네임" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qBk-GS-28f">
+                                        <rect key="frame" x="0.0" y="35" width="294" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <connections>
+                                            <action selector="keboardReturnKeyTapped:" destination="dl1-AY-HOZ" eventType="editingDidEndOnExit" id="Soa-0z-AZb"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXZ-dH-1TR">
+                                        <rect key="frame" x="0.0" y="79" width="294" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="3za-LZ-TSg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" systemColor="systemPinkColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qxq-4U-dhm">
+                                        <rect key="frame" x="0.0" y="119" width="294" height="40"/>
+                                        <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="kxh-n1-Ifv"/>
+                                        </constraints>
+                                        <state key="normal" title="확인">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="doneButtonTapped:" destination="dl1-AY-HOZ" eventType="touchUpInside" id="KIK-x3-88J"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="86j-eR-kkj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="86j-eR-kkj" firstAttribute="trailing" secondItem="1qw-fK-wYA" secondAttribute="trailing" constant="60" id="2IT-1H-HCb"/>
+                            <constraint firstItem="RvW-Wz-n3S" firstAttribute="leading" secondItem="Bsu-ZR-4eV" secondAttribute="leading" id="BWH-OH-nbq"/>
+                            <constraint firstItem="1qw-fK-wYA" firstAttribute="leading" secondItem="86j-eR-kkj" secondAttribute="leading" constant="60" id="ECd-xd-yrG"/>
+                            <constraint firstItem="RvW-Wz-n3S" firstAttribute="bottom" secondItem="Bsu-ZR-4eV" secondAttribute="bottom" id="MHA-Fp-PxM"/>
+                            <constraint firstItem="Bsu-ZR-4eV" firstAttribute="centerX" secondItem="pnC-D6-1YX" secondAttribute="centerX" id="OAO-Eh-6yA"/>
+                            <constraint firstItem="1qw-fK-wYA" firstAttribute="top" secondItem="RvW-Wz-n3S" secondAttribute="bottom" constant="10" id="To7-kW-JiI"/>
+                            <constraint firstItem="RvW-Wz-n3S" firstAttribute="top" secondItem="Bsu-ZR-4eV" secondAttribute="top" id="ncP-GI-Wmz"/>
+                            <constraint firstItem="RvW-Wz-n3S" firstAttribute="trailing" secondItem="Bsu-ZR-4eV" secondAttribute="trailing" id="uzk-KE-SJE"/>
+                            <constraint firstItem="Bsu-ZR-4eV" firstAttribute="top" secondItem="86j-eR-kkj" secondAttribute="top" constant="50" id="w44-IX-DNw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="doneButton" destination="Qxq-4U-dhm" id="rDU-Pg-5vT"/>
+                        <outlet property="emailLabel" destination="tuA-He-RK1" id="UY3-eP-Re8"/>
+                        <outlet property="nicknameTextField" destination="qBk-GS-28f" id="oOd-gw-xhQ"/>
+                        <outlet property="profileImageView" destination="Bsu-ZR-4eV" id="2kp-zH-DNb"/>
+                        <outlet property="warningLabel" destination="VXZ-dH-1TR" id="p02-Tf-oB6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lkq-th-BzB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4161" y="518"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g9h-JP-JED"/>
+        <segue reference="Lfq-pS-ZUy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
@@ -2814,6 +2939,9 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

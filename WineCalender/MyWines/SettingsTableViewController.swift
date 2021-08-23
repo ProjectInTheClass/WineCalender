@@ -71,6 +71,9 @@ class SettingsTableViewController: UITableViewController {
             switch indexPath {
             case editProfileIndexPath:
                 print("edit profile")
+                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController{
+                    self.navigationController?.pushViewController(editProfileVC, animated: true)
+                }
             case changePasswordIndexPath:
                 print("change password")
             case signOutIndexPath:

@@ -32,7 +32,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
     }
     
     @IBAction func imageButtonTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "프로필 사진 선택", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -54,7 +54,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
             alert.addAction(photoLibraryAction)
         }
         
-        let deleteAction = UIAlertAction(title: "사진 삭제", style: .default) { action in
+        let deleteAction = UIAlertAction(title: "사진 선택 안 함", style: .default) { action in
             self.profileImageView.image = UIImage(systemName: "person.circle.fill")
         }
         alert.addAction(deleteAction)

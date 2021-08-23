@@ -7,26 +7,44 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class MyWinesViewController: UIViewController {
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUserProfile()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateNicknameLabel()
-        
         NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.updateNicknameLabel()
+            self?.fetchUserProfile()
         }
     }
     
-    func updateNicknameLabel() {
-        if Auth.auth().currentUser != nil {
-            nicknameLabel.text = Auth.auth().currentUser?.email
-        } else {
-            nicknameLabel.text = "비회원"
+    func fetchUserProfile() {
+        profileImageView.layer.borderColor = UIColor.systemIndigo.cgColor
+        profileImageView.layer.borderWidth = 1
+        
+        DispatchQueue.main.async {
+            if Auth.auth().currentUser == nil {
+                self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+                self.nicknameLabel.text = "비회원"
+            } else {
+                AuthenticationManager.shared.fetchUserNicknameAndProfileImage { nickname, profileImageURL in
+                    self.nicknameLabel.text = nickname
+                    if profileImageURL == nil {
+                        self.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
+                    } else {
+                        self.profileImageView.kf.setImage(with: profileImageURL)
+                    }
+                }
+            }
         }
     }
 }

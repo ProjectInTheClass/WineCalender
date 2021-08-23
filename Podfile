@@ -14,6 +14,9 @@ target 'WineCalender' do
   pod 'YPImagePicker'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'Kingfisher', '~> 6.3'
   
   target 'WineCalenderTests' do
     inherit! :search_paths

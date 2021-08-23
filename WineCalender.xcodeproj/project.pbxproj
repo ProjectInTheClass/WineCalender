@@ -32,6 +32,7 @@
 		12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C526CBB1F00035964F /* WineTastingNotes.swift */; };
 		12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */; };
 		12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EEA68E269AD9FC00D850F0 /* DataManager.swift */; };
+		12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F1FDAA26D3D94800342BE2 /* EditProfileViewController.swift */; };
 		12FF458526CC248F005EB491 /* UILabel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF458426CC248F005EB491 /* UILabel+Helpers.swift */; };
 		1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F215B2626A0069800F0E526 /* SearchViewController.swift */; };
 		1F21DCFF26AA7E2D000C6A59 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F21DCFE26AA7E2D000C6A59 /* SearchTableViewCell.swift */; };
@@ -103,6 +104,7 @@
 		12E188C526CBB1F00035964F /* WineTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineTastingNotes.swift; sourceTree = "<group>"; };
 		12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesViewController.swift; sourceTree = "<group>"; };
 		12EEA68E269AD9FC00D850F0 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		12F1FDAA26D3D94800342BE2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		12FF458426CC248F005EB491 /* UILabel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Helpers.swift"; sourceTree = "<group>"; };
 		1F215B2626A0069800F0E526 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		1F21DCFE26AA7E2D000C6A59 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */,
 				1223396726CFC10A00B7FB74 /* SignInViewController.swift */,
 				1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */,
+				12F1FDAA26D3D94800342BE2 /* EditProfileViewController.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,
 				1F21DD0226AE96CC000C6A59 /* ComuVC.swift in Sources */,
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
+				12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */,
 				122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */,
 				22AF411C26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
