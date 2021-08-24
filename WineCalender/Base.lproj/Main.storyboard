@@ -78,7 +78,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yYk-mV-qEJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="421.73913043478262" y="193.52678571428569"/>
+            <point key="canvasLocation" x="104" y="-186"/>
         </scene>
         <!--My Wines View Controller-->
         <scene sceneID="294-XA-c4D">
@@ -197,7 +197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPQ-aE-5Iw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2297" y="193"/>
+            <point key="canvasLocation" x="1978" y="-187"/>
         </scene>
         <!--설정-->
         <scene sceneID="hj2-eW-47w">
@@ -227,7 +227,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="El7-sD-b0d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3232" y="192"/>
+            <point key="canvasLocation" x="2914" y="-187"/>
         </scene>
         <!--Wine Search-->
         <scene sceneID="oSQ-hV-ofj">
@@ -833,7 +833,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XW6-Bo-Dex" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="dtv-Wq-gO5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2338" y="-2456"/>
+            <point key="canvasLocation" x="2296" y="-2772"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hd1-h3-Xcb">
@@ -1889,7 +1889,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0o-4S-vsc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="-2456"/>
+            <point key="canvasLocation" x="1509" y="-2772"/>
         </scene>
         <!--DetailMyWines-->
         <scene sceneID="8kR-27-Mz7">
@@ -1918,7 +1918,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wMf-Ia-bcv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2374" y="-772"/>
+            <point key="canvasLocation" x="2374" y="-1295"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7dL-B6-7VK">
@@ -1936,7 +1936,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XF6-cr-k4F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1509" y="-1637"/>
+            <point key="canvasLocation" x="1509" y="-2019"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SvF-eB-1An">
@@ -1954,7 +1954,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u3v-gA-E0w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1509" y="-772"/>
+            <point key="canvasLocation" x="1509" y="-1295"/>
         </scene>
         <!--일정 편집-->
         <scene sceneID="cIJ-38-4h4">
@@ -2112,7 +2112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dvI-dc-TPP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="nM7-vT-50L" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2374" y="-1638"/>
+            <point key="canvasLocation" x="2374" y="-2020"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="6Z3-kw-iRt">
@@ -2141,7 +2141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rH-QY-8ql" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4081" y="-1638"/>
+            <point key="canvasLocation" x="4080" y="-2020"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6r9-IE-bOs">
@@ -2157,7 +2157,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SKD-Ci-iHS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3233" y="-1639"/>
+            <point key="canvasLocation" x="3232" y="-2020"/>
         </scene>
         <!--추천게시글-->
         <scene sceneID="07v-qx-jNX">
@@ -2547,7 +2547,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGZ-XS-WgA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1354" y="193"/>
+            <point key="canvasLocation" x="1036" y="-187"/>
         </scene>
         <!--로그인-->
         <scene sceneID="yut-NJ-NzP">
@@ -2616,6 +2616,9 @@
                                                 <state key="normal" title="비밀번호 찾기">
                                                     <color key="titleColor" systemColor="systemGrayColor"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="yN2-qv-yVt" kind="show" id="6pW-fQ-xez"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UEs-YN-fqL">
                                                 <rect key="frame" x="162" y="0.0" width="132" height="40"/>
@@ -2652,7 +2655,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hog-II-FSa" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4162" y="-188"/>
+            <point key="canvasLocation" x="3933" y="-898"/>
         </scene>
         <!--회원가입-->
         <scene sceneID="qAB-af-Zq3">
@@ -2781,7 +2784,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jOs-Fw-sQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5167" y="-577"/>
+            <point key="canvasLocation" x="4878" y="-432"/>
         </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="WO6-j9-Sml">
@@ -2887,7 +2890,161 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkq-th-BzB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4161" y="518"/>
+            <point key="canvasLocation" x="3933" y="-205"/>
+        </scene>
+        <!--Find Password View Controller-->
+        <scene sceneID="URq-RV-QpA">
+            <objects>
+                <viewController id="yN2-qv-yVt" customClass="FindPasswordViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8mR-T4-5Fo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="v6W-qx-cUp">
+                                <rect key="frame" x="60" y="49.999999999999986" width="294" height="174.66666666666663"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="가입하신 이메일 주소를 입력해 주세요. 비밀번호 재설정 이메일을 전송합니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fw7-Mc-Q2E">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="40.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이메일" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jPa-on-iSc">
+                                        <rect key="frame" x="0.0" y="50.666666666666671" width="294" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BX9-0M-PkX">
+                                        <rect key="frame" x="0.0" y="94.666666666666657" width="294" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="7qg-aQ-HB7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" systemColor="systemPinkColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miD-3j-BlR">
+                                        <rect key="frame" x="0.0" y="134.66666666666666" width="294" height="40"/>
+                                        <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="ZFT-Nk-N20"/>
+                                        </constraints>
+                                        <state key="normal" title="확인">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="doneButtonTapped:" destination="yN2-qv-yVt" eventType="touchUpInside" id="FnX-9X-jYA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DMP-et-Su2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="v6W-qx-cUp" secondAttribute="trailing" constant="60" id="Q5N-NB-eUT"/>
+                            <constraint firstItem="v6W-qx-cUp" firstAttribute="leading" secondItem="DMP-et-Su2" secondAttribute="leading" constant="60" id="UDw-Mm-GDO"/>
+                            <constraint firstItem="v6W-qx-cUp" firstAttribute="top" secondItem="DMP-et-Su2" secondAttribute="top" constant="50" id="gIW-2i-XEG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="y5E-fs-fpW"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="jPa-on-iSc" id="vQE-HK-bWp"/>
+                        <outlet property="warningLabel" destination="BX9-0M-PkX" id="YpF-pc-pxq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q6s-zy-NRb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4878" y="-1142"/>
+        </scene>
+        <!--Update Password View Controller-->
+        <scene sceneID="dzv-Ra-9s0">
+            <objects>
+                <viewController storyboardIdentifier="UpdatePasswordViewController" id="rNR-Pm-seO" customClass="UpdatePasswordViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8GQ-26-yNV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="mDr-VY-rlf">
+                                <rect key="frame" x="60" y="50" width="294" height="277"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="현재 비밀번호" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="90B-0Q-1ON">
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="새 비밀번호 (6글자 이상)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FA8-I6-I1M">
+                                        <rect key="frame" x="0.0" y="49" width="294" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="새 비밀번호 확인" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FSQ-Ix-WxB">
+                                        <rect key="frame" x="0.0" y="98" width="294" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IE-qa-oWq">
+                                        <rect key="frame" x="0.0" y="147" width="294" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Ox2-rO-cD3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" systemColor="systemPinkColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0y-Aq-K7T">
+                                        <rect key="frame" x="0.0" y="192" width="294" height="40"/>
+                                        <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9zg-i5-p18"/>
+                                        </constraints>
+                                        <state key="normal" title="확인">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="doneButtonTapped:" destination="rNR-Pm-seO" eventType="touchUpInside" id="bAG-fC-OJO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFY-9m-oK1">
+                                        <rect key="frame" x="0.0" y="247" width="294" height="30"/>
+                                        <state key="normal" title="비밀번호를 잊으셨나요?">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="forgotPasswordButtonTapped:" destination="rNR-Pm-seO" eventType="touchUpInside" id="pyd-5k-EQN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Fnt-G9-IAi"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mDr-VY-rlf" firstAttribute="leading" secondItem="Fnt-G9-IAi" secondAttribute="leading" constant="60" id="0hi-MK-epe"/>
+                            <constraint firstAttribute="trailing" secondItem="mDr-VY-rlf" secondAttribute="trailing" constant="60" id="CTq-Yt-hJy"/>
+                            <constraint firstItem="mDr-VY-rlf" firstAttribute="top" secondItem="Fnt-G9-IAi" secondAttribute="top" constant="50" id="Ve9-BD-Wq4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="checkNewPasswordTextField" destination="FSQ-Ix-WxB" id="k09-yj-acJ"/>
+                        <outlet property="newPasswordTextField" destination="FA8-I6-I1M" id="fLs-Jr-hRm"/>
+                        <outlet property="presentPasswordTextField" destination="90B-0Q-1ON" id="LnY-9d-2H1"/>
+                        <outlet property="warningLabel" destination="6IE-qa-oWq" id="Hl2-Fs-2Ii"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ehR-Px-eIE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3933" y="457"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

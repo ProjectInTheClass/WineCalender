@@ -30,6 +30,14 @@ class SignInViewController: UIViewController {
     
     @IBAction func signInButtonTapped(_ sender: UIButton) {
         if let email = emailTextField.text, let password = passwordTextField.text {
+            guard email != "" else {
+                warningLabel.text = "이메일 주소를 입력해 주세요."
+                return
+            }
+            guard password != "" else {
+                warningLabel.text = "비밀번호를 입력해 주세요."
+                return
+            }
             AuthenticationManager.shared.signIn(email: email, password: password, warningLabel: warningLabel) { result in
                 if result == true {
                     self.navigationController?.popToRootViewController(animated: true)

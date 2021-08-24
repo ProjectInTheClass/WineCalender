@@ -70,14 +70,14 @@ class SettingsTableViewController: UITableViewController {
             let signOutIndexPath = IndexPath(row: 2, section: 1)
             switch indexPath {
             case editProfileIndexPath:
-                print("edit profile")
-                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController{
+                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
                     self.navigationController?.pushViewController(editProfileVC, animated: true)
                 }
             case changePasswordIndexPath:
-                print("change password")
+                if let updatePasswordVC = storyboard?.instantiateViewController(identifier: "UpdatePasswordViewController") as? UpdatePasswordViewController {
+                    self.navigationController?.pushViewController(updatePasswordVC, animated: true)
+                }
             case signOutIndexPath:
-                print("sign out")
                 let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in

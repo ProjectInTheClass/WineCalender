@@ -12,7 +12,6 @@ class TabBarController: UITabBarController {
     
     let addButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -45,7 +44,6 @@ class TabBarController: UITabBarController {
         let community = (storyboard?.instantiateViewController(identifier: "Community"))!
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)
-        add.tabBarItem.isEnabled = false
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         self.viewControllers = [community, add, myWines]
         
@@ -57,8 +55,10 @@ class TabBarController: UITabBarController {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        addButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        addButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        let height = self.tabBar.frame.size.height
+        addButton.heightAnchor.constraint(equalToConstant: height).isActive = true
+        let width = self.tabBar.frame.size.width / 3
+        addButton.widthAnchor.constraint(equalToConstant: width).isActive = true
     }
     
     @objc func addButtonTapped() {

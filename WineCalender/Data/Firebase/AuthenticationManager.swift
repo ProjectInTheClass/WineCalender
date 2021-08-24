@@ -42,7 +42,7 @@ class AuthenticationManager {
         Auth.auth().signIn(withEmail: email, password: password) { uthResult, error in
             if let error = error {
                 print("이메일 로그인 에러 : \(error.localizedDescription)" )
-                warningLabel.text = "이메일 주소와 비밀번호가 맞는지 다시 확인해 주세요."
+                warningLabel.text = "입력하신 정보가 맞는지 다시 확인해 주세요."
                 return
             } else {
                 completion(true)
@@ -98,6 +98,38 @@ class AuthenticationManager {
                             completion(nickname,profileImageURL)
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    func resetPassword(email: String, completion: @escaping(Bool) -> Void) {
+        Auth.auth().languageCode = "ko_kr"
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print("비밀번호 찾기 에러: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                print("이메일 보냄")
+                completion(true)
+            }
+        }
+    }
+    
+    func updatePassword(presentPassword: String, newPassword: String, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
+        if let email = Auth.auth().currentUser?.email {
+            signIn(email: email, password: presentPassword, warningLabel: warningLabel) { result in
+                if result == true {
+                    Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
+                        if error != nil {
+                            warningLabel.text = "비밀번호 변경 오류"
+                            print("비밀번호 변경 오류")
+                            completion(false)
+                        } else {
+                            print("비밀번호 변경됨")
+                            completion(true)
+                        }
+                    })
                 }
             }
         }
