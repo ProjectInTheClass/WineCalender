@@ -16,10 +16,10 @@ extension WineTastingNote {
         return NSFetchRequest<WineTastingNote>(entityName: "WineTastingNote")
     }
 
-    @NSManaged public var date: Date?
+    @NSManaged public var date: Date
     @NSManaged public var place: String?
-    @NSManaged public var image: [UIImage]?
-    @NSManaged public var name: String?
+    @NSManaged public var image: [UIImage]
+    @NSManaged public var name: String
     @NSManaged public var category: String?
     @NSManaged public var varieties: [String]?
     @NSManaged public var producingCountry: String?

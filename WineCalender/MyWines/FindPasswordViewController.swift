@@ -15,6 +15,11 @@ class FindPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "비밀번호 찾기"
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {

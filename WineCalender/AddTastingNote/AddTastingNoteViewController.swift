@@ -7,10 +7,11 @@
 
 import UIKit
 import YPImagePicker
+import FirebaseAuth
 
 class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate {
     
-    var selectedImages: [UIImage]?
+    var selectedImages: [UIImage] = []
     var selectedCateory: String?
     var selectedWineVarieties: [String]?
     var selectedWineProducingCountry: String?
@@ -41,6 +42,7 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var wineAromasAndFlavorsLabel: UILabel!
     @IBOutlet weak var wineMemoTextView: UITextView!
     @IBOutlet weak var ratingSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var doneButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +134,10 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     }
                     picker?.dismiss(animated: true, completion: {
                         self.selectedImages = selectedItems
+                        if self.wineNameTextField.text != "" {
+                            self.doneButton.isUserInteractionEnabled = true
+                            self.doneButton.backgroundColor = UIColor.brown
+                        }
                     })
                 case .video:
                     print("video")
@@ -214,6 +220,8 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.wineVintageLabel.text = selectedVintage
             }
         }))
+        alert.addAction(UIAlertAction(title: "선택 안 함", style: .default, handler: nil))
+        
         present(alert, animated: true, completion: nil)
     }
     
@@ -255,13 +263,28 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     }
     
+    @IBAction func wineNameTextFieldEditingChanged(_ sender: UITextField) {
+        if sender.text != "", firstImageView.image != nil  {
+            doneButton.isUserInteractionEnabled = true
+            doneButton.backgroundColor = UIColor.brown
+        } else {
+            doneButton.isUserInteractionEnabled = false
+            doneButton.backgroundColor = UIColor.systemGray4
+        }
+    }
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         let alert = UIAlertController(title: "테이스팅 노트 등록", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [self] action in
             let date = wineTastingdate.date
-            let place = wineTastingPlaceTextField.text
-            let name = wineNameTextField.text
+            var place: String? = nil
+            if wineTastingPlaceTextField.text == "" {
+                place = nil
+            } else {
+                place = wineTastingPlaceTextField.text
+            }
+            let name = wineNameTextField.text ?? ""
             if let index = wineCategorySegmentedControl?.selectedSegmentIndex{
                 if index > -1 && index < 5 {
                     selectedCateory = wineCategorySegmentedControl.titleForSegment(at: index)
@@ -269,7 +292,12 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     selectedCateory = nil
                 }
             }
-            let producer = wineProducerTextField.text
+            var producer: String? = nil
+            if wineProducerTextField.text == "" {
+                producer = nil
+            } else {
+                producer = wineProducerTextField.text
+            }
             if let priceString = winePriceTextField.text {
                 if let p = Int32(priceString) {
                     price = p
@@ -297,13 +325,21 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 return text
             }
             }()
-            let rating = ratingSegmentedControl.selectedSegmentIndex + 1
+            var selectedRating: Int16? = Int16(ratingSegmentedControl.selectedSegmentIndex) + 1
+            if selectedRating == 0 {
+                selectedRating = nil
+            }
             
-            let wineTastingNotes = WineTastingNotes(date: date, place: place, image: selectedImages, name: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price ?? 0, alcoholContent: alcoholContent ?? 0, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: Int16(rating))
+            let wineTastingNotes = WineTastingNotes(date: date, place: place, image: selectedImages, name: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: selectedRating)
             
             print(wineTastingNotes)
             
-            DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes)
+            if Auth.auth().currentUser == nil {
+                DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes)
+            } else {
+                PostManager.shared.uploadPost(wineTastingNotes: wineTastingNotes)
+            }
+            
             dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)

@@ -24,6 +24,8 @@ class DataManager {
 
     func fetchWineTastingNote() {
         let request: NSFetchRequest<WineTastingNote> = WineTastingNote.fetchRequest()
+        let sortByDESC = NSSortDescriptor(key: "date", ascending: false)
+        request.sortDescriptors = [sortByDESC]
         do {
             wineTastingNoteList = try mainContext.fetch(request)
         } catch {
@@ -51,6 +53,7 @@ class DataManager {
         object.setValue(wineTastingNotes.aromasAndFlavors, forKey: "aromasAndFlavors")
         object.setValue(wineTastingNotes.memo, forKey: "memo")
         object.setValue(wineTastingNotes.rating, forKey: "rating")
+        saveContext()
     }
     
     // MARK: - Calendar Data

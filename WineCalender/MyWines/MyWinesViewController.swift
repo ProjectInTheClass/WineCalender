@@ -13,18 +13,29 @@ class MyWinesViewController: UIViewController {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         fetchUserProfile()
+
+        if Auth.auth().currentUser != nil {
+            PostManager.shared.fetchMyPosts()
+        } else {
+            DataManager.shared.fetchWineTastingNote()
+        }
+        
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.fetchUserProfile()
-        }
+//        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+//            self?.fetchUserProfile()
+//        }
+
     }
     
     func fetchUserProfile() {
@@ -54,25 +65,36 @@ class MyWinesViewController: UIViewController {
 extension MyWinesViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return wines.count
+        //return wines.count
+        if Auth.auth().currentUser != nil {
+            return 0
+        } else {
+            return DataManager.shared.wineTastingNoteList.count
+        }
     }
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "winesCell", for: indexPath) as! MyWinesTableViewCell
-
-        // Configure the cell...
-        cell.wineNameLabel.text = wines[indexPath.row].name
-        cell.wineCategoryLabel.text = wines[indexPath.row].category
+        
+        //cell.wineNameLabel.text = wines[indexPath.row].name
+        //cell.wineCategoryLabel.text = wines[indexPath.row].category
         cell.wineCellBG.layer.cornerRadius = 15
         cell.wineImageView.layer.cornerRadius = 10
-
+        
+        if Auth.auth().currentUser != nil {
+            
+        } else {
+            let note = DataManager.shared.wineTastingNoteList[indexPath.row]
+            cell.wineNameLabel.text = note.name
+            cell.wineCategoryLabel.text = note.category
+            cell.wineImageView.image = note.image[0]
+        }
+   
         return cell
     }
     
