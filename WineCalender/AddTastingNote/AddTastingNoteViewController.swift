@@ -330,12 +330,12 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 selectedRating = nil
             }
             
-            let wineTastingNotes = WineTastingNotes(date: date, place: place, image: selectedImages, name: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: selectedRating)
+            let wineTastingNotes = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: selectedRating)
             
             print(wineTastingNotes)
             
             if Auth.auth().currentUser == nil {
-                DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes)
+                DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes, image: selectedImages)
             } else {
                 PostManager.shared.uploadPost(wineTastingNotes: wineTastingNotes)
             }

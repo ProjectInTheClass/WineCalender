@@ -15,18 +15,12 @@ class MyWinesViewController: UIViewController {
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var myPosts: [Post] = []
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        fetchMyPosts()
         fetchUserProfile()
-
-        if Auth.auth().currentUser != nil {
-            PostManager.shared.fetchMyPosts()
-        } else {
-            DataManager.shared.fetchWineTastingNote()
-        }
-        
-        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -36,6 +30,20 @@ class MyWinesViewController: UIViewController {
 //            self?.fetchUserProfile()
 //        }
 
+    }
+    
+    func fetchMyPosts() {
+        DispatchQueue.main.async {
+            if Auth.auth().currentUser != nil {
+                PostManager.shared.fetchMyPosts { myPosts in
+                    self.myPosts = myPosts
+                    self.tableView.reloadData()
+                }
+            } else {
+                DataManager.shared.fetchWineTastingNote()
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func fetchUserProfile() {
@@ -69,25 +77,24 @@ extension MyWinesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return wines.count
         if Auth.auth().currentUser != nil {
-            return 0
+            return self.myPosts.count
         } else {
             return DataManager.shared.wineTastingNoteList.count
         }
     }
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "winesCell", for: indexPath) as! MyWinesTableViewCell
-        
-        //cell.wineNameLabel.text = wines[indexPath.row].name
-        //cell.wineCategoryLabel.text = wines[indexPath.row].category
+
         cell.wineCellBG.layer.cornerRadius = 15
         cell.wineImageView.layer.cornerRadius = 10
         
         if Auth.auth().currentUser != nil {
-            
+            let post = self.myPosts[indexPath.row].tastingNote
+            cell.wineNameLabel.text = post.wineName
+            cell.wineCategoryLabel.text = post.category
+            cell.wineImageView.image = UIImage()
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
             cell.wineNameLabel.text = note.name

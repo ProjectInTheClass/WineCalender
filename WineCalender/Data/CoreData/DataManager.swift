@@ -33,12 +33,12 @@ class DataManager {
         }
     }
     
-    func addWineTastingNote(wineTastingNotes: WineTastingNotes){
+    func addWineTastingNote(wineTastingNotes: WineTastingNotes, image: [UIImage]){
         let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
-        object.setValue(wineTastingNotes.date, forKey: "date")
+        object.setValue(wineTastingNotes.tastingDate, forKey: "date")
         object.setValue(wineTastingNotes.place, forKey: "place")
-        object.setValue(wineTastingNotes.image, forKey: "image")
-        object.setValue(wineTastingNotes.name, forKey: "name")
+        object.setValue(image, forKey: "image")
+        object.setValue(wineTastingNotes.wineName, forKey: "name")
         object.setValue(wineTastingNotes.category, forKey: "category")
         object.setValue(wineTastingNotes.varieties, forKey: "varieties")
         object.setValue(wineTastingNotes.producingCountry, forKey: "producingCountry")

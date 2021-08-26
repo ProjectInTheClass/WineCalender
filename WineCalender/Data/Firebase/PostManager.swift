@@ -20,8 +20,8 @@ class PostManager {
         if let uid = Auth.auth().currentUser?.uid {
             let postingDate: Double = (Date().timeIntervalSince1970).rounded()
             
-            let tastingDate: Double = (wineTastingNotes.date.timeIntervalSince1970).rounded()
-            let tastingNote = ["tastingDate":tastingDate, "wineName":wineTastingNotes.name, "rating":wineTastingNotes.rating as Any, "price":wineTastingNotes.price as Any, "alcoholContent":wineTastingNotes.alcoholContent as Any] as [String : Any]
+            let tastingDate: Double = (wineTastingNotes.tastingDate.timeIntervalSince1970).rounded()
+            let tastingNote = ["tastingDate":tastingDate, "wineName":wineTastingNotes.wineName, "category":wineTastingNotes.category as Any, "rating":wineTastingNotes.rating as Any, "price":wineTastingNotes.price as Any, "alcoholContent":wineTastingNotes.alcoholContent as Any] as [String : Any]
             
             let value = ["authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
             
@@ -30,10 +30,22 @@ class PostManager {
         }
     }
     
-    func fetchMyPosts() {
+    func fetchMyPosts(completion: @escaping ([Post]) -> Void){
+        var myPosts: [Post] = []
         if let uid = Auth.auth().currentUser?.uid {
             PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
-                print(snapshot)
+
+                guard let snapshotDict = snapshot.value as? [String:Any] else { return }
+                
+                let datas = Array(snapshotDict.values)
+                guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
+                
+                let decoder = JSONDecoder()
+                guard let posts = try? decoder.decode([Post].self, from: data) else { return }
+                
+                myPosts = posts
+                myPosts.sort{$0.postingDate > $1.postingDate}
+                completion(myPosts)
             }
         }
     }
