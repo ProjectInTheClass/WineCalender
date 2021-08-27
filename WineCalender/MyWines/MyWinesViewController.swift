@@ -15,7 +15,9 @@ class MyWinesViewController: UIViewController {
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var postIDs: [String] = []
     var myPosts: [Post] = []
+    var postImageURLs: [URL] = []
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -25,18 +27,18 @@ class MyWinesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-//            self?.fetchUserProfile()
-//        }
-
+        NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.fetchMyPosts()
+        }
     }
     
     func fetchMyPosts() {
         DispatchQueue.main.async {
             if Auth.auth().currentUser != nil {
-                PostManager.shared.fetchMyPosts { myPosts in
+                PostManager.shared.fetchMyPosts { postIDs, myPosts  in
+                    self.postIDs = postIDs
                     self.myPosts = myPosts
+                    self.postImageURLs = myPosts.map { URL(string: $0.postImageURL[0])! }
                     self.tableView.reloadData()
                 }
             } else {
@@ -91,10 +93,10 @@ extension MyWinesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.wineImageView.layer.cornerRadius = 10
         
         if Auth.auth().currentUser != nil {
-            let post = self.myPosts[indexPath.row].tastingNote
-            cell.wineNameLabel.text = post.wineName
-            cell.wineCategoryLabel.text = post.category
-            cell.wineImageView.image = UIImage()
+            let post = self.myPosts[indexPath.row]
+            cell.wineNameLabel.text = post.tastingNote.wineName
+            cell.wineCategoryLabel.text = post.tastingNote.category
+            cell.wineImageView.kf.setImage(with: self.postImageURLs[indexPath.row])
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
             cell.wineNameLabel.text = note.name

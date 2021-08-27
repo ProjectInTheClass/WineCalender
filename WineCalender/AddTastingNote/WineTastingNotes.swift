@@ -29,22 +29,9 @@ struct WineTastingNotes: Decodable {
     var rating: Int16?
 }
 
-
 struct Post: Decodable {
     var authorUID: String
     var postingDate: Date
+    var postImageURL: [String]
     var tastingNote: WineTastingNotes
-    
-    enum CodingKeys: String, CodingKey {
-        case authorUID
-        case postingDate
-        case tastingNote
-    }
-        
-    init(from decoder: Decoder) throws {
-        let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
-        self.authorUID = try valueContainer.decode(String.self, forKey: CodingKeys.authorUID)
-        self.postingDate = try valueContainer.decode(Date.self, forKey: CodingKeys.postingDate)
-        self.tastingNote = try valueContainer.decode(WineTastingNotes.self, forKey: CodingKeys.tastingNote)
-    }
 }

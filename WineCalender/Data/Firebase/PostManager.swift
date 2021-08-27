@@ -16,36 +16,60 @@ class PostManager {
     //let postRef = Database.database().reference().child("Post")
     let postImageRef = Storage.storage().reference().child("PostImage")
     
-    func uploadPost(wineTastingNotes: WineTastingNotes) {
+    func uploadPost(tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
+
+            guard let postID = PostManager.shared.postRef.childByAutoId().key else { return }
+            
+            for (index, image) in images.enumerated() {
+                let imageName = postID + String(index) + ".jpg"
+                if let postImageData = image.jpegData(compressionQuality: 0.2) {
+                    PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+                        if let error = error {
+                            print("이미지 등록 에러 : \(error.localizedDescription)")
+                        } else {
+                            print("이미지 등록함")
+                            PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
+                                guard let url = url else { return }
+                                let urlString = "\(url)"
+                                let value = [index:urlString]
+                                let childUpdates = ["/\(postID)/postImageURL":value]
+                                PostManager.shared.postRef.updateChildValues(childUpdates)
+                                completion(true)
+                            }
+                        }
+                    }
+                }
+            }
+            
             let postingDate: Double = (Date().timeIntervalSince1970).rounded()
             
-            let tastingDate: Double = (wineTastingNotes.tastingDate.timeIntervalSince1970).rounded()
-            let tastingNote = ["tastingDate":tastingDate, "wineName":wineTastingNotes.wineName, "category":wineTastingNotes.category as Any, "rating":wineTastingNotes.rating as Any, "price":wineTastingNotes.price as Any, "alcoholContent":wineTastingNotes.alcoholContent as Any] as [String : Any]
+            let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
+            let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
             
             let value = ["authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
             
-            PostManager.shared.postRef.childByAutoId().setValue(value)
-            
+            PostManager.shared.postRef.child(postID).setValue(value)
         }
     }
     
-    func fetchMyPosts(completion: @escaping ([Post]) -> Void){
-        var myPosts: [Post] = []
+    func fetchMyPosts(completion: @escaping (_ postIDs: [String], [Post]) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
             PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
-
+                
                 guard let snapshotDict = snapshot.value as? [String:Any] else { return }
+                let postIDs = snapshotDict.map{ $0.key }
                 
                 let datas = Array(snapshotDict.values)
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
                 
                 let decoder = JSONDecoder()
                 guard let posts = try? decoder.decode([Post].self, from: data) else { return }
+
+                var myPosts: [Post] = posts
+                myPosts.sort{ $0.postingDate > $1.postingDate }
                 
-                myPosts = posts
-                myPosts.sort{$0.postingDate > $1.postingDate}
-                completion(myPosts)
+                completion(postIDs, myPosts)
             }
         }
     }

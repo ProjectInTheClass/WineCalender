@@ -95,7 +95,7 @@ class AuthenticationManager {
                                 return
                             }
                             let profileImageURL = downloadURL
-                            completion(nickname,profileImageURL)
+                            completion(nickname, profileImageURL)
                         }
                     }
                 }

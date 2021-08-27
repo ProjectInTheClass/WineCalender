@@ -330,14 +330,18 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                 selectedRating = nil
             }
             
-            let wineTastingNotes = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: selectedRating)
+            let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: Int16(sweet), acidity: Int16(acidity), tannin: Int16(tannin), body: Int16(body), aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: selectedRating)
             
-            print(wineTastingNotes)
+            //print(wineTastingNote)
             
             if Auth.auth().currentUser == nil {
-                DataManager.shared.addWineTastingNote(wineTastingNotes: wineTastingNotes, image: selectedImages)
+                DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages)
             } else {
-                PostManager.shared.uploadPost(wineTastingNotes: wineTastingNotes)
+                PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
+                    if result == true {
+                        NotificationCenter.default.post(name: AddTastingNoteViewController.uploadPost, object: nil)
+                    }
+                }
             }
             
             dismiss(animated: true, completion: nil)
@@ -380,4 +384,8 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
         let vintage = winevintageList[row]
         self.selectedVintage = vintage
     }
+}
+
+extension AddTastingNoteViewController {
+    static let uploadPost = Notification.Name(rawValue: "uploadPost")
 }
