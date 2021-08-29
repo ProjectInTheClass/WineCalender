@@ -35,9 +35,13 @@ class DataManager {
     
     func addWineTastingNote(tastingNote: WineTastingNotes, images: [UIImage]){
         let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
+
+        let compressedImagesDatas = images.map{ $0.jpegData(compressionQuality: 0.2) }
+        let compressedImages = compressedImagesDatas.map{ UIImage(data:$0!) }
+        
         object.setValue(tastingNote.tastingDate, forKey: "date")
         object.setValue(tastingNote.place, forKey: "place")
-        object.setValue(images, forKey: "image")
+        object.setValue(compressedImages, forKey: "image")
         object.setValue(tastingNote.wineName, forKey: "name")
         object.setValue(tastingNote.category, forKey: "category")
         object.setValue(tastingNote.varieties, forKey: "varieties")

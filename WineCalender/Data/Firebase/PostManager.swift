@@ -28,13 +28,17 @@ class PostManager {
                         if let error = error {
                             print("이미지 등록 에러 : \(error.localizedDescription)")
                         } else {
-                            print("이미지 등록함")
                             PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
+                                if let error = error {
+                                    print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
+                                }
                                 guard let url = url else { return }
                                 let urlString = "\(url)"
-                                let value = [index:urlString]
-                                let childUpdates = ["/\(postID)/postImageURL":value]
+                                //let value = [index:urlString]
+                                //let childUpdates = ["/\(postID)/postImageURL":value]
+                                let childUpdates = ["/\(postID)/postImageURL/\(index)":urlString]
                                 PostManager.shared.postRef.updateChildValues(childUpdates)
+                                print("이미지 등록함")
                                 completion(true)
                             }
                         }
