@@ -55,6 +55,15 @@ class MyWinesViewController: UIViewController {
         }
     }
     
+    @IBAction func moreButtonTapped(_ sender: UIButton) {
+        let superview = sender.superview?.superview?.superview?.superview
+
+        guard let cell = superview as? MyWinesCollectionViewCell else { return }
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        print(indexPath.row)
+    }
+    
+    
 //    func fetchUserProfile() {
 //        profileImageView.layer.borderColor = UIColor.systemGray2.cgColor
 //        profileImageView.layer.borderWidth = 1
@@ -142,16 +151,24 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
+        
+        cell.label1.isHidden = true
+        cell.label2.isHidden = true
+        cell.label3.isHidden = true
+        cell.moreButton.isHidden = true
+        
         if Auth.auth().currentUser != nil {
             //let post = self.myPosts[indexPath.row]
             //cell.wineNameLabel.text = post.tastingNote.wineName
             //cell.wineCategoryLabel.text = post.tastingNote.category
             cell.imageView.kf.setImage(with: self.postImageURLs[indexPath.row])
+            cell.imageView.alpha = 1.0
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
             //cell.wineNameLabel.text = note.name
             //cell.wineCategoryLabel.text = note.category
             cell.imageView.image = note.image[0]
+            cell.imageView.alpha = 1.0
         }
         
         return cell
@@ -164,6 +181,43 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         let height = width
         
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
+        
+        UIView.transition(with: cell.imageView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        UIView.transition(with: cell.stackView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        
+        if cell.imageView.alpha == 1.0 {
+            cell.imageView.alpha = 0.2
+            cell.label1.isHidden = false
+            cell.label2.isHidden = false
+            cell.label3.isHidden = false
+            cell.moreButton.isHidden = false
+        } else {
+            cell.imageView.alpha = 1.0
+            cell.label1.isHidden = true
+            cell.label2.isHidden = true
+            cell.label3.isHidden = true
+            cell.moreButton.isHidden = true
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        
+        if Auth.auth().currentUser != nil {
+            let post = self.myPosts[indexPath.row]
+            cell.label1.text = "🍷 " + post.tastingNote.wineName
+            cell.label2.text = "🗓 " + dateFormatter.string(from: post.tastingNote.tastingDate)
+            cell.label3.text = "⭐️ \(String(describing: post.tastingNote.rating))"
+        } else {
+            let note = DataManager.shared.wineTastingNoteList[indexPath.row]
+            cell.label1.text = "🍷 " + note.name
+            cell.label2.text = "🗓 " + dateFormatter.string(from: note.date)
+            cell.label3.text = "⭐️ \(String(describing: note.rating))"
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
