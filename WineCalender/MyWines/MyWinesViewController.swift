@@ -16,25 +16,46 @@ class MyWinesViewController: UIViewController {
     //@IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var profileImageURL: URL? = nil
+    var nickname: String = ""
+    var introduction: String = ""
     var postIDs: [String] = []
     var myPosts: [Post] = []
     var postImageURLs: [URL] = []
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchMyPosts()
-        //fetchUserProfile()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.fetchMyPosts()
-        }
-        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         //self.navigationController?.navigationBar.layoutIfNeeded()
+        
+        setNotificationObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchMyPosts()
+        fetchMyProfile()
+    }
+    
+    func setNotificationObserver() {
+        NotificationCenter.default.addObserver(forName: SignInViewController.userSignInNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.fetchMyPosts()
+            self?.fetchMyProfile()
+        }
+        
+        NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.fetchMyPosts()
+        }
+
+        NotificationCenter.default.addObserver(forName: SettingsTableViewController.userSignOutNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.profileImageURL = nil
+            self?.nickname = ""
+            self?.introduction = ""
+            self?.postIDs = []
+            self?.myPosts = []
+            self?.postImageURLs = []
+        }
     }
     
     func fetchMyPosts() {
@@ -55,6 +76,15 @@ class MyWinesViewController: UIViewController {
         }
     }
     
+    func fetchMyProfile() {
+        AuthenticationManager.shared.fetchMyProfile { profileImageURL, nickname, introduction in
+            self.profileImageURL = profileImageURL
+            self.nickname = nickname
+            self.introduction = introduction
+            self.collectionView.reloadData()
+        }
+    }
+    
     @IBAction func moreButtonTapped(_ sender: UIButton) {
         let superview = sender.superview?.superview?.superview?.superview
 
@@ -62,28 +92,6 @@ class MyWinesViewController: UIViewController {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         print(indexPath.row)
     }
-    
-    
-//    func fetchUserProfile() {
-//        profileImageView.layer.borderColor = UIColor.systemGray2.cgColor
-//        profileImageView.layer.borderWidth = 1
-//
-//        DispatchQueue.main.async {
-//            if Auth.auth().currentUser == nil {
-//                self.profileImageView.image = UIImage(systemName: "person.circle.fill")
-//                self.nicknameLabel.text = "비회원"
-//            } else {
-//                AuthenticationManager.shared.fetchUserNicknameAndProfileImage { nickname, profileImageURL in
-//                    self.nicknameLabel.text = nickname
-//                    if profileImageURL == nil {
-//                        self.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-//                    } else {
-//                        self.profileImageView.kf.setImage(with: profileImageURL)
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
 
 // MARK: - Table view data source
@@ -225,13 +233,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
         
         if Auth.auth().currentUser != nil {
-            AuthenticationManager.shared.fetchUserNicknameAndProfileImage { nickname, profileImageURL in
-                headerView.nicknameLabel.text = nickname
-                if profileImageURL == nil {
-                    headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-                } else {
-                    headerView.profileImageView.kf.setImage(with: profileImageURL)
-                }
+            headerView.nicknameLabel.text = nickname
+            headerView.introductionLabel.text = introduction
+            if profileImageURL == nil {
+                headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
+            } else {
+                headerView.profileImageView.kf.setImage(with: profileImageURL)
             }
         } else {
             headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")

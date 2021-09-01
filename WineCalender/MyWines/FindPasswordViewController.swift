@@ -22,6 +22,10 @@ class FindPasswordViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         guard emailTextField.text != "" else {
             warningLabel.text = "이메일 주소를 입력해 주세요."

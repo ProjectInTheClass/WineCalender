@@ -22,5 +22,6 @@ class MyWinesHeaderView: UICollectionReusableView {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var introductionLabel: UILabel!
     
 }

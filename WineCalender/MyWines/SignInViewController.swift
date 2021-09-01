@@ -24,7 +24,11 @@ class SignInViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+    @IBAction func emailReturnKeyTapped(_ sender: UITextField) {
+        passwordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
@@ -48,5 +52,5 @@ class SignInViewController: UIViewController {
 }
 
 extension SignInViewController {
-    static let userStateChangeNoti = Notification.Name(rawValue: "userStateChangeNoti")
+    static let userSignInNoti = Notification.Name(rawValue: "userSignInNoti")
 }

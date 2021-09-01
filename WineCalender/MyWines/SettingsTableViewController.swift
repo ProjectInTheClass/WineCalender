@@ -20,9 +20,9 @@ class SettingsTableViewController: UITableViewController {
 
         updateRow()
         
-        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.updateRow()
-        }
+//        NotificationCenter.default.addObserver(forName: SignInViewController.userSignInNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+//            self?.updateRow()
+//        }
     }
     
     func updateRow() {
@@ -147,4 +147,9 @@ class SettingsTableViewController: UITableViewController {
     }
     */
 
+}
+
+
+extension SettingsTableViewController {
+    static let userSignOutNoti = Notification.Name(rawValue: "userSignOutNoti")
 }

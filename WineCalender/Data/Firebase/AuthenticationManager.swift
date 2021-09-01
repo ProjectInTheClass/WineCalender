@@ -20,7 +20,7 @@ class AuthenticationManager {
     func signUp(email: String, password: String, nickname: String, profileImage: UIImage, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                print(error.localizedDescription)
+                print("회원가입 오류 - \(error.localizedDescription)")
                 if error.localizedDescription.contains("The email address is badly formatted.") {
                     warningLabel.text = "이메일 형식을 확인해 주세요."
                 } else if error.localizedDescription.contains("The email address is already in use by another account.") {
@@ -30,10 +30,13 @@ class AuthenticationManager {
                 }
                 return
             } else {
-                self.saveUserNicknameAndProfileImage(nickname: nickname, profileImage: profileImage) { result in
+                self.saveMyProfile(profileImage: profileImage, nickname: nickname, introduction: "" ) { result in
                     if result == true {
-                        NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
+                        NotificationCenter.default.post(name: SignInViewController.userSignInNoti, object: nil)
                         return completion(true)
+                    } else {
+                        print("회원가입 - 프로필 저장 실패")
+                        return completion(false)
                     }
                 }
             }
@@ -48,7 +51,7 @@ class AuthenticationManager {
                 return
             } else {
                 completion(true)
-                NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
+                NotificationCenter.default.post(name: SignInViewController.userSignInNoti, object: nil)
             }
         }
     }
@@ -56,48 +59,69 @@ class AuthenticationManager {
     func signOut() {
         do {
             try Auth.auth().signOut()
-            NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
+            NotificationCenter.default.post(name: SettingsTableViewController.userSignOutNoti, object: nil)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
     
-    func saveUserNicknameAndProfileImage(nickname: String, profileImage: UIImage, completion: @escaping(Bool) -> Void) {
+    func saveMyProfile(profileImage: UIImage, nickname: String, introduction: String, completion: @escaping(Bool) -> Void) {
         let uid = Auth.auth().currentUser!.uid
-        if profileImage.isSymbolImage == true {
-        } else {
+        if !profileImage.isSymbolImage {
             let profileImageName = uid + ".jpg"
+            print("saveUserProfile profileImageName - \(profileImageName)")
             if let profileImageData = profileImage.jpegData(compressionQuality: 0.1) {
                 userProfileImageRef.child(profileImageName).putData(profileImageData, metadata: nil) { metadata, error in
                     if let error = error {
                         print("프로필 이미지 등록 에러 : \(error.localizedDescription)")
                     } else {
                         print("프로필 이미지 등록함")
+                        if introduction != "" {
+                            AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname, "introduction": introduction])
+                            completion(true)
+                        } else {
+                            AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname])
+                            completion(true)
+                        }
                     }
                 }
             }
+        } else {
+            if introduction != "" {
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname, "introduction": introduction])
+                completion(true)
+            } else {
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname])
+                completion(true)
+            }
         }
-        userRef.child(uid).setValue(["nickname": nickname])
-        completion(true)
     }
     
-    func fetchUserNicknameAndProfileImage(completion: @escaping(_ nickname: String, _ profileImageURL: URL?) -> Void) {
+    func fetchMyProfile(completion: @escaping(_ profileImageURL: URL?, _ nickname: String, _ introduction: String) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
-            userRef.child(uid).child("nickname").observeSingleEvent(of: .value) { snapshot in
-                let nickname = snapshot.value as? String ?? "닉네임없음"
+            userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+                guard let values = snapshot.value as? [String : String] else { return }
+
+                let nickname = values["nickname"]!
+                
+                var introduction = ""
+                if let introductionValue = values["introduction"] {
+                    introduction = introductionValue
+                }
+                
                 let profileImageName = uid + ".jpg"
                 self.userProfileImageRef.child(profileImageName).downloadURL { url, error in
                     if let error = error {
                         let profileImageURL: URL? = nil
                         print("이미지 다운로드 에러 또는 이미지없음: \(error.localizedDescription)")
-                        completion(nickname,profileImageURL)
+                        completion(profileImageURL, nickname, introduction)
                     } else {
                         self.userProfileImageRef.child(profileImageName).downloadURL { (url, error) in
                             guard let downloadURL = url else {
                                 return
                             }
                             let profileImageURL = downloadURL
-                            completion(nickname, profileImageURL)
+                            completion(profileImageURL, nickname, introduction)
                         }
                     }
                 }

@@ -13,6 +13,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var nicknameTextField: UITextField!
+    @IBOutlet weak var introductionTextField: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
@@ -30,22 +31,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.view.endEditing(true)
     }
     
-    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+    @IBAction func nicknameReturnKeyTapped(_ sender: UITextField) {
+        introductionTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func introductionReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
 
-    func fetchUserProfile() {
-        profileImageView.layer.borderColor = UIColor.systemIndigo.cgColor
-        profileImageView.layer.borderWidth = 1
-        
+    func fetchUserProfile() {        
         emailLabel.text = Auth.auth().currentUser?.email
         
         DispatchQueue.main.async {
-            AuthenticationManager.shared.fetchUserNicknameAndProfileImage { nickname, profileImageURL in
-                self.nicknameTextField.text = nickname
+            AuthenticationManager.shared.fetchMyProfile { profileImageURL, nickname, introduction in
                 if profileImageURL != nil {
                     self.profileImageView.kf.setImage(with: profileImageURL)
                 }
+                self.nicknameTextField.text = nickname
+                self.introductionTextField.text = introduction
             }
         }
     }
@@ -101,9 +104,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let alert = UIAlertController(title: "프로필 수정", message: "프로필을 수정하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-            let nickname = self.nicknameTextField.text!
+            
             let profileImage = self.profileImageView.image!
-            AuthenticationManager.shared.saveUserNicknameAndProfileImage(nickname: nickname, profileImage: profileImage) { result in
+            let nickname = self.nicknameTextField.text!
+            let introduction = self.introductionTextField.text!
+            AuthenticationManager.shared.saveMyProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
                 if result == true {
                     self.navigationController?.popToRootViewController(animated: true)
                 } else {
@@ -111,6 +116,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     //self.warningLabel.text = "오류 잠시 후 다시 시도해 주세요. "
                 }
             }
+            
         }))
         self.present(alert, animated: true, completion: nil)
     }
