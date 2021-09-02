@@ -294,7 +294,11 @@
 			isa = PBXGroup;
 			children = (
 				1F215B1E269EB89B00F0E526 /* Data */,
+				227DED4E26E0DF65001CCCE0 /* Model */,
+				227DED4C26E0DF55001CCCE0 /* View */,
+				227DED4D26E0DF5E001CCCE0 /* ViewModel */,
 				1F21DD0026AE9655000C6A59 /* Comunity */,
+				227DED4F26E0E136001CCCE0 /* Service */,
 				1223396426CFA22700B7FB74 /* AddTastingNote */,
 				C7E30AF826BD2F8600151A44 /* MyWines */,
 				1F215B2526A0067200F0E526 /* Search */,
@@ -330,6 +334,34 @@
 				1FCB9139267B8470008C93C7 /* Info.plist */,
 			);
 			path = WineCalenderUITests;
+			sourceTree = "<group>";
+		};
+		227DED4C26E0DF55001CCCE0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		227DED4D26E0DF5E001CCCE0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		227DED4E26E0DF65001CCCE0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		227DED4F26E0E136001CCCE0 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		67439B2F11CD3C4F4C9DE439 /* Frameworks */ = {
