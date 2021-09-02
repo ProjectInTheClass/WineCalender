@@ -70,6 +70,8 @@ class PostManager {
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
                 
                 let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                
                 guard let posts = try? decoder.decode([Post].self, from: data) else { return }
 
                 var myPosts: [Post] = posts

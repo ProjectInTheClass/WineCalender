@@ -219,12 +219,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             let post = self.myPosts[indexPath.row]
             cell.label1.text = "🍷 " + post.tastingNote.wineName
             cell.label2.text = "🗓 " + dateFormatter.string(from: post.tastingNote.tastingDate)
-            cell.label3.text = "⭐️ \(String(describing: post.tastingNote.rating))"
+            cell.label3.text = "⭐️" + "\(post.tastingNote.rating ?? 0)"
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
             cell.label1.text = "🍷 " + note.name
             cell.label2.text = "🗓 " + dateFormatter.string(from: note.date)
-            cell.label3.text = "⭐️ \(String(describing: note.rating))"
+            cell.label3.text = "⭐️" + "\(note.rating)"
         }
     }
     
@@ -243,6 +243,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         } else {
             headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")
             headerView.nicknameLabel.text = "비회원"
+            headerView.introductionLabel.text = ""
         }
         
         return headerView
