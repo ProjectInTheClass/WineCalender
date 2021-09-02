@@ -183,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				12FF458426CC248F005EB491 /* UILabel+Helpers.swift */,
-				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
 				122536DE26C3A20200190CA1 /* WineVarieties.swift */,
 				123DEC4826C44AFD00DE45F7 /* Countries.swift */,
 				125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */,
@@ -218,6 +217,7 @@
 		1263F9C226E0E5F40094DF99 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
