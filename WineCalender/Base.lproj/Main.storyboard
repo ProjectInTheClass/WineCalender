@@ -1745,7 +1745,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="eJS-t8-3Y3"/>
                             </scrollView>
                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvA-th-Udc">
-                                <rect key="frame" x="10" y="2391" width="394" height="50"/>
+                                <rect key="frame" x="10" y="2440" width="394" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="616-DT-DUh"/>
@@ -2274,11 +2274,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="183" height="320"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="pgC-2y-Qtx">
-                                            <rect key="frame" x="0.0" y="0.0" width="183" height="196"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" name="themeDarkItemColor"/>
-                                        </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Trj-iS-WDE">
                                             <rect key="frame" x="5" y="201" width="173" height="114"/>
                                             <subviews>
@@ -2365,18 +2360,27 @@
                                                 <constraint firstItem="oFH-f1-H8X" firstAttribute="top" secondItem="Trj-iS-WDE" secondAttribute="top" id="ts2-1a-rJv"/>
                                             </constraints>
                                         </stackView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Sg-68-5oL">
+                                            <rect key="frame" x="0.0" y="0.0" width="183" height="196"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="0Sg-68-5oL" secondAttribute="height" multiplier="1:1" id="nva-zR-tvY"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="Trj-iS-WDE" secondAttribute="trailing" constant="5" id="9dg-jD-oxQ"/>
+                                        <constraint firstItem="0Sg-68-5oL" firstAttribute="top" secondItem="znK-z1-VqK" secondAttribute="top" id="Aze-pf-QIX"/>
                                         <constraint firstAttribute="bottom" secondItem="Trj-iS-WDE" secondAttribute="bottom" constant="5" id="HSQ-Kl-bVd"/>
-                                        <constraint firstItem="Trj-iS-WDE" firstAttribute="top" secondItem="pgC-2y-Qtx" secondAttribute="bottom" constant="5" id="TWH-PQ-7sl"/>
+                                        <constraint firstAttribute="trailing" secondItem="0Sg-68-5oL" secondAttribute="trailing" id="MBT-f3-cXs"/>
                                         <constraint firstItem="Trj-iS-WDE" firstAttribute="leading" secondItem="znK-z1-VqK" secondAttribute="leading" constant="5" id="ZJU-5r-1LO"/>
                                         <constraint firstItem="Trj-iS-WDE" firstAttribute="centerX" secondItem="znK-z1-VqK" secondAttribute="centerX" id="a5t-me-9Uw"/>
+                                        <constraint firstItem="0Sg-68-5oL" firstAttribute="leading" secondItem="znK-z1-VqK" secondAttribute="leading" id="jFu-NJ-V1y"/>
+                                        <constraint firstItem="Trj-iS-WDE" firstAttribute="top" secondItem="0Sg-68-5oL" secondAttribute="bottom" constant="5" id="vwx-Mo-3Nk"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="183" height="320"/>
                                 <connections>
-                                    <outlet property="cellImage" destination="pgC-2y-Qtx" id="fL8-Ki-unM"/>
+                                    <outlet property="cellImage" destination="0Sg-68-5oL" id="0hS-pM-e7j"/>
                                     <outlet property="mainTitle" destination="r9d-TP-VpL" id="rA3-1x-UIg"/>
                                     <outlet property="profileImage" destination="jmh-43-1b1" id="Apm-aj-nz4"/>
                                     <outlet property="profileName" destination="TqX-9x-zks" id="gdR-IR-S5E"/>
@@ -3290,7 +3294,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g9h-JP-JED"/>
+        <segue reference="Lfq-pS-ZUy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>

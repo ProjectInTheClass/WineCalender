@@ -35,7 +35,10 @@ class ComuVC : UIViewController{
         UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 11",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
         UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 12",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
     ]
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
     
     
     override func viewDidLoad() {
@@ -48,7 +51,15 @@ class ComuVC : UIViewController{
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
+        self.collectionView.contentInset = .init(top: 0, left: 8, bottom: 0, right: 8)
         
+        view.layoutSubviews()
+        view.layoutIfNeeded()
+        // 리서치 필요
+        
+//        PostManager.shared.postRef.observeSingleEvent(of: .value) { snapshot in
+//            print(snapshot)
+//        }
     }
 }
 
@@ -58,6 +69,10 @@ class defaultCell : UICollectionViewCell {
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var heartImageView: UIButton!
+    @IBOutlet weak var heartLabel: UILabel!
+    @IBOutlet weak var commentsImageView: UIButton!
+    @IBOutlet weak var commentsLabel: UILabel!
 }
 
 
@@ -75,7 +90,6 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! defaultCell
         
         cell.cellImage.image = UIImage(named: posts[indexPath.row].userPostImages[0])
-        cell.cellImage.frame.size = CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.width/2)
         cell.cellImage.layer.cornerRadius = 10
         cell.mainTitle.text = posts[indexPath.row].postText
         cell.subTitle.text = posts[indexPath.row].hashTag
@@ -114,12 +128,13 @@ extension ComuVC : UICollectionViewDelegateFlowLayout {
         // 위 아래 간격
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-        //옆간격
+        return 8
+        // 셀간 가로 간격
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //cell 크기
-        let width = collectionView.frame.width / 2 - 1
+        let width = collectionView.frame.width - 74
         let size = CGSize(width: width, height: 200)
         return size
     }
