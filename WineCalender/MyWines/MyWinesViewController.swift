@@ -11,14 +11,13 @@ import Kingfisher
 
 class MyWinesViewController: UIViewController {
     
-    //@IBOutlet weak var profileImageView: UIImageView!
-    //@IBOutlet weak var nicknameLabel: UILabel!
-    //@IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var profileImageURL: URL? = nil
-    var nickname: String = ""
-    var introduction: String = ""
+    var userViewModel: UserViewModel? = nil {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     var postIDs: [String] = []
     var myPosts: [Post] = []
     var postImageURLs: [URL] = []
@@ -28,33 +27,24 @@ class MyWinesViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         //self.navigationController?.navigationBar.layoutIfNeeded()
-        
-        setNotificationObserver()
+        fetchUserProfile()
+        setNotificationObserver()        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchMyPosts()
-        fetchMyProfile()
     }
     
     func setNotificationObserver() {
-        NotificationCenter.default.addObserver(forName: SignInViewController.userSignInNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.fetchMyPosts()
-            self?.fetchMyProfile()
-        }
-        
         NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             self?.fetchMyPosts()
         }
-
-        NotificationCenter.default.addObserver(forName: SettingsTableViewController.userSignOutNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.profileImageURL = nil
-            self?.nickname = ""
-            self?.introduction = ""
-            self?.postIDs = []
-            self?.myPosts = []
-            self?.postImageURLs = []
+    }
+    
+    func fetchUserProfile() {
+        AuthenticationManager.shared.fetchUserProfile { user in
+            self.userViewModel = UserViewModel(user: user)
         }
     }
     
@@ -65,24 +55,20 @@ class MyWinesViewController: UIViewController {
                     self.postIDs = postIDs
                     self.myPosts = myPosts
                     self.postImageURLs = myPosts.map { URL(string: $0.postImageURL[0])! }
-                    //self.tableView.reloadData()
                     self.collectionView.reloadData()
                 }
             } else {
                 DataManager.shared.fetchWineTastingNote()
-                //self.tableView.reloadData()
                 self.collectionView.reloadData()
             }
         }
     }
     
-    func fetchMyProfile() {
-        AuthenticationManager.shared.fetchMyProfile { profileImageURL, nickname, introduction in
-            self.profileImageURL = profileImageURL
-            self.nickname = nickname
-            self.introduction = introduction
-            self.collectionView.reloadData()
-        }
+    func resetModels() {
+        userViewModel = nil
+        postIDs = []
+        myPosts = []
+        postImageURLs = []
     }
     
     @IBAction func moreButtonTapped(_ sender: UIButton) {
@@ -92,58 +78,14 @@ class MyWinesViewController: UIViewController {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         print(indexPath.row)
     }
-}
-
-// MARK: - Table view data source
-/*
-extension MyWinesViewController: UITableViewDataSource, UITableViewDelegate {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if Auth.auth().currentUser != nil {
-            return self.myPosts.count
-        } else {
-            return DataManager.shared.wineTastingNoteList.count
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SettingsSegue",
+           let settingsTVC = segue.destination as? SettingsTableViewController {
+            settingsTVC.userViewModel = self.userViewModel
         }
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "winesCell", for: indexPath) as! MyWinesTableViewCell
-
-        cell.wineCellBG.layer.cornerRadius = 15
-        cell.wineImageView.layer.cornerRadius = 10
-        
-        if Auth.auth().currentUser != nil {
-            let post = self.myPosts[indexPath.row]
-            cell.wineNameLabel.text = post.tastingNote.wineName
-            cell.wineCategoryLabel.text = post.tastingNote.category
-            cell.wineImageView.kf.setImage(with: self.postImageURLs[indexPath.row])
-        } else {
-            let note = DataManager.shared.wineTastingNoteList[indexPath.row]
-            cell.wineNameLabel.text = note.name
-            cell.wineCategoryLabel.text = note.category
-            cell.wineImageView.image = note.image[0]
-        }
-   
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 100
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete", handler: {(ac:UIContextualAction, view: UIView, success:(Bool) -> Void) in })
-        let editAction = UIContextualAction(style: .normal, title: "Edit", handler: {(ac:UIContextualAction, view: UIView, success:(Bool) -> Void) in success(true)})
-        
-        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-    }
 }
-*/
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
@@ -230,21 +172,9 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
         
-        if Auth.auth().currentUser != nil {
-            headerView.nicknameLabel.text = nickname
-            headerView.introductionLabel.text = introduction
-            if profileImageURL == nil {
-                headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-            } else {
-                headerView.profileImageView.kf.setImage(with: profileImageURL)
-            }
-        } else {
-            headerView.profileImageView.image = UIImage(systemName: "person.circle.fill")
-            headerView.nicknameLabel.text = "비회원"
-            headerView.introductionLabel.text = ""
-        }
+        headerView.userViewModel = userViewModel
         
         return headerView
     }

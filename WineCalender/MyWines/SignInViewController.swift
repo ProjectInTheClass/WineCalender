@@ -44,13 +44,13 @@ class SignInViewController: UIViewController {
             }
             AuthenticationManager.shared.signIn(email: email, password: password, warningLabel: warningLabel) { result in
                 if result == true {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.fetchUserProfile()
+                        myWinesVC.fetchMyPosts()
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }
     }
-}
-
-extension SignInViewController {
-    static let userSignInNoti = Notification.Name(rawValue: "userSignInNoti")
 }

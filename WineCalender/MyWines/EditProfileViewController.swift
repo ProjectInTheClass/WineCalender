@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Kingfisher
 
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -17,13 +17,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationItem.title = "프로필 수정"
-        fetchUserProfile()
-    }
-    
+    var userViewModel: UserViewModel? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "프로필 수정"
+        fetchUserProfile()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
@@ -38,18 +37,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func introductionReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
-
-    func fetchUserProfile() {        
-        emailLabel.text = Auth.auth().currentUser?.email
-        
-        DispatchQueue.main.async {
-            AuthenticationManager.shared.fetchMyProfile { profileImageURL, nickname, introduction in
-                if profileImageURL != nil {
-                    self.profileImageView.kf.setImage(with: profileImageURL)
-                }
-                self.nicknameTextField.text = nickname
-                self.introductionTextField.text = introduction
+    
+    func fetchUserProfile() {
+        DispatchQueue.main.async { [weak self] in
+            if let url = self?.userViewModel?.profileImageURL {
+                self?.profileImageView.kf.setImage(with: url)
+            } else {
+                self?.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
             }
+            self?.emailLabel.text = self?.userViewModel?.email
+            self?.nicknameTextField.text = self?.userViewModel?.nickname
+            self?.introductionTextField.text = self?.userViewModel?.introduction
         }
     }
     
@@ -97,9 +95,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         guard nicknameTextField.text != "" else {
             warningLabel.text = "닉네임을 입력해 주세요."
+            nicknameTextField.becomeFirstResponder()
             return
         }
         warningLabel.text = ""
+        
+        self.nicknameTextField.resignFirstResponder()
+        self.introductionTextField.resignFirstResponder()
         
         let alert = UIAlertController(title: "프로필 수정", message: "프로필을 수정하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
@@ -108,9 +110,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             let profileImage = self.profileImageView.image!
             let nickname = self.nicknameTextField.text!
             let introduction = self.introductionTextField.text!
-            AuthenticationManager.shared.saveMyProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
+            AuthenticationManager.shared.saveUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
                 if result == true {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.fetchUserProfile()
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 } else {
                     print("프로필 수정 오류")
                     //self.warningLabel.text = "오류 잠시 후 다시 시도해 주세요. "

@@ -34,10 +34,7 @@ class PostManager {
                                 if let error = error {
                                     print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
                                 }
-                                guard let url = url else { return }
-                                let urlString = "\(url)"
-                                //let value = [index:urlString]
-                                //let childUpdates = ["/\(postID)/postImageURL":value]
+                                guard let urlString: String = url?.absoluteString else { return }
                                 let childUpdates = ["/\(postID)/postImageURL/\(index)":urlString]
                                 PostManager.shared.postRef.updateChildValues(childUpdates)
                                 print("이미지 등록함")

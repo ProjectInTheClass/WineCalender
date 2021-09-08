@@ -109,7 +109,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
                 if result == true {
                     let alert = UIAlertController(title: "회원가입완료", message: "환영합니다:)", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
-                        self.navigationController?.popToRootViewController(animated: true)
+                        if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                            myWinesVC.fetchUserProfile()
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
                     })
                     self.present(alert, animated: true, completion: nil)
                 } else {

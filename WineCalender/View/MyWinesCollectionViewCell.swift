@@ -17,11 +17,3 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!
     
 }
-
-class MyWinesHeaderView: UICollectionReusableView {
-    
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nicknameLabel: UILabel!
-    @IBOutlet weak var introductionLabel: UILabel!
-    
-}

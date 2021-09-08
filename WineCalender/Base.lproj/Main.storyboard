@@ -261,7 +261,7 @@
                             <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                             <color key="tintColor" name="blackAndWhite"/>
                             <connections>
-                                <segue destination="9oL-Ln-Kbw" kind="show" id="lYh-8v-Q0B"/>
+                                <segue destination="9oL-Ln-Kbw" kind="show" identifier="SettingsSegue" id="lYh-8v-Q0B"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
