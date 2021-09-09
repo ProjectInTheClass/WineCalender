@@ -27,7 +27,19 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
         self.view.endEditing(true)
     }
     
-    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+    @IBAction func emailReturnkeyTapped(_ sender: UITextField) {
+        passwordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordReturnkeyTapped(_ sender: UITextField) {
+        checkPasswordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func checkPasswordReturnkeyTapped(_ sender: UITextField) {
+        nicknameTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func nicknameReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
@@ -97,9 +109,14 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
                 if result == true {
                     let alert = UIAlertController(title: "회원가입완료", message: "환영합니다:)", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
-                        self.navigationController?.popToRootViewController(animated: true)
+                        if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                            myWinesVC.fetchUserProfile()
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
                     })
                     self.present(alert, animated: true, completion: nil)
+                } else {
+                    print("회원가입 실패")
                 }
             }
         }

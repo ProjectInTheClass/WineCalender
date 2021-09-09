@@ -7,6 +7,8 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
+import FirebaseDatabase
 
 class AuthenticationManager {
     
@@ -18,7 +20,7 @@ class AuthenticationManager {
     func signUp(email: String, password: String, nickname: String, profileImage: UIImage, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                print(error.localizedDescription)
+                print("회원가입 오류 - \(error.localizedDescription)")
                 if error.localizedDescription.contains("The email address is badly formatted.") {
                     warningLabel.text = "이메일 형식을 확인해 주세요."
                 } else if error.localizedDescription.contains("The email address is already in use by another account.") {
@@ -28,10 +30,12 @@ class AuthenticationManager {
                 }
                 return
             } else {
-                self.saveUserNicknameAndProfileImage(nickname: nickname, profileImage: profileImage) { result in
+                self.saveUserProfile(profileImage: profileImage, nickname: nickname, introduction: "" ) { result in
                     if result == true {
-                        NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
                         return completion(true)
+                    } else {
+                        print("회원가입 - 프로필 저장 실패")
+                        return completion(false)
                     }
                 }
             }
@@ -46,7 +50,6 @@ class AuthenticationManager {
                 return
             } else {
                 completion(true)
-                NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
             }
         }
     }
@@ -54,52 +57,68 @@ class AuthenticationManager {
     func signOut() {
         do {
             try Auth.auth().signOut()
-            NotificationCenter.default.post(name: SignInViewController.userStateChangeNoti, object: nil)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
     }
     
-    func saveUserNicknameAndProfileImage(nickname: String, profileImage: UIImage, completion: @escaping(Bool) -> Void) {
-        let uid = Auth.auth().currentUser!.uid
-        if profileImage.isSymbolImage == true {
-        } else {
+    func saveUserProfile(profileImage: UIImage, nickname: String, introduction: String, completion: @escaping(Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        if !profileImage.isSymbolImage {
             let profileImageName = uid + ".jpg"
             if let profileImageData = profileImage.jpegData(compressionQuality: 0.1) {
                 userProfileImageRef.child(profileImageName).putData(profileImageData, metadata: nil) { metadata, error in
                     if let error = error {
                         print("프로필 이미지 등록 에러 : \(error.localizedDescription)")
+                        completion(false)
                     } else {
                         print("프로필 이미지 등록함")
-                    }
-                }
-            }
-        }
-        userRef.child(uid).setValue(["nickname": nickname])
-        completion(true)
-    }
-    
-    func fetchUserNicknameAndProfileImage(completion: @escaping(_ nickname: String, _ profileImageURL: URL?) -> Void) {
-        if let uid = Auth.auth().currentUser?.uid {
-            userRef.child(uid).child("nickname").observeSingleEvent(of: .value) { snapshot in
-                let nickname = snapshot.value as? String ?? "닉네임없음"
-                let profileImageName = uid + ".jpg"
-                self.userProfileImageRef.child(profileImageName).downloadURL { url, error in
-                    if let error = error {
-                        let profileImageURL: URL? = nil
-                        print("이미지 다운로드 에러 또는 이미지없음: \(error.localizedDescription)")
-                        completion(nickname,profileImageURL)
-                    } else {
-                        self.userProfileImageRef.child(profileImageName).downloadURL { (url, error) in
-                            guard let downloadURL = url else {
-                                return
+                        self.userProfileImageRef.child(profileImageName).downloadURL { url, error in
+                            guard let urlString: String = url?.absoluteString else { return }
+                            if introduction != "" {
+                                AuthenticationManager.shared.userRef.child(uid).setValue(["profileImageURL": urlString, "nickname": nickname, "introduction": introduction])
+                                completion(true)
+                            } else {
+                                AuthenticationManager.shared.userRef.child(uid).setValue(["profileImageURL": urlString, "nickname": nickname])
+                                completion(true)
                             }
-                            let profileImageURL = downloadURL
-                            completion(nickname, profileImageURL)
                         }
                     }
                 }
             }
+        } else {
+            if introduction != "" {
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname, "introduction": introduction])
+                completion(true)
+            } else {
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname])
+                completion(true)
+            }
+        }
+    }
+    
+    func fetchUserProfile(completion: @escaping (User) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid,
+              let email = Auth.auth().currentUser?.email else { return }
+        
+        userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let values = snapshot.value as? [String : String] else { return }
+            
+            var profileImageURL: URL? = nil
+            if let url = values["profileImageURL"] {
+                profileImageURL = URL(string: url)
+            }
+            
+            let nickname = values["nickname"]!
+            
+            var introduction: String? = nil
+            if let introductionValue = values["introduction"] {
+                introduction = introductionValue
+            }
+            
+            let user = User(uid: uid, email: email, profileImageURL: profileImageURL, nickname: nickname, introduction: introduction)
+            
+            completion(user)
         }
     }
     

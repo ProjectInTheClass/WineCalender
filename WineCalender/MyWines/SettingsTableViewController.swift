@@ -10,30 +10,23 @@ import Firebase
 
 class SettingsTableViewController: UITableViewController {
     
+    var userViewModel: UserViewModel? = nil
+    
     let section1 = ["공지사항", "도움말", "문의하기", "이용약관", "개인정보 취급방침"]
     lazy var section2 = [String]()
-
-    var userState: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationItem.title = "설정"
         updateRow()
-        
-        NotificationCenter.default.addObserver(forName: SignInViewController.userStateChangeNoti, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.updateRow()
-        }
     }
     
     func updateRow() {
-        if Auth.auth().currentUser == nil {
+        if userViewModel == nil {
             self.section2 = ["로그인"]
-            userState = false
         } else {
             self.section2 = ["프로필 수정", "비밀번호 변경", "로그아웃"]
-            userState = true
         }
-        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -64,13 +57,14 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        if userState {
+        if userViewModel != nil {
             let editProfileIndexPath = IndexPath(row: 0, section: 1)
             let changePasswordIndexPath = IndexPath(row: 1, section: 1)
             let signOutIndexPath = IndexPath(row: 2, section: 1)
             switch indexPath {
             case editProfileIndexPath:
                 if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
+                    editProfileVC.userViewModel = self.userViewModel
                     self.navigationController?.pushViewController(editProfileVC, animated: true)
                 }
             case changePasswordIndexPath:
@@ -82,7 +76,10 @@ class SettingsTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
                     AuthenticationManager.shared.signOut()
-                    self.navigationController?.popViewController(animated: true)
+                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.resetModels()
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }))
                 self.present(alert, animated: true, completion: nil)
             default:

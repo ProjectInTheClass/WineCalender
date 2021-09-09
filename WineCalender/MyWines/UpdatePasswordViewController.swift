@@ -25,6 +25,18 @@ class UpdatePasswordViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    @IBAction func presentPasswordReturnKeyTapped(_ sender: UITextField) {
+        newPasswordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func newPasswordReturnKeyTapped(_ sender: UITextField) {
+        checkNewPasswordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func checkNewPasswordReturnKeyTapped(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         guard presentPasswordTextField.text != "", newPasswordTextField.text != "",
               checkNewPasswordTextField.text != "" else {

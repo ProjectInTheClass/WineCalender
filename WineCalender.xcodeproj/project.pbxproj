@@ -16,6 +16,7 @@
 		122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */; };
 		122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */; };
 		122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DE26C3A20200190CA1 /* WineVarieties.swift */; };
+		1226FF4426E8731F003ACE3A /* MyWinesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */; };
 		123DEC4726C449B600DE45F7 /* WineProducingCountriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */; };
 		123DEC4926C44AFD00DE45F7 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEC4826C44AFD00DE45F7 /* Countries.swift */; };
 		12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E792697517500F2FF20 /* CalendarViewController.swift */; };
@@ -24,6 +25,8 @@
 		125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */; };
 		125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */; };
 		126810B326D407150061B9A5 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126810B226D407150061B9A5 /* FindPasswordViewController.swift */; };
+		1280D8A926E654A20052226A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8A826E654A20052226A /* User.swift */; };
+		1280D8AB26E654B30052226A /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8AA26E654B30052226A /* UserViewModel.swift */; };
 		1284F5EE26DB51860033CFD0 /* MyWinesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */; };
 		12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BB26984D0000911CF0 /* Categories.swift */; };
 		12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */; };
@@ -95,6 +98,7 @@
 		122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTastingNoteViewController.swift; sourceTree = "<group>"; };
 		122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarietiesTableViewController.swift; sourceTree = "<group>"; };
 		122536DE26C3A20200190CA1 /* WineVarieties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarieties.swift; sourceTree = "<group>"; };
+		1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesHeaderView.swift; sourceTree = "<group>"; };
 		123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineProducingCountriesTableViewController.swift; sourceTree = "<group>"; };
 		123DEC4826C44AFD00DE45F7 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		12578E792697517500F2FF20 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +107,9 @@
 		125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewController.swift; sourceTree = "<group>"; };
 		125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewCell.swift; sourceTree = "<group>"; };
 		126810B226D407150061B9A5 /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
-		1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyWinesCollectionViewCell.swift; path = WineCalender/MyWinesCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
+		1280D8A826E654A20052226A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		1280D8AA26E654B30052226A /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyWinesCollectionViewCell.swift; path = WineCalender/View/MyWinesCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		12C9D6BB26984D0000911CF0 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		12C9D6BD2698547500911CF0 /* AddScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddScheduleTableViewController.swift; sourceTree = "<group>"; };
 		12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				12FF458426CC248F005EB491 /* UILabel+Helpers.swift */,
-				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
 				122536DE26C3A20200190CA1 /* WineVarieties.swift */,
 				123DEC4826C44AFD00DE45F7 /* Countries.swift */,
 				125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */,
@@ -215,10 +220,43 @@
 		1223396626CFA2B900B7FB74 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				1223396926CFC38900B7FB74 /* AuthenticationManager.swift */,
 				12EC792E26D4C31C0003DE27 /* PostManager.swift */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		1226FF4126E86B72003ACE3A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */,
+				1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1226FF4226E870A0003ACE3A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				1223396926CFC38900B7FB74 /* AuthenticationManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		1263F9C226E0E5F40094DF99 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				12E188C526CBB1F00035964F /* WineTastingNotes.swift */,
+				1280D8A826E654A20052226A /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1280D8A726E6548C0052226A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1280D8AA26E654B30052226A /* UserViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		1F215B1D269EB85B00F0E526 /* Camera */ = {
@@ -299,6 +337,10 @@
 		1FCB9111267B846C008C93C7 /* WineCalender */ = {
 			isa = PBXGroup;
 			children = (
+				1263F9C226E0E5F40094DF99 /* Model */,
+				1226FF4126E86B72003ACE3A /* View */,
+				1280D8A726E6548C0052226A /* ViewModel */,
+				1226FF4226E870A0003ACE3A /* Service */,
 				1F215B1E269EB89B00F0E526 /* Data */,
 				1F21DD0026AE9655000C6A59 /* Comunity */,
 				1223396426CFA22700B7FB74 /* AddTastingNote */,
@@ -370,7 +412,6 @@
 				C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */,
 				C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */,
 				12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */,
-				1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */,
 				1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */,
 				1223396726CFC10A00B7FB74 /* SignInViewController.swift */,
 				1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */,
@@ -625,6 +666,7 @@
 			files = (
 				1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */,
 				12E188C426CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift in Sources */,
+				1280D8A926E654A20052226A /* User.swift in Sources */,
 				12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */,
 				125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
@@ -647,6 +689,7 @@
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */,
 				122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */,
+				1280D8AB26E654B30052226A /* UserViewModel.swift in Sources */,
 				22AF411C26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
@@ -656,6 +699,7 @@
 				12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */,
 				1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */,
 				1F21DCFF26AA7E2D000C6A59 /* SearchTableViewCell.swift in Sources */,
+				1226FF4426E8731F003ACE3A /* MyWinesHeaderView.swift in Sources */,
 				12EC792F26D4C31C0003DE27 /* PostManager.swift in Sources */,
 				12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */,
 				22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */,

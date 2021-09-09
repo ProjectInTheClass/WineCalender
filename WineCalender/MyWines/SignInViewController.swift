@@ -24,7 +24,11 @@ class SignInViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    @IBAction func keboardReturnKeyTapped(_ sender: UITextField) {
+    @IBAction func emailReturnKeyTapped(_ sender: UITextField) {
+        passwordTextField.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
     }
     
@@ -40,13 +44,13 @@ class SignInViewController: UIViewController {
             }
             AuthenticationManager.shared.signIn(email: email, password: password, warningLabel: warningLabel) { result in
                 if result == true {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.fetchUserProfile()
+                        myWinesVC.fetchMyPosts()
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }
     }
-}
-
-extension SignInViewController {
-    static let userStateChangeNoti = Notification.Name(rawValue: "userStateChangeNoti")
 }
