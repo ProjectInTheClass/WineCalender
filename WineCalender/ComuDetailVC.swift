@@ -25,7 +25,7 @@ class ComuDetailVC : UIViewController,UIGestureRecognizerDelegate{
             UIImage(named: "postImage04"),
             UIImage(named: "postImage05")
        ]
-    var postData : UserData?
+    var postData : Post?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,17 +34,17 @@ class ComuDetailVC : UIViewController,UIGestureRecognizerDelegate{
         postCollection.delegate = self
         postCollection.dataSource = self
         
-        detailProfile.image = UIImage(named: postData?.profileImageName ?? "AppIcon")
+        detailProfile.image = UIImage(named: "AppIcon")
         detailProfile.layer.cornerRadius = detailProfile.frame.height/2
         detailProfile.layer.borderWidth = 0.1
         detailProfile.layer.borderColor = UIColor.lightGray.cgColor
         
 //        detailMainImg.image = UIImage(named: "AppIcon")
-        memoTxt.text = postData?.postText
+        
         memoTxt.font = UIFont.systemFont(ofSize: 16)
-        hashTag.text = postData?.hashTag
+        
         hashTag.font = UIFont.boldSystemFont(ofSize: 13)
-        userName.text = postData?.userName
+        
         
         followBtn.layer.cornerRadius = 5
         

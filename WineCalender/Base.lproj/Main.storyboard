@@ -1745,7 +1745,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="eJS-t8-3Y3"/>
                             </scrollView>
                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvA-th-Udc">
-                                <rect key="frame" x="10" y="2391" width="394" height="50"/>
+                                <rect key="frame" x="10" y="2440" width="394" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="616-DT-DUh"/>
@@ -2255,7 +2255,7 @@
         <!--추천게시글-->
         <scene sceneID="07v-qx-jNX">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="MUZ-EU-hAR" customClass="ComuVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="MUZ-EU-hAR" customClass="Community" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="38U-7C-2vx" userLabel="collectionView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2267,7 +2267,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="defaultCell" id="Zry-NE-May" customClass="defaultCell" customModule="WineCalender" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="defaultCell" id="Zry-NE-May" customClass="PostThumbnailCell" customModule="WineCalender" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="183" height="320"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="znK-z1-VqK">
@@ -2376,7 +2376,7 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="183" height="320"/>
                                 <connections>
-                                    <outlet property="cellImage" destination="pgC-2y-Qtx" id="fL8-Ki-unM"/>
+                                    <outlet property="cellImage" destination="pgC-2y-Qtx" id="fDd-ps-6Y3"/>
                                     <outlet property="mainTitle" destination="r9d-TP-VpL" id="rA3-1x-UIg"/>
                                     <outlet property="profileImage" destination="jmh-43-1b1" id="Apm-aj-nz4"/>
                                     <outlet property="profileName" destination="TqX-9x-zks" id="gdR-IR-S5E"/>
@@ -2395,7 +2395,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="추천게시글" largeTitleDisplayMode="never" id="KRr-O8-qYx" customClass="ComuNavController" customModule="WineCalender" customModuleProvider="target"/>
                     <connections>
-                        <outlet property="collectionView" destination="38U-7C-2vx" id="3aV-ah-EIL"/>
+                        <outlet property="collectionView" destination="38U-7C-2vx" id="Pvz-WS-VeY"/>
                         <segue destination="J1V-b9-rvV" kind="show" identifier="collectionDetail" id="dVH-YG-c4m"/>
                     </connections>
                 </viewController>
@@ -2478,7 +2478,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uQA-CA-V2x">
-                                                            <rect key="frame" x="0.0" y="0.0" width="413" height="314"/>
+                                                            <rect key="frame" x="0.0" y="-9" width="413" height="314"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
@@ -3290,7 +3290,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="g9h-JP-JED"/>
+        <segue reference="Lfq-pS-ZUy"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>

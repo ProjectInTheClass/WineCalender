@@ -13,6 +13,8 @@ struct Post: Decodable {
     var postingDate: Date
     var postImageURL: [String]
     var tastingNote: WineTastingNotes
+    var userName : String?
+    var profileImageURL : URL?
 }
 
 struct WineTastingNotes: Decodable {

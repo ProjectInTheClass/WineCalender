@@ -20,10 +20,10 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let firstViewController = UIViewController()
+        let firstViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
         firstViewController.view.backgroundColor = .orange
     
-        let secondViewController = UIViewController()
+        let secondViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
         secondViewController.view.backgroundColor = .purple
         
         // Initialize a FixedPagingViewController and pass
@@ -41,12 +41,12 @@ class TabBarController: UITabBarController {
         pagingViewController.didMove(toParent: self)
         
         // TabBarItem
-        let community = (storyboard?.instantiateViewController(identifier: "Community"))!
+        
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
-        self.viewControllers = [community, add, myWines]
+        self.viewControllers = [pagingViewController, add, myWines]
         
         setAddButton()
     }
