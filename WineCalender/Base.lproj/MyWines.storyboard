@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -15,12 +16,12 @@
             <objects>
                 <tableViewController storyboardIdentifier="UITableViewController-DZv-Fd-3AE" id="DZv-Fd-3AE" customClass="MyWinesTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="scrollableAxes" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3ne-RU-Q9J">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="winesCell" rowHeight="100" id="ebC-Sq-S4B" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ebC-Sq-S4B" id="FJa-7f-4Y5" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -84,11 +85,11 @@
             <objects>
                 <viewController id="NNa-q7-PN9" customClass="MyWinesViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IWa-Jy-ajf">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qsX-hJ-vtq">
-                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="Y1z-Ej-AEn">
                                     <size key="itemSize" width="128" height="128"/>
@@ -111,28 +112,28 @@
                                                     <rect key="frame" x="5" y="50" width="118" height="73"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🍷" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-KH-jQR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="118" height="24.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="118" height="24.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🗓" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5o-eX-Kxy">
-                                                            <rect key="frame" x="0.0" y="24.333333333333329" width="118" height="24.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="24.5" width="118" height="24"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Jwj-ou-SXO">
-                                                            <rect key="frame" x="0.0" y="48.666666666666671" width="118" height="24.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="48.5" width="118" height="24.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⭐️" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2mA-z4-0Di">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="46" height="24.333333333333332"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="46" height="24.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kzN-rk-U7X">
-                                                                    <rect key="frame" x="46" y="0.0" width="72" height="24.333333333333332"/>
+                                                                    <rect key="frame" x="46" y="0.0" width="72" height="24.5"/>
                                                                     <state key="normal" title="more">
                                                                         <color key="titleColor" systemColor="systemPurpleColor"/>
                                                                     </state>
@@ -177,7 +178,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-jh-jtY">
-                                                            <rect key="frame" x="0.0" y="1" width="100" height="98.666666666666671"/>
+                                                            <rect key="frame" x="0.0" y="0.5" width="100" height="99"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="tintColor" systemColor="systemGray5Color"/>
                                                             <constraints>
@@ -277,15 +278,15 @@
             <objects>
                 <tableViewController id="9oL-Ln-Kbw" customClass="SettingsTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="j2S-vD-oSd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="DCy-Xm-7vh">
-                                <rect key="frame" x="20" y="49" width="374" height="43.666667938232422"/>
+                                <rect key="frame" x="20" y="49.5" width="374" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DCy-Xm-7vh" id="xd0-ho-eCs">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -309,7 +310,7 @@
                     <tabBarItem key="tabBarItem" title="MyWines" image="MyWinesTabBarItem" id="F9x-7N-9xN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="9NR-ae-Uge">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
@@ -327,11 +328,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignInViewController" id="yN2-iw-Ptn" userLabel="로그인" customClass="SignInViewController" customModule="WineCalender" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="arh-Vx-etV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ijm-KR-ygi">
-                                <rect key="frame" x="60" y="30" width="294" height="212"/>
+                                <rect key="frame" x="60" y="74" width="294" height="212"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ruy-Y2-Ie0">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="35"/>
@@ -452,11 +453,11 @@
             <objects>
                 <viewController id="dTu-aC-3PN" customClass="SignUpViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ejb-cg-NvF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MCA-c6-BTt">
-                                <rect key="frame" x="157" y="119.66666666666666" width="100" height="98.666666666666671"/>
+                                <rect key="frame" x="157" y="182" width="100" height="99"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="systemGray5Color"/>
                                 <constraints>
@@ -473,7 +474,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pof-IY-KIK">
-                                <rect key="frame" x="157" y="118.66666666666669" width="100" height="100"/>
+                                <rect key="frame" x="157" y="181.5" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="HUY-9r-qlc"/>
                                     <constraint firstAttribute="width" secondItem="Pof-IY-KIK" secondAttribute="height" multiplier="1:1" id="aaF-Mb-mQl"/>
@@ -484,7 +485,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EuS-Gg-Unj">
-                                <rect key="frame" x="60" y="228.66666666666663" width="294" height="259"/>
+                                <rect key="frame" x="60" y="291.5" width="294" height="259"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일 (abc@xyz.com)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jZW-hR-3wV">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="35"/>
@@ -499,14 +500,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vs4-uN-UCv">
-                                        <rect key="frame" x="0.0" y="40.000000000000028" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="40" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="25M-BL-sxu"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호 (6글자 이상)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mPc-nY-oaz">
-                                        <rect key="frame" x="0.0" y="46.000000000000028" width="294" height="35"/>
+                                        <rect key="frame" x="0.0" y="46" width="294" height="35"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="4I0-7P-daK"/>
@@ -518,14 +519,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvj-1v-Lz8">
-                                        <rect key="frame" x="0.0" y="86.000000000000028" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="86" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="eQ8-kD-VyF"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="비밀번호 확인" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4Sh-ab-IMn">
-                                        <rect key="frame" x="0.0" y="92.000000000000028" width="294" height="35"/>
+                                        <rect key="frame" x="0.0" y="92" width="294" height="35"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="CHg-0t-9c0"/>
@@ -537,14 +538,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ns-Fy-nlH">
-                                        <rect key="frame" x="0.0" y="132.00000000000003" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="132" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="to5-Il-GKz"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="닉네임" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Sgo-yG-xam">
-                                        <rect key="frame" x="0.0" y="138.00000000000003" width="294" height="35"/>
+                                        <rect key="frame" x="0.0" y="138" width="294" height="35"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="1yN-jb-1OX"/>
@@ -556,14 +557,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TwW-iE-DQD">
-                                        <rect key="frame" x="0.0" y="178.00000000000003" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="178" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="XIa-N0-Jpc"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmH-he-6B1">
-                                        <rect key="frame" x="0.0" y="184.00000000000003" width="294" height="30"/>
+                                        <rect key="frame" x="0.0" y="184" width="294" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="lAI-Ng-Q3D"/>
                                         </constraints>
@@ -572,7 +573,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wby-cM-rwr">
-                                        <rect key="frame" x="0.0" y="219.00000000000003" width="294" height="39.999999999999972"/>
+                                        <rect key="frame" x="0.0" y="219" width="294" height="40"/>
                                         <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="wC3-lx-a7a"/>
@@ -625,11 +626,11 @@
             <objects>
                 <viewController storyboardIdentifier="EditProfileViewController" id="dl1-AY-HOZ" customClass="EditProfileViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pnC-D6-1YX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bsu-ZR-4eV">
-                                <rect key="frame" x="157" y="31.000000000000007" width="100" height="98.666666666666686"/>
+                                <rect key="frame" x="157" y="74.5" width="100" height="99"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="systemPurpleColor"/>
                                 <constraints>
@@ -645,13 +646,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvW-Wz-n3S">
-                                <rect key="frame" x="157" y="30" width="100" height="100"/>
+                                <rect key="frame" x="157" y="74" width="100" height="100"/>
                                 <connections>
                                     <action selector="profileImageButtonTapped:" destination="dl1-AY-HOZ" eventType="touchUpInside" id="o11-AZ-2bu"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1qw-fK-wYA">
-                                <rect key="frame" x="60" y="140" width="294" height="197"/>
+                                <rect key="frame" x="60" y="184" width="294" height="197"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuA-He-RK1">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="25"/>
@@ -762,20 +763,20 @@
             <objects>
                 <viewController id="yN2-qv-yVt" customClass="FindPasswordViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8mR-T4-5Fo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="v6W-qx-cUp">
-                                <rect key="frame" x="60" y="30" width="294" height="166.66666666666666"/>
+                                <rect key="frame" x="60" y="30" width="294" height="167"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="가입하신 이메일 주소를 입력해 주세요. 비밀번호 재설정 이메일을 전송합니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fw7-Mc-Q2E">
-                                        <rect key="frame" x="0.0" y="0.0" width="294" height="40.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="294" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jPa-on-iSc">
-                                        <rect key="frame" x="0.0" y="45.666666666666671" width="294" height="35"/>
+                                        <rect key="frame" x="0.0" y="46" width="294" height="35"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="h9v-ts-DJ1"/>
@@ -787,14 +788,14 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aML-IE-GUo">
-                                        <rect key="frame" x="0.0" y="85.666666666666671" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="86" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="87b-Yu-RaY"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BX9-0M-PkX">
-                                        <rect key="frame" x="0.0" y="91.666666666666671" width="294" height="30"/>
+                                        <rect key="frame" x="0.0" y="92" width="294" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="7qg-aQ-HB7"/>
                                         </constraints>
@@ -803,7 +804,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miD-3j-BlR">
-                                        <rect key="frame" x="0.0" y="126.66666666666666" width="294" height="40"/>
+                                        <rect key="frame" x="0.0" y="127" width="294" height="40"/>
                                         <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="ZFT-Nk-N20"/>
@@ -846,11 +847,11 @@
             <objects>
                 <viewController storyboardIdentifier="UpdatePasswordViewController" id="rNR-Pm-seO" customClass="UpdatePasswordViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8GQ-26-yNV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="mDr-VY-rlf">
-                                <rect key="frame" x="60" y="30" width="294" height="248"/>
+                                <rect key="frame" x="60" y="74" width="294" height="248"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="현재 비밀번호" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="90B-0Q-1ON">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="35"/>
