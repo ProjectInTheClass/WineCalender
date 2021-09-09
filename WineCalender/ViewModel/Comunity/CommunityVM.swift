@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Parchment
 
-struct UserData {
+struct PostData {
     var userName : String
     var profileImageName : String
     var followed : Bool
@@ -21,7 +21,7 @@ struct UserData {
 class ComuVC : UIViewController{
     @IBOutlet var collectionView: UICollectionView!
     
-    var posts = [UserData]()
+    var posts = [PostData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +76,7 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
-        guard let item = sender as? UserData else { return }
+        guard let item = sender as? PostData else { return }
         ComuDetailVC.postData = item
                  
     }
