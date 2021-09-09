@@ -62,6 +62,9 @@
 		5C04E5E602073F713F4D418D /* Pods_WineCalender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F6D26CAC0A65D404A6CDCF /* Pods_WineCalender.framework */; };
 		C767CAEF26BCFB4100BD827A /* MyWinesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */; };
 		C767CAF126BCFB6300BD827A /* MyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */; };
+		C7BAABA626E9CC6400471FB1 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BAABA426E9CC6400471FB1 /* Community.storyboard */; };
+		C7BAABA926E9CDB200471FB1 /* MyWines.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BAABA726E9CDB200471FB1 /* MyWines.storyboard */; };
+		C7BAABAC26E9CEA500471FB1 /* TastingNotes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7BAABAA26E9CEA500471FB1 /* TastingNotes.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +151,9 @@
 		A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WineCalender_WineCalenderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C767CAEE26BCFB4100BD827A /* MyWinesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesTableViewCell.swift; sourceTree = "<group>"; };
 		C767CAF026BCFB6300BD827A /* MyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesTableViewController.swift; sourceTree = "<group>"; };
+		C7BAABA526E9CC6400471FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Community.storyboard; sourceTree = "<group>"; };
+		C7BAABA826E9CDB200471FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MyWines.storyboard; sourceTree = "<group>"; };
+		C7BAABAB26E9CEA500471FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TastingNotes.storyboard; sourceTree = "<group>"; };
 		EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WineCalenderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -306,6 +312,9 @@
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
 				1FCB9118267B846C008C93C7 /* Main.storyboard */,
 				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
+				C7BAABA426E9CC6400471FB1 /* Community.storyboard */,
+				C7BAABAA26E9CEA500471FB1 /* TastingNotes.storyboard */,
+				C7BAABA726E9CDB200471FB1 /* MyWines.storyboard */,
 				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
 				1FCB9123267B846F008C93C7 /* Info.plist */,
 				1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */,
@@ -482,8 +491,11 @@
 			files = (
 				1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */,
 				1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */,
+				C7BAABAC26E9CEA500471FB1 /* TastingNotes.storyboard in Resources */,
 				1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */,
+				C7BAABA626E9CC6400471FB1 /* Community.storyboard in Resources */,
 				1FCB911A267B846C008C93C7 /* Main.storyboard in Resources */,
+				C7BAABA926E9CDB200471FB1 /* MyWines.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,6 +718,30 @@
 				1FCB9121267B846F008C93C7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		C7BAABA426E9CC6400471FB1 /* Community.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7BAABA526E9CC6400471FB1 /* Base */,
+			);
+			name = Community.storyboard;
+			sourceTree = "<group>";
+		};
+		C7BAABA726E9CDB200471FB1 /* MyWines.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7BAABA826E9CDB200471FB1 /* Base */,
+			);
+			name = MyWines.storyboard;
+			sourceTree = "<group>";
+		};
+		C7BAABAA26E9CEA500471FB1 /* TastingNotes.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7BAABAB26E9CEA500471FB1 /* Base */,
+			);
+			name = TastingNotes.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
