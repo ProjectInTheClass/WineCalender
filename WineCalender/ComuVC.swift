@@ -21,34 +21,16 @@ struct UserData {
 class ComuVC : UIViewController{
     @IBOutlet var collectionView: UICollectionView!
     
-    var posts:[UserData] = [
-        UserData(userName: "JaeKwon",profileImageName:"jk", followed: false,postText: "오늘 먹은 와인이 어쩌고 저쩌고",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"],hashTag: "#오늘#했다#혼술#많이"),
-        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 2",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 3",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 4",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "JaeKwon",profileImageName:"jk", followed: false,postText: "Test 5",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 6",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 7",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 8",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "Jaekwon",profileImageName:"jk", followed: false,postText: "Test 9",userPostImages: ["postImage01","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "MJ",profileImageName:"mj", followed: false,postText: "Test 10",userPostImages: ["postImage02","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "METAOX",profileImageName:"gh", followed: false,postText: "Test 11",userPostImages: ["postImage03","postImage02","postImage03","postImage04","postImage05"]),
-        UserData(userName: "Zenn K",profileImageName:"sj", followed: false,postText: "Test 12",userPostImages: ["postImage04","postImage02","postImage03","postImage04","postImage05"]),
-    ]
-    
-    
+    var posts = [UserData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        
-        
     }
 }
 
@@ -60,11 +42,7 @@ class defaultCell : UICollectionViewCell {
     @IBOutlet weak var profileImage: UIImageView!
 }
 
-
 extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
-//    }
     // 컬렉션 뷰의 마진설정
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -100,11 +78,7 @@ extension ComuVC : UICollectionViewDelegate,UICollectionViewDataSource {
         guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
         guard let item = sender as? UserData else { return }
         ComuDetailVC.postData = item
-         
-//        let selectedItem = collectionView.indexPathsForSelectedItems!
-//        ComuDetailVC.post = posts[selectedItem]
-//        print(selectedItem.count)
-        
+                 
     }
 }
 

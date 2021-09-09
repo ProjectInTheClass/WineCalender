@@ -8,6 +8,13 @@
 import Foundation
 import UIKit
 
+struct Post: Decodable {
+    var authorUID: String
+    var postingDate: Date
+    var postImageURL: [String]
+    var tastingNote: WineTastingNotes
+}
+
 struct WineTastingNotes: Decodable {
     var tastingDate: Date
     var place: String?
@@ -29,9 +36,3 @@ struct WineTastingNotes: Decodable {
     var rating: Int16?
 }
 
-struct Post: Decodable {
-    var authorUID: String
-    var postingDate: Date
-    var postImageURL: [String]
-    var tastingNote: WineTastingNotes
-}

@@ -13,10 +13,13 @@ struct UserViewModel {
     let nickname: String
     let introduction: String?
     
+    
     init (user: User) {
         self.email = user.email
         self.profileImageURL = user.profileImageURL
         self.nickname = user.nickname
         self.introduction = user.introduction
+        
     }
+    
 }
