@@ -60,7 +60,6 @@
 		227DED5726E9D326001CCCE0 /* CommunityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED5626E9D326001CCCE0 /* CommunityVM.swift */; };
 		227DED5926E9DD5F001CCCE0 /* PostThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED5826E9DD5F001CCCE0 /* PostThumbnailCell.swift */; };
 		227DED5B26E9DF85001CCCE0 /* PostThumbnailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED5A26E9DF85001CCCE0 /* PostThumbnailVM.swift */; };
-		227DED5D26E9F6A0001CCCE0 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED5C26E9F6A0001CCCE0 /* ImageCollectionViewCell.swift */; };
 		22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411526CE54A900F0D123 /* TapBarController.swift */; };
 		22AF411C26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411B26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift */; };
 		2D44FD482C6F8C9A9A8B5A3B /* Pods_WineCalender_WineCalenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */; };
@@ -148,7 +147,6 @@
 		227DED5626E9D326001CCCE0 /* CommunityVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVM.swift; sourceTree = "<group>"; };
 		227DED5826E9DD5F001CCCE0 /* PostThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostThumbnailCell.swift; sourceTree = "<group>"; };
 		227DED5A26E9DF85001CCCE0 /* PostThumbnailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostThumbnailVM.swift; sourceTree = "<group>"; };
-		227DED5C26E9F6A0001CCCE0 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		22AF411526CE54A900F0D123 /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
 		22AF411B26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPostCollectionViewCollectionViewController.swift; sourceTree = "<group>"; };
 		22C743C658C7C294A97A0BA6 /* Pods-WineCalenderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.release.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -293,16 +291,6 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
-		1F21DD0026AE9655000C6A59 /* Comunity */ = {
-			isa = PBXGroup;
-			children = (
-				227DED5C26E9F6A0001CCCE0 /* ImageCollectionViewCell.swift */,
-				2240FCA926CA5F920074C145 /* ComuDetailVC.swift */,
-				22AF411B26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift */,
-			);
-			name = Comunity;
-			sourceTree = "<group>";
-		};
 		1FCB9106267B846C008C93C7 = {
 			isa = PBXGroup;
 			children = (
@@ -332,7 +320,6 @@
 				1263F9C226E0E5F40094DF99 /* Model */,
 				1226FF4126E86B72003ACE3A /* View */,
 				1280D8A726E6548C0052226A /* ViewModel */,
-				1F21DD0026AE9655000C6A59 /* Comunity */,
 				1223396426CFA22700B7FB74 /* AddTastingNote */,
 				C7E30AF826BD2F8600151A44 /* MyWines */,
 				1F215B2526A0067200F0E526 /* Search */,
@@ -382,6 +369,8 @@
 		227DED5526E9CD95001CCCE0 /* Comunity */ = {
 			isa = PBXGroup;
 			children = (
+				22AF411B26D3762400F0D123 /* DetailPostCollectionViewCollectionViewController.swift */,
+				2240FCA926CA5F920074C145 /* ComuDetailVC.swift */,
 				227DED5626E9D326001CCCE0 /* CommunityVM.swift */,
 				227DED5A26E9DF85001CCCE0 /* PostThumbnailVM.swift */,
 			);
@@ -666,7 +655,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				227DED5D26E9F6A0001CCCE0 /* ImageCollectionViewCell.swift in Sources */,
 				1F215B2726A0069800F0E526 /* SearchViewController.swift in Sources */,
 				12E188C426CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift in Sources */,
 				1280D8A926E654A20052226A /* User.swift in Sources */,
