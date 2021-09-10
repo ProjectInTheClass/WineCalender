@@ -83,3 +83,7 @@ extension Community : UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+class ImageCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var postImage: UIImageView!
+}
