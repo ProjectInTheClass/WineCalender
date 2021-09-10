@@ -1,5 +1,5 @@
 //
-//  UserViewModel.swift
+//  MyWinesHeaderViewModel.swift
 //  WineCalender
 //
 //  Created by Minju Lee on 2021/09/06.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserViewModel {
+struct MyWinesHeaderViewModel {
     let email: String
     let profileImageURL: URL?
     let nickname: String

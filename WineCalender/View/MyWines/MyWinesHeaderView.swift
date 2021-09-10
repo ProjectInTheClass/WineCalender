@@ -14,7 +14,7 @@ class MyWinesHeaderView: UICollectionReusableView {
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var introductionLabel: UILabel!
     
-    var userViewModel: UserViewModel? {
+    var myWinesHeaderViewModel: MyWinesHeaderViewModel? {
         didSet {
             if Auth.auth().currentUser == nil {
                 self.profileImageView.image = UIImage(systemName: "person.circle.fill")
@@ -22,13 +22,13 @@ class MyWinesHeaderView: UICollectionReusableView {
                 self.introductionLabel.text = ""
             } else {
                 DispatchQueue.main.async {
-                    if let url = self.userViewModel?.profileImageURL {
+                    if let url = self.myWinesHeaderViewModel?.profileImageURL {
                         self.profileImageView.kf.setImage(with: url)
                     } else {
                         self.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
                     }
-                    self.nicknameLabel.text = self.userViewModel?.nickname
-                    self.introductionLabel.text = self.userViewModel?.introduction
+                    self.nicknameLabel.text = self.myWinesHeaderViewModel?.nickname
+                    self.introductionLabel.text = self.myWinesHeaderViewModel?.introduction
                 }
             }
         }

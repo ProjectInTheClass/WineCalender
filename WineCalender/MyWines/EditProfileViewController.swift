@@ -17,7 +17,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
-    var userViewModel: UserViewModel? = nil
+    var myWinesHeaderViewModel: MyWinesHeaderViewModel? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +40,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func fetchUserProfile() {
         DispatchQueue.main.async { [weak self] in
-            if let url = self?.userViewModel?.profileImageURL {
+            if let url = self?.myWinesHeaderViewModel?.profileImageURL {
                 self?.profileImageView.kf.setImage(with: url)
             } else {
                 self?.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
             }
-            self?.emailLabel.text = self?.userViewModel?.email
-            self?.nicknameTextField.text = self?.userViewModel?.nickname
-            self?.introductionTextField.text = self?.userViewModel?.introduction
+            self?.emailLabel.text = self?.myWinesHeaderViewModel?.email
+            self?.nicknameTextField.text = self?.myWinesHeaderViewModel?.nickname
+            self?.introductionTextField.text = self?.myWinesHeaderViewModel?.introduction
         }
     }
     

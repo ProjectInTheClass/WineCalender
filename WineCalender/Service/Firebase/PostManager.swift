@@ -50,18 +50,17 @@ class PostManager {
             let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
             let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
             
-            let value = ["authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
+            let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
             
             PostManager.shared.postRef.child(postID).setValue(value)
         }
     }
     
-    func fetchMyPosts(completion: @escaping (_ postIDs: [String], [Post]) -> Void){
+    func fetchMyPosts(completion: @escaping ([Post]) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
             PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
                 
                 guard let snapshotDict = snapshot.value as? [String:Any] else { return }
-                let postIDs = snapshotDict.map{ $0.key }
                 
                 let datas = Array(snapshotDict.values)
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
@@ -74,7 +73,7 @@ class PostManager {
                 var myPosts: [Post] = posts
                 myPosts.sort{ $0.postingDate > $1.postingDate }
                 
-                completion(postIDs, myPosts)
+                completion(myPosts)
             }
         }
     }

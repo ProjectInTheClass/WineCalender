@@ -10,7 +10,7 @@ import Firebase
 
 class SettingsTableViewController: UITableViewController {
     
-    var userViewModel: UserViewModel? = nil
+    var myWinesHeaderViewModel: MyWinesHeaderViewModel? = nil
     
     let section1 = ["공지사항", "도움말", "문의하기", "이용약관", "개인정보 취급방침"]
     lazy var section2 = [String]()
@@ -22,7 +22,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func updateRow() {
-        if userViewModel == nil {
+        if myWinesHeaderViewModel == nil {
             self.section2 = ["로그인"]
         } else {
             self.section2 = ["프로필 수정", "비밀번호 변경", "로그아웃"]
@@ -57,14 +57,14 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        if userViewModel != nil {
+        if myWinesHeaderViewModel != nil {
             let editProfileIndexPath = IndexPath(row: 0, section: 1)
             let changePasswordIndexPath = IndexPath(row: 1, section: 1)
             let signOutIndexPath = IndexPath(row: 2, section: 1)
             switch indexPath {
             case editProfileIndexPath:
                 if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
-                    editProfileVC.userViewModel = self.userViewModel
+                    editProfileVC.myWinesHeaderViewModel = self.myWinesHeaderViewModel
                     self.navigationController?.pushViewController(editProfileVC, animated: true)
                 }
             case changePasswordIndexPath:

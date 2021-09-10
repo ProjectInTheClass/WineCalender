@@ -13,14 +13,17 @@ class MyWinesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var userViewModel: UserViewModel? = nil {
+    var myWinesHeaderViewModel: MyWinesHeaderViewModel? = nil {
         didSet {
             collectionView.reloadData()
         }
     }
-    var postIDs: [String] = []
-    var myPosts: [Post] = []
-    var postImageURLs: [URL] = []
+    
+    var myWinesViewModel: [MyWinesViewModel]? = nil {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,7 @@ class MyWinesViewController: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         //self.navigationController?.navigationBar.layoutIfNeeded()
         fetchUserProfile()
+        fetchMyPosts()
         setNotificationObserver()        
     }
     
@@ -44,31 +48,24 @@ class MyWinesViewController: UIViewController {
     
     func fetchUserProfile() {
         AuthenticationManager.shared.fetchUserProfile { user in
-            self.userViewModel = UserViewModel(user: user)
+            self.myWinesHeaderViewModel = MyWinesHeaderViewModel(user: user)
         }
     }
     
     func fetchMyPosts() {
-        DispatchQueue.main.async {
-            if Auth.auth().currentUser != nil {
-                PostManager.shared.fetchMyPosts { postIDs, myPosts  in
-                    self.postIDs = postIDs
-                    self.myPosts = myPosts
-                    self.postImageURLs = myPosts.map { URL(string: $0.postImageURL[0])! }
-                    self.collectionView.reloadData()
-                }
-            } else {
-                DataManager.shared.fetchWineTastingNote()
-                self.collectionView.reloadData()
+        if Auth.auth().currentUser != nil {
+            PostManager.shared.fetchMyPosts { myPosts in
+                self.myWinesViewModel = myPosts.map{ MyWinesViewModel(post: $0) }
             }
+        } else {
+            DataManager.shared.fetchWineTastingNote()
+            self.collectionView.reloadData()
         }
     }
     
     func resetModels() {
-        userViewModel = nil
-        postIDs = []
-        myPosts = []
-        postImageURLs = []
+        myWinesHeaderViewModel = nil
+        myWinesViewModel = nil
     }
     
     @IBAction func moreButtonTapped(_ sender: UIButton) {
@@ -82,7 +79,7 @@ class MyWinesViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SettingsSegue",
            let settingsTVC = segue.destination as? SettingsTableViewController {
-            settingsTVC.userViewModel = self.userViewModel
+            settingsTVC.myWinesHeaderViewModel = self.myWinesHeaderViewModel
         }
     }
 }
@@ -93,7 +90,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if Auth.auth().currentUser != nil {
-            return self.myPosts.count
+            return self.myWinesViewModel?.count ?? 0
         } else {
             return DataManager.shared.wineTastingNoteList.count
         }
@@ -106,19 +103,13 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.label2.isHidden = true
         cell.label3.isHidden = true
         cell.moreButton.isHidden = true
+        cell.imageView.alpha = 1.0
         
         if Auth.auth().currentUser != nil {
-            //let post = self.myPosts[indexPath.row]
-            //cell.wineNameLabel.text = post.tastingNote.wineName
-            //cell.wineCategoryLabel.text = post.tastingNote.category
-            cell.imageView.kf.setImage(with: self.postImageURLs[indexPath.row])
-            cell.imageView.alpha = 1.0
+            cell.myWinesViewModel = self.myWinesViewModel?[indexPath.row]
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
-            //cell.wineNameLabel.text = note.name
-            //cell.wineCategoryLabel.text = note.category
             cell.imageView.image = note.image[0]
-            cell.imageView.alpha = 1.0
         }
         
         return cell
@@ -158,10 +149,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         dateFormatter.locale = Locale(identifier: "ko_kr")
         
         if Auth.auth().currentUser != nil {
-            let post = self.myPosts[indexPath.row]
-            cell.label1.text = "🍷 " + post.tastingNote.wineName
-            cell.label2.text = "🗓 " + dateFormatter.string(from: post.tastingNote.tastingDate)
-            cell.label3.text = "⭐️" + "\(post.tastingNote.rating ?? 0)"
+            cell.myWinesViewModel = self.myWinesViewModel?[indexPath.row]
         } else {
             let note = DataManager.shared.wineTastingNoteList[indexPath.row]
             cell.label1.text = "🍷 " + note.name
@@ -174,7 +162,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
         
-        headerView.userViewModel = userViewModel
+        headerView.myWinesHeaderViewModel = myWinesHeaderViewModel
         
         return headerView
     }
