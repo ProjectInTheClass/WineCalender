@@ -13,7 +13,7 @@
         <!--추천게시글-->
         <scene sceneID="07v-qx-jNX">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="MUZ-EU-hAR" customClass="ComuVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="MUZ-EU-hAR" customClass="Community" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="38U-7C-2vx" userLabel="collectionView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -25,7 +25,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="defaultCell" id="Zry-NE-May" customClass="defaultCell" customModule="WineCalender" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="defaultCell" id="Zry-NE-May" customClass="PostThumbnailCell" customModule="WineCalender" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="183" height="320"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="znK-z1-VqK">
@@ -134,11 +134,11 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="183" height="320"/>
                                 <connections>
-                                    <outlet property="cellImage" destination="pgC-2y-Qtx" id="fL8-Ki-unM"/>
-                                    <outlet property="mainTitle" destination="r9d-TP-VpL" id="rA3-1x-UIg"/>
-                                    <outlet property="profileImage" destination="jmh-43-1b1" id="Apm-aj-nz4"/>
-                                    <outlet property="profileName" destination="TqX-9x-zks" id="gdR-IR-S5E"/>
-                                    <outlet property="subTitle" destination="yUO-Ug-HZb" id="Sax-tH-1Bm"/>
+                                    <outlet property="cellImage" destination="pgC-2y-Qtx" id="PkR-Ih-qOZ"/>
+                                    <outlet property="mainTitle" destination="r9d-TP-VpL" id="XLb-yL-lJ4"/>
+                                    <outlet property="profileImage" destination="jmh-43-1b1" id="t8M-ew-n0v"/>
+                                    <outlet property="profileName" destination="TqX-9x-zks" id="pcO-zO-79v"/>
+                                    <outlet property="subTitle" destination="yUO-Ug-HZb" id="P8R-1H-eo8"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -153,7 +153,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="추천게시글" largeTitleDisplayMode="never" id="KRr-O8-qYx" customClass="ComuNavController" customModule="WineCalender" customModuleProvider="target"/>
                     <connections>
-                        <outlet property="collectionView" destination="38U-7C-2vx" id="3aV-ah-EIL"/>
+                        <outlet property="collectionView" destination="38U-7C-2vx" id="zmM-61-ngs"/>
                         <segue destination="J1V-b9-rvV" kind="show" identifier="collectionDetail" id="dVH-YG-c4m"/>
                     </connections>
                 </viewController>
