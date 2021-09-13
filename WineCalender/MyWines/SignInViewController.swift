@@ -45,8 +45,8 @@ class SignInViewController: UIViewController {
             AuthenticationManager.shared.signIn(email: email, password: password, warningLabel: warningLabel) { result in
                 if result == true {
                     if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.fetchUserProfile()
-                        myWinesVC.fetchMyPosts()
+                        myWinesVC.myWinesHeaderViewModel.fetchUserProfile()
+                        //myWinesVC.myWinesViewModel.fetchMyPosts()
                         self.navigationController?.popToRootViewController(animated: true)
                     }
                 }

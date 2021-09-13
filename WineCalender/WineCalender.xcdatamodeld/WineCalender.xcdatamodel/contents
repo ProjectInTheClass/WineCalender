@@ -17,24 +17,26 @@
         <attribute name="aromasAndFlavors" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="body" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[UIImage]"/>
         <attribute name="memo" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="place" optional="YES" attributeType="String"/>
+        <attribute name="postingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="price" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="producer" optional="YES" attributeType="String"/>
         <attribute name="producingCountry" optional="YES" attributeType="String"/>
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sweet" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="tannin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tastingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="varieties" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="[String]"/>
         <attribute name="vintage" optional="YES" attributeType="String"/>
+        <attribute name="wineName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Event" positionX="-63" positionY="-18" width="128" height="59"/>
         <element name="MyWine" positionX="-54" positionY="18" width="128" height="44"/>
         <element name="Schedule" positionX="-36" positionY="27" width="128" height="59"/>
-        <element name="WineTastingNote" positionX="-45" positionY="18" width="128" height="299"/>
+        <element name="WineTastingNote" positionX="-45" positionY="18" width="128" height="329"/>
     </elements>
 </model>

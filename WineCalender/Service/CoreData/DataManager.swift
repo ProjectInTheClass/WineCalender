@@ -19,15 +19,15 @@ class DataManager {
     }
     
     // MARK: - WineTastingNote Data
-    
-    var wineTastingNoteList = [WineTastingNote]()
 
-    func fetchWineTastingNote() {
+    func fetchWineTastingNote(completion: @escaping ([WineTastingNote]) -> Void) {
         let request: NSFetchRequest<WineTastingNote> = WineTastingNote.fetchRequest()
-        let sortByDESC = NSSortDescriptor(key: "date", ascending: false)
+        let sortByDESC = NSSortDescriptor(key: "postingDate", ascending: false)
         request.sortDescriptors = [sortByDESC]
         do {
+            var wineTastingNoteList = [WineTastingNote]()
             wineTastingNoteList = try mainContext.fetch(request)
+            completion(wineTastingNoteList)
         } catch {
             print(error)
         }
@@ -36,13 +36,16 @@ class DataManager {
     func addWineTastingNote(tastingNote: WineTastingNotes, images: [UIImage]){
         let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
 
+        let postingDate = Date()
+        
         let compressedImagesDatas = images.map{ $0.jpegData(compressionQuality: 0.2) }
         let compressedImages = compressedImagesDatas.map{ UIImage(data:$0!) }
         
-        object.setValue(tastingNote.tastingDate, forKey: "date")
+        object.setValue(postingDate, forKey: "postingDate")
+        object.setValue(tastingNote.tastingDate, forKey: "tastingDate")
         object.setValue(tastingNote.place, forKey: "place")
         object.setValue(compressedImages, forKey: "image")
-        object.setValue(tastingNote.wineName, forKey: "name")
+        object.setValue(tastingNote.wineName, forKey: "wineName")
         object.setValue(tastingNote.category, forKey: "category")
         object.setValue(tastingNote.varieties, forKey: "varieties")
         object.setValue(tastingNote.producingCountry, forKey: "producingCountry")

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
@@ -17,7 +16,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     
-    var myWinesHeaderViewModel: MyWinesHeaderViewModel? = nil
+    var myWinesHeaderViewModel = MyWinesHeaderViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +39,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func fetchUserProfile() {
         DispatchQueue.main.async { [weak self] in
-            if let url = self?.myWinesHeaderViewModel?.profileImageURL {
-                self?.profileImageView.kf.setImage(with: url)
-            } else {
-                self?.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-            }
-            self?.emailLabel.text = self?.myWinesHeaderViewModel?.email
-            self?.nicknameTextField.text = self?.myWinesHeaderViewModel?.nickname
-            self?.introductionTextField.text = self?.myWinesHeaderViewModel?.introduction
+            self?.profileImageView.image = self?.myWinesHeaderViewModel.profileImage
+            self?.emailLabel.text = self?.myWinesHeaderViewModel.email
+            self?.nicknameTextField.text = self?.myWinesHeaderViewModel.nickname
+            self?.introductionTextField.text = self?.myWinesHeaderViewModel.introduction
         }
     }
     
@@ -113,7 +108,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             AuthenticationManager.shared.saveUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
                 if result == true {
                     if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.fetchUserProfile()
+                        myWinesVC.myWinesHeaderViewModel.fetchUserProfile()
                         self.navigationController?.popToRootViewController(animated: true)
                     }
                 } else {

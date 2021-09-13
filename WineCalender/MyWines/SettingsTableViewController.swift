@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 
 class SettingsTableViewController: UITableViewController {
     
@@ -63,8 +62,8 @@ class SettingsTableViewController: UITableViewController {
             let signOutIndexPath = IndexPath(row: 2, section: 1)
             switch indexPath {
             case editProfileIndexPath:
-                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
-                    editProfileVC.myWinesHeaderViewModel = self.myWinesHeaderViewModel
+                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController, let model = myWinesHeaderViewModel {
+                    editProfileVC.myWinesHeaderViewModel = model
                     self.navigationController?.pushViewController(editProfileVC, animated: true)
                 }
             case changePasswordIndexPath:

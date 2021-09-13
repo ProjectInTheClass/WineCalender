@@ -15,11 +15,13 @@ extension WineTastingNote {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<WineTastingNote> {
         return NSFetchRequest<WineTastingNote>(entityName: "WineTastingNote")
     }
-
-    @NSManaged public var date: Date
+    
+    @NSManaged public var postingDate: Date
+    @NSManaged public var updatedDate: Date?
+    @NSManaged public var tastingDate: Date
     @NSManaged public var place: String?
     @NSManaged public var image: [UIImage]
-    @NSManaged public var name: String
+    @NSManaged public var wineName: String
     @NSManaged public var category: String?
     @NSManaged public var varieties: [String]?
     @NSManaged public var producingCountry: String?

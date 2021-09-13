@@ -6,66 +6,48 @@
 //
 
 import UIKit
-import Firebase
-import Kingfisher
 
 class MyWinesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var myWinesHeaderViewModel: MyWinesHeaderViewModel? = nil {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    let myWinesHeaderViewModel = MyWinesHeaderViewModel()
     
-    var myWinesViewModel: [MyWinesViewModel]? = nil {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    let myWinesViewModel = MyWinesViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        //self.navigationController?.navigationBar.layoutIfNeeded()
-        fetchUserProfile()
-        fetchMyPosts()
+
+        myWinesHeaderViewModel.onUpdated = {
+            self.collectionView.reloadData()
+        }
+        myWinesHeaderViewModel.fetchUserProfile()
+        myWinesViewModel.onUpdated = {
+            self.collectionView.reloadData()
+        }
+//        myWinesViewModel.fetchMyPosts()
         setNotificationObserver()        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchMyPosts()
+        myWinesViewModel.fetchMyPosts()
     }
     
     func setNotificationObserver() {
         NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.fetchMyPosts()
-        }
-    }
-    
-    func fetchUserProfile() {
-        AuthenticationManager.shared.fetchUserProfile { user in
-            self.myWinesHeaderViewModel = MyWinesHeaderViewModel(user: user)
-        }
-    }
-    
-    func fetchMyPosts() {
-        if Auth.auth().currentUser != nil {
-            PostManager.shared.fetchMyPosts { myPosts in
-                self.myWinesViewModel = myPosts.map{ MyWinesViewModel(post: $0) }
+            self?.myWinesViewModel.onUpdated = {
+                self?.collectionView.reloadData()
             }
-        } else {
-            DataManager.shared.fetchWineTastingNote()
-            self.collectionView.reloadData()
+            self?.myWinesViewModel.fetchMyPosts()
         }
     }
     
     func resetModels() {
-        myWinesHeaderViewModel = nil
-        myWinesViewModel = nil
+        myWinesHeaderViewModel.fetchUserProfile()
+        myWinesViewModel.fetchMyPosts()
     }
     
     @IBAction func moreButtonTapped(_ sender: UIButton) {
@@ -77,7 +59,7 @@ class MyWinesViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SettingsSegue",
+        if self.myWinesHeaderViewModel.email != nil, segue.identifier == "SettingsSegue",
            let settingsTVC = segue.destination as? SettingsTableViewController {
             settingsTVC.myWinesHeaderViewModel = self.myWinesHeaderViewModel
         }
@@ -89,11 +71,7 @@ class MyWinesViewController: UIViewController {
 extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if Auth.auth().currentUser != nil {
-            return self.myWinesViewModel?.count ?? 0
-        } else {
-            return DataManager.shared.wineTastingNoteList.count
-        }
+        return self.myWinesViewModel.vm.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -105,12 +83,8 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.moreButton.isHidden = true
         cell.imageView.alpha = 1.0
         
-        if Auth.auth().currentUser != nil {
-            cell.myWinesViewModel = self.myWinesViewModel?[indexPath.row]
-        } else {
-            let note = DataManager.shared.wineTastingNoteList[indexPath.row]
-            cell.imageView.image = note.image[0]
-        }
+        let myWine = myWinesViewModel.vm[indexPath.row]
+        cell.update(myWine: myWine)
         
         return cell
     }
@@ -144,26 +118,15 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             cell.moreButton.isHidden = true
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        
-        if Auth.auth().currentUser != nil {
-            cell.myWinesViewModel = self.myWinesViewModel?[indexPath.row]
-        } else {
-            let note = DataManager.shared.wineTastingNoteList[indexPath.row]
-            cell.label1.text = "🍷 " + note.name
-            cell.label2.text = "🗓 " + dateFormatter.string(from: note.date)
-            cell.label3.text = "⭐️" + "\(note.rating)"
-        }
+        let myWine = myWinesViewModel.vm[indexPath.row]
+        cell.update(myWine: myWine)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
         
-        headerView.myWinesHeaderViewModel = myWinesHeaderViewModel
-        
+        headerView.update(user: myWinesHeaderViewModel)
         return headerView
     }
 }
