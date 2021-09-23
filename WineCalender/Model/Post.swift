@@ -17,7 +17,3 @@ struct Post: Decodable {
     let likes: [String]?
     let comments: [Comment]?
 }
-
-//func getUserForUID() {
-//    
-//}

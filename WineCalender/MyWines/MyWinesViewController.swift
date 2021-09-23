@@ -76,13 +76,13 @@ class MyWinesViewController: UIViewController {
         print(indexPath.row)
 
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
-        let comuDetailVC = storyboard.instantiateViewController(identifier: "ComuDetailVC") as! PostDetail
+        let comuDetailVC = storyboard.instantiateViewController(identifier: "ComuDetailVC") as! ComuDetailVC
 
         if Auth.auth().currentUser != nil {
-            comuDetailVC.postDetailData = posts[indexPath.row]
+            comuDetailVC.postData = posts[indexPath.row]
         } else {
 //            comuDetailVC.postData = Post(note: notes[indexPath.row])
-            comuDetailVC.postDetailData = nil
+            comuDetailVC.postData = nil
         }
         
         self.navigationController?.pushViewController(comuDetailVC, animated: true)

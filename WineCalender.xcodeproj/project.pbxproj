@@ -61,12 +61,10 @@
 		227DED7326EF546E001CCCE0 /* PostThumbnailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */; };
 		227DED7426EF546E001CCCE0 /* CommunityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7026EF546D001CCCE0 /* CommunityVM.swift */; };
 		227DED7526EF546E001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */; };
-		227DED7626EF546E001CCCE0 /* PostDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7226EF546D001CCCE0 /* PostDetail.swift */; };
+		227DED7626EF546E001CCCE0 /* ComuDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7226EF546D001CCCE0 /* ComuDetailVC.swift */; };
 		227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */; };
 		227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */; };
 		227DED7D26EF549B001CCCE0 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7A26EF549B001CCCE0 /* Community.swift */; };
-		227DED7F26F08A00001CCCE0 /* PagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7E26F08A00001CCCE0 /* PagingViewController.swift */; };
-		227DED8126F095FE001CCCE0 /* PostDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED8026F095FE001CCCE0 /* PostDetailVM.swift */; };
 		22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411526CE54A900F0D123 /* TapBarController.swift */; };
 		2D44FD482C6F8C9A9A8B5A3B /* Pods_WineCalender_WineCalenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */; };
 		5C04E5E602073F713F4D418D /* Pods_WineCalender.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F6D26CAC0A65D404A6CDCF /* Pods_WineCalender.framework */; };
@@ -155,12 +153,10 @@
 		227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailVM.swift; sourceTree = "<group>"; };
 		227DED7026EF546D001CCCE0 /* CommunityVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityVM.swift; sourceTree = "<group>"; };
 		227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostCollectionViewCollectionViewController.swift; sourceTree = "<group>"; };
-		227DED7226EF546D001CCCE0 /* PostDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetail.swift; sourceTree = "<group>"; };
+		227DED7226EF546D001CCCE0 /* ComuDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComuDetailVC.swift; sourceTree = "<group>"; };
 		227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailCell.swift; sourceTree = "<group>"; };
 		227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		227DED7A26EF549B001CCCE0 /* Community.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
-		227DED7E26F08A00001CCCE0 /* PagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingViewController.swift; sourceTree = "<group>"; };
-		227DED8026F095FE001CCCE0 /* PostDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailVM.swift; sourceTree = "<group>"; };
 		22AF411526CE54A900F0D123 /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
 		22C743C658C7C294A97A0BA6 /* Pods-WineCalenderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.release.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AD1389320F08F52A5BF1AB6 /* Pods-WineCalender.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender/Pods-WineCalender.debug.xcconfig"; sourceTree = "<group>"; };
@@ -359,12 +355,12 @@
 				1F215B1F269EB8A300F0E526 /* Calendar */,
 				1F215B1D269EB85B00F0E526 /* Camera */,
 				22AF411526CE54A900F0D123 /* TapBarController.swift */,
-				227DED7E26F08A00001CCCE0 /* PagingViewController.swift */,
 				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
 				1FCB9118267B846C008C93C7 /* Main.storyboard */,
 				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
+				C7BAABA426E9CC6400471FB1 /* Community.storyboard */,
 				C7BAABAA26E9CEA500471FB1 /* TastingNotes.storyboard */,
 				C7BAABA726E9CDB200471FB1 /* MyWines.storyboard */,
 				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
@@ -399,7 +395,7 @@
 				227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */,
 				227DED7026EF546D001CCCE0 /* CommunityVM.swift */,
 				227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */,
-				227DED8026F095FE001CCCE0 /* PostDetailVM.swift */,
+				227DED7226EF546D001CCCE0 /* ComuDetailVC.swift */,
 			);
 			path = Comunity;
 			sourceTree = "<group>";
@@ -407,11 +403,9 @@
 		227DED7726EF549B001CCCE0 /* Comunity */ = {
 			isa = PBXGroup;
 			children = (
-				C7BAABA426E9CC6400471FB1 /* Community.storyboard */,
 				227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */,
 				227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */,
 				227DED7A26EF549B001CCCE0 /* Community.swift */,
-				227DED7226EF546D001CCCE0 /* PostDetail.swift */,
 			);
 			path = Comunity;
 			sourceTree = "<group>";
@@ -483,7 +477,6 @@
 				1FCB9124267B8470008C93C7 /* Sources */,
 				1FCB9125267B8470008C93C7 /* Frameworks */,
 				1FCB9126267B8470008C93C7 /* Resources */,
-				04B4ADEE4BD718F6E4C72001 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -589,23 +582,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		04B4ADEE4BD718F6E4C72001 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		14AEBB9B4CAC1C2F60427572 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -734,10 +710,8 @@
 				125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */,
 				1284F5EE26DB51860033CFD0 /* MyWinesCollectionViewCell.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
-				227DED8126F095FE001CCCE0 /* PostDetailVM.swift in Sources */,
 				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,
 				12D9A61D26EA69BD00792C6E /* Comment.swift in Sources */,
-				227DED7F26F08A00001CCCE0 /* PagingViewController.swift in Sources */,
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */,
 				227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */,
@@ -762,7 +736,7 @@
 				1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
 				125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */,
-				227DED7626EF546E001CCCE0 /* PostDetail.swift in Sources */,
+				227DED7626EF546E001CCCE0 /* ComuDetailVC.swift in Sources */,
 				12FF458526CC248F005EB491 /* UILabel+Helpers.swift in Sources */,
 				227DED7326EF546E001CCCE0 /* PostThumbnailVM.swift in Sources */,
 				12D9A62126EA7AFE00792C6E /* MyWinesViewModel.swift in Sources */,
