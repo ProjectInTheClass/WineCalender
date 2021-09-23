@@ -17,10 +17,14 @@ target 'WineCalender' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Kingfisher', '~> 6.3'
+  pod 'RxSwift', '6.2.0'
+  pod 'RxCocoa', '6.2.0'
   
   target 'WineCalenderTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RxBlocking', '6.2.0'
+    pod 'RxTest', '6.2.0'
   end
 
   target 'WineCalenderUITests' do

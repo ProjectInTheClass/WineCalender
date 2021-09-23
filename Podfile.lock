@@ -116,6 +116,16 @@ PODS:
   - Parchment (3.0.1)
   - PromisesObjC (1.2.12)
   - PryntTrimmerView (4.0.2)
+  - RxBlocking (6.2.0):
+    - RxSwift (= 6.2.0)
+  - RxCocoa (6.2.0):
+    - RxRelay (= 6.2.0)
+    - RxSwift (= 6.2.0)
+  - RxRelay (6.2.0):
+    - RxSwift (= 6.2.0)
+  - RxSwift (6.2.0)
+  - RxTest (6.2.0):
+    - RxSwift (= 6.2.0)
   - SnapKit (5.0.1)
   - SteviaLayout (4.7.3)
   - SwiftyCam (4.0.0)
@@ -132,6 +142,10 @@ DEPENDENCIES:
   - JJFloatingActionButton
   - Kingfisher (~> 6.3)
   - Parchment (~> 3.0)
+  - RxBlocking (= 6.2.0)
+  - RxCocoa (= 6.2.0)
+  - RxSwift (= 6.2.0)
+  - RxTest (= 6.2.0)
   - SnapKit (~> 5.0.0)
   - SwiftyCam
   - YPImagePicker
@@ -158,6 +172,11 @@ SPEC REPOS:
     - Parchment
     - PromisesObjC
     - PryntTrimmerView
+    - RxBlocking
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - RxTest
     - SnapKit
     - SteviaLayout
     - SwiftyCam
@@ -184,11 +203,16 @@ SPEC CHECKSUMS:
   Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
+  RxBlocking: 0b29f7d2079109a8de49c411381bed7c33ef1eeb
+  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
+  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
+  RxTest: 0c692fa672b694373ba86d2b00033595297a2831
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
   YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: efad47dc276faec519f4c9c6e48940243ca56902
+PODFILE CHECKSUM: 980b40b3920c0a1f985cb46ebbb7f8daafa916ef
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2

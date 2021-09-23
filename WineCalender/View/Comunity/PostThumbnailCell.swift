@@ -25,12 +25,18 @@ class PostThumbnailCell : UICollectionViewCell {
     func updateView(){
         
         guard let vm = postThumbnailVM else { return }
+        
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
         profileName.text = vm.userName
-        profileImage.kf.setImage(with: vm.profileImageURL) 
+        profileImage.kf.setImage(with: vm.profileImageURL)
+        mainTitle.text = vm.postMainText
+        subTitle.text = vm.postSubText
         
+        mainTitle.font = mainTitle.font.withSize(14)
+        subTitle.font = subTitle.font.withSize(10)
         cellImage.layer.cornerRadius = 10
-        profileImage.layer.borderWidth = 0.1
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.cornerRadius = profileImage.frame.width / 2
         profileImage.layer.borderColor = UIColor.lightGray.cgColor
         // 뷰의 경계에 맞춰준다
         profileImage.clipsToBounds = true

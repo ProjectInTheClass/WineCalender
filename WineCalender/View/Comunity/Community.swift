@@ -23,7 +23,7 @@ class Community : UIViewController{
         self.collectionView.dataSource = self
         
         PostManager.shared.postRef.queryOrdered(byChild: "postingDate").observe(DataEventType.value, with: { snapshot in
-            
+            self.posts.removeAll()
             for child in snapshot.children.reversed() {
                 let snapshot = child as! DataSnapshot
                 guard let dictionary = snapshot.value as? [String:Any] else { return }
@@ -64,13 +64,13 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        self.performSegue(withIdentifier: "collectionDetail", sender: collectionView.cellForItem(at: indexPath))
 //            collectionView.deselectItem(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "collectionDetail", sender: posts[indexPath.row])
+        self.performSegue(withIdentifier: "PostDetailSeque", sender: posts[indexPath.row])
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
+        guard segue.identifier == "PostDetailSeque" , let PostDetail = segue.destination as? PostDetail else {return}
         guard let item = sender as? Post else { return }
-        ComuDetailVC.postData = item
+        PostDetail.postDetailData = item
                  
     }
 }
