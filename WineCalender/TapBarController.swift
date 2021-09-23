@@ -18,13 +18,8 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let firstViewController = UIViewController()
-        firstViewController.view.backgroundColor = .orange
-    
-        let secondViewController = UIViewController()
-        secondViewController.view.backgroundColor = .purple
+        let firstViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
+        let secondViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
         
         // Initialize a FixedPagingViewController and pass
         // in the view controllers.
@@ -41,12 +36,12 @@ class TabBarController: UITabBarController {
         pagingViewController.didMove(toParent: self)
         
         // TabBarItem
-        let community = (storyboard?.instantiateViewController(identifier: "Community"))!
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)
+        pagingViewController.tabBarItem = UITabBarItem(title:"Community",image:UIImage(systemName: ""),selectedImage: nil)
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
-        self.viewControllers = [community, add, myWines]
+        self.viewControllers = [pagingViewController, add, myWines]
         
         setAddButton()
     }

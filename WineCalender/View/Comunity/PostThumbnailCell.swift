@@ -16,6 +16,7 @@ class PostThumbnailCell : UICollectionViewCell {
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     
+    
     var postThumbnailVM : PostThumbnailVM?{
         didSet{
             updateView()
@@ -27,7 +28,10 @@ class PostThumbnailCell : UICollectionViewCell {
         guard let vm = postThumbnailVM else { return }
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
         profileName.text = vm.userName
-        profileImage.kf.setImage(with: vm.profileImageURL) 
+        profileImage.kf.setImage(with: vm.profileImageURL)
+        
+        mainTitle.text = vm.postMainText
+        subTitle.text = vm.postSubText
         
         cellImage.layer.cornerRadius = 10
         profileImage.layer.borderWidth = 0.1

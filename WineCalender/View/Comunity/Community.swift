@@ -68,9 +68,9 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? ComuDetailVC else {return}
+        guard segue.identifier == "collectionDetail" , let ComuDetailVC = segue.destination as? PostDetail else {return}
         guard let item = sender as? Post else { return }
-        ComuDetailVC.postData = item
+        ComuDetailVC.postDetailData = item
                  
     }
 }

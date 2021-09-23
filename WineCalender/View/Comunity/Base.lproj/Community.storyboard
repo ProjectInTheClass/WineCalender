@@ -161,10 +161,10 @@
             </objects>
             <point key="canvasLocation" x="1224.6376811594205" y="2315.217391304348"/>
         </scene>
-        <!--Comu DetailVC-->
+        <!--Post Detail-->
         <scene sceneID="cgx-HG-8eo">
             <objects>
-                <viewController storyboardIdentifier="ComuDetailVC" wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="ComuDetailVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ComuDetailVC" wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="PostDetail" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FZD-k1-Lkv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -212,9 +212,6 @@
                                                 </constraints>
                                                 <color key="tintColor" name="wine1"/>
                                                 <state key="normal" title="팔로우"/>
-                                                <connections>
-                                                    <action selector="followBtnTap:" destination="J1V-b9-rvV" eventType="touchUpInside" id="nLk-bK-J2s"/>
-                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -284,11 +281,10 @@
                     <navigationItem key="navigationItem" id="bLI-rz-obb"/>
                     <connections>
                         <outlet property="detailProfile" destination="eDs-gm-DbW" id="KhE-TJ-Q5N"/>
-                        <outlet property="followBtn" destination="Dje-Fj-Get" id="LIs-qo-D28"/>
-                        <outlet property="hashTag" destination="gSV-Vg-McJ" id="l2F-GN-Y3k"/>
-                        <outlet property="memoTxt" destination="4ez-VZ-IFB" id="Qbl-So-wSh"/>
-                        <outlet property="postCollection" destination="GLb-fM-B21" id="x35-F4-LlH"/>
+                        <outlet property="mainText" destination="4ez-VZ-IFB" id="rE4-25-DKV"/>
+                        <outlet property="postCollection" destination="GLb-fM-B21" id="9DV-hY-zM2"/>
                         <outlet property="userName" destination="Enz-4H-gxj" id="vpu-3b-WR3"/>
+                        <outlet property="wineName" destination="gSV-Vg-McJ" id="3oj-Jr-Xdl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="An8-CM-304" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -298,6 +294,7 @@
         <!--Detail Post Collection View Collection View Controller-->
         <scene sceneID="ngt-WP-dWf">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I6y-gg-hC2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <collectionViewController id="502-S9-1aw" customClass="DetailPostCollectionViewCollectionViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="S4G-cG-5wP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -333,7 +330,6 @@
                         </connections>
                     </collectionView>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I6y-gg-hC2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3054" y="2315"/>
         </scene>
