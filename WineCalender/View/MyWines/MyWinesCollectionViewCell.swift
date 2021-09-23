@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MyWinesCollectionViewCell: UICollectionViewCell {
 
@@ -16,12 +17,34 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     
-    func update(myWine: MyWinesModel) {
-        DispatchQueue.main.async {
-            self.imageView.image = myWine.firstImage
-            self.label1.text = myWine.wineNameDescription
-            self.label2.text = myWine.tastingDateDescription
-            self.label3.text = myWine.ratingDescription
+    var post: Post? {
+        didSet {
+            updatePost()
+        }
+    }
+    var note: WineTastingNote? {
+        didSet {
+            updateNote()
+        }
+    }
+
+    func updatePost() {
+        if let post = post {
+            let vm = MyWinesViewModel(post: post)
+            imageView.kf.setImage(with: vm.firstImageURL)
+            label1.text = vm.wineNameDescription
+            label2.text = vm.tastingDateDescription
+            label3.text = vm.ratingDescription
+        }
+    }
+    
+    func updateNote() {
+        if let note = note {
+            let vm = MyWinesViewModel(note: note)
+            imageView.image = vm.firstImage
+            label1.text = vm.wineNameDescription
+            label2.text = vm.tastingDateDescription
+            label3.text = vm.ratingDescription
         }
     }
 }

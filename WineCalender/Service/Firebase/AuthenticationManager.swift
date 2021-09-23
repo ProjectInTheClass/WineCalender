@@ -97,6 +97,7 @@ class AuthenticationManager {
         }
     }
     
+    //My profile
     func fetchUserProfile(completion: @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid,
               let email = Auth.auth().currentUser?.email else { return }
@@ -119,6 +120,22 @@ class AuthenticationManager {
             let user = User(uid: uid, email: email, profileImageURL: profileImageURL, nickname: nickname, introduction: introduction)
             
             completion(user)
+        }
+    }
+    
+    //Post Author Profile
+    func fetchUserProfile(AuthorUID: String, completion: @escaping (URL?, String) -> Void) {
+        userRef.child(AuthorUID).observeSingleEvent(of: .value) { snapshot in
+            guard let values = snapshot.value as? [String : String] else { return }
+            
+            var profileImageURL: URL? = nil
+            if let url = values["profileImageURL"] {
+                profileImageURL = URL(string: url)
+            }
+            
+            let nickname = values["nickname"]!
+            
+            completion(profileImageURL, nickname)
         }
     }
     

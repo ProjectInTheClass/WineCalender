@@ -15,8 +15,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var introductionTextField: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
-    
-    var myWinesHeaderViewModel = MyWinesHeaderViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +36,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func fetchUserProfile() {
-        DispatchQueue.main.async { [weak self] in
-            self?.profileImageView.image = self?.myWinesHeaderViewModel.profileImage
-            self?.emailLabel.text = self?.myWinesHeaderViewModel.email
-            self?.nicknameTextField.text = self?.myWinesHeaderViewModel.nickname
-            self?.introductionTextField.text = self?.myWinesHeaderViewModel.introduction
+        AuthenticationManager.shared.fetchUserProfile { user in
+            DispatchQueue.main.async {
+                self.profileImageView.kf.setImage(with: user.profileImageURL)
+                self.emailLabel.text = user.email
+                self.nicknameTextField.text = user.nickname
+                self.introductionTextField.text = user.introduction
+            }
         }
     }
     

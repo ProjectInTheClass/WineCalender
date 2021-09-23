@@ -164,7 +164,7 @@
         <!--Comu DetailVC-->
         <scene sceneID="cgx-HG-8eo">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="ComuDetailVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ComuDetailVC" wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="ComuDetailVC" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FZD-k1-Lkv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -293,7 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="An8-CM-304" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2224.6376811594205" y="2315.217391304348"/>
+            <point key="canvasLocation" x="2224.6376811594205" y="2314.9553571428569"/>
         </scene>
         <!--Detail Post Collection View Collection View Controller-->
         <scene sceneID="ngt-WP-dWf">

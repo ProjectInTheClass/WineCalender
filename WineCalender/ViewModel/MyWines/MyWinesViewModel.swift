@@ -9,71 +9,80 @@ import Foundation
 import Kingfisher
 import FirebaseAuth
 
-struct MyWinesModel {
-    let postID: String?
-    let postingDate: Date
-    let firstImage: UIImage
-    let wineNameDescription: String
-    let tastingDateDescription: String
-    let ratingDescription: String
-}
-
 class MyWinesViewModel {
 
-    var onUpdated: () -> Void = {}
+    let post: Post?
+    
+    let note: WineTastingNote?
 
-    var vm = [MyWinesModel]() {
-        didSet {
-            vm.sort { $0.postingDate > $1.postingDate }
-            onUpdated()
+    var firstImageURL: URL? {
+        var url = URL(string: "")
+        if let postImageURL = URL(string:post?.postImageURL[0] ?? "") {
+            url = postImageURL
         }
-    }
-
-    func fetchMyPosts() {
-        vm = [MyWinesModel]()
-        if Auth.auth().currentUser != nil {
-            PostManager.shared.fetchMyPosts { myPosts in
-                for post in myPosts {
-                    let postID = post.postID
-                    let postingDate = post.postingDate
-                    self.downloadImage(with: post.postImageURL[0]) { image in
-                        guard let image = image else { return }
-                        let firstImage = image
-                        let wineNameDescription = self.wineNameToDescription(name: post.tastingNote.wineName)
-                        let tastingDateDescription = self.tastingDateToDescription(date: post.tastingNote.tastingDate)
-                        let ratingDescription = self.ratingToDescription(rating: post.tastingNote.rating)
-                        self.vm.append(MyWinesModel(postID: postID, postingDate: postingDate, firstImage: firstImage, wineNameDescription: wineNameDescription, tastingDateDescription: tastingDateDescription, ratingDescription: ratingDescription))
-                    }
-                }
-            }
-        } else {
-            DataManager.shared.fetchWineTastingNote { myWineTastingNotes in
-                for note in myWineTastingNotes {
-                    let postingDate = note.postingDate
-                    let firstImage = note.image[0]
-                    let wineNameDescription = self.wineNameToDescription(name: note.wineName)
-                    let tastingDateDescription = self.tastingDateToDescription(date: note.tastingDate)
-                    let ratingDescription = self.ratingToDescription(rating: note.rating)
-                    self.vm.append(MyWinesModel(postID: nil, postingDate: postingDate, firstImage: firstImage, wineNameDescription: wineNameDescription, tastingDateDescription: tastingDateDescription, ratingDescription: ratingDescription))
-                }
-            }
-        }
+        return url
     }
     
-    private func downloadImage(with urlString : String, imageCompletionHandler: @escaping (UIImage?) -> Void){
-        guard let url = URL(string: urlString) else {
-            return  imageCompletionHandler(nil)
+    var firstImage: UIImage {
+        return note?.image[0] ?? UIImage()
+    }
+    
+    var wineNameDescription: String {
+        var string = ""
+        if let post = post {
+            string = self.wineNameToDescription(name: post.tastingNote.wineName)
+        } else if let note = note {
+            string = self.wineNameToDescription(name: note.wineName)
         }
+        return string
+    }
+    
+    var tastingDateDescription: String {
+        var string = ""
+        if let post = post {
+            string = self.tastingDateToDescription(date: post.tastingNote.tastingDate)
+        } else if let note = note {
+            string = self.tastingDateToDescription(date: note.tastingDate)
+        }
+        return string
+    }
+    
+    var ratingDescription: String {
+        var string = ""
+        if let post = post {
+            string = self.ratingToDescription(rating: post.tastingNote.rating)
+        } else if let note = note {
+            string = self.ratingToDescription(rating: note.rating)
+        }
+        return string
+    }
+
+    //FireBase
+    init(post: Post) {
+        self.post = post
+        self.note = nil
+    }
+    
+    //CoreData
+    init(note: WineTastingNote) {
+        self.post = nil
+        self.note = note
+    }
+    
+    private func downloadImage(with urlString : String) -> UIImage {
+        guard let url = URL(string: urlString) else { return UIImage() }
+ 
         let resource = ImageResource(downloadURL: url)
-        
+        var image = UIImage()
         KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
             switch result {
             case .success(let value):
-                imageCompletionHandler(value.image)
+                image = value.image
             case .failure:
-                imageCompletionHandler(nil)
+                break
             }
         }
+        return image
     }
 
     private func wineNameToDescription(name: String) -> String {

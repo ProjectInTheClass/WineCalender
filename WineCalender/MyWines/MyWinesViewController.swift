@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Kingfisher
 
 class MyWinesViewController: UIViewController {
     
@@ -13,7 +15,17 @@ class MyWinesViewController: UIViewController {
     
     let myWinesHeaderViewModel = MyWinesHeaderViewModel()
     
-    let myWinesViewModel = MyWinesViewModel()
+    var posts = [Post]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
+    var notes = [WineTastingNote]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,30 +36,36 @@ class MyWinesViewController: UIViewController {
             self.collectionView.reloadData()
         }
         myWinesHeaderViewModel.fetchUserProfile()
-        myWinesViewModel.onUpdated = {
-            self.collectionView.reloadData()
-        }
-//        myWinesViewModel.fetchMyPosts()
-        setNotificationObserver()        
+
+        setNotificationObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        myWinesViewModel.fetchMyPosts()
+        fetchMyPosts()
     }
     
     func setNotificationObserver() {
         NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.myWinesViewModel.onUpdated = {
-                self?.collectionView.reloadData()
+            self?.fetchMyPosts()
+        }
+    }
+    
+    func fetchMyPosts() {
+        if Auth.auth().currentUser != nil {
+            PostManager.shared.fetchMyPosts { myPosts in
+                self.posts = myPosts
             }
-            self?.myWinesViewModel.fetchMyPosts()
+        } else {
+            DataManager.shared.fetchWineTastingNote { notes in
+                self.notes = notes
+            }
         }
     }
     
     func resetModels() {
         myWinesHeaderViewModel.fetchUserProfile()
-        myWinesViewModel.fetchMyPosts()
+        fetchMyPosts()
     }
     
     @IBAction func moreButtonTapped(_ sender: UIButton) {
@@ -56,13 +74,19 @@ class MyWinesViewController: UIViewController {
         guard let cell = superview as? MyWinesCollectionViewCell else { return }
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         print(indexPath.row)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if self.myWinesHeaderViewModel.email != nil, segue.identifier == "SettingsSegue",
-           let settingsTVC = segue.destination as? SettingsTableViewController {
-            settingsTVC.myWinesHeaderViewModel = self.myWinesHeaderViewModel
+
+        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+        let comuDetailVC = storyboard.instantiateViewController(identifier: "ComuDetailVC") as! ComuDetailVC
+
+        if Auth.auth().currentUser != nil {
+            comuDetailVC.postData = posts[indexPath.row]
+        } else {
+//            comuDetailVC.postData = Post(note: notes[indexPath.row])
+            comuDetailVC.postData = nil
         }
+        
+        self.navigationController?.pushViewController(comuDetailVC, animated: true)
+        
     }
 }
 
@@ -71,7 +95,11 @@ class MyWinesViewController: UIViewController {
 extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.myWinesViewModel.vm.count
+        if Auth.auth().currentUser != nil {
+            return posts.count
+        } else {
+            return notes.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,8 +111,11 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.moreButton.isHidden = true
         cell.imageView.alpha = 1.0
         
-        let myWine = myWinesViewModel.vm[indexPath.row]
-        cell.update(myWine: myWine)
+        if Auth.auth().currentUser != nil {
+            cell.post = posts[indexPath.row]
+        } else {
+            cell.note = notes[indexPath.row]
+        }
         
         return cell
     }
@@ -117,9 +148,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             cell.label3.isHidden = true
             cell.moreButton.isHidden = true
         }
-        
-        let myWine = myWinesViewModel.vm[indexPath.row]
-        cell.update(myWine: myWine)
+
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

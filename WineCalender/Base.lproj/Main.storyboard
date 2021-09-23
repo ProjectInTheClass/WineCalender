@@ -629,7 +629,6 @@
                         <segue destination="mBO-Hx-9Kg" kind="relationship" relationship="viewControllers" id="Paq-mP-Ba9"/>
                         <segue destination="1Xb-BE-oOH" kind="relationship" relationship="viewControllers" id="Y4k-DZ-NGw"/>
                         <segue destination="pVc-8m-eba" kind="relationship" relationship="viewControllers" id="g9h-JP-JED"/>
-                        <segue destination="6uQ-5L-rGG" kind="relationship" relationship="viewControllers" id="KqJ-xL-3Pm"/>
                         <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
                     </connections>
                 </tabBarController>
@@ -932,16 +931,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rkk-ti-wQj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="87" y="312"/>
-        </scene>
-        <!--UITableViewController-DZv-Fd-3AE-->
-        <scene sceneID="kYB-Xx-317">
-            <objects>
-                <viewControllerPlaceholder storyboardName="MyWines" referencedIdentifier="UITableViewController-DZv-Fd-3AE" id="6uQ-5L-rGG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="hX2-kP-xcP"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Lz3-AM-QGc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="259" y="-836"/>
         </scene>
         <!--MyWines-->
         <scene sceneID="Y3X-6d-jSE">

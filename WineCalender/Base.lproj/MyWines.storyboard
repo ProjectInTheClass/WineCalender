@@ -11,79 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Wines-->
-        <scene sceneID="6TH-1E-U6Z">
-            <objects>
-                <tableViewController storyboardIdentifier="UITableViewController-DZv-Fd-3AE" id="DZv-Fd-3AE" customClass="MyWinesTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="scrollableAxes" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3ne-RU-Q9J">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="winesCell" rowHeight="100" id="ebC-Sq-S4B" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="100"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ebC-Sq-S4B" id="FJa-7f-4Y5" customClass="MyWinesTableViewCell" customModule="WineCalender" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TYh-Ks-ePu">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xVa-za-IUH">
-                                                    <rect key="frame" x="10" y="10" width="394" height="80"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wc-icon120" translatesAutoresizingMaskIntoConstraints="NO" id="Exe-Lt-1cg">
-                                                            <rect key="frame" x="5" y="5" width="70" height="70"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZT-v8-mxX">
-                                                            <rect key="frame" x="86" y="5" width="300" height="38"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSt-p9-xXd">
-                                                            <rect key="frame" x="86" y="37" width="300" height="38"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <color key="backgroundColor" name="themeDarkItemColor"/>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        </view>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="wineCategoryLabel" destination="bSt-p9-xXd" id="gSZ-QI-eNa"/>
-                                    <outlet property="wineCellBG" destination="xVa-za-IUH" id="GuJ-J3-f8J"/>
-                                    <outlet property="wineImageView" destination="Exe-Lt-1cg" id="QnE-qk-2JR"/>
-                                    <outlet property="wineNameLabel" destination="AZT-v8-mxX" id="A4D-zm-XEV"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="DZv-Fd-3AE" id="Zk0-jB-idf"/>
-                            <outlet property="delegate" destination="DZv-Fd-3AE" id="aDO-bU-X4S"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="My Wines" image="MyWinesTabBarItem" id="woS-O9-pQ2"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yYk-mV-qEJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-228" y="-1114"/>
-        </scene>
         <!--My Wines View Controller-->
         <scene sceneID="294-XA-c4D">
             <objects>
-                <viewController id="NNa-q7-PN9" customClass="MyWinesViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyWinesVC" id="NNa-q7-PN9" customClass="MyWinesViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IWa-Jy-ajf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -139,7 +70,6 @@
                                                                     </state>
                                                                     <connections>
                                                                         <action selector="moreButtonTapped:" destination="NNa-q7-PN9" eventType="touchUpInside" id="ylw-JR-v3h"/>
-                                                                        <segue destination="eIQ-Km-uGk" kind="show" identifier="" id="5tm-Hd-4DQ"/>
                                                                     </connections>
                                                                 </button>
                                                             </subviews>
@@ -258,6 +188,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="u0M-g3-xQV">
+                        <barButtonItem key="backBarButtonItem" title="My Wines" id="bEK-C9-3ho"/>
                         <barButtonItem key="rightBarButtonItem" id="xU7-41-hdp">
                             <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                             <color key="tintColor" name="blackAndWhite"/>
@@ -272,23 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPQ-aE-5Iw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2254" y="-1114"/>
-        </scene>
-        <!--My Wines Detail View Controller-->
-        <scene sceneID="d3b-fN-6tA">
-            <objects>
-                <viewController id="eIQ-Km-uGk" customClass="MyWinesDetailViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Y7c-hF-H6U">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="WIs-g6-zKn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="WBh-IX-nvH"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0TB-Yn-gd3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3541" y="-1820"/>
+            <point key="canvasLocation" x="2303" y="-50"/>
         </scene>
         <!--설정-->
         <scene sceneID="hj2-eW-47w">
@@ -338,7 +253,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGZ-XS-WgA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1049" y="-1114"/>
+            <point key="canvasLocation" x="1097" y="-50"/>
         </scene>
         <!--로그인-->
         <scene sceneID="yut-NJ-NzP">
@@ -991,12 +906,8 @@
         <image name="MyWinesTabBarItem" width="25" height="25"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="wc-icon120" width="90" height="90"/>
         <namedColor name="blackAndWhite">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="themeDarkItemColor">
-            <color red="0.92500001192092896" green="0.95099997520446777" blue="0.75700002908706665" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
