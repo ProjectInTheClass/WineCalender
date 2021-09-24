@@ -164,7 +164,7 @@
         <!--Post Detail-->
         <scene sceneID="cgx-HG-8eo">
             <objects>
-                <viewController storyboardIdentifier="ComuDetailVC" wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="PostDetail" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostDetail" wantsFullScreenLayout="YES" id="J1V-b9-rvV" customClass="PostDetail" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FZD-k1-Lkv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -294,7 +294,6 @@
         <!--Detail Post Collection View Collection View Controller-->
         <scene sceneID="ngt-WP-dWf">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I6y-gg-hC2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <collectionViewController id="502-S9-1aw" customClass="DetailPostCollectionViewCollectionViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="S4G-cG-5wP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -330,6 +329,7 @@
                         </connections>
                     </collectionView>
                 </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I6y-gg-hC2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3054" y="2315"/>
         </scene>

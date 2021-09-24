@@ -55,17 +55,20 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        
         if Auth.auth().currentUser != nil {
             let editProfileIndexPath = IndexPath(row: 0, section: 1)
             let changePasswordIndexPath = IndexPath(row: 1, section: 1)
             let signOutIndexPath = IndexPath(row: 2, section: 1)
+
             switch indexPath {
             case editProfileIndexPath:
-                if let editProfileVC = storyboard?.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
+                if let editProfileVC = storyboard.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
                     self.navigationController?.pushViewController(editProfileVC, animated: true)
                 }
             case changePasswordIndexPath:
-                if let updatePasswordVC = storyboard?.instantiateViewController(identifier: "UpdatePasswordViewController") as? UpdatePasswordViewController {
+                if let updatePasswordVC = storyboard.instantiateViewController(identifier: "UpdatePasswordViewController") as? UpdatePasswordViewController {
                     self.navigationController?.pushViewController(updatePasswordVC, animated: true)
                 }
             case signOutIndexPath:
@@ -86,7 +89,7 @@ class SettingsTableViewController: UITableViewController {
             let signInIndexPath = IndexPath(row: 0, section: 1)
             if indexPath == signInIndexPath {
                 print("sign in")
-                let signInVC = self.storyboard?.instantiateViewController(identifier: "SignInViewController") as! SignInViewController
+                let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController") as! SignInViewController
                 self.navigationController?.pushViewController(signInVC, animated: true)
             }
         }

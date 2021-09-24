@@ -20,6 +20,8 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     var currentCelIndex = 0
     
     var postDetailData : Post?
+    //nonmember
+    var noteDetailData : WineTastingNote?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,16 +36,24 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configure()
+        configureMemberUI()
+        configureNonmemberUI()
     }
     
-    func configure() {
+    func configureMemberUI() {
         //Fetch User Profile
         guard let authorUID = postDetailData?.authorUID else { return }
         AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
             self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
             self.userName.text = nickname
         }
+    }
+    
+    func configureNonmemberUI() {
+        guard let note = noteDetailData else { return }
+        self.userName.text = "비회원"
+        self.wineName.text = note.wineName
+        self.mainText.text = note.memo
     }
 }
 
@@ -53,14 +63,23 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
         postCollection.scrollToItem(at: IndexPath(item: currentCelIndex, section: 0), at: .centeredHorizontally, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let count = postDetailData?.postImageURL.count else { return 0 }
-        return count
+        var num = 0
+        if let n = postDetailData?.postImageURL.count {
+            num = n
+        } else if let n = noteDetailData?.image.count {
+            num = n
+        }
+        return num
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
-        guard let imageURL = URL(string: (postDetailData?.postImageURL[indexPath.row])!) else { return postCell }
-        postCell.postImage.kf.setImage(with: imageURL)
+        if let post = postDetailData {
+            let imageURL = URL(string: (post.postImageURL[indexPath.row]))
+            postCell.postImage.kf.setImage(with: imageURL)
+        } else if let note = noteDetailData {
+            postCell.postImage.image = note.image[indexPath.row]
+        }
         return postCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

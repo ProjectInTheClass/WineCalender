@@ -630,6 +630,7 @@
                         <segue destination="1Xb-BE-oOH" kind="relationship" relationship="viewControllers" id="Y4k-DZ-NGw"/>
                         <segue destination="pVc-8m-eba" kind="relationship" relationship="viewControllers" id="g9h-JP-JED"/>
                         <segue destination="Jdn-pO-Cc9" kind="relationship" relationship="viewControllers" id="p3W-gb-CeG"/>
+                        <segue destination="m8j-YA-Ghm" kind="relationship" relationship="viewControllers" id="5f6-j0-LvU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69b-eg-bGC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -935,34 +936,12 @@
         <!--MyWines-->
         <scene sceneID="Y3X-6d-jSE">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="MyWines" storyboardName="MyWines" referencedIdentifier="MyWines" id="m8j-YA-Ghm" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="MyWines" storyboardName="MyWines" referencedIdentifier="MyWines" id="m8j-YA-Ghm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="gpf-UE-yFH"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9q-E3-Yoj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="753" y="-838"/>
-        </scene>
-        <!--UpdatePasswordViewController-->
-        <scene sceneID="KVh-Hb-Pdh">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="UpdatePasswordViewController" storyboardName="MyWines" referencedIdentifier="UpdatePasswordViewController" id="yan-hO-1TZ" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zZC-dC-PMs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2262" y="-838"/>
-        </scene>
-        <!--SignInViewController-->
-        <scene sceneID="pqe-2d-iGC">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="SignInViewController" storyboardName="MyWines" referencedIdentifier="SignInViewController" id="w3W-G3-e5P" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RpY-2E-GP3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1145" y="-838"/>
-        </scene>
-        <!--EditProfileViewController-->
-        <scene sceneID="dEi-ne-v0p">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="EditProfileViewController" storyboardName="MyWines" referencedIdentifier="EditProfileViewController" id="1eM-xB-p8B" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zTt-bO-wCM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1663" y="-838"/>
+            <point key="canvasLocation" x="140" y="-836"/>
         </scene>
         <!--AddTastingNoteNav-->
         <scene sceneID="uRX-5m-oTj">
@@ -1008,7 +987,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Lfq-pS-ZUy"/>
+        <segue reference="g9h-JP-JED"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
