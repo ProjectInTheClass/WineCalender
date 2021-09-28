@@ -29,9 +29,9 @@ class MyWinesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-
+        
+        adjustCollectionViewTopAnchor()
+        
         myWinesHeaderViewModel.onUpdated = {
             self.collectionView.reloadData()
         }
@@ -43,6 +43,15 @@ class MyWinesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchMyPosts()
+    }
+    
+    func adjustCollectionViewTopAnchor() {
+        let window = UIApplication.shared.windows.first{ $0.isKeyWindow }
+        let statusbarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let navigationbarHeight = self.navigationController?.navigationBar.frame.height ?? 0
+
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: -(statusbarHeight+navigationbarHeight)).isActive = true
     }
     
     func setNotificationObserver() {
@@ -155,5 +164,14 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         headerView.update(user: myWinesHeaderViewModel)
         return headerView
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let h: CGFloat = 44.0
+        if self.navigationController?.navigationBar.frame.height == h {
+            self.navigationItem.title = myWinesHeaderViewModel.nickname
+        } else {
+            self.navigationItem.title = ""
+        }
     }
 }

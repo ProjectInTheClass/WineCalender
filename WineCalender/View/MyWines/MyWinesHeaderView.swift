@@ -15,29 +15,11 @@ class MyWinesHeaderView: UICollectionReusableView {
     
     func update(user: MyWinesHeaderViewModel) {
         DispatchQueue.main.async {
+            self.profileImageView.layer.borderColor = UIColor.white.cgColor
+            self.profileImageView.layer.borderWidth = 6
             self.profileImageView.image = user.profileImage
             self.nicknameLabel.text = user.nickname
             self.introductionLabel.text = user.introduction
         }
     }
-    
-//    var myWinesHeaderViewModel: MyWinesHeaderViewModel? {
-//        didSet {
-//            if Auth.auth().currentUser == nil {
-//                self.profileImageView.image = UIImage(systemName: "person.circle.fill")
-//                self.nicknameLabel.text = "비회원"
-//                self.introductionLabel.text = ""
-//            } else {
-//                DispatchQueue.main.async {
-//                    if let url = self.myWinesHeaderViewModel?.profileImageURL {
-//                        self.profileImageView.kf.setImage(with: url)
-//                    } else {
-//                        self.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-//                    }
-//                    self.nicknameLabel.text = self.myWinesHeaderViewModel?.nickname
-//                    self.introductionLabel.text = self.myWinesHeaderViewModel?.introduction
-//                }
-//            }
-//        }
-//    }
 }
