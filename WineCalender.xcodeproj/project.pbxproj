@@ -235,7 +235,7 @@
 		1226FF4126E86B72003ACE3A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				227DED7726EF549B001CCCE0 /* Comunity */,
+				227DED7726EF549B001CCCE0 /* Community */,
 				12D9A62226EA91EE00792C6E /* MyWines */,
 				12B5560226FC9B3400639807 /* Settings */,
 			);
@@ -267,7 +267,7 @@
 		1280D8A726E6548C0052226A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				227DED6E26EF546D001CCCE0 /* Comunity */,
+				227DED6E26EF546D001CCCE0 /* Community */,
 				12D9A62326EA91FA00792C6E /* MyWines */,
 			);
 			path = ViewModel;
@@ -405,7 +405,7 @@
 			path = WineCalenderUITests;
 			sourceTree = "<group>";
 		};
-		227DED6E26EF546D001CCCE0 /* Comunity */ = {
+		227DED6E26EF546D001CCCE0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
 				227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */,
@@ -413,10 +413,10 @@
 				227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */,
 				227DED7226EF546D001CCCE0 /* PostDetail.swift */,
 			);
-			path = Comunity;
+			path = Community;
 			sourceTree = "<group>";
 		};
-		227DED7726EF549B001CCCE0 /* Comunity */ = {
+		227DED7726EF549B001CCCE0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
 				C7BAABA426E9CC6400471FB1 /* Community.storyboard */,
@@ -424,7 +424,7 @@
 				227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */,
 				227DED7A26EF549B001CCCE0 /* Community.swift */,
 			);
-			path = Comunity;
+			path = Community;
 			sourceTree = "<group>";
 		};
 		67439B2F11CD3C4F4C9DE439 /* Frameworks */ = {
