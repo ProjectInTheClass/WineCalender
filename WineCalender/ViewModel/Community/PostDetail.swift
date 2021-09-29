@@ -24,38 +24,34 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     var noteDetailData : WineTastingNote?
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+         super.viewDidLoad()
 
-        postCollection.delegate = self
-        postCollection.dataSource = self
-        
-        detailProfile.image = UIImage(named: "AppIcon")
-        detailProfile.layer.cornerRadius = detailProfile.frame.height/2
-        detailProfile.layer.borderWidth = 0.1
-        detailProfile.layer.borderColor = UIColor.lightGray.cgColor
-    }
-    
+         postCollection.delegate = self
+         postCollection.dataSource = self
+         
+         detailProfile.image = UIImage(named: "AppIcon")
+         detailProfile.layer.cornerRadius = detailProfile.frame.height/2
+         detailProfile.layer.borderWidth = 0.1
+         detailProfile.layer.borderColor = UIColor.lightGray.cgColor
+     }
     override func viewWillAppear(_ animated: Bool) {
-        configureMemberUI()
-        configureNonmemberUI()
-    }
-    
-    func configureMemberUI() {
-        //Fetch User Profile
-        guard let authorUID = postDetailData?.authorUID else { return }
-        AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
-            self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-            self.userName.text = nickname
+        func configureMemberUI() {
+               //Fetch User Profile
+               guard let authorUID = postDetailData?.authorUID else { return }
+               AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
+                   self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+                   self.userName.text = nickname
+               }
+           }
+        func configureNonmemberUI() {
+                guard let note = noteDetailData else { return }
+                self.userName.text = "비회원"
+                self.wineName.text = note.wineName
+                self.mainText.text = note.memo
+            }
         }
     }
-    
-    func configureNonmemberUI() {
-        guard let note = noteDetailData else { return }
-        self.userName.text = "비회원"
-        self.wineName.text = note.wineName
-        self.mainText.text = note.memo
-    }
-}
+  
 
 extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func MoveToNextIndex(){

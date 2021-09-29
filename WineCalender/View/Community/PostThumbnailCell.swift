@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 
 class PostThumbnailCell : UICollectionViewCell {
+    @IBOutlet weak var postCardView: UIView!
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var mainTitle: UILabel!
     @IBOutlet weak var subTitle: UILabel!
@@ -26,8 +27,9 @@ class PostThumbnailCell : UICollectionViewCell {
     func updateView(){
         
         guard let vm = postThumbnailVM else { return }
-        subTitle.isHidden = vm.postSubTextIsHidden
         
+        subTitle.isHidden = vm.postSubTextIsHidden
+        postCardView.backgroundColor = vm.color
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
         profileName.text = vm.userName
         profileImage.kf.setImage(with: vm.profileImageURL)
@@ -35,7 +37,7 @@ class PostThumbnailCell : UICollectionViewCell {
         mainTitle.text = vm.postMainText
         subTitle.text = vm.postSubText
         
-        cellImage.layer.cornerRadius = 10
+        cellImage.layer.cornerRadius = 5
         profileImage.layer.borderWidth = 0.1
         profileImage.layer.borderColor = UIColor.lightGray.cgColor
         profileImage.layer.cornerRadius = profileImage.frame.width / 2

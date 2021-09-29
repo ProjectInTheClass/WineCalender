@@ -10,8 +10,20 @@ import UIKit
 import Firebase
 import Parchment
 
+
+
 class Community : UIViewController{
+
     @IBOutlet var collectionView: UICollectionView!
+    
+    let postCardColorSet = [
+        UIColor.init(red: 255/255.0, green: 181/255.0, blue: 181/255.0, alpha: 1),
+        UIColor.init(red: 225/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1),
+        UIColor.init(red: 158/255.0, green: 251/255.0, blue: 255/255.0, alpha: 1),
+        UIColor.init(red: 158/255.0, green: 255/255.0, blue: 190/255.0, alpha: 1),
+        UIColor.init(red: 255/255.0, green: 234/255.0, blue: 158/255.0, alpha: 1),
+        UIColor.init(red: 255/255.0, green: 158/255.0, blue: 192/255.0, alpha: 1),
+        ]
     
     var posts = [(Post,String,URL?)]()
     
@@ -57,7 +69,8 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! PostThumbnailCell
         let postInfo = posts[indexPath.row]
-        cell.postThumbnailVM = PostThumbnailVM(postInfo.0,postInfo.1,postInfo.2)
+        let color = postCardColorSet[indexPath.row % postCardColorSet.count]
+        cell.postThumbnailVM = PostThumbnailVM(postInfo.0,postInfo.1,postInfo.2,color)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -75,14 +88,8 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
 }
 
 extension Community : UICollectionViewDelegateFlowLayout {
-    var hSpacing: Int {
-        return 16
-    }
-    var vSpacing: Int {
-        return 16
-    }
     var padding : Int {
-        return 8
+        return 16
     }
     // 컬렉션 뷰의 마진설정
     func setupCollectionViewInsets() {
@@ -91,16 +98,16 @@ extension Community : UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return .init(vSpacing)
+        return .init(padding)
         // 위 아래 간격
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return .init(hSpacing)
+        return .init(padding)
         //옆간격
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //cell 크기
-        let width = (Int(collectionView.frame.width) - 2*padding - hSpacing) / 2
+        let width = (Int(collectionView.frame.width) - 2*padding - padding) / 2
         let size = CGSize(width: width, height: 300)
         return size
     }
