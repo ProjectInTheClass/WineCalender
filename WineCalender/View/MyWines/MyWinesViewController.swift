@@ -13,36 +13,33 @@ class MyWinesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let myWinesHeaderViewModel = MyWinesHeaderViewModel()
-    
-    var posts = [Post]() {
+    var myWinesHeaderVM: MyWinesHeaderViewModel? = nil {
         didSet {
             collectionView.reloadData()
         }
     }
     
-    var notes = [WineTastingNote]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    lazy var posts = [Post]()
+    lazy var notes = [WineTastingNote]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         adjustCollectionViewTopAnchor()
+        setUploadNotiObserver()
         
-        myWinesHeaderViewModel.onUpdated = {
-            self.collectionView.reloadData()
+        if Auth.auth().currentUser != nil {
+            updateMemberUI()
+        } else {
+            updateNonmemberUI()
         }
-        myWinesHeaderViewModel.fetchUserProfile()
-
-        setNotificationObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchMyPosts()
+
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
     }
     
     func adjustCollectionViewTopAnchor() {
@@ -54,27 +51,48 @@ class MyWinesViewController: UIViewController {
         collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: -(statusbarHeight+navigationbarHeight)).isActive = true
     }
     
-    func setNotificationObserver() {
+    func setUploadNotiObserver() {
         NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
-            self?.fetchMyPosts()
-        }
-    }
-    
-    func fetchMyPosts() {
-        if Auth.auth().currentUser != nil {
-            PostManager.shared.fetchMyPosts { myPosts in
-                self.posts = myPosts
-            }
-        } else {
-            DataManager.shared.fetchWineTastingNote { notes in
-                self.notes = notes
+            if Auth.auth().currentUser != nil {
+                self?.updateMemberUI()
+            } else {
+                self?.updateNonmemberUI()
             }
         }
     }
+
+    //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
+    func updateMemberUI() {
+        PostManager.shared.fetchMyPosts { myPosts in
+            if let posts = myPosts {
+                self.posts = posts
+                let num = self.posts.count
+                AuthenticationManager.shared.fetchMyProfile { user in
+                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: num)
+                }
+            } else {
+                AuthenticationManager.shared.fetchMyProfile { user in
+                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: 0)
+                }
+            }
+        }
+    }
     
-    func resetModels() {
-        myWinesHeaderViewModel.fetchUserProfile()
-        fetchMyPosts()
+    //로그아웃, 비회원이 앱 실행할 때, 비회원이 글 쓸 때
+    func updateNonmemberUI() {
+        DataManager.shared.fetchWineTastingNote { myNotes in
+            self.notes = myNotes
+            let num = self.notes.count
+            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, num: num)
+        }
+    }
+
+    //프로필 수정 후
+    func fetchMyProfile() {
+        AuthenticationManager.shared.fetchMyProfile { user in
+            let num = self.posts.count
+            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: num)
+        }
     }
     
     @IBAction func moreButtonTapped(_ sender: UIButton) {
@@ -162,16 +180,11 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
         
-        headerView.update(user: myWinesHeaderViewModel)
+        self.navigationItem.title = self.myWinesHeaderVM?.nickname
+        
+        guard let vm = self.myWinesHeaderVM else { return headerView }
+        headerView.update(vm: vm)
+        
         return headerView
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let h: CGFloat = 44.0
-        if self.navigationController?.navigationBar.frame.height == h {
-            self.navigationItem.title = myWinesHeaderViewModel.nickname
-        } else {
-            self.navigationItem.title = ""
-        }
     }
 }

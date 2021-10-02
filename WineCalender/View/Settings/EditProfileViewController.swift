@@ -19,7 +19,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "프로필 수정"
-        fetchUserProfile()
+        fetchMyProfile()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
@@ -35,10 +35,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         sender.resignFirstResponder()
     }
     
-    func fetchUserProfile() {
-        AuthenticationManager.shared.fetchUserProfile { user in
+    func fetchMyProfile() {
+        AuthenticationManager.shared.fetchMyProfile { user in
             DispatchQueue.main.async {
-                self.profileImageView.kf.setImage(with: user.profileImageURL)
+                self.profileImageView.kf.setImage(with: user.profileImageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
                 self.emailLabel.text = user.email
                 self.nicknameTextField.text = user.nickname
                 self.introductionTextField.text = user.introduction
@@ -106,11 +106,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             let nickname = self.nicknameTextField.text!
             let introduction = self.introductionTextField.text!
             AuthenticationManager.shared.saveUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
-                if result == true {
-                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.myWinesHeaderViewModel.fetchUserProfile()
-                        self.navigationController?.popToRootViewController(animated: true)
-                    }
+                if result == true,
+                   let myWinesVC = self.navigationController?.children.first as? MyWinesViewController{
+                    myWinesVC.fetchMyProfile()
+                    self.navigationController?.popToRootViewController(animated: true)
                 } else {
                     print("프로필 수정 오류")
                     //self.warningLabel.text = "오류 잠시 후 다시 시도해 주세요. "

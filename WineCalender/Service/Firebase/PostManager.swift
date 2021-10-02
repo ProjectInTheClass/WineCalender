@@ -56,11 +56,13 @@ class PostManager {
         }
     }
     
-    func fetchMyPosts(completion: @escaping ([Post]) -> Void){
+    func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
             PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
-                
-                guard let snapshotDict = snapshot.value as? [String:Any] else { return }
+                guard let snapshotDict = snapshot.value as? [String:Any] else {
+                    completion(nil)
+                    return
+                }
                 
                 let datas = Array(snapshotDict.values)
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }

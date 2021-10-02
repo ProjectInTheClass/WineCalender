@@ -19,6 +19,11 @@ class SettingsTableViewController: UITableViewController {
         updateRow()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+    }
+    
     func updateRow() {
         if Auth.auth().currentUser == nil {
             self.section2 = ["로그인"]
@@ -75,10 +80,13 @@ class SettingsTableViewController: UITableViewController {
                 let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                    AuthenticationManager.shared.signOut()
-                    if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.resetModels()
-                        self.navigationController?.popViewController(animated: true)
+                    AuthenticationManager.shared.signOut { result in
+                        if result == true,
+                           let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                            myWinesVC.posts = [Post]()
+                            myWinesVC.updateNonmemberUI()
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                 }))
                 self.present(alert, animated: true, completion: nil)
@@ -88,7 +96,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             let signInIndexPath = IndexPath(row: 0, section: 1)
             if indexPath == signInIndexPath {
-                print("sign in")
                 let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController") as! SignInViewController
                 self.navigationController?.pushViewController(signInVC, animated: true)
             }

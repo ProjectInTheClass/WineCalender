@@ -54,11 +54,13 @@ class AuthenticationManager {
         }
     }
     
-    func signOut() {
+    func signOut(completion: @escaping(Bool) -> Void) {
         do {
             try Auth.auth().signOut()
+            completion(true)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+            completion(false)
         }
     }
     
@@ -98,7 +100,7 @@ class AuthenticationManager {
     }
     
     //My profile
-    func fetchUserProfile(completion: @escaping (User) -> Void) {
+    func fetchMyProfile(completion: @escaping (User) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid,
               let email = Auth.auth().currentUser?.email else { return }
         

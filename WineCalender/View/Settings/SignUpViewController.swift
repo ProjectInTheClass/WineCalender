@@ -106,13 +106,12 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
            let nickname = nicknameTextField.text, let profileImage = profileImageView.image {
             AuthenticationManager.shared.signUp(email: email, password: password, nickname: nickname,
                                                 profileImage: profileImage, warningLabel: warningLabel) { result in
-                if result == true {
+                if result == true,
+                   let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
                     let alert = UIAlertController(title: "회원가입완료", message: "환영합니다:)", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
-                        if let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                            myWinesVC.myWinesHeaderViewModel.fetchUserProfile()
-                            self.navigationController?.popToRootViewController(animated: true)
-                        }
+                        myWinesVC.updateMemberUI()
+                        self.navigationController?.popToRootViewController(animated: true)
                     })
                     self.present(alert, animated: true, completion: nil)
                 } else {

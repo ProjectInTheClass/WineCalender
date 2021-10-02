@@ -6,20 +6,34 @@
 //
 
 import UIKit
+import Kingfisher
+import FirebaseAuth
 
 class MyWinesHeaderView: UICollectionReusableView {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var introductionLabel: UILabel!
+    @IBOutlet weak var numberOfPostsLabel: UILabel!
     
-    func update(user: MyWinesHeaderViewModel) {
+    func update(vm: MyWinesHeaderViewModel) {
         DispatchQueue.main.async {
             self.profileImageView.layer.borderColor = UIColor.white.cgColor
             self.profileImageView.layer.borderWidth = 6
-            self.profileImageView.image = user.profileImage
-            self.nicknameLabel.text = user.nickname
-            self.introductionLabel.text = user.introduction
+            
+            if Auth.auth().currentUser != nil {
+                if let url = vm.profileImageURL {
+                    self.profileImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+                } else {
+                    self.profileImageView.image = UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
+                }
+            } else {
+                self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+            }
+
+            self.nicknameLabel.text = vm.nickname
+            self.introductionLabel.text = vm.introduction
+            self.numberOfPostsLabel.text = vm.numberOfPosts
         }
     }
 }

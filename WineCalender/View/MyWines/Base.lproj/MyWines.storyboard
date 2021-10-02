@@ -126,8 +126,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cw-pV-8gc">
-                                            <rect key="frame" x="140" y="142" width="106" height="30"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cw-pV-8gc">
+                                            <rect key="frame" x="140" y="142" width="0.0" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="ajV-T7-zTV"/>
                                             </constraints>
@@ -136,10 +136,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="7Kt-Gi-tpu">
-                                            <rect key="frame" x="30" y="197" width="236.5" height="25"/>
+                                            <rect key="frame" x="30" y="197" width="237" height="25"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 게시물" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cne-p2-cOw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="68.5" height="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 게시물" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cne-p2-cOw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="ApG-uq-0gw"/>
                                                     </constraints>
@@ -148,7 +148,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 팔로워" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XO-PP-GCU">
-                                                    <rect key="frame" x="83.5" y="0.0" width="69" height="25"/>
+                                                    <rect key="frame" x="84" y="0.0" width="69" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Vrb-I9-GLw"/>
                                                     </constraints>
@@ -157,7 +157,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 팔로잉" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSk-A4-yMf">
-                                                    <rect key="frame" x="167.5" y="0.0" width="69" height="25"/>
+                                                    <rect key="frame" x="168" y="0.0" width="69" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="lgU-WW-Viv"/>
                                                     </constraints>
@@ -167,8 +167,8 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="introduction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-kT-g1L">
-                                            <rect key="frame" x="30" y="237" width="83" height="25"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-kT-g1L">
+                                            <rect key="frame" x="30" y="237" width="0.0" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="vDm-G1-NJw"/>
                                             </constraints>
@@ -196,6 +196,7 @@
                                     <connections>
                                         <outlet property="introductionLabel" destination="PvZ-kT-g1L" id="kgW-za-Kib"/>
                                         <outlet property="nicknameLabel" destination="1cw-pV-8gc" id="NHF-2t-1dN"/>
+                                        <outlet property="numberOfPostsLabel" destination="Cne-p2-cOw" id="B6Q-GV-ace"/>
                                         <outlet property="profileImageView" destination="XAl-jh-jtY" id="zZ4-z2-paM"/>
                                     </connections>
                                 </collectionReusableView>
