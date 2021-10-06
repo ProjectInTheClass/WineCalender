@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		083AE751270D7F3E009A77F4 /* PostThumbnailVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083AE750270D7F3D009A77F4 /* PostThumbnailVMTests.swift */; };
 		08A5EC76E616238FE4A1344C /* Pods_WineCalenderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */; };
 		1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */; };
 		1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */; };
@@ -55,7 +56,7 @@
 		1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */; };
 		1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB911E267B846F008C93C7 /* Assets.xcassets */; };
 		1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */; };
-		1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */; };
+		1FCB912D267B8470008C93C7 /* WineCalenderCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB912C267B8470008C93C7 /* WineCalenderCoreDataTests.swift */; };
 		1FCB9138267B8470008C93C7 /* WineCalenderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */; };
 		1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9145267B8A44008C93C7 /* SearchPhotoViewController.swift */; };
 		1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		083AE750270D7F3D009A77F4 /* PostThumbnailVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostThumbnailVMTests.swift; sourceTree = "<group>"; };
 		0DE066646E2C02D2B6FC876E /* Pods-WineCalenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		11236921FC67ADC3A00258B4 /* Pods-WineCalender-WineCalenderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender-WineCalenderUITests/Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -144,7 +146,7 @@
 		1FCB9121267B846F008C93C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FCB9123267B846F008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FCB9128267B8470008C93C7 /* WineCalenderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WineCalenderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderTests.swift; sourceTree = "<group>"; };
+		1FCB912C267B8470008C93C7 /* WineCalenderCoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderCoreDataTests.swift; sourceTree = "<group>"; };
 		1FCB912E267B8470008C93C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FCB9133267B8470008C93C7 /* WineCalenderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WineCalenderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FCB9137267B8470008C93C7 /* WineCalenderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineCalenderUITests.swift; sourceTree = "<group>"; };
@@ -390,7 +392,8 @@
 		1FCB912B267B8470008C93C7 /* WineCalenderTests */ = {
 			isa = PBXGroup;
 			children = (
-				1FCB912C267B8470008C93C7 /* WineCalenderTests.swift */,
+				1FCB912C267B8470008C93C7 /* WineCalenderCoreDataTests.swift */,
+				083AE750270D7F3D009A77F4 /* PostThumbnailVMTests.swift */,
 				1FCB912E267B8470008C93C7 /* Info.plist */,
 			);
 			path = WineCalenderTests;
@@ -752,7 +755,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FCB912D267B8470008C93C7 /* WineCalenderTests.swift in Sources */,
+				1FCB912D267B8470008C93C7 /* WineCalenderCoreDataTests.swift in Sources */,
+				083AE751270D7F3E009A77F4 /* PostThumbnailVMTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,13 +950,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalender;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -966,13 +970,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalender;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -985,8 +989,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalenderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -994,7 +999,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalenderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1008,8 +1013,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalenderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1017,7 +1023,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderTests;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalenderTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1030,15 +1036,16 @@
 			baseConfigurationReference = 11236921FC67ADC3A00258B4 /* Pods-WineCalender-WineCalenderUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalenderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalenderUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1051,15 +1058,16 @@
 			baseConfigurationReference = 54B44FEDB34CF45CA63EB7CC /* Pods-WineCalender-WineCalenderUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = WN979R49XM;
 				INFOPLIST_FILE = WineCalenderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Gape.WineCalenderUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = suzen.WineCalenderUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
