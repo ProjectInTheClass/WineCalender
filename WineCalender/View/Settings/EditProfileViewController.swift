@@ -105,7 +105,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             let profileImage = self.profileImageView.image!
             let nickname = self.nicknameTextField.text!
             let introduction = self.introductionTextField.text!
-            AuthenticationManager.shared.saveUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
+            AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction, warningLabel: self.warningLabel) { result in
                 if result == true,
                    let myWinesVC = self.navigationController?.children.first as? MyWinesViewController{
                     myWinesVC.fetchMyProfile()
@@ -115,7 +115,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     //self.warningLabel.text = "오류 잠시 후 다시 시도해 주세요. "
                 }
             }
-            
         }))
         self.present(alert, animated: true, completion: nil)
     }
