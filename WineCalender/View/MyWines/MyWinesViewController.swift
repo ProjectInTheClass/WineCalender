@@ -64,15 +64,15 @@ class MyWinesViewController: UIViewController {
     //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
     func updateMemberUI() {
         PostManager.shared.fetchMyPosts { myPosts in
-            if let posts = myPosts {
-                self.posts = posts
-                let num = self.posts.count
+            if let myPosts = myPosts {
+                self.posts = myPosts
+                let numberOfPosts = self.posts.count
                 AuthenticationManager.shared.fetchMyProfile { user in
-                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: num)
+                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts)
                 }
             } else {
                 AuthenticationManager.shared.fetchMyProfile { user in
-                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: 0)
+                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
                 }
             }
         }
@@ -82,16 +82,16 @@ class MyWinesViewController: UIViewController {
     func updateNonmemberUI() {
         DataManager.shared.fetchWineTastingNote { myNotes in
             self.notes = myNotes
-            let num = self.notes.count
-            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, num: num)
+            let numberOfNotes = self.notes.count
+            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes)
         }
     }
 
     //프로필 수정 후
     func fetchMyProfile() {
         AuthenticationManager.shared.fetchMyProfile { user in
-            let num = self.posts.count
-            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, num: num)
+            let numberOfPosts = self.posts.count
+            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts)
         }
     }
     

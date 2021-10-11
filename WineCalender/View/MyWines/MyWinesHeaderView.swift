@@ -15,6 +15,8 @@ class MyWinesHeaderView: UICollectionReusableView {
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var introductionLabel: UILabel!
     @IBOutlet weak var numberOfPostsLabel: UILabel!
+    @IBOutlet weak var numberOfFollowersLabel: UILabel!
+    @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     
     func update(vm: MyWinesHeaderViewModel) {
         DispatchQueue.main.async {
@@ -33,6 +35,12 @@ class MyWinesHeaderView: UICollectionReusableView {
 
             self.nicknameLabel.text = vm.nickname
             self.introductionLabel.text = vm.introduction
+            
+            if vm.numberOfPosts == "0" {
+                self.numberOfPostsLabel.textColor = UIColor.systemGray2
+            } else {
+                self.numberOfPostsLabel.textColor = UIColor(named: "blackAndWhite")
+            }
             self.numberOfPostsLabel.text = vm.numberOfPosts
         }
     }

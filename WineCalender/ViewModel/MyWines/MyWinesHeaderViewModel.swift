@@ -14,10 +14,24 @@ class MyWinesHeaderViewModel {
     let introduction: String?
     var numberOfPosts: String
     
-    init (user: User?, num: Int) {
+    init (user: User?, posts: Int) {
         self.profileImageURL = user?.profileImageURL
         self.nickname = user?.nickname ?? "비회원"
         self.introduction = user?.introduction
-        self.numberOfPosts = "\(num) 게시물"
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        var formattedPosts = ""
+        if posts < 10000 {
+            formattedPosts = numberFormatter.string(for: posts)!
+        } else if posts >= 10000 && posts < 100000000 {
+            let num = posts / 10000
+            formattedPosts = numberFormatter.string(for: num)! + "만"
+        } else if posts >= 100000000{
+            let num = posts / 100000000
+            formattedPosts = numberFormatter.string(for: num)! + "억"
+        }
+        self.numberOfPosts = formattedPosts
     }
 }

@@ -28,33 +28,37 @@ class MyWinesViewModel {
     }
     
     var wineNameDescription: String {
-        var string = ""
+        var name = ""
         if let post = post {
-            string = self.wineNameToDescription(name: post.tastingNote.wineName)
+            name = post.tastingNote.wineName
         } else if let note = note {
-            string = self.wineNameToDescription(name: note.wineName)
+            name = note.wineName
         }
-        return string
+        return "🍷 " + name
     }
     
     var tastingDateDescription: String {
-        var string = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        
+        var date = Date()
         if let post = post {
-            string = self.tastingDateToDescription(date: post.tastingNote.tastingDate)
+            date = post.tastingNote.tastingDate
         } else if let note = note {
-            string = self.tastingDateToDescription(date: note.tastingDate)
+            date = note.tastingDate
         }
-        return string
+        return "🗓 " + dateFormatter.string(from: date)
     }
     
     var ratingDescription: String {
-        var string = ""
+        var rating: Int16 = 0
         if let post = post {
-            string = self.ratingToDescription(rating: post.tastingNote.rating)
+            rating = post.tastingNote.rating ?? 0
         } else if let note = note {
-            string = self.ratingToDescription(rating: note.rating)
+            rating = note.rating
         }
-        return string
+        return "⭐️ " + "\(rating)"
     }
 
     //FireBase
@@ -83,20 +87,5 @@ class MyWinesViewModel {
             }
         }
         return image
-    }
-
-    private func wineNameToDescription(name: String) -> String {
-        return "🍷 " + name
-    }
-
-    private func tastingDateToDescription(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        return "🗓 " + dateFormatter.string(from: date)
-    }
-
-    private func ratingToDescription(rating: Int16?) -> String {
-        return "⭐️ " + "\(rating ?? 0)"
     }
 }
