@@ -35,23 +35,27 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
          detailProfile.layer.borderColor = UIColor.lightGray.cgColor
      }
     override func viewWillAppear(_ animated: Bool) {
-        func configureMemberUI() {
-               //Fetch User Profile
-               guard let authorUID = postDetailData?.authorUID else { return }
-               AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
-                   self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-                   self.userName.text = nickname
-               }
-           }
-        func configureNonmemberUI() {
-                guard let note = noteDetailData else { return }
-                self.userName.text = "비회원"
-                self.wineName.text = note.wineName
-                self.mainText.text = note.memo
-            }
-        }
+        configureMemberUI()
+        configureNonmemberUI()
     }
-  
+    
+    func configureMemberUI() {
+       //Fetch User Profile
+       guard let authorUID = postDetailData?.authorUID else { return }
+       AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
+           self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+           self.userName.text = nickname
+       }
+    }
+    
+    func configureNonmemberUI() {
+        guard let note = noteDetailData else { return }
+        self.userName.text = "비회원"
+        self.wineName.text = note.wineName
+        self.mainText.text = note.memo
+    }
+}
+
 
 extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func MoveToNextIndex(){

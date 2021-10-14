@@ -25,7 +25,7 @@ class Community : UIViewController{
         UIColor.init(red: 255/255.0, green: 158/255.0, blue: 192/255.0, alpha: 1),
         ]
     
-    var posts = [(Post,String,URL?)]()
+    var posts = [(post: Post, username: String, profileImageUrl: URL?)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! PostThumbnailCell
         let postInfo = posts[indexPath.row]
         let color = postCardColorSet[indexPath.row % postCardColorSet.count]
-        cell.postThumbnailVM = PostThumbnailVM(postInfo.0,postInfo.1,postInfo.2,color)
+        cell.postThumbnailVM = PostThumbnailVM(postInfo.post, postInfo.username ,postInfo.profileImageUrl, color)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
