@@ -36,6 +36,7 @@ class Community : UIViewController{
         setupCollectionViewInsets()
         
         PostManager.shared.postRef.queryOrdered(byChild: "postingDate").observe(DataEventType.value, with: { snapshot in
+            self.posts = []
             
             for child in snapshot.children.reversed() {
                 let snapshot = child as! DataSnapshot
@@ -76,13 +77,13 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        self.performSegue(withIdentifier: "collectionDetail", sender: collectionView.cellForItem(at: indexPath))
 //            collectionView.deselectItem(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "collectionDetail", sender: posts[indexPath.row])
+        self.performSegue(withIdentifier: "collectionDetail", sender: indexPath.row)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "collectionDetail" , let PostDetail = segue.destination as? PostDetail else {return}
-        guard let item = sender as? Post else { return }
-        PostDetail.postDetailData = item
+        guard segue.identifier == "collectionDetail" , let postDetail = segue.destination as? PostDetail else {return}
+        guard let row = sender as? Int else { return }
+        postDetail.postDetailData = posts[row].0
                  
     }
 }
