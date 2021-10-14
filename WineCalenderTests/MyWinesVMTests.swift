@@ -28,7 +28,7 @@ class MyWinesVMTests: XCTestCase {
                          updatedDate: nil,
                          postImageURL: ["https://firebasestorage.googleapis.com:443/v0/b/wine-calendar-3e6a1.appspot.com/o/PostImage%2F-MlJQtDIa38wN9_bWWuG%2F-MlJQtDIa38wN9_bWWuG0.jpg?alt=media&token=91332640-18ee-4dfa-a25b-64728647afad"],
                          tastingNote: tastingNotes,
-                         likes: nil,
+                         likeUIDs: nil,
                          comments: nil)
     
     override func setUpWithError() throws {

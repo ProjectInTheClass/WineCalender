@@ -17,7 +17,7 @@ class PostThumbnailVMTests: XCTestCase {
                          updatedDate: nil,
                          postImageURL: ["https://firebasestorage.googleapis.com:443/v0/b/wine-calendar-3e6a1.appspot.com/o/PostImage%2F-MlJQtDIa38wN9_bWWuG%2F-MlJQtDIa38wN9_bWWuG0.jpg?alt=media&token=91332640-18ee-4dfa-a25b-64728647afad"],
                          tastingNote: tastingNotes,
-                         likes: nil,
+                         likeUIDs: nil,
                          comments: nil)
     
     let user = User(uid: "i5yIPNa6HwV7SyJ1Jz04JcdEAJI3", email: "suzennk@test.com", profileImageURL: URL(string: "https://firebasestorage.googleapis.com:443/v0/b/wine-calendar-3e6a1.appspot.com/o/ProfileImage%2Fi5yIPNa6HwV7SyJ1Jz04JcdEAJI3.jpg?alt=media&token=042ce1d8-44a2-46bd-afa3-a35b164fc1c4"), nickname: "suzennk", introduction: nil)
