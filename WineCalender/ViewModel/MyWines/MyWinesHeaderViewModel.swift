@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MyWinesHeaderViewModel {
     
@@ -13,6 +14,7 @@ class MyWinesHeaderViewModel {
     let nickname: String
     let introduction: String?
     var numberOfPosts: String
+    var numberOfPostsColor: UIColor
     
     init (user: User?, posts: Int) {
         self.profileImageURL = user?.profileImageURL
@@ -22,16 +24,20 @@ class MyWinesHeaderViewModel {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         
-        var formattedPosts = ""
-        if posts < 10000 {
-            formattedPosts = numberFormatter.string(for: posts)!
-        } else if posts >= 10000 && posts < 100000000 {
+        if posts >= 10000 && posts < 100000000 {
             let num = posts / 10000
-            formattedPosts = numberFormatter.string(for: num)! + "만"
-        } else if posts >= 100000000{
+            self.numberOfPosts = numberFormatter.string(for: num)! + "만"
+        } else if posts >= 100000000 {
             let num = posts / 100000000
-            formattedPosts = numberFormatter.string(for: num)! + "억"
+            self.numberOfPosts = numberFormatter.string(for: num)! + "억"
+        } else {
+            self.numberOfPosts = numberFormatter.string(for: posts)!
         }
-        self.numberOfPosts = formattedPosts
+        
+        if posts == 0 {
+            self.numberOfPostsColor = UIColor.systemGray2
+        } else {
+            self.numberOfPostsColor = UIColor(named: "blackAndWhite")!
+        }
     }
 }

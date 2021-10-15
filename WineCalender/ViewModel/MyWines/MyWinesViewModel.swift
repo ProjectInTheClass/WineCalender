@@ -23,8 +23,8 @@ class MyWinesViewModel {
         return url
     }
     
-    var firstImage: UIImage {
-        return note?.image[0] ?? UIImage()
+    var firstImage: UIImage? {
+        return note?.image[0]
     }
     
     var wineNameDescription: String {

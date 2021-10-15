@@ -20,7 +20,7 @@ class MyWinesHeaderView: UICollectionReusableView {
     
     func update(vm: MyWinesHeaderViewModel) {
         DispatchQueue.main.async {
-            self.profileImageView.layer.borderColor = UIColor.white.cgColor
+            self.profileImageView.layer.borderColor = UIColor(named: "whiteAndBlack")!.cgColor
             self.profileImageView.layer.borderWidth = 6
             
             if Auth.auth().currentUser != nil {
@@ -35,13 +35,25 @@ class MyWinesHeaderView: UICollectionReusableView {
 
             self.nicknameLabel.text = vm.nickname
             self.introductionLabel.text = vm.introduction
-            
-            if vm.numberOfPosts == "0" {
-                self.numberOfPostsLabel.textColor = UIColor.systemGray2
-            } else {
-                self.numberOfPostsLabel.textColor = UIColor(named: "blackAndWhite")
-            }
             self.numberOfPostsLabel.text = vm.numberOfPosts
+            self.numberOfPostsLabel.textColor = vm.numberOfPostsColor
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 13.0, *) {
+            if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if traitCollection.userInterfaceStyle == .dark {
+                    self.profileImageView.layer.borderColor = UIColor.black.cgColor
+                }
+                else {
+                    self.profileImageView.layer.borderColor = UIColor.white.cgColor
+                }
+            }
+        } else {
+            self.profileImageView.layer.borderColor = UIColor.white.cgColor
         }
     }
 }
