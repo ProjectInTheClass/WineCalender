@@ -52,6 +52,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let cameraAction = UIAlertAction(title: "카메라", style: .default) { action in
                 imagePicker.sourceType = .camera
+                imagePicker.allowsEditing = true
                 self.present(imagePicker, animated: true, completion: nil)
             }
             alert.addAction(cameraAction)
