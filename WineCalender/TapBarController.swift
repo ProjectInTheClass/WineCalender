@@ -36,6 +36,8 @@ class TabBarController: UITabBarController {
         pagingViewController.didMove(toParent: self)
         
         let community = (storyboard?.instantiateViewController(identifier: "Community"))!
+        community.tabBarItem = UITabBarItem(title: "Community", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3.fill"))
+        
         // TabBarItem
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)

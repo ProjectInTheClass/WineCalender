@@ -15,6 +15,7 @@ struct PostDetailVM {
 //    let isMine : Bool?
     let memo : String?
     let wineName: String?
+    let addPostDate: Date?
     
     init(_ post:Post,_ username:String,_ profileImageUrl:URL?,_ color:UIColor) {
         self.userName = username
@@ -22,5 +23,6 @@ struct PostDetailVM {
         self.postCardColor = color
         self.memo = post.tastingNote.memo
         self.wineName = post.tastingNote.wineName
+        self.addPostDate = post.tastingNote.tastingDate
    }
 }

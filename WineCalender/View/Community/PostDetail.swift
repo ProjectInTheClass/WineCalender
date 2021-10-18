@@ -21,6 +21,16 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     
     var postDetailData : Post?
     //nonmember
+    var postDetailVM : PostDetailVM?{
+        didSet{
+            updateView()
+        }
+    }
+    func updateView(){
+        guard let vm = postDetailVM else { return }
+    
+    }
+    
     var noteDetailData : WineTastingNote?
     
     override func viewDidLoad() {
@@ -34,11 +44,13 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
          detailProfile.layer.borderWidth = 3.5 
          detailProfile.layer.borderColor = UIColor.white.cgColor
         
+        
      }
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
         configureNonmemberUI()
     }
+    
     
     func configureMemberUI() {
        //Fetch User Profile
@@ -81,6 +93,8 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
+        postCell.backgroundColor = postDetailVM?.postCardColor
+        
         if let post = postDetailData {
             let imageURL = URL(string: (post.postImageURL[indexPath.row]))
             postCell.postImage.kf.setImage(with: imageURL)

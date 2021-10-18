@@ -16,14 +16,6 @@ class Community : UIViewController{
 
     @IBOutlet var collectionView: UICollectionView!
     
-    let postCardColorSet = [
-        UIColor.init(red: 255/255.0, green: 181/255.0, blue: 181/255.0, alpha: 1),
-        UIColor.init(red: 225/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1),
-        UIColor.init(red: 158/255.0, green: 251/255.0, blue: 255/255.0, alpha: 1),
-        UIColor.init(red: 158/255.0, green: 255/255.0, blue: 190/255.0, alpha: 1),
-        UIColor.init(red: 255/255.0, green: 234/255.0, blue: 158/255.0, alpha: 1),
-        UIColor.init(red: 255/255.0, green: 158/255.0, blue: 192/255.0, alpha: 1),
-        ]
     
     var posts = [(post: Post, username: String, profileImageUrl: URL?)]()
     
@@ -71,8 +63,7 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! PostThumbnailCell
         let postInfo = posts[indexPath.row]
-        let color = postCardColorSet[indexPath.row % postCardColorSet.count]
-        cell.postThumbnailVM = PostThumbnailVM(postInfo.post, postInfo.username ,postInfo.profileImageUrl, color)
+        cell.postThumbnailVM = PostThumbnailVM(postInfo.post, postInfo.username ,postInfo.profileImageUrl, indexPath.row)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -85,7 +76,9 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
         guard segue.identifier == "collectionDetail" , let postDetail = segue.destination as? PostDetail else {return}
         guard let row = sender as? Int else { return }
         postDetail.postDetailData = posts[row].0
-                 
+        let data = posts[row]
+        let cell = collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? PostThumbnailCell
+        postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
     }
 }
 
