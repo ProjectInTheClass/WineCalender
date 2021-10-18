@@ -35,13 +35,14 @@ class TabBarController: UITabBarController {
 //        view.constrainToEdges(pagingViewController.view)
         pagingViewController.didMove(toParent: self)
         
+        let community = (storyboard?.instantiateViewController(identifier: "Community"))!
         // TabBarItem
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)
         pagingViewController.tabBarItem = UITabBarItem(title:"Community",image:UIImage(systemName: ""),selectedImage: nil)
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
-        self.viewControllers = [pagingViewController, add, myWines]
+        self.viewControllers = [community, add, myWines]
         
         setAddButton()
     }

@@ -31,8 +31,9 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
          
          detailProfile.image = UIImage(named: "AppIcon")
          detailProfile.layer.cornerRadius = detailProfile.frame.height/2
-         detailProfile.layer.borderWidth = 0.1
-         detailProfile.layer.borderColor = UIColor.lightGray.cgColor
+         detailProfile.layer.borderWidth = 3.5 
+         detailProfile.layer.borderColor = UIColor.white.cgColor
+        
      }
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
@@ -54,6 +55,12 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         self.wineName.text = note.wineName
         self.mainText.text = note.memo
     }
+    
+//    func updateView() {
+//        guard let vmm = PostDetailVM else { return }
+//
+////        postCollection.backgroundColor =
+//    }
 }
 
 
