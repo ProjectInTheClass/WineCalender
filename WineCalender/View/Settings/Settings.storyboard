@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -339,7 +340,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zT6-bU-oim">
-                                <rect key="frame" x="60" y="184" width="294" height="197"/>
+                                <rect key="frame" x="60" y="184" width="294" height="232"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2a-Af-Fy8">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="25"/>
@@ -350,7 +351,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="닉네임" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Qma-pW-0A7">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="닉네임" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qma-pW-0A7">
                                         <rect key="frame" x="0.0" y="30" width="294" height="35"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
@@ -369,27 +370,29 @@
                                             <constraint firstAttribute="height" constant="1" id="dvs-JP-BCC"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="소개" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lbw-CI-i8k">
-                                        <rect key="frame" x="0.0" y="76" width="294" height="35"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" text="소개" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6qS-N5-A7b">
+                                        <rect key="frame" x="0.0" y="76" width="294" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="tintColor" name="blackAndWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="vPh-uQ-xc5"/>
+                                            <constraint firstAttribute="height" constant="70" id="pxI-Pv-wdk"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        <color key="textColor" systemColor="systemGray2Color"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                         <connections>
-                                            <action selector="introductionReturnKeyTapped:" destination="agX-9y-ucz" eventType="editingDidEndOnExit" id="V0s-It-nSh"/>
+                                            <outlet property="delegate" destination="agX-9y-ucz" id="21V-2O-joi"/>
                                         </connections>
-                                    </textField>
+                                    </textView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtX-5e-lzp">
-                                        <rect key="frame" x="0.0" y="116" width="294" height="1"/>
+                                        <rect key="frame" x="0.0" y="151" width="294" height="1"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="cjw-Js-Chg"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z52-as-ZZI">
-                                        <rect key="frame" x="0.0" y="122" width="294" height="30"/>
+                                        <rect key="frame" x="0.0" y="157" width="294" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="WK9-TZ-TSv"/>
                                         </constraints>
@@ -398,7 +401,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AoM-qC-3Vv">
-                                        <rect key="frame" x="0.0" y="157" width="294" height="40"/>
+                                        <rect key="frame" x="0.0" y="192" width="294" height="40"/>
                                         <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="oWC-AS-V5T"/>
@@ -435,7 +438,7 @@
                     <connections>
                         <outlet property="doneButton" destination="AoM-qC-3Vv" id="CV2-gl-2Vm"/>
                         <outlet property="emailLabel" destination="c2a-Af-Fy8" id="aiX-AV-VZG"/>
-                        <outlet property="introductionTextField" destination="lbw-CI-i8k" id="PRj-pH-Cuz"/>
+                        <outlet property="introductionTextView" destination="6qS-N5-A7b" id="1os-Qf-IGY"/>
                         <outlet property="nicknameTextField" destination="Qma-pW-0A7" id="EOJ-Mi-7EY"/>
                         <outlet property="profileImageView" destination="vVO-SE-IPk" id="sqy-aX-J67"/>
                         <outlet property="warningLabel" destination="z52-as-ZZI" id="aLG-cz-a0O"/>
@@ -443,7 +446,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1U-Ww-hDb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4852" y="-49"/>
+            <point key="canvasLocation" x="4850.7246376811599" y="-49.553571428571423"/>
         </scene>
         <!--Find Password View Controller-->
         <scene sceneID="9ST-HZ-S9e">
