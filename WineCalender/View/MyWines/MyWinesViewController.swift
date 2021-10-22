@@ -95,24 +95,24 @@ class MyWinesViewController: UIViewController {
         }
     }
     
-    @IBAction func moreButtonTapped(_ sender: UIButton) {
-        let superview = sender.superview?.superview?.superview?.superview
-
-        guard let cell = superview as? MyWinesCollectionViewCell else { return }
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
-        print(indexPath.row)
-
-        let storyboard = UIStoryboard(name: "Community", bundle: nil)
-        let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
-
-        if Auth.auth().currentUser != nil {
-            postDetailVC.postDetailData = posts[indexPath.row]
-        } else {
-            postDetailVC.noteDetailData = notes[indexPath.row]
-        }
-        
-        self.navigationController?.pushViewController(postDetailVC, animated: true)
-    }
+//    @IBAction func moreButtonTapped(_ sender: UIButton) {
+//        let superview = sender.superview?.superview?.superview?.superview
+//
+//        guard let cell = superview as? MyWinesCollectionViewCell else { return }
+//        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+//        print(indexPath.row)
+//
+//        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+//        let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
+//
+//        if Auth.auth().currentUser != nil {
+//            postDetailVC.postDetailData = posts[indexPath.row]
+//        } else {
+//            postDetailVC.noteDetailData = notes[indexPath.row]
+//        }
+//
+//        self.navigationController?.pushViewController(postDetailVC, animated: true)
+//    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -130,11 +130,15 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
         
-        cell.label1.isHidden = true
-        cell.label2.isHidden = true
-        cell.label3.isHidden = true
-        cell.moreButton.isHidden = true
+//        cell.label1.isHidden = true
+//        cell.label2.isHidden = true
+//        cell.label3.isHidden = true
+//        cell.moreButton.isHidden = true
+        cell.wineStackView.isHidden = true
+        cell.likesComentsStackView.isHidden = true
         cell.imageView.alpha = 1.0
+        //cell.backView.backgroundColor = postCardColorSet[indexPath.item % postCardColorSet.count]
+        cell.backView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
         
         if Auth.auth().currentUser != nil {
             cell.post = posts[indexPath.row]
@@ -167,24 +171,60 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
+
+        //imageView constraint
+        let imageViewTopAnchor = cell.imageView.topAnchor.constraint(equalTo: cell.imageView.superview!.topAnchor)
+        imageViewTopAnchor.priority = UILayoutPriority(999)
+        let imageViewSelectedTopAnchor = cell.imageView.topAnchor.constraint(equalTo: cell.imageView.superview!.topAnchor, constant: 10)
+        imageViewSelectedTopAnchor.priority = UILayoutPriority(999)
         
-        UIView.transition(with: cell.imageView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-        UIView.transition(with: cell.stackView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+        let imageViewLeadingAnchor = cell.imageView.leadingAnchor.constraint(equalTo: cell.imageView.superview!.leadingAnchor)
+        imageViewLeadingAnchor.priority = UILayoutPriority(999)
+        let imageViewSelectedLeadingAnchor = cell.imageView.leadingAnchor.constraint(equalTo: cell.imageView.superview!.leadingAnchor, constant: 22)
+        imageViewSelectedLeadingAnchor.priority = UILayoutPriority(999)
+        
+        let imageViewBottomAnchor = cell.imageView.bottomAnchor.constraint(equalTo: cell.imageView.superview!.bottomAnchor)
+        imageViewBottomAnchor.priority = UILayoutPriority(999)
+        let imageViewSelectedBottomAnchor = cell.imageView.bottomAnchor.constraint(equalTo: cell.imageView.superview!.bottomAnchor, constant: -34)
+        imageViewSelectedBottomAnchor.priority = UILayoutPriority(999)
         
         if cell.imageView.alpha == 1.0 {
-            cell.imageView.alpha = 0.2
-            cell.label1.isHidden = false
-            cell.label2.isHidden = false
-            cell.label3.isHidden = false
-            cell.moreButton.isHidden = false
+            UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+            cell.imageView.alpha = 0.3
+            cell.imageView.layer.cornerRadius = 10
+            cell.wineStackView.isHidden = false
+            cell.likesComentsStackView.isHidden = false
+            
+            imageViewTopAnchor.isActive = false
+            imageViewLeadingAnchor.isActive = false
+            imageViewBottomAnchor.isActive = false
+            imageViewSelectedTopAnchor.isActive = true
+            imageViewSelectedLeadingAnchor.isActive = true
+            imageViewSelectedBottomAnchor.isActive = true
         } else {
+            UIView.transition(with: cell, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
             cell.imageView.alpha = 1.0
-            cell.label1.isHidden = true
-            cell.label2.isHidden = true
-            cell.label3.isHidden = true
-            cell.moreButton.isHidden = true
-        }
+            cell.imageView.layer.cornerRadius = 0
+            cell.wineStackView.isHidden = true
+            cell.likesComentsStackView.isHidden = true
+            
+            imageViewSelectedTopAnchor.isActive = false
+            imageViewSelectedLeadingAnchor.isActive = false
+            imageViewSelectedBottomAnchor.isActive = false
+            imageViewTopAnchor.isActive = true
+            imageViewLeadingAnchor.isActive = true
+            imageViewBottomAnchor.isActive = true
+            
+            let storyboard = UIStoryboard(name: "Community", bundle: nil)
+            let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
 
+            if Auth.auth().currentUser != nil {
+                postDetailVC.postDetailData = posts[indexPath.row]
+            } else {
+                postDetailVC.noteDetailData = notes[indexPath.row]
+            }
+            self.navigationController?.pushViewController(postDetailVC, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

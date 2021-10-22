@@ -10,12 +10,16 @@ import Kingfisher
 
 class MyWinesCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var label1: UILabel!
-    @IBOutlet weak var label2: UILabel!
-    @IBOutlet weak var label3: UILabel!
-    @IBOutlet weak var moreButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var wineNameLabel: UILabel!
+    @IBOutlet weak var tastingDateLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+//    @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var numberOfLikesLabel: UILabel!
+    @IBOutlet weak var numberOfComentsLabel: UILabel!
+    @IBOutlet weak var wineStackView: UIStackView!
+    @IBOutlet weak var likesComentsStackView: UIStackView!
     
     var post: Post? {
         didSet {
@@ -32,9 +36,9 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
         if let post = post {
             let vm = MyWinesViewModel(post: post)
             imageView.kf.setImage(with: vm.firstImageURL)
-            label1.text = vm.wineNameDescription
-            label2.text = vm.tastingDateDescription
-            label3.text = vm.ratingDescription
+            wineNameLabel.text = vm.wineNameDescription
+            tastingDateLabel.text = vm.tastingDateDescription
+            ratingLabel.text = vm.ratingDescription
         }
     }
     
@@ -42,9 +46,9 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
         if let note = note {
             let vm = MyWinesViewModel(note: note)
             imageView.image = vm.firstImage
-            label1.text = vm.wineNameDescription
-            label2.text = vm.tastingDateDescription
-            label3.text = vm.ratingDescription
+            wineNameLabel.text = vm.wineNameDescription
+            tastingDateLabel.text = vm.tastingDateDescription
+            ratingLabel.text = vm.ratingDescription
         }
     }
 }
