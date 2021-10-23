@@ -130,6 +130,13 @@ extension YPSelectionsGalleryVC: UICollectionViewDelegate {
         if let mediaFilterVC = mediaFilterVC as? UIViewController {
             let navVC = UINavigationController(rootViewController: mediaFilterVC)
             navVC.navigationBar.isTranslucent = false
+            if #available(iOS 13.0, *) {
+                let navBarAppearance = UINavigationBarAppearance()
+                navBarAppearance.configureWithOpaqueBackground()
+                navVC.navigationBar.scrollEdgeAppearance = navBarAppearance
+            } else {
+                // Fallback on earlier versions
+            }
             present(navVC, animated: true, completion: nil)
         }
     }
