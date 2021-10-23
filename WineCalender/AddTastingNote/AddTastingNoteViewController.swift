@@ -106,36 +106,17 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
         config.hidesCancelButton = false
         config.gallery.hidesRemoveButton = false
         
-        config.wordings.libraryTitle = "앨범"
-        config.wordings.cancel = "취소"
-        config.wordings.next = "다음"
-        config.wordings.albumsTitle = "앨범"
-        config.wordings.cameraTitle = "카메라"
-        config.wordings.done = "완료"
-        config.wordings.filter = "필터"
-        config.wordings.warningMaxItemsLimit = "최대 3장까지 선택할 수 있습니다."
+//        config.wordings.libraryTitle = "앨범"
+//        config.wordings.cancel = "취소"
+//        config.wordings.next = "다음"
+//        config.wordings.albumsTitle = "앨범"
+//        config.wordings.cameraTitle = "카메라"
+//        config.wordings.done = "완료"
+//        config.wordings.filter = "필터"
+//        config.wordings.warningMaxItemsLimit = "최대 3장까지 선택할 수 있습니다."
         config.colors.tintColor = .label
         config.colors.multipleItemsSelectedCircleColor = .systemPurple
-//        config.colors.navigationBarActivityIndicatorColor = .yellow
-//        config.colors.albumTintColor = .yellow
-//        config.colors.albumBarTintColor = .yellow
-//        config.colors.libraryScreenBackgroundColor = .yellow
-//        config.colors.assetViewBackgroundColor = .yellow
-//        config.colors.filterBackgroundColor = .yellow
-//        config.colors.selectionsBackgroundColor = .yellow
-//        config.colors.progressBarCompletedColor = .yellow
-//        config.colors.coverSelectorBorderColor = .yellow
-//        config.colors.progressBarTrackColor = .yellow
-//        config.colors.trimmerMainColor = .yellow
-//        config.colors.trimmerHandleColor = .yellow
-//        config.colors.positionLineColor = .yellow
-//        config.colors.bottomMenuItemSelectedTextColor = .yellow
-//        config.colors.bottomMenuItemUnselectedTextColor = .yellow
-//        config.colors.bottomMenuItemBackgroundColor = .yellow
-//        config.colors.photoVideoScreenBackgroundColor = .yellow
-//        config.colors.albumTitleColor = .yellow
-//        config.colors.safeAreaBackgroundColor = .yellow
- 
+
         let picker = YPImagePicker(configuration: config)
         picker.imagePickerDelegate = self
 //        picker.view.backgroundColor = UIColor(named: "whiteAndBlack")
