@@ -15,11 +15,14 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var wineNameLabel: UILabel!
     @IBOutlet weak var tastingDateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
-//    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var numberOfLikesLabel: UILabel!
     @IBOutlet weak var numberOfComentsLabel: UILabel!
     @IBOutlet weak var wineStackView: UIStackView!
     @IBOutlet weak var likesComentsStackView: UIStackView!
+    @IBOutlet weak var imageViewTopAnchor: NSLayoutConstraint!
+    @IBOutlet weak var imageViewLeadingAnchor: NSLayoutConstraint!
+    @IBOutlet weak var imageViewBottomAnchor: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTrailingAnchor: NSLayoutConstraint!
     
     var post: Post? {
         didSet {

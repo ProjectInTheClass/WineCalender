@@ -22,6 +22,8 @@ class MyWinesViewController: UIViewController {
     lazy var posts = [Post]()
     lazy var notes = [WineTastingNote]()
     
+    lazy var selectedCells = [Int:Int]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,16 +131,31 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
-        
-//        cell.label1.isHidden = true
-//        cell.label2.isHidden = true
-//        cell.label3.isHidden = true
-//        cell.moreButton.isHidden = true
-        cell.wineStackView.isHidden = true
-        cell.likesComentsStackView.isHidden = true
-        cell.imageView.alpha = 1.0
-        //cell.backView.backgroundColor = postCardColorSet[indexPath.item % postCardColorSet.count]
+
         cell.backView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
+        
+        //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
+        if self.selectedCells[indexPath.item] == indexPath.item {
+            cell.imageView.alpha = 0.3
+            cell.imageView.layer.cornerRadius = 10
+            cell.wineStackView.isHidden = false
+            cell.likesComentsStackView.isHidden = false
+            
+            cell.imageViewTopAnchor.constant = 10
+            cell.imageViewLeadingAnchor.constant = 22
+            cell.imageViewTrailingAnchor.constant = 22
+            cell.imageViewBottomAnchor.constant = 34
+        } else {
+            cell.imageView.alpha = 1.0
+            cell.imageView.layer.cornerRadius = 0
+            cell.wineStackView.isHidden = true
+            cell.likesComentsStackView.isHidden = true
+            
+            cell.imageViewTopAnchor.constant = 0
+            cell.imageViewLeadingAnchor.constant = 0
+            cell.imageViewTrailingAnchor.constant = 0
+            cell.imageViewBottomAnchor.constant = 0
+        }
         
         if Auth.auth().currentUser != nil {
             cell.post = posts[indexPath.row]
@@ -171,49 +188,29 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
-
-        //imageView constraint
-        let imageViewTopAnchor = cell.imageView.topAnchor.constraint(equalTo: cell.imageView.superview!.topAnchor)
-        imageViewTopAnchor.priority = UILayoutPriority(999)
-        let imageViewSelectedTopAnchor = cell.imageView.topAnchor.constraint(equalTo: cell.imageView.superview!.topAnchor, constant: 10)
-        imageViewSelectedTopAnchor.priority = UILayoutPriority(999)
-        
-        let imageViewLeadingAnchor = cell.imageView.leadingAnchor.constraint(equalTo: cell.imageView.superview!.leadingAnchor)
-        imageViewLeadingAnchor.priority = UILayoutPriority(999)
-        let imageViewSelectedLeadingAnchor = cell.imageView.leadingAnchor.constraint(equalTo: cell.imageView.superview!.leadingAnchor, constant: 22)
-        imageViewSelectedLeadingAnchor.priority = UILayoutPriority(999)
-        
-        let imageViewBottomAnchor = cell.imageView.bottomAnchor.constraint(equalTo: cell.imageView.superview!.bottomAnchor)
-        imageViewBottomAnchor.priority = UILayoutPriority(999)
-        let imageViewSelectedBottomAnchor = cell.imageView.bottomAnchor.constraint(equalTo: cell.imageView.superview!.bottomAnchor, constant: -34)
-        imageViewSelectedBottomAnchor.priority = UILayoutPriority(999)
         
         if cell.imageView.alpha == 1.0 {
+            self.selectedCells[indexPath.item] = indexPath.item
             UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
             cell.imageView.alpha = 0.3
             cell.imageView.layer.cornerRadius = 10
             cell.wineStackView.isHidden = false
             cell.likesComentsStackView.isHidden = false
-            
-            imageViewTopAnchor.isActive = false
-            imageViewLeadingAnchor.isActive = false
-            imageViewBottomAnchor.isActive = false
-            imageViewSelectedTopAnchor.isActive = true
-            imageViewSelectedLeadingAnchor.isActive = true
-            imageViewSelectedBottomAnchor.isActive = true
+            cell.imageViewTopAnchor.constant = 10
+            cell.imageViewLeadingAnchor.constant = 22
+            cell.imageViewTrailingAnchor.constant = 22
+            cell.imageViewBottomAnchor.constant = 34
         } else {
+            self.selectedCells[indexPath.item] = nil
             UIView.transition(with: cell, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
             cell.imageView.alpha = 1.0
             cell.imageView.layer.cornerRadius = 0
             cell.wineStackView.isHidden = true
             cell.likesComentsStackView.isHidden = true
-            
-            imageViewSelectedTopAnchor.isActive = false
-            imageViewSelectedLeadingAnchor.isActive = false
-            imageViewSelectedBottomAnchor.isActive = false
-            imageViewTopAnchor.isActive = true
-            imageViewLeadingAnchor.isActive = true
-            imageViewBottomAnchor.isActive = true
+            cell.imageViewTopAnchor.constant = 0
+            cell.imageViewLeadingAnchor.constant = 0
+            cell.imageViewTrailingAnchor.constant = 0
+            cell.imageViewBottomAnchor.constant = 0
             
             let storyboard = UIStoryboard(name: "Community", bundle: nil)
             let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
