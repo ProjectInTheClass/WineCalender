@@ -52,7 +52,7 @@
                                                         <constraint firstAttribute="width" secondItem="hZg-Qd-HG4" secondAttribute="height" multiplier="1:1" id="anM-iy-MDo"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9eL-Do-5kc">
+                                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9eL-Do-5kc">
                                                     <rect key="frame" x="5" y="50" width="118" height="73"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🍷" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-KH-jQR">
@@ -86,7 +86,7 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="I6K-BB-qEv">
+                                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="I6K-BB-qEv">
                                                     <rect key="frame" x="22" y="94" width="76" height="30"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Jih-di-vZp">
@@ -128,13 +128,13 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="hZg-Qd-HG4" secondAttribute="bottom" priority="998" id="3rS-Vf-HFi"/>
+                                                <constraint firstAttribute="bottom" secondItem="hZg-Qd-HG4" secondAttribute="bottom" id="3rS-Vf-HFi"/>
                                                 <constraint firstItem="Hkw-4l-b01" firstAttribute="bottom" secondItem="hZg-Qd-HG4" secondAttribute="bottom" id="5qd-in-A6q"/>
-                                                <constraint firstItem="hZg-Qd-HG4" firstAttribute="top" secondItem="rbG-9f-XnJ" secondAttribute="top" priority="998" id="6fw-8y-ZF5"/>
-                                                <constraint firstAttribute="trailing" secondItem="hZg-Qd-HG4" secondAttribute="trailing" priority="998" id="9nU-oh-7ta"/>
+                                                <constraint firstItem="hZg-Qd-HG4" firstAttribute="top" secondItem="rbG-9f-XnJ" secondAttribute="top" id="6fw-8y-ZF5"/>
+                                                <constraint firstAttribute="trailing" secondItem="hZg-Qd-HG4" secondAttribute="trailing" id="9nU-oh-7ta"/>
                                                 <constraint firstItem="I6K-BB-qEv" firstAttribute="leading" secondItem="rbG-9f-XnJ" secondAttribute="leading" constant="22" id="KPY-ld-Yeq"/>
                                                 <constraint firstAttribute="bottom" secondItem="I6K-BB-qEv" secondAttribute="bottom" constant="4" id="QlG-6T-5Tk"/>
-                                                <constraint firstItem="hZg-Qd-HG4" firstAttribute="leading" secondItem="rbG-9f-XnJ" secondAttribute="leading" priority="998" id="UfP-7M-ucc"/>
+                                                <constraint firstItem="hZg-Qd-HG4" firstAttribute="leading" secondItem="rbG-9f-XnJ" secondAttribute="leading" id="UfP-7M-ucc"/>
                                                 <constraint firstItem="9eL-Do-5kc" firstAttribute="leading" secondItem="hZg-Qd-HG4" secondAttribute="leading" constant="5" id="aGf-UD-4eN"/>
                                                 <constraint firstItem="Hkw-4l-b01" firstAttribute="trailing" secondItem="hZg-Qd-HG4" secondAttribute="trailing" id="dDd-SM-zrN"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="I6K-BB-qEv" secondAttribute="trailing" constant="22" id="fVm-g6-NIi"/>
@@ -148,6 +148,10 @@
                                         <connections>
                                             <outlet property="backView" destination="rbG-9f-XnJ" id="tKH-Tl-rrg"/>
                                             <outlet property="imageView" destination="hZg-Qd-HG4" id="sBB-VS-DWw"/>
+                                            <outlet property="imageViewBottomAnchor" destination="3rS-Vf-HFi" id="oBQ-Nd-o6r"/>
+                                            <outlet property="imageViewLeadingAnchor" destination="UfP-7M-ucc" id="iIg-P1-QgH"/>
+                                            <outlet property="imageViewTopAnchor" destination="6fw-8y-ZF5" id="a8O-FV-1b2"/>
+                                            <outlet property="imageViewTrailingAnchor" destination="9nU-oh-7ta" id="O3q-dp-mbq"/>
                                             <outlet property="likesComentsStackView" destination="I6K-BB-qEv" id="ycP-ui-JNp"/>
                                             <outlet property="numberOfComentsLabel" destination="DFa-aR-I36" id="yLT-d6-KcB"/>
                                             <outlet property="numberOfLikesLabel" destination="bHz-wk-gAG" id="oEs-ua-dwn"/>
