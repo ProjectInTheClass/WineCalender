@@ -13,23 +13,15 @@ import FirebaseAuth
 class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var detailProfile: UIImageView!
-    @IBOutlet weak var mainText: UILabel!
-    @IBOutlet weak var wineName: UILabel!
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var wineName: UILabel!
+    @IBOutlet weak var mainText: UILabel!
     
     var currentCelIndex = 0
     
     var postDetailData : Post?
     //nonmember
-    var postDetailVM : PostDetailVM?{
-        didSet{
-            updateView()
-        }
-    }
-    func updateView(){
-        guard let vm = postDetailVM else { return }
-    
-    }
+    var postDetailVM : PostDetailVM?
     
     var noteDetailData : WineTastingNote?
     
@@ -44,13 +36,14 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
          detailProfile.layer.borderWidth = 3.5 
          detailProfile.layer.borderColor = UIColor.white.cgColor
         
-        
+        wineName.text = postDetailVM?.wineName
+        mainText.text = postDetailVM?.memo
      }
+    
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
         configureNonmemberUI()
     }
-    
     
     func configureMemberUI() {
        //Fetch User Profile

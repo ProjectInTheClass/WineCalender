@@ -9,13 +9,12 @@ import Foundation
 import UIKit
 
 let postCardColorSet = [
-    UIColor.init(red: 255/255.0, green: 181/255.0, blue: 181/255.0, alpha: 1),
-    UIColor.init(red: 225/255.0, green: 181/255.0, blue: 255/255.0, alpha: 1),
-    UIColor.init(red: 158/255.0, green: 251/255.0, blue: 255/255.0, alpha: 1),
-    UIColor.init(red: 158/255.0, green: 255/255.0, blue: 190/255.0, alpha: 1),
-    UIColor.init(red: 255/255.0, green: 234/255.0, blue: 158/255.0, alpha: 1),
-    UIColor.init(red: 255/255.0, green: 158/255.0, blue: 192/255.0, alpha: 1),
-    ]
+    UIColor(named:"postCard0"),
+    UIColor(named:"postCard1"),
+    UIColor(named:"postCard2"),
+    UIColor(named:"postCard3"),
+    UIColor(named:"postCard4")
+]
 
 struct PostThumbnailVM {
     let thumbnailImageURL : URL?
@@ -34,7 +33,7 @@ struct PostThumbnailVM {
        self.profileImageURL = profileImageUrl
        self.postMainText = post.tastingNote.wineName
        self.postSubText = post.tastingNote.memo ?? ""
-       self.color = postCardColorSet[index % postCardColorSet.count]
+        self.color = postCardColorSet[index % postCardColorSet.count] ?? .white
        
        self.postSubTextIsHidden = post.tastingNote.memo == nil ? true : false
    }

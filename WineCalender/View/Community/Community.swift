@@ -66,20 +66,25 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
         cell.postThumbnailVM = PostThumbnailVM(postInfo.post, postInfo.username ,postInfo.profileImageUrl, indexPath.row)
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.performSegue(withIdentifier: "collectionDetail", sender: collectionView.cellForItem(at: indexPath))
-//            collectionView.deselectItem(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "collectionDetail", sender: indexPath.row)
-    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "collectionDetail" , let postDetail = segue.destination as? PostDetail else {return}
-        guard let row = sender as? Int else { return }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let postDetail = (storyboard?.instantiateViewController(identifier: "PostDetail")) as! PostDetail
+        let row = indexPath.row
         postDetail.postDetailData = posts[row].0
         let data = posts[row]
         let cell = collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? PostThumbnailCell
+        self.navigationController?.pushViewController(postDetail, animated: true)
         postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard segue.identifier == "collectionDetail" , let postDetail = segue.destination as? PostDetail else {return}
+//        guard let row = sender as? Int else { return }
+//        postDetail.postDetailData = posts[row].0
+//        let data = posts[row]
+//        let cell = collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? PostThumbnailCell
+//        postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
+//    }
 }
 
 extension Community : UICollectionViewDelegateFlowLayout {
