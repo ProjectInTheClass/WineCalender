@@ -52,13 +52,21 @@ class MyWinesViewModel {
     }
     
     var ratingDescription: String {
-        var rating: Int16 = 0
+        var rating: String = ""
         if let post = post {
-            rating = post.tastingNote.rating ?? 0
+            if post.tastingNote.rating == nil {
+                rating = ""
+            } else {
+                rating = String(post.tastingNote.rating!)
+            }
         } else if let note = note {
-            rating = note.rating
+            if note.rating == 0 {
+                rating = ""
+            } else {
+                rating = String(note.rating)
+            }
         }
-        return "⭐️ " + "\(rating)"
+        return "⭐️ " + rating
     }
 
     //FireBase

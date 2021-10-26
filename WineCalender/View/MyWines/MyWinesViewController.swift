@@ -54,7 +54,7 @@ class MyWinesViewController: UIViewController {
     }
     
     func setUploadNotiObserver() {
-        NotificationCenter.default.addObserver(forName: AddTastingNoteViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+        NotificationCenter.default.addObserver(forName: AddTastingNoteTableViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             if Auth.auth().currentUser != nil {
                 self?.updateMemberUI()
             } else {

@@ -10,4 +10,5 @@ import UIKit
 class WineAromasAndFlavorsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var wineAromasAndFlavorsLabel: UILabel!
+    @IBOutlet weak var backView: UIView!
 }
