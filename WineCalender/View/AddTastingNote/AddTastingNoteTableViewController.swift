@@ -45,9 +45,13 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.doneButton.isEnabled = false
         self.firstImageView.layer.borderWidth = 1
         self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
+        self.secondImageView.layer.borderWidth = 1
+        self.secondImageView.layer.borderColor = UIColor.gray.cgColor
+        self.thirdImageView.layer.borderWidth = 1
+        self.thirdImageView.layer.borderColor = UIColor.gray.cgColor
+
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
     }
     
@@ -79,14 +83,14 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         config.hidesCancelButton = false
         config.gallery.hidesRemoveButton = false
         
-//        config.wordings.libraryTitle = "앨범"
-//        config.wordings.cancel = "취소"
-//        config.wordings.next = "다음"
-//        config.wordings.albumsTitle = "앨범"
-//        config.wordings.cameraTitle = "카메라"
-//        config.wordings.done = "완료"
-//        config.wordings.filter = "필터"
-//        config.wordings.warningMaxItemsLimit = "최대 3장까지 선택할 수 있습니다."
+        config.wordings.libraryTitle = "앨범"
+        config.wordings.cancel = "취소"
+        config.wordings.next = "다음"
+        config.wordings.albumsTitle = "앨범"
+        config.wordings.cameraTitle = "카메라"
+        config.wordings.done = "완료"
+        config.wordings.filter = "필터"
+        config.wordings.warningMaxItemsLimit = "최대 3장까지 선택할 수 있습니다."
         config.colors.tintColor = .label
         config.colors.multipleItemsSelectedCircleColor = .systemPurple
 
@@ -126,7 +130,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     }
                     picker?.dismiss(animated: true, completion: {
                         self.selectedImages = selectedItems
-                        self.firstImageView.layer.borderWidth = 0
+                        self.firstImageView.layer.borderColor = UIColor.gray.cgColor
                         if self.wineNameTextField.text != "" {
                             self.doneButton.isEnabled = true
                         }
@@ -151,10 +155,10 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     @IBAction func wineNameTextFieldEditingChanged(_ sender: UITextField) {
         if sender.text != "", firstImageView.image != nil  {
             doneButton.isEnabled = true
-            self.firstImageView.layer.borderWidth = 0
+            self.firstImageView.layer.borderColor = UIColor.gray.cgColor
         } else {
             doneButton.isEnabled = false
-            self.firstImageView.layer.borderWidth = 1
+            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
         }
     }
     
@@ -353,6 +357,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             textView.textColor = UIColor.systemGray2
         }
     }
+    
     // MARK: - cancel and done
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)

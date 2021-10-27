@@ -21,11 +21,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Please allow to take photo.</string>
+	<string>테이스팅 노트, 프로필 이미지 등록 및 수정시 사용됩니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Please allow to record audio.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow to use Image.</string>
+	<string>테이스팅 노트, 프로필 이미지 등록 및 수정시 사용됩니다.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

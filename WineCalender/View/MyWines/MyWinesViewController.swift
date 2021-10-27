@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import Kingfisher
 
-class MyWinesViewController: UIViewController {
+class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -115,6 +115,41 @@ class MyWinesViewController: UIViewController {
 //
 //        self.navigationController?.pushViewController(postDetailVC, animated: true)
 //    }
+
+    @objc func handleSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
+        let point = gestureRecognizer.location(in: collectionView)
+        if let indexPath = collectionView?.indexPathForItem(at: point) {
+            let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
+            
+            if gestureRecognizer.direction == .right {
+                UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+            } else if gestureRecognizer.direction == .left {
+                UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            }
+            
+            if cell.imageView.alpha == 1.0 {
+                self.selectedCells[indexPath.item] = indexPath.item
+                cell.imageView.alpha = 0.3
+                cell.imageView.layer.cornerRadius = 10
+                cell.wineStackView.isHidden = false
+                cell.likesComentsStackView.isHidden = false
+                cell.imageViewTopAnchor.constant = 10
+                cell.imageViewLeadingAnchor.constant = 10
+                cell.imageViewTrailingAnchor.constant = 10
+                cell.imageViewBottomAnchor.constant = 10
+            } else {
+                self.selectedCells[indexPath.item] = nil
+                cell.imageView.alpha = 1.0
+                cell.imageView.layer.cornerRadius = 0
+                cell.wineStackView.isHidden = true
+                cell.likesComentsStackView.isHidden = true
+                cell.imageViewTopAnchor.constant = 0
+                cell.imageViewLeadingAnchor.constant = 0
+                cell.imageViewTrailingAnchor.constant = 0
+                cell.imageViewBottomAnchor.constant = 0
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -131,7 +166,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
-
+        
         cell.backView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
         
         //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
@@ -140,17 +175,15 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             cell.imageView.layer.cornerRadius = 10
             cell.wineStackView.isHidden = false
             cell.likesComentsStackView.isHidden = false
-            
             cell.imageViewTopAnchor.constant = 10
-            cell.imageViewLeadingAnchor.constant = 22
-            cell.imageViewTrailingAnchor.constant = 22
-            cell.imageViewBottomAnchor.constant = 34
+            cell.imageViewLeadingAnchor.constant = 10
+            cell.imageViewTrailingAnchor.constant = 10
+            cell.imageViewBottomAnchor.constant = 10
         } else {
             cell.imageView.alpha = 1.0
             cell.imageView.layer.cornerRadius = 0
             cell.wineStackView.isHidden = true
             cell.likesComentsStackView.isHidden = true
-            
             cell.imageViewTopAnchor.constant = 0
             cell.imageViewLeadingAnchor.constant = 0
             cell.imageViewTrailingAnchor.constant = 0
@@ -162,6 +195,18 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         } else {
             cell.note = notes[indexPath.row]
         }
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+        swipeRight.delegate = self
+        swipeRight.delaysTouchesBegan = true
+        swipeRight.direction = .right
+        cell.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+        swipeLeft.delegate = self
+        swipeLeft.delaysTouchesBegan = true
+        swipeLeft.direction = .left
+        cell.addGestureRecognizer(swipeLeft)
         
         return cell
     }
@@ -187,41 +232,15 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
+        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+        let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         
-        if cell.imageView.alpha == 1.0 {
-            self.selectedCells[indexPath.item] = indexPath.item
-            UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
-            cell.imageView.alpha = 0.3
-            cell.imageView.layer.cornerRadius = 10
-            cell.wineStackView.isHidden = false
-            cell.likesComentsStackView.isHidden = false
-            cell.imageViewTopAnchor.constant = 10
-            cell.imageViewLeadingAnchor.constant = 22
-            cell.imageViewTrailingAnchor.constant = 22
-            cell.imageViewBottomAnchor.constant = 34
+        if Auth.auth().currentUser != nil {
+            postDetailVC.postDetailData = posts[indexPath.row]
         } else {
-            self.selectedCells[indexPath.item] = nil
-            UIView.transition(with: cell, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
-            cell.imageView.alpha = 1.0
-            cell.imageView.layer.cornerRadius = 0
-            cell.wineStackView.isHidden = true
-            cell.likesComentsStackView.isHidden = true
-            cell.imageViewTopAnchor.constant = 0
-            cell.imageViewLeadingAnchor.constant = 0
-            cell.imageViewTrailingAnchor.constant = 0
-            cell.imageViewBottomAnchor.constant = 0
-            
-            let storyboard = UIStoryboard(name: "Community", bundle: nil)
-            let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
-
-            if Auth.auth().currentUser != nil {
-                postDetailVC.postDetailData = posts[indexPath.row]
-            } else {
-                postDetailVC.noteDetailData = notes[indexPath.row]
-            }
-            self.navigationController?.pushViewController(postDetailVC, animated: true)
+            postDetailVC.noteDetailData = notes[indexPath.row]
         }
+        self.navigationController?.pushViewController(postDetailVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

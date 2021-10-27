@@ -1727,7 +1727,7 @@
                                 <action selector="cancelButtonTapped:" destination="37k-G2-kAN" id="NGY-qT-1s8"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="완료" id="YK2-Ei-zaR">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="완료" id="YK2-Ei-zaR">
                             <color key="tintColor" systemColor="tintColor"/>
                             <connections>
                                 <action selector="doneButtonTapped:" destination="37k-G2-kAN" id="jlK-X3-Z6j"/>
