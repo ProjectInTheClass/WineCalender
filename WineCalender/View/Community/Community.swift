@@ -89,7 +89,7 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
 
 extension Community : UICollectionViewDelegateFlowLayout {
     var padding : Int {
-        return 16
+        return 8
     }
     // 컬렉션 뷰의 마진설정
     func setupCollectionViewInsets() {

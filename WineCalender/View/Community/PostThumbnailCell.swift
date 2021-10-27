@@ -31,7 +31,7 @@ class PostThumbnailCell : UICollectionViewCell {
         
         subTitle.isHidden = vm.postSubTextIsHidden
         postCardView.backgroundColor = vm.color
-        thumnailBottom.backgroundColor = vm.color
+//        thumnailBottom.backgroundColor = vm.color
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
         profileName.text = vm.userName
         profileImage.kf.setImage(with: vm.profileImageURL)
