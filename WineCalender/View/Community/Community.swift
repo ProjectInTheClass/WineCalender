@@ -12,20 +12,24 @@ import Parchment
 
 
 
-class Community : UIViewController{
-
-    @IBOutlet var collectionView: UICollectionView!
-    
-    
+class Community : UICollectionViewController {
+    private let cellId = "ThumbnailCell"
     var posts = [(post: Post, username: String, profileImageUrl: URL?)]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemBackground
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
-        setupCollectionViewInsets()
+        self.collectionView.register(UINib(nibName: "ThumbnailCell", bundle: nil), forCellWithReuseIdentifier: cellId)
+
+        guard let layout = collectionView.collectionViewLayout as? ZigzagLayout else { return }
+        layout.contentWidth = collectionView.frame.width - collectionView.contentInset.left - collectionView.contentInset.right
+        
+//        setupCollectionViewInsets()
         
         PostManager.shared.postRef.queryOrdered(byChild: "postingDate").observe(DataEventType.value, with: { snapshot in
             self.posts = []
@@ -54,21 +58,21 @@ class Community : UIViewController{
     }
 }
 
-extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
-   
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension Community {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) as! PostThumbnailCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PostThumbnailCell
         let postInfo = posts[indexPath.row]
         cell.postThumbnailVM = PostThumbnailVM(postInfo.post, postInfo.username ,postInfo.profileImageUrl, indexPath.row)
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let postDetail = (storyboard?.instantiateViewController(identifier: "PostDetail")) as! PostDetail
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+        let postDetail = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         let row = indexPath.row
         postDetail.postDetailData = posts[row].0
         let data = posts[row]
@@ -76,43 +80,6 @@ extension Community : UICollectionViewDelegate,UICollectionViewDataSource {
         self.navigationController?.pushViewController(postDetail, animated: true)
         postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard segue.identifier == "collectionDetail" , let postDetail = segue.destination as? PostDetail else {return}
-//        guard let row = sender as? Int else { return }
-//        postDetail.postDetailData = posts[row].0
-//        let data = posts[row]
-//        let cell = collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? PostThumbnailCell
-//        postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
-//    }
-}
-
-extension Community : UICollectionViewDelegateFlowLayout {
-    var padding : Int {
-        return 8
-    }
-    // 컬렉션 뷰의 마진설정
-    func setupCollectionViewInsets() {
-        let padding = CGFloat(padding)
-        collectionView.contentInset = .init(top:0,left:padding,bottom:0,right:padding)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return .init(padding)
-        // 위 아래 간격
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return .init(padding)
-        //옆간격
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //cell 크기
-        let width = (Int(collectionView.frame.width) - 2*padding - padding) / 2
-        
-        let size = CGSize(width: width, height: 300)
-        return size
-    }
-    
 }
 
 class ImageCollectionViewCell: UICollectionViewCell {

@@ -18,6 +18,8 @@ class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
         let firstViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
         let secondViewController = (storyboard?.instantiateViewController(identifier: "Community"))!
         
@@ -34,17 +36,21 @@ class TabBarController: UITabBarController {
         view.addSubview(pagingViewController.view)
 //        view.constrainToEdges(pagingViewController.view)
         pagingViewController.didMove(toParent: self)
+         
+         pagingViewController.tabBarItem = UITabBarItem(title:"Community",image:UIImage(systemName: ""),selectedImage: nil)
+         */
         
-        let community = (storyboard?.instantiateViewController(identifier: "Community"))!
-        community.tabBarItem = UITabBarItem(title: "Community", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3.fill"))
+        let layout = ZigzagLayout()
+        let communityCollectionVC = Community(collectionViewLayout: layout)
+        communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3.fill"))
+        let communityNavContr = UINavigationController(rootViewController: communityCollectionVC)
         
         // TabBarItem
         let add = UIViewController()
         add.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "plus"), selectedImage: nil)
-        pagingViewController.tabBarItem = UITabBarItem(title:"Community",image:UIImage(systemName: ""),selectedImage: nil)
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
-        self.viewControllers = [community, add, myWines]
+        self.viewControllers = [communityNavContr, add, myWines]
         
         setAddButton()
     }

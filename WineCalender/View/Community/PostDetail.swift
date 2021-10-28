@@ -50,15 +50,11 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
      }
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
-        configureNonmemberUI()
+//        configureNonmemberUI()
     }
     @IBAction func moreButtonTapped(_ sender: Any) {
         
     }
-    
-//    @IBAction func pageChanged(_ sender: Any) {
-//        postImages.image = UIImage(named: postDetailData?.postImageURL[pageControl.currentPage] ?? "cancel")
-//    }
     func configureMemberUI() {
        //Fetch User Profile
        guard let authorUID = postDetailData?.authorUID else { return }
@@ -67,22 +63,13 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
            self.userName.text = nickname
        }
     }
-    
     func configureNonmemberUI() {
         guard let note = noteDetailData else { return }
         self.userName.text = "비회원"
         self.wineName.text = note.wineName
         self.mainText.text = note.memo
     }
-    
-//    func updateView() {
-//        guard let vm = PostDetailVM else { return }
-//
-////        postCollection.backgroundColor =
-//    }
 }
-
-
 extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postDetailData?.postImageURL.count ?? 0
@@ -91,12 +78,6 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
         let page = Int(targetContentOffset.pointee.x / view.frame.width)
         self.pageControl.currentPage = page
       }
-//
-//    func MoveToNextIndex(){
-//        currentCelIndex += 1
-//        postCollection.scrollToItem(at: IndexPath(item: currentCelIndex, section: 0), at: .centeredHorizontally, animated: true)
-//    }
-
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell

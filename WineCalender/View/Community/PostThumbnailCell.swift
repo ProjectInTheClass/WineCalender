@@ -25,6 +25,10 @@ class PostThumbnailCell : UICollectionViewCell {
         }
     }
     
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     func updateView(){
         
         guard let vm = postThumbnailVM else { return }
@@ -38,7 +42,7 @@ class PostThumbnailCell : UICollectionViewCell {
 
         mainTitle.text = vm.postMainText
         subTitle.text = vm.postSubText
-        
+
         cellImage.layer.cornerRadius = 5
         profileImage.layer.borderWidth = 0.1
         profileImage.layer.borderColor = UIColor.lightGray.cgColor

@@ -26,7 +26,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="defaultCell" id="Zry-NE-May" customClass="PostThumbnailCell" customModule="WineCalender" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="defaultCell" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="oldDefaultCell" id="Zry-NE-May" customClass="PostThumbnailCell" customModule="WineCalender" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="183" height="320"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -180,7 +180,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="추천게시글" largeTitleDisplayMode="never" id="KRr-O8-qYx"/>
                     <connections>
-                        <outlet property="collectionView" destination="38U-7C-2vx" id="zmM-61-ngs"/>
                         <segue destination="J1V-b9-rvV" kind="show" identifier="collectionDetail" id="dVH-YG-c4m"/>
                     </connections>
                 </viewController>
