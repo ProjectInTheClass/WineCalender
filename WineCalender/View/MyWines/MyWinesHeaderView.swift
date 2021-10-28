@@ -20,40 +20,33 @@ class MyWinesHeaderView: UICollectionReusableView {
     
     func update(vm: MyWinesHeaderViewModel) {
         DispatchQueue.main.async {
-            self.profileImageView.layer.borderColor = UIColor(named: "whiteAndBlack")!.cgColor
-            self.profileImageView.layer.borderWidth = 6
-            
             if Auth.auth().currentUser != nil {
                 if let url = vm.profileImageURL {
-                    self.profileImageView.kf.setImage(with: url, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-                } else {
-                    self.profileImageView.image = UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
+                    self.profileImageView.kf.setImage(with: url)
                 }
-            } else {
-                self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+                self.introductionLabel.text = vm.introduction
             }
-
             self.nicknameLabel.text = vm.nickname
-            self.introductionLabel.text = vm.introduction
             self.numberOfPostsLabel.text = vm.numberOfPosts
             self.numberOfPostsLabel.textColor = vm.numberOfPostsColor
         }
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if #available(iOS 13.0, *) {
-            if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                if traitCollection.userInterfaceStyle == .dark {
-                    self.profileImageView.layer.borderColor = UIColor.black.cgColor
-                }
-                else {
-                    self.profileImageView.layer.borderColor = UIColor.white.cgColor
-                }
-            }
-        } else {
-            self.profileImageView.layer.borderColor = UIColor.white.cgColor
-        }
-    }
+//    다크모드 변화 감지
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//
+//        if #available(iOS 13.0, *) {
+//            if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+//                if traitCollection.userInterfaceStyle == .dark {
+//                    self.profileImageView.layer.borderColor = UIColor.black.cgColor
+//                }
+//                else {
+//                    self.profileImageView.layer.borderColor = UIColor.white.cgColor
+//                }
+//            }
+//        } else {
+//            self.profileImageView.layer.borderColor = UIColor.white.cgColor
+//        }
+//    }
 }

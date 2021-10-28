@@ -34,12 +34,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func fetchMyProfile() {
         AuthenticationManager.shared.fetchMyProfile { user in
             DispatchQueue.main.async {
-                self.profileImageView.kf.setImage(with: user.profileImageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+                if let url = user.profileImageURL {
+                    self.profileImageView.kf.setImage(with: url)
+                }
                 self.emailLabel.text = user.email
                 self.nicknameTextField.text = user.nickname
                 if let introduction = user.introduction {
                     self.introductionTextView.text = introduction
-                    self.introductionTextView.textColor = UIColor(named: "blackAndWhite")
+                    self.introductionTextView.textColor = .label
                 } else {
                     self.introductionTextView.text = "소개"
                     self.introductionTextView.textColor = UIColor.systemGray2
@@ -73,7 +75,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         let deleteAction = UIAlertAction(title: "사진 선택 안 함", style: .default) { action in
-            self.profileImageView.image = UIImage(systemName: "person.circle.fill")?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
+            self.profileImageView.image = UIImage(systemName: "person.circle.fill")
         }
         alert.addAction(deleteAction)
         

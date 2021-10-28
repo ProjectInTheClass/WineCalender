@@ -232,13 +232,18 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
+        let cellColor = cell.backView.backgroundColor
+        
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         
         if Auth.auth().currentUser != nil {
             postDetailVC.postDetailData = posts[indexPath.row]
+            postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
         } else {
             postDetailVC.noteDetailData = notes[indexPath.row]
+//            postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], myWinesHeaderVM!.nickname, nil, cellColor ?? .white)
         }
         self.navigationController?.pushViewController(postDetailVC, animated: true)
     }

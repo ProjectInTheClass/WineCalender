@@ -37,7 +37,7 @@ class MyWinesHeaderViewModel {
         if posts == 0 {
             self.numberOfPostsColor = UIColor.systemGray2
         } else {
-            self.numberOfPostsColor = UIColor(named: "blackAndWhite")!
+            self.numberOfPostsColor = UIColor.label
         }
     }
 }
