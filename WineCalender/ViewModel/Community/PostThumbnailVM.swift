@@ -26,14 +26,14 @@ struct PostThumbnailVM {
     let color : UIColor
     
     init(_ post:Post,_ username:String,_ profileImageUrl:URL?,_ index: Int) {
-       let thumbnailURL = URL(string: post.postImageURL[0])
+        let thumbnailURL = URL(string: post.postImageURL[0])
        
        self.thumbnailImageURL = thumbnailURL
        self.userName = username
        self.profileImageURL = profileImageUrl
        self.postMainText = post.tastingNote.wineName
        self.postSubText = post.tastingNote.memo ?? ""
-        self.color = postCardColorSet[index % postCardColorSet.count] ?? .white
+        self.color = postCardColorSet[index % postCardColorSet.count]!
        
        self.postSubTextIsHidden = post.tastingNote.memo == nil ? true : false
    }

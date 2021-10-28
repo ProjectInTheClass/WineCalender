@@ -17,7 +17,8 @@ target 'WineCalender' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Kingfisher', '~> 6.3'
-  
+  pod 'PanModal'
+
   target 'WineCalenderTests' do
     inherit! :search_paths
     # Pods for testing

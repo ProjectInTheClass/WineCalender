@@ -108,6 +108,7 @@ extension Community : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //cell 크기
         let width = (Int(collectionView.frame.width) - 2*padding - padding) / 2
+        
         let size = CGSize(width: width, height: 300)
         return size
     }

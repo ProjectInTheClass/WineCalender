@@ -34,8 +34,8 @@ class PostThumbnailCell : UICollectionViewCell {
 //        thumnailBottom.backgroundColor = vm.color
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
         profileName.text = vm.userName
-        profileImage.kf.setImage(with: vm.profileImageURL)
-        
+        profileImage.kf.setImage(with: vm.profileImageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+
         mainTitle.text = vm.postMainText
         subTitle.text = vm.postSubText
         
