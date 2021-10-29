@@ -42,36 +42,30 @@ extension PostManager {
         print("unlike post")
     }
     
-    func fetchLikes(postUID: String, completion: @escaping ((Result<PostLike, LikeError>) -> ())) {
-        print("fetch likes")
-        
+    func fetchLikes(postUID: String, completion: @escaping ((Result<[Like], Error>) -> ())) {
+        var result = [Like]()
+
         // 로그인 상태 확인
         guard let _ = Auth.auth().currentUser else {
             debugPrint("User not logged in")
             return
         }
-    
-        PostManager.shared.likeRef.queryEqual(toValue: postUID).getData { error, snapshot in
-            guard let _ = error else {
-                completion(.failure(.postUnavailable))
-                return
+        
+        PostManager.shared.likeRef.child(postUID).observeSingleEvent(of: .value) { snapshot in
+            for child in snapshot.children.reversed() {
+                let dataSnapshot = child as! DataSnapshot
+                guard let dictionary = dataSnapshot.value as? [String:Any] else { return }
+                
+                guard let data = try? JSONSerialization.data(withJSONObject: dictionary, options: []) else { return }
+                
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                
+                guard let like = try? decoder.decode(Like.self, from: data) else { return }
+                result.append(like)
             }
             
-            guard let value = snapshot.value as? [String: Any] else {
-                completion(.failure(.valueUnavailable))
-                return
-            }
-            
-            let data = Array(value)
-            guard let data = try? JSONSerialization.data(withJSONObject: data, options: []) else { return }
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            
-            guard let postLike = try? decoder.decode(PostLike.self, from: data) else { return }
-            
-            completion(.success(postLike))
-            
+            completion(.success(result))
         }
     }
 }
