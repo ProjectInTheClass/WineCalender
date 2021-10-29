@@ -13,8 +13,17 @@ import FirebaseDatabase
  Like 기능과 관련한 Error
  */
 enum LikeError: Error {
-    case postUnavailable
-    case valueUnavailable
+    case failedToLike
+    case failedToUnlike
+    
+    var localizedDescription: String {
+        switch self {
+        case .failedToLike:
+            return "Failed to like post"
+        case .failedToUnlike:
+            return "Failed to unlike post"
+        }
+    }
 }
 
 /**
@@ -30,42 +39,45 @@ extension PostManager {
     var likeRef: DatabaseReference {
         get {
             return Database.database(url: baseUrl).reference().child("Like")
-
         }
     }
     
-    func likePost() {
-        print("like post")
-    }
-    
-    func unlikePost() {
-        print("unlike post")
-    }
-    
-    func fetchLikes(postUID: String, completion: @escaping ((Result<[Like], Error>) -> ())) {
-        var result = [Like]()
+    func like(postUID: String, completion: @escaping (Result<Void, Error>) -> ()) {
+        guard let uid = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
 
-        // 로그인 상태 확인
-        guard let _ = Auth.auth().currentUser else {
-            debugPrint("User not logged in")
-            return
+        let likeRef = PostManager.shared.likeRef.child(postUID).child(uid)
+        likeRef.setValue(Date().timeIntervalSince1970.rounded()) { error, ref in
+            if let _ = error {
+                completion(.failure(LikeError.failedToLike))
+            } else {
+                completion(.success(()))
+            }
         }
+    }
+    
+    func unlike(postUID: String, completion: @escaping (Result<Void, Error>) ->()) {
+        guard let uid = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
+        
+        let likeRef = PostManager.shared.likeRef.child(postUID).child(uid)
+        likeRef.removeValue { error, _ in
+            if let _ = error {
+                completion(.failure(LikeError.failedToUnlike))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func fetchLikes(postUID: String, completion: @escaping (Result<[String], Error>) -> ()) {
+        guard let _ = Auth.auth().currentUser else { fatalError("User not logged in") }
         
         PostManager.shared.likeRef.child(postUID).observeSingleEvent(of: .value) { snapshot in
-            for child in snapshot.children.reversed() {
-                let dataSnapshot = child as! DataSnapshot
-                guard let dictionary = dataSnapshot.value as? [String:Any] else { return }
-                
-                guard let data = try? JSONSerialization.data(withJSONObject: dictionary, options: []) else { return }
-                
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                
-                guard let like = try? decoder.decode(Like.self, from: data) else { return }
-                result.append(like)
+            guard let dict = snapshot.value as? [String : Any] else {
+                completion(.success([]))
+                return
             }
-            
-            completion(.success(result))
+            let uids = dict.keys.compactMap { String($0) }
+            completion(.success(uids))
         }
     }
 }
