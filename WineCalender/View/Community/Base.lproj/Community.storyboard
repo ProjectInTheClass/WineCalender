@@ -348,12 +348,17 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="f6y-cM-Mdk">
                                                         <rect key="frame" x="280" y="0.0" width="60" height="27"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pcx-rK-E6X">
-                                                                <rect key="frame" x="0.0" y="1.5" width="27" height="24.5"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be6-Fw-Z9K">
+                                                                <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" secondItem="pcx-rK-E6X" secondAttribute="height" multiplier="1:1" id="YHg-V1-OWQ"/>
+                                                                    <constraint firstAttribute="width" secondItem="be6-Fw-Z9K" secondAttribute="height" id="ehX-xh-w4R"/>
                                                                 </constraints>
-                                                            </imageView>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" image="heart" catalog="system"/>
+                                                                <connections>
+                                                                    <action selector="handleHeartTapped:" destination="J1V-b9-rvV" eventType="touchUpInside" id="ABH-dW-pCh"/>
+                                                                </connections>
+                                                            </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2l8-nI-3el">
                                                                 <rect key="frame" x="35" y="0.0" width="25" height="27"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -389,6 +394,8 @@
                     <connections>
                         <outlet property="collectionBackground" destination="6mt-CW-wca" id="TqI-HE-cE3"/>
                         <outlet property="detailProfile" destination="eDs-gm-DbW" id="oFe-Sv-UYi"/>
+                        <outlet property="heartButton" destination="be6-Fw-Z9K" id="uaz-qR-5Sk"/>
+                        <outlet property="likeLabel" destination="2l8-nI-3el" id="DAX-BR-9R0"/>
                         <outlet property="mainText" destination="4ez-VZ-IFB" id="Kk2-bI-pHM"/>
                         <outlet property="pageControl" destination="IJM-WG-3Fp" id="IS8-mX-aPU"/>
                         <outlet property="postCollection" destination="GLb-fM-B21" id="SiO-kl-JJN"/>

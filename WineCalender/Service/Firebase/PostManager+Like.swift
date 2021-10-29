@@ -80,4 +80,20 @@ extension PostManager {
             completion(.success(uids))
         }
     }
+    
+    func likesPost(postUID: String, completion: @escaping (Bool) -> Void) {
+        guard let userUID = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
+
+        PostManager.shared.likeRef.child(postUID).observe(.value) { snapshot in
+            if let dict = snapshot.value as? NSDictionary {
+                if let _ = dict[userUID] {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } else {
+                completion(false)
+            }
+        }
+    }
 }
