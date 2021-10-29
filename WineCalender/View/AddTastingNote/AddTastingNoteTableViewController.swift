@@ -108,12 +108,16 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         self.selectedVintage = updatePost?.tastingNote.vintage
         self.setupWineVintageLable()
         if let p = updatePost?.tastingNote.price {
+            self.price = p
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
             self.winePriceTextField.text = numberFormatter.string(for: p)
         }
         if let ac = updatePost?.tastingNote.alcoholContent {
-            self.wineAlcoholContentTextField.text = String(ac)
+            self.alcoholContent = ac
+            var alcoholContentString = String(ac)
+            alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+            self.wineAlcoholContentTextField.text = alcoholContentString
         }
         self.selectedWineAromasAndFlavors = updatePost?.tastingNote.aromasAndFlavors
         self.setupWineAromasAndFlavorsLable()
@@ -565,10 +569,9 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
                         if result == true {
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            let navVC = self.presentingViewController?.children.first
-                            let postDetailVC = navVC?.children.last as! PostDetail
+//                            let navVC = self.presentingViewController?.children.first
+//                            let postDetailVC = navVC?.children.last
                             //데이터넘기기?
-                            print(postDetailVC)
                         }
                     }
                 }

@@ -20,39 +20,47 @@ class PostManager {
     
     func uploadPost(tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
-
             guard let postID = PostManager.shared.postRef.childByAutoId().key else { return }
+            uploadImage { result in
+                if result == true {
+                    let postingDate: Double = (Date().timeIntervalSince1970).rounded()
+
+                    let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
+                    let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
+
+                    let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
+                    
+                    PostManager.shared.postRef.child(postID).updateChildValues(value)
+                    completion(true)
+                }
+            }
             
-            for (index, image) in images.enumerated() {
-                let imageName = postID + String(index) + ".jpg"
-                if let postImageData = image.jpegData(compressionQuality: 0.2) {
-                    PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
-                        if let error = error {
-                            print("이미지 등록 에러 : \(error.localizedDescription)")
-                        } else {
-                            PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
-                                if let error = error {
-                                    print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
+            func uploadImage(imageUploadCompletion: @escaping (Bool) -> Void) {
+                for (index, image) in images.enumerated() {
+                    let imageName = postID + String(index) + ".jpg"
+                    if let postImageData = image.jpegData(compressionQuality: 0.2) {
+                        PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+                            if let error = error {
+                                print("이미지 등록 에러 : \(error.localizedDescription)")
+                            } else {
+                                PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
+                                    if let error = error {
+                                        print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
+                                    } else {
+                                        guard let urlString: String = url?.absoluteString else { return }
+                                        print("이미지 등록함")
+                                        let value = ["/\(postID)/postImageURL/\(index)":urlString]
+                                        PostManager.shared.postRef.updateChildValues(value)
+                                        if images.count == index + 1 {
+                                            imageUploadCompletion(true)
+                                        }
+                                    }
                                 }
-                                guard let urlString: String = url?.absoluteString else { return }
-                                let childUpdates = ["/\(postID)/postImageURL/\(index)":urlString]
-                                PostManager.shared.postRef.updateChildValues(childUpdates)
-                                print("이미지 등록함")
-                                completion(true)
                             }
                         }
                     }
                 }
             }
-            
-            let postingDate: Double = (Date().timeIntervalSince1970).rounded()
-            
-            let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
-            let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
-            
-            let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
-            
-            PostManager.shared.postRef.child(postID).setValue(value)
         }
     }
     

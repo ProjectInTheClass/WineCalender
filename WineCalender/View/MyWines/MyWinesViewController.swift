@@ -67,6 +67,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 
     //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
     func updateMemberUI() {
+        self.insideoutCells = [:]
         PostManager.shared.fetchMyPosts { myPosts in
             if let myPosts = myPosts {
                 self.posts = myPosts
@@ -84,6 +85,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     //로그아웃, 비회원이 앱 실행할 때, 비회원이 글 쓸 때
     func updateNonmemberUI() {
+        self.insideoutCells = [:]
         DataManager.shared.fetchWineTastingNote { myNotes in
             self.notes = myNotes
             let numberOfNotes = self.notes.count
