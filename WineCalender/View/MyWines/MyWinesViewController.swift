@@ -22,13 +22,13 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     lazy var posts = [Post]()
     lazy var notes = [WineTastingNote]()
     
-    lazy var selectedCells = [Int:Int]()
+    lazy var insideoutCells = [Int:Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         adjustCollectionViewTopAnchor()
-        setUploadNotiObserver()
+        uploadUpdateDeleteNotiObserver()
         
         if Auth.auth().currentUser != nil {
             updateMemberUI()
@@ -53,11 +53,13 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: -(statusbarHeight+navigationbarHeight)).isActive = true
     }
     
-    func setUploadNotiObserver() {
-        NotificationCenter.default.addObserver(forName: AddTastingNoteTableViewController.uploadPost, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+    func uploadUpdateDeleteNotiObserver() {
+        NotificationCenter.default.addObserver(forName: MyWinesViewController.uploadUpdateDelete, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             if Auth.auth().currentUser != nil {
-                self?.updateMemberUI()
+                self?.insideoutCells = [:]
+                //self?.updateMemberUI()
             } else {
+                self?.insideoutCells = [:]
                 self?.updateNonmemberUI()
             }
         }
@@ -128,7 +130,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
             if cell.imageView.alpha == 1.0 {
-                self.selectedCells[indexPath.item] = indexPath.item
+                self.insideoutCells[indexPath.item] = indexPath.item
                 cell.imageView.alpha = 0.3
                 cell.imageView.layer.cornerRadius = 10
                 cell.wineStackView.isHidden = false
@@ -138,7 +140,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 cell.imageViewTrailingAnchor.constant = 10
                 cell.imageViewBottomAnchor.constant = 10
             } else {
-                self.selectedCells[indexPath.item] = nil
+                self.insideoutCells[indexPath.item] = nil
                 cell.imageView.alpha = 1.0
                 cell.imageView.layer.cornerRadius = 0
                 cell.wineStackView.isHidden = true
@@ -170,7 +172,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.backView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
         
         //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
-        if self.selectedCells[indexPath.item] == indexPath.item {
+        if self.insideoutCells[indexPath.item] == indexPath.item {
             cell.imageView.alpha = 0.3
             cell.imageView.layer.cornerRadius = 10
             cell.wineStackView.isHidden = false
@@ -259,4 +261,8 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         return headerView
     }
+}
+
+extension MyWinesViewController {
+    static let uploadUpdateDelete = Notification.Name(rawValue: "uploadUpdateDelete")
 }

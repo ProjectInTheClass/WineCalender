@@ -58,7 +58,8 @@ class PostManager {
     
     func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
-            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
+//            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
+            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observe(DataEventType.value) { snapshot in
                 guard let snapshotDict = snapshot.value as? [String:Any] else {
                     completion(nil)
                     return
@@ -80,4 +81,36 @@ class PostManager {
         }
     }
     
+    func removeMyPost(postID: String, authorUID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
+        guard authorUID == Auth.auth().currentUser?.uid else { return }
+        PostManager.shared.postRef.child(postID).removeValue { error, databaseReference in
+            if let error = error {
+                print(error)
+            } else {
+                // File deleted successfully
+                for num in 1...numberOfImage {
+                    let fileName = postID + String(num - 1) + ".jpg"
+                    PostManager.shared.postImageRef.child(postID).child(fileName).delete { error in
+                        if let error = error {
+                            completion(false)
+                            print("post만 삭제되고 image는 삭제안됨 \(error)")
+                        } else {
+                            completion(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Bool) -> Void) {
+        let updatedDate: Double = (Date().timeIntervalSince1970).rounded()
+        let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
+        let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
+        
+        let value = ["updatedDate":updatedDate, "tastingNote":tastingNote] as [String:Any]
+        
+        PostManager.shared.postRef.child(postID).updateChildValues(value)
+        completion(true)
+    }
 }

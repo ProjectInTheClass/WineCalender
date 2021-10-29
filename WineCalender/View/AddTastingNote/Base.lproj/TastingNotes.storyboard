@@ -1039,7 +1039,7 @@
             </objects>
             <point key="canvasLocation" x="1509" y="-4260"/>
         </scene>
-        <!--테이스팅 노트 작성-->
+        <!--Add Tasting Note Table View Controller-->
         <scene sceneID="cY0-Hu-bbv">
             <objects>
                 <tableViewController id="37k-G2-kAN" customClass="AddTastingNoteTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
@@ -1656,7 +1656,7 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="gae-en-nOf"/>
                                                     </constraints>
                                                     <color key="textColor" systemColor="systemGray2Color"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="37k-G2-kAN" id="7Nc-sZ-Sta"/>
@@ -1720,7 +1720,7 @@
                             <outlet property="delegate" destination="37k-G2-kAN" id="bu5-6Q-O8m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="테이스팅 노트 작성" id="PmZ-aO-xoE">
+                    <navigationItem key="navigationItem" id="PmZ-aO-xoE">
                         <barButtonItem key="leftBarButtonItem" title="취소" id="YIG-vT-mfd">
                             <color key="tintColor" systemColor="tintColor"/>
                             <connections>
@@ -1737,6 +1737,7 @@
                     <size key="freeformSize" width="414" height="1300"/>
                     <connections>
                         <outlet property="aciditySegmentedControl" destination="Cd5-KP-FfX" id="ng3-Rp-288"/>
+                        <outlet property="addImageButton" destination="axb-kY-klB" id="q6U-Ou-5oA"/>
                         <outlet property="bodySegmentedControl" destination="iRg-nu-1QI" id="i1n-QE-AhR"/>
                         <outlet property="doneButton" destination="YK2-Ei-zaR" id="9ib-3x-mon"/>
                         <outlet property="firstImageView" destination="Nuh-M4-kef" id="wSI-76-UEc"/>

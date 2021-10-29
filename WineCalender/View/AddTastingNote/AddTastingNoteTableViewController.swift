@@ -11,8 +11,10 @@ import FirebaseAuth
 
 class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
+    lazy var updatePost: Post? = nil
+    lazy var updateNote: WineTastingNote? = nil
+    
     var selectedImages: [UIImage] = []
-    var selectedCateory: String?
     var selectedWineVarieties: [String]?
     var selectedWineProducingCountry: String?
     var selectedVintage: String?
@@ -26,6 +28,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     @IBOutlet weak var firstImageView: UIImageView!
     @IBOutlet weak var secondImageView: UIImageView!
     @IBOutlet weak var thirdImageView: UIImageView!
+    @IBOutlet weak var addImageButton: UIButton!
     @IBOutlet weak var wineNameTextField: UITextField!
     @IBOutlet weak var wineCategorySegmentedControl: UISegmentedControl!
     @IBOutlet weak var wineVarietiesLabel: UILabel!
@@ -45,14 +48,9 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.firstImageView.layer.borderWidth = 1
-        self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
-        self.secondImageView.layer.borderWidth = 1
-        self.secondImageView.layer.borderColor = UIColor.gray.cgColor
-        self.thirdImageView.layer.borderWidth = 1
-        self.thirdImageView.layer.borderColor = UIColor.gray.cgColor
-
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        configureUI()
+        configureImageViewsUI()
     }
     
     @objc func hideKeyboard() {
@@ -63,7 +61,121 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         sender.resignFirstResponder()
     }
     
+    func configureUI() {
+        if self.updatePost != nil {
+            guard updatePost?.authorUID == Auth.auth().currentUser?.uid else { return }
+            self.navigationItem.title = "테이스팅 노트 수정"
+            self.doneButton.isEnabled = true
+            self.addImageButton.isHidden = true
+            setupDataForUpdatePost()
+        } else if self.updateNote != nil {
+            self.navigationItem.title = "테이스팅 노트 수정"
+            self.doneButton.isEnabled = true
+            self.addImageButton.isHidden = true
+            setupDataForUpdateNote()
+        } else {
+            self.navigationItem.title = "테이스팅 노트 작성"
+        }
+    }
+    
+    func setupDataForUpdatePost() {
+        self.wineTastingdate.date = updatePost?.tastingNote.tastingDate ?? Date()
+        self.wineTastingPlaceTextField.text = updatePost?.tastingNote.place
+        let numberOfPostImage = updatePost?.postImageURL.count
+        if numberOfPostImage == 1 {
+            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
+        }
+        if numberOfPostImage == 2 {
+            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
+            self.secondImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[1] ?? ""))
+        }
+        if numberOfPostImage == 3 {
+            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
+            self.secondImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[1] ?? ""))
+            self.thirdImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[2] ?? ""))
+        }
+        self.wineNameTextField.text = updatePost?.tastingNote.wineName
+        for index in 0...4 {
+            if wineCategorySegmentedControl.titleForSegment(at: index) == updatePost?.tastingNote.category {
+                wineCategorySegmentedControl.selectedSegmentIndex = index
+            }
+        }
+        self.selectedWineVarieties = updatePost?.tastingNote.varieties
+        self.setupWineVarietiesLable()
+        self.selectedWineProducingCountry = updatePost?.tastingNote.producingCountry
+        self.setupWineProducingCoutryLable()
+        self.wineProducerTextField.text = updatePost?.tastingNote.producer
+        self.selectedVintage = updatePost?.tastingNote.vintage
+        self.setupWineVintageLable()
+        if let p = updatePost?.tastingNote.price {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            self.winePriceTextField.text = numberFormatter.string(for: p)
+        }
+        if let ac = updatePost?.tastingNote.alcoholContent {
+            self.wineAlcoholContentTextField.text = String(ac)
+        }
+        self.selectedWineAromasAndFlavors = updatePost?.tastingNote.aromasAndFlavors
+        self.setupWineAromasAndFlavorsLable()
+        if let s = updatePost?.tastingNote.sweet {
+            for index in 0...4 {
+                if sweetSegmentedControl.titleForSegment(at: index) == String(s) {
+                    sweetSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let a = updatePost?.tastingNote.acidity {
+            for index in 0...4 {
+                if aciditySegmentedControl.titleForSegment(at: index) == String(a) {
+                    aciditySegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let t = updatePost?.tastingNote.tannin {
+            for index in 0...4 {
+                if tanninSegmentedControl.titleForSegment(at: index) == String(t) {
+                    tanninSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let b = updatePost?.tastingNote.body {
+            for index in 0...4 {
+                if bodySegmentedControl.titleForSegment(at: index) == String(b) {
+                    bodySegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let memo = updatePost?.tastingNote.memo {
+            self.wineMemoTextView.text = memo
+            self.wineMemoTextView.textColor = .label
+        }
+        if let r = updatePost?.tastingNote.rating {
+            for index in 0...4 {
+                if ratingSegmentedControl.titleForSegment(at: index) == String(r) {
+                    ratingSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+    }
+    
+    func setupDataForUpdateNote() {
+        //비회원 수정
+    }
+    
     // MARK: - image
+    func configureImageViewsUI() {
+        self.firstImageView.layer.borderWidth = 1
+        if self.updatePost == nil {
+            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
+        } else {
+            self.firstImageView.layer.borderColor = UIColor.gray.cgColor
+        }
+        self.secondImageView.layer.borderWidth = 1
+        self.secondImageView.layer.borderColor = UIColor.gray.cgColor
+        self.thirdImageView.layer.borderWidth = 1
+        self.thirdImageView.layer.borderColor = UIColor.gray.cgColor
+    }
+    
     @IBAction func addImageButtonTapped(_ sender: UIButton) {
         var config = YPImagePickerConfiguration()
         config.isScrollToChangeModesEnabled = false
@@ -170,20 +282,24 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             
             WineVarietiesTVC.completionHandler = { wineVarieties in
                 self.selectedWineVarieties = wineVarieties
-                if self.selectedWineVarieties == [] {
-                    self.wineVarietiesLabel.textColor = .systemGray2
-                    self.wineVarietiesLabel.text = "포도 품종 선택"
-                } else if self.selectedWineVarieties?.count == 1 {
-                    self.wineVarietiesLabel.textColor = .label
-                    self.wineVarietiesLabel.text = self.selectedWineVarieties!.first!
-                } else {
-                    if let wineVarietiesString = self.selectedWineVarieties?.joined(separator: "\n") {
-                        self.wineVarietiesLabel.textColor = .label
-                        self.wineVarietiesLabel.text = wineVarietiesString
-                    }
-                }
+                self.setupWineVarietiesLable()
                 self.tableView.beginUpdates()
                 self.tableView.endUpdates()
+            }
+        }
+    }
+    
+    func setupWineVarietiesLable() {
+        if self.selectedWineVarieties == [] {
+            self.wineVarietiesLabel.textColor = .systemGray2
+            self.wineVarietiesLabel.text = "포도 품종 선택"
+        } else if self.selectedWineVarieties?.count == 1 {
+            self.wineVarietiesLabel.textColor = .label
+            self.wineVarietiesLabel.text = self.selectedWineVarieties!.first!
+        } else {
+            if let wineVarietiesString = self.selectedWineVarieties?.joined(separator: "\n") {
+                self.wineVarietiesLabel.textColor = .label
+                self.wineVarietiesLabel.text = wineVarietiesString
             }
         }
     }
@@ -196,11 +312,15 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             
             wineProducingCountriesTVC.completionHandler = { country in
                 self.selectedWineProducingCountry = country
-                if let country = self.selectedWineProducingCountry {
-                    self.wineProducingCountryLabel.textColor = .label
-                    self.wineProducingCountryLabel.text = country
-                }
+                self.setupWineProducingCoutryLable()
             }
+        }
+    }
+    
+    func setupWineProducingCoutryLable() {
+        if let country = self.selectedWineProducingCountry {
+            self.wineProducingCountryLabel.textColor = .label
+            self.wineProducingCountryLabel.text = country
         }
     }
     
@@ -223,18 +343,23 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { result in
             self.selectedVintage = self.winevintageList[vintagePickerView.selectedRow(inComponent: 0)]
-            if let selectedVintage = self.selectedVintage {
-                self.wineVintageLabel.textColor = .label
-                self.wineVintageLabel.text = selectedVintage
-            }
+            self.setupWineVintageLable()
         }))
         alert.addAction(UIAlertAction(title: "선택 안 함", style: .default, handler: {_ in
             self.selectedVintage = nil
             self.wineVintageLabel.text = "빈티지 선택"
             self.wineVintageLabel.textColor = .systemGray2
         }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    func setupWineVintageLable() {
+        if let selectedVintage = self.selectedVintage {
+            self.wineVintageLabel.textColor = .label
+            self.wineVintageLabel.text = selectedVintage
+        }
     }
     
     //UIPickerViewDataSource, UIPickerViewDelegate
@@ -319,20 +444,24 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             
             wineAromasAndFlavorsCVC.completionHandler = { aromasAndFlavors in
                 self.selectedWineAromasAndFlavors = aromasAndFlavors
-                if self.selectedWineAromasAndFlavors == [] {
-                    self.wineAromasAndFlavorsLabel.textColor = .systemGray2
-                    self.wineAromasAndFlavorsLabel.text = "향, 맛 선택"
-                } else if self.selectedWineAromasAndFlavors?.count == 1 {
-                    self.wineAromasAndFlavorsLabel.textColor = .label
-                    self.wineAromasAndFlavorsLabel.text = self.selectedWineAromasAndFlavors!.first!
-                } else {
-                    if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.joined(separator: ", ") {
-                        self.wineAromasAndFlavorsLabel.textColor = .label
-                        self.wineAromasAndFlavorsLabel.text = wineAromasAndFlavorsString
-                    }
-                }
+                self.setupWineAromasAndFlavorsLable()
                 self.tableView.beginUpdates()
                 self.tableView.endUpdates()
+            }
+        }
+    }
+    
+    func setupWineAromasAndFlavorsLable() {
+        if self.selectedWineAromasAndFlavors == [] {
+            self.wineAromasAndFlavorsLabel.textColor = .systemGray2
+            self.wineAromasAndFlavorsLabel.text = "향, 맛 선택"
+        } else if self.selectedWineAromasAndFlavors?.count == 1 {
+            self.wineAromasAndFlavorsLabel.textColor = .label
+            self.wineAromasAndFlavorsLabel.text = self.selectedWineAromasAndFlavors!.first!
+        } else {
+            if let wineAromasAndFlavorsString = self.selectedWineAromasAndFlavors?.joined(separator: ", ") {
+                self.wineAromasAndFlavorsLabel.textColor = .label
+                self.wineAromasAndFlavorsLabel.text = wineAromasAndFlavorsString
             }
         }
     }
@@ -381,22 +510,15 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             } else {
                 place = wineTastingPlaceTextField.text
             }
-            
             let name = wineNameTextField.text ?? ""
-            if let index = wineCategorySegmentedControl?.selectedSegmentIndex{
-                if index > -1 && index < 5 {
-                    selectedCateory = wineCategorySegmentedControl.titleForSegment(at: index)
-                } else {
-                    selectedCateory = nil
-                }
-            }
+            let selectedCategoryIndex = wineCategorySegmentedControl.selectedSegmentIndex
+            let category = wineCategorySegmentedControl.titleForSegment(at: selectedCategoryIndex)
             var producer: String? = nil
             if wineProducerTextField.text == "" {
                 producer = nil
             } else {
                 producer = wineProducerTextField.text
             }
-            
             var sweet: Int16? = Int16(sweetSegmentedControl.selectedSegmentIndex) + 1
             if sweet == 6 {
                 sweet = nil
@@ -427,15 +549,27 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 rating = nil
             }
             
-            let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: selectedCateory, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: rating)
+            let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: rating)
 
             if Auth.auth().currentUser == nil {
                 DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages)
-                NotificationCenter.default.post(name: AddTastingNoteTableViewController.uploadPost, object: nil)
+                NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
             } else {
-                PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
-                    if result == true {
-                        NotificationCenter.default.post(name: AddTastingNoteTableViewController.uploadPost, object: nil)
+                if self.updatePost == nil {
+                    PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
+                        if result == true {
+                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        }
+                    }
+                } else {
+                    PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
+                        if result == true {
+                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                            let navVC = self.presentingViewController?.children.first
+                            let postDetailVC = navVC?.children.last as! PostDetail
+                            //데이터넘기기?
+                            print(postDetailVC)
+                        }
                     }
                 }
             }
@@ -462,8 +596,4 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             return 0
         }
     }
-}
-
-extension AddTastingNoteTableViewController {
-    static let uploadPost = Notification.Name(rawValue: "uploadPost")
 }
