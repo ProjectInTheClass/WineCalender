@@ -31,7 +31,7 @@ class PostThumbnailVMTests: XCTestCase {
     }
 
     func testExample() throws {
-        let vm = PostThumbnailVM(post, user.nickname, user.profileImageURL, .red)
+        let vm = PostThumbnailVM(post, user.nickname, user.profileImageURL, 10)
         XCTAssertEqual(vm.profileImageURL?.absoluteString, "https://firebasestorage.googleapis.com:443/v0/b/wine-calendar-3e6a1.appspot.com/o/ProfileImage%2Fi5yIPNa6HwV7SyJ1Jz04JcdEAJI3.jpg?alt=media&token=042ce1d8-44a2-46bd-afa3-a35b164fc1c4")
         XCTAssertEqual(vm.postMainText, "파이니스트 모젤 리슬링")
         XCTAssertEqual(vm.postSubText, "")
