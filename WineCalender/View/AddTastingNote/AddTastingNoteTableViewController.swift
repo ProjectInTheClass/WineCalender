@@ -66,12 +66,10 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             guard updatePost?.authorUID == Auth.auth().currentUser?.uid else { return }
             self.navigationItem.title = "테이스팅 노트 수정"
             self.doneButton.isEnabled = true
-            self.addImageButton.isHidden = true
             setupDataForUpdatePost()
         } else if self.updateNote != nil {
             self.navigationItem.title = "테이스팅 노트 수정"
             self.doneButton.isEnabled = true
-            self.addImageButton.isHidden = true
             setupDataForUpdateNote()
         } else {
             self.navigationItem.title = "테이스팅 노트 작성"
@@ -163,16 +161,101 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func setupDataForUpdateNote() {
-        //비회원 수정
+        self.wineTastingdate.date = updateNote?.tastingDate ?? Date()
+        self.wineTastingPlaceTextField.text = updateNote?.place
+        let numberOfPostImage = updateNote?.image.count
+        if numberOfPostImage == 1 {
+            self.firstImageView.image = updateNote?.image[0]
+        }
+        if numberOfPostImage == 2 {
+            self.firstImageView.image = updateNote?.image[0]
+            self.secondImageView.image = updateNote?.image[1]
+        }
+        if numberOfPostImage == 3 {
+            self.firstImageView.image = updateNote?.image[0]
+            self.secondImageView.image = updateNote?.image[1]
+            self.thirdImageView.image = updateNote?.image[2]
+        }
+        self.wineNameTextField.text = updateNote?.wineName
+        for index in 0...4 {
+            if wineCategorySegmentedControl.titleForSegment(at: index) == updateNote?.category {
+                wineCategorySegmentedControl.selectedSegmentIndex = index
+            }
+        }
+        self.selectedWineVarieties = updateNote?.varieties
+        self.setupWineVarietiesLable()
+        self.selectedWineProducingCountry = updateNote?.producingCountry
+        self.setupWineProducingCoutryLable()
+        self.wineProducerTextField.text = updateNote?.producer
+        self.selectedVintage = updateNote?.vintage
+        self.setupWineVintageLable()
+        if let p = updateNote?.price {
+            if p != 0 {
+                self.price = p
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                self.winePriceTextField.text = numberFormatter.string(for: p)
+            }
+        }
+        if let ac = updateNote?.alcoholContent {
+            if ac != 0 {
+                self.alcoholContent = ac
+                var alcoholContentString = String(ac)
+                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+                self.wineAlcoholContentTextField.text = alcoholContentString
+            }
+        }
+        self.selectedWineAromasAndFlavors = updateNote?.aromasAndFlavors
+        self.setupWineAromasAndFlavorsLable()
+        if let s = updateNote?.sweet {
+            for index in 0...4 {
+                if sweetSegmentedControl.titleForSegment(at: index) == String(s) {
+                    sweetSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let a = updateNote?.acidity {
+            for index in 0...4 {
+                if aciditySegmentedControl.titleForSegment(at: index) == String(a) {
+                    aciditySegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let t = updateNote?.tannin {
+            for index in 0...4 {
+                if tanninSegmentedControl.titleForSegment(at: index) == String(t) {
+                    tanninSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let b = updateNote?.body {
+            for index in 0...4 {
+                if bodySegmentedControl.titleForSegment(at: index) == String(b) {
+                    bodySegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
+        if let memo = updateNote?.memo {
+            self.wineMemoTextView.text = memo
+            self.wineMemoTextView.textColor = .label
+        }
+        if let r = updateNote?.rating {
+            for index in 0...4 {
+                if ratingSegmentedControl.titleForSegment(at: index) == String(r) {
+                    ratingSegmentedControl.selectedSegmentIndex = index
+                }
+            }
+        }
     }
     
     // MARK: - image
     func configureImageViewsUI() {
         self.firstImageView.layer.borderWidth = 1
-        if self.updatePost == nil {
-            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
-        } else {
+        if self.updatePost != nil || self.updateNote != nil {
             self.firstImageView.layer.borderColor = UIColor.gray.cgColor
+            self.addImageButton.isHidden = true
+        } else {
+            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
         }
         self.secondImageView.layer.borderWidth = 1
         self.secondImageView.layer.borderColor = UIColor.gray.cgColor
@@ -556,16 +639,49 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: rating)
 
             if Auth.auth().currentUser == nil {
-                DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages)
-                NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                //비회원 - 처음 작성
+                if self.updateNote == nil {
+                    DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages, completion: { result in
+                        if result == true {
+                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        }
+                    })    
+                } else {
+                    //비회원 - 수정
+                    updateNote?.updatedDate = Date()
+                    updateNote?.tastingDate = date 
+                    updateNote?.place = place
+                    updateNote?.wineName = name
+                    updateNote?.category = category
+                    updateNote?.varieties = selectedWineVarieties
+                    updateNote?.producingCountry = selectedWineProducingCountry
+                    updateNote?.producer = producer
+                    updateNote?.vintage = selectedVintage
+                    updateNote?.price = price ?? 0
+                    updateNote?.alcoholContent = alcoholContent ?? 0
+                    updateNote?.sweet = sweet ?? 0
+                    updateNote?.acidity = acidity ?? 0
+                    updateNote?.tannin = tannin ?? 0
+                    updateNote?.body = body ?? 0
+                    updateNote?.aromasAndFlavors = selectedWineAromasAndFlavors
+                    updateNote?.memo = memo
+                    updateNote?.rating = rating ?? 0
+                    DataManager.shared.updateWineTastingNote(completion: { result in
+                        if result == true {
+                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        }
+                    })
+                }
             } else {
                 if self.updatePost == nil {
+                    //회원 - 처음 작성
                     PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
                         if result == true {
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
                         }
                     }
                 } else {
+                    //회원 - 수정
                     PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
                         if result == true {
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)

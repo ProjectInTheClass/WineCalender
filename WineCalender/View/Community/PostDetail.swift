@@ -88,6 +88,28 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
             }
         } else {
             //비회원 - 내 글
+            guard noteDetailData != nil else { return }
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+                let alert2 = UIAlertController(title: "정말로 삭제하시겠습니까?", message: nil, preferredStyle: .actionSheet)
+                alert2.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+                    DataManager.shared.removeWineTastingNote(wineTastingNote: self.noteDetailData)
+                    self.navigationController?.popViewController(animated: true)
+                    NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                }))
+                alert2.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(alert2, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "수정", style: .default, handler: { action in
+                let storyboard = UIStoryboard(name: "TastingNotes", bundle: nil)
+                let addTastingNoteNav = storyboard.instantiateViewController(identifier: "AddTastingNoteNav")
+                addTastingNoteNav.modalPresentationStyle = .fullScreen
+                let addTastingNoteTVC = addTastingNoteNav.children.first as! AddTastingNoteTableViewController
+                addTastingNoteTVC.updateNote = self.noteDetailData
+                self.present(addTastingNoteNav, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func configureMemberUI() {

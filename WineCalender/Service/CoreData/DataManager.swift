@@ -33,7 +33,7 @@ class DataManager {
         }
     }
     
-    func addWineTastingNote(tastingNote: WineTastingNotes, images: [UIImage]){
+    func addWineTastingNote(tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void){
         let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
 
         let postingDate = Date()
@@ -61,6 +61,19 @@ class DataManager {
         object.setValue(tastingNote.memo, forKey: "memo")
         object.setValue(tastingNote.rating, forKey: "rating")
         saveContext()
+        completion(true)
+    }
+    
+    func removeWineTastingNote(wineTastingNote: WineTastingNote?) {
+        if let note = wineTastingNote {
+            mainContext.delete(note)
+            saveContext()
+        }
+    }
+    
+    func updateWineTastingNote(completion: @escaping (Bool) -> Void) {
+        saveContext()
+        completion(true)
     }
     
     // MARK: - Calendar Data
