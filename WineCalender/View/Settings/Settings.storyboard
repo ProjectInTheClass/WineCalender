@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="elO-4d-ahM">
-                                <rect key="frame" x="60" y="74" width="294" height="212"/>
+                                <rect key="frame" x="60" y="74" width="294" height="167"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="이메일" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cwO-gz-xLs">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="35"/>
@@ -87,41 +87,44 @@
                                             <action selector="signInButtonTapped:" destination="8Nn-qI-4mu" eventType="touchUpInside" id="gzI-ZT-34o"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="MGP-kT-j74">
-                                        <rect key="frame" x="0.0" y="172" width="294" height="40"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83R-dA-lqc">
-                                                <rect key="frame" x="0.0" y="0.0" width="132" height="40"/>
-                                                <state key="normal" title="비밀번호 찾기">
-                                                    <color key="titleColor" systemColor="systemGrayColor"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="0n3-MO-KXK" kind="show" id="xfE-aL-jdN"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGc-Wu-vdE">
-                                                <rect key="frame" x="162" y="0.0" width="132" height="40"/>
-                                                <state key="normal" title="회원가입">
-                                                    <color key="titleColor" systemColor="systemGrayColor"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="qrP-yO-f5m" kind="show" id="XqR-cr-s84"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="RiE-gf-moA"/>
-                                        </constraints>
-                                    </stackView>
                                 </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="MGP-kT-j74">
+                                <rect key="frame" x="60" y="256" width="294" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83R-dA-lqc">
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="40"/>
+                                        <state key="normal" title="비밀번호 찾기">
+                                            <color key="titleColor" systemColor="systemGrayColor"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="0n3-MO-KXK" kind="show" id="xfE-aL-jdN"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGc-Wu-vdE">
+                                        <rect key="frame" x="162" y="0.0" width="132" height="40"/>
+                                        <state key="normal" title="회원가입">
+                                            <color key="titleColor" systemColor="systemGrayColor"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="qrP-yO-f5m" kind="show" id="XqR-cr-s84"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="RiE-gf-moA"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZWu-Yc-j1d"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="MGP-kT-j74" firstAttribute="leading" secondItem="elO-4d-ahM" secondAttribute="leading" id="0i0-su-n44"/>
                             <constraint firstItem="elO-4d-ahM" firstAttribute="leading" secondItem="ZWu-Yc-j1d" secondAttribute="leading" constant="60" id="6VH-Qk-K99"/>
                             <constraint firstItem="elO-4d-ahM" firstAttribute="top" secondItem="ZWu-Yc-j1d" secondAttribute="top" constant="30" id="6aA-gK-tBi"/>
                             <constraint firstItem="ZWu-Yc-j1d" firstAttribute="trailing" secondItem="elO-4d-ahM" secondAttribute="trailing" constant="60" id="Tuh-K7-g3P"/>
+                            <constraint firstItem="MGP-kT-j74" firstAttribute="trailing" secondItem="elO-4d-ahM" secondAttribute="trailing" id="jzr-ZD-WIP"/>
+                            <constraint firstItem="MGP-kT-j74" firstAttribute="top" secondItem="elO-4d-ahM" secondAttribute="bottom" constant="15" id="pfl-qR-M8k"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="로그인" id="Scz-UM-Mgk"/>
@@ -540,7 +543,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="w7K-XP-Yus">
-                                <rect key="frame" x="60" y="74" width="294" height="248"/>
+                                <rect key="frame" x="60" y="74" width="294" height="213"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="현재 비밀번호" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zgj-da-uWa">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="35"/>
@@ -626,24 +629,27 @@
                                             <action selector="doneButtonTapped:" destination="JWH-M0-g3q" eventType="touchUpInside" id="m9l-d5-8ja"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dos-A1-R2D">
-                                        <rect key="frame" x="0.0" y="218" width="294" height="30"/>
-                                        <state key="normal" title="비밀번호를 잊으셨나요?">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="forgotPasswordButtonTapped:" destination="JWH-M0-g3q" eventType="touchUpInside" id="zoj-QO-Ub7"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dos-A1-R2D">
+                                <rect key="frame" x="60" y="302" width="294" height="30"/>
+                                <state key="normal" title="비밀번호를 잊으셨나요?">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgotPasswordButtonTapped:" destination="JWH-M0-g3q" eventType="touchUpInside" id="zoj-QO-Ub7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rpu-aA-gAF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Dos-A1-R2D" firstAttribute="trailing" secondItem="w7K-XP-Yus" secondAttribute="trailing" id="8jw-3g-yq7"/>
                             <constraint firstItem="w7K-XP-Yus" firstAttribute="leading" secondItem="rpu-aA-gAF" secondAttribute="leading" constant="60" id="Bvj-hG-4K3"/>
+                            <constraint firstItem="Dos-A1-R2D" firstAttribute="leading" secondItem="w7K-XP-Yus" secondAttribute="leading" id="UN5-0h-6uF"/>
                             <constraint firstItem="w7K-XP-Yus" firstAttribute="top" secondItem="rpu-aA-gAF" secondAttribute="top" constant="30" id="UVE-9F-ZCz"/>
                             <constraint firstAttribute="trailing" secondItem="w7K-XP-Yus" secondAttribute="trailing" constant="60" id="gL2-Vh-GHt"/>
+                            <constraint firstItem="Dos-A1-R2D" firstAttribute="top" secondItem="w7K-XP-Yus" secondAttribute="bottom" constant="15" id="zM7-M0-Zxg"/>
                         </constraints>
                     </view>
                     <connections>
@@ -656,6 +662,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6nS-po-kTx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4852" y="695"/>
+        </scene>
+        <!--설정-->
+        <scene sceneID="P22-hI-kRZ">
+            <objects>
+                <tableViewController storyboardIdentifier="settings" id="3Wb-m4-ZLC" customClass="SettingsTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="UjI-y6-9R9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="Ohl-gH-hAn">
+                                <rect key="frame" x="20" y="49.5" width="374" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ohl-gH-hAn" id="PPL-3H-IG5">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="3Wb-m4-ZLC" id="Hab-Cx-T0I"/>
+                            <outlet property="delegate" destination="3Wb-m4-ZLC" id="TwQ-W4-vDa"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="설정" largeTitleDisplayMode="always" id="gvQ-aS-gg9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NvC-DD-fZA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3887" y="-210"/>
         </scene>
     </scenes>
     <resources>

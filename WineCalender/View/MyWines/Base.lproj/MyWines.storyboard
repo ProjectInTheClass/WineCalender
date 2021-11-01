@@ -335,7 +335,7 @@
                             <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                             <color key="tintColor" name="blackAndWhite"/>
                             <connections>
-                                <segue destination="9oL-Ln-Kbw" kind="show" identifier="SettingsSegue" id="lYh-8v-Q0B"/>
+                                <segue destination="FgK-d5-yug" kind="show" id="ZhM-HP-tDa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -347,35 +347,15 @@
             </objects>
             <point key="canvasLocation" x="2302.898550724638" y="-50.223214285714285"/>
         </scene>
-        <!--설정-->
-        <scene sceneID="hj2-eW-47w">
+        <!--settings-->
+        <scene sceneID="Pya-Ya-w31">
             <objects>
-                <tableViewController id="9oL-Ln-Kbw" customClass="SettingsTableViewController" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="j2S-vD-oSd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" id="DCy-Xm-7vh">
-                                <rect key="frame" x="20" y="32" width="374" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DCy-Xm-7vh" id="xd0-ho-eCs">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="9oL-Ln-Kbw" id="T8G-Vo-jin"/>
-                            <outlet property="delegate" destination="9oL-Ln-Kbw" id="Gm0-RT-ith"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="설정" largeTitleDisplayMode="always" id="e1Q-30-I7x"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="El7-sD-b0d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Settings" referencedIdentifier="settings" id="FgK-d5-yug" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="xAM-S9-X6e"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="plm-TC-YqH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3542" y="-48"/>
+            <point key="canvasLocation" x="2982" y="-50"/>
         </scene>
         <!--MyWines-->
         <scene sceneID="dsx-PM-lDZ">

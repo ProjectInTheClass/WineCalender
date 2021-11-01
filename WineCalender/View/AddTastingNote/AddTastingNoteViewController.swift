@@ -361,7 +361,7 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
                     }
                 })
             } else {
-                PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
+                PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages) {result in
                     if result == true {
                         NotificationCenter.default.post(name: AddTastingNoteViewController.uploadPost, object: nil)
                     }

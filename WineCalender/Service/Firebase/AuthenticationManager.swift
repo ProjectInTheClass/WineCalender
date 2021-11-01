@@ -208,4 +208,19 @@ class AuthenticationManager {
             }
         }
     }
+    
+    func deleteAccount(completion: @escaping (Bool) -> Void) {
+        guard let user = Auth.auth().currentUser else { return }
+        user.delete { error in
+//          if let error = error {
+//              // An error happened.
+//              print(error.localizedDescription)
+//              completion(false)
+//          } else {
+//              // Account deleted.
+//              // delete post, likes, comments, postImage, profileImage
+//              completion(true)
+//          }
+        }
+    }
 }

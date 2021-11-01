@@ -18,17 +18,29 @@ class PostManager {
     //let postRef = Database.database().reference().child("Post")
     let postImageRef = Storage.storage().reference().child("PostImage")
     
-    func uploadPost(tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void) {
+    func uploadPost(posting: Date?, updated: Date?, tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void) {
         if let uid = Auth.auth().currentUser?.uid {
             guard let postID = PostManager.shared.postRef.childByAutoId().key else { return }
             uploadImage { result in
                 if result == true {
-                    let postingDate: Double = (Date().timeIntervalSince1970).rounded()
-
+                    var postingDate: Double? = nil
+                    if posting == nil {
+                        postingDate = (Date().timeIntervalSince1970).rounded()
+                    } else {
+                        postingDate = (posting!.timeIntervalSince1970).rounded()
+                    }
+                    
+                    var updatedDate: Double? = nil
+                    if updated == nil {
+                        updatedDate = nil
+                    } else {
+                        updatedDate = (updated!.timeIntervalSince1970).rounded()
+                    }
+                    
                     let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
                     let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
 
-                    let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate, "tastingNote":tastingNote] as [String:Any]
+                    let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote] as [String:Any]
                     
                     PostManager.shared.postRef.child(postID).updateChildValues(value)
                     completion(true)
@@ -64,6 +76,7 @@ class PostManager {
         }
     }
     
+    //For My Wines
     func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
 //            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
@@ -86,6 +99,20 @@ class PostManager {
                 
                 completion(myPosts)
             }
+        }
+    }
+    
+    //For Update
+    func fetchMyPost(postID: String, completion: @escaping (Post) -> Void) {
+        PostManager.shared.postRef.queryOrdered(byChild: "postID").queryEqual(toValue: postID).observeSingleEvent(of: .value) { snapshot in
+            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
+            guard let value = snapshotDict.value(forKey: postID) as? NSDictionary else { return }
+            guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            guard let post = try? decoder.decode(Post.self, from: data) else { return }
+            
+            completion(post)
         }
     }
     

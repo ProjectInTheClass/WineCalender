@@ -11,6 +11,7 @@ import FirebaseAuth
 
 class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
+    lazy var postID: String? = nil
     lazy var updatePost: Post? = nil
     lazy var updateNote: WineTastingNote? = nil
     
@@ -62,8 +63,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func configureUI() {
-        if self.updatePost != nil {
-            guard updatePost?.authorUID == Auth.auth().currentUser?.uid else { return }
+        if self.postID != nil {
             self.navigationItem.title = "테이스팅 노트 수정"
             self.doneButton.isEnabled = true
             setupDataForUpdatePost()
@@ -77,84 +77,88 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func setupDataForUpdatePost() {
-        self.wineTastingdate.date = updatePost?.tastingNote.tastingDate ?? Date()
-        self.wineTastingPlaceTextField.text = updatePost?.tastingNote.place
-        let numberOfPostImage = updatePost?.postImageURL.count
-        if numberOfPostImage == 1 {
-            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
-        }
-        if numberOfPostImage == 2 {
-            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
-            self.secondImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[1] ?? ""))
-        }
-        if numberOfPostImage == 3 {
-            self.firstImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[0] ?? ""))
-            self.secondImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[1] ?? ""))
-            self.thirdImageView.kf.setImage(with: URL(string: updatePost?.postImageURL[2] ?? ""))
-        }
-        self.wineNameTextField.text = updatePost?.tastingNote.wineName
-        for index in 0...4 {
-            if wineCategorySegmentedControl.titleForSegment(at: index) == updatePost?.tastingNote.category {
-                wineCategorySegmentedControl.selectedSegmentIndex = index
+        PostManager.shared.fetchMyPost(postID: self.postID ?? "") { myPost in
+            self.updatePost = myPost
+            
+            self.wineTastingdate.date = self.updatePost?.tastingNote.tastingDate ?? Date()
+            self.wineTastingPlaceTextField.text = self.updatePost?.tastingNote.place
+            let numberOfPostImage = self.updatePost?.postImageURL.count
+            if numberOfPostImage == 1 {
+                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
             }
-        }
-        self.selectedWineVarieties = updatePost?.tastingNote.varieties
-        self.setupWineVarietiesLable()
-        self.selectedWineProducingCountry = updatePost?.tastingNote.producingCountry
-        self.setupWineProducingCoutryLable()
-        self.wineProducerTextField.text = updatePost?.tastingNote.producer
-        self.selectedVintage = updatePost?.tastingNote.vintage
-        self.setupWineVintageLable()
-        if let p = updatePost?.tastingNote.price {
-            self.price = p
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .decimal
-            self.winePriceTextField.text = numberFormatter.string(for: p)
-        }
-        if let ac = updatePost?.tastingNote.alcoholContent {
-            self.alcoholContent = ac
-            var alcoholContentString = String(ac)
-            alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
-            self.wineAlcoholContentTextField.text = alcoholContentString
-        }
-        self.selectedWineAromasAndFlavors = updatePost?.tastingNote.aromasAndFlavors
-        self.setupWineAromasAndFlavorsLable()
-        if let s = updatePost?.tastingNote.sweet {
+            if numberOfPostImage == 2 {
+                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
+                self.secondImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[1] ?? ""))
+            }
+            if numberOfPostImage == 3 {
+                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
+                self.secondImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[1] ?? ""))
+                self.thirdImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[2] ?? ""))
+            }
+            self.wineNameTextField.text = self.updatePost?.tastingNote.wineName
             for index in 0...4 {
-                if sweetSegmentedControl.titleForSegment(at: index) == String(s) {
-                    sweetSegmentedControl.selectedSegmentIndex = index
+                if self.wineCategorySegmentedControl.titleForSegment(at: index) == self.updatePost?.tastingNote.category {
+                    self.wineCategorySegmentedControl.selectedSegmentIndex = index
                 }
             }
-        }
-        if let a = updatePost?.tastingNote.acidity {
-            for index in 0...4 {
-                if aciditySegmentedControl.titleForSegment(at: index) == String(a) {
-                    aciditySegmentedControl.selectedSegmentIndex = index
+            self.selectedWineVarieties = self.updatePost?.tastingNote.varieties
+            self.setupWineVarietiesLable()
+            self.selectedWineProducingCountry = self.updatePost?.tastingNote.producingCountry
+            self.setupWineProducingCoutryLable()
+            self.wineProducerTextField.text = self.updatePost?.tastingNote.producer
+            self.selectedVintage = self.updatePost?.tastingNote.vintage
+            self.setupWineVintageLable()
+            if let p = self.updatePost?.tastingNote.price {
+                self.price = p
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                self.winePriceTextField.text = numberFormatter.string(for: p)
+            }
+            if let ac = self.updatePost?.tastingNote.alcoholContent {
+                self.alcoholContent = ac
+                var alcoholContentString = String(ac)
+                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+                self.wineAlcoholContentTextField.text = alcoholContentString
+            }
+            self.selectedWineAromasAndFlavors = self.updatePost?.tastingNote.aromasAndFlavors
+            self.setupWineAromasAndFlavorsLable()
+            if let s = self.updatePost?.tastingNote.sweet {
+                for index in 0...4 {
+                    if self.sweetSegmentedControl.titleForSegment(at: index) == String(s) {
+                        self.sweetSegmentedControl.selectedSegmentIndex = index
+                    }
                 }
             }
-        }
-        if let t = updatePost?.tastingNote.tannin {
-            for index in 0...4 {
-                if tanninSegmentedControl.titleForSegment(at: index) == String(t) {
-                    tanninSegmentedControl.selectedSegmentIndex = index
+            if let a = self.updatePost?.tastingNote.acidity {
+                for index in 0...4 {
+                    if self.aciditySegmentedControl.titleForSegment(at: index) == String(a) {
+                        self.aciditySegmentedControl.selectedSegmentIndex = index
+                    }
                 }
             }
-        }
-        if let b = updatePost?.tastingNote.body {
-            for index in 0...4 {
-                if bodySegmentedControl.titleForSegment(at: index) == String(b) {
-                    bodySegmentedControl.selectedSegmentIndex = index
+            if let t = self.updatePost?.tastingNote.tannin {
+                for index in 0...4 {
+                    if self.tanninSegmentedControl.titleForSegment(at: index) == String(t) {
+                        self.tanninSegmentedControl.selectedSegmentIndex = index
+                    }
                 }
             }
-        }
-        if let memo = updatePost?.tastingNote.memo {
-            self.wineMemoTextView.text = memo
-            self.wineMemoTextView.textColor = .label
-        }
-        if let r = updatePost?.tastingNote.rating {
-            for index in 0...4 {
-                if ratingSegmentedControl.titleForSegment(at: index) == String(r) {
-                    ratingSegmentedControl.selectedSegmentIndex = index
+            if let b = self.updatePost?.tastingNote.body {
+                for index in 0...4 {
+                    if self.bodySegmentedControl.titleForSegment(at: index) == String(b) {
+                        self.bodySegmentedControl.selectedSegmentIndex = index
+                    }
+                }
+            }
+            if let memo = self.updatePost?.tastingNote.memo {
+                self.wineMemoTextView.text = memo
+                self.wineMemoTextView.textColor = .label
+            }
+            if let r = self.updatePost?.tastingNote.rating {
+                for index in 0...4 {
+                    if self.ratingSegmentedControl.titleForSegment(at: index) == String(r) {
+                        self.ratingSegmentedControl.selectedSegmentIndex = index
+                    }
                 }
             }
         }
@@ -251,7 +255,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     // MARK: - image
     func configureImageViewsUI() {
         self.firstImageView.layer.borderWidth = 1
-        if self.updatePost != nil || self.updateNote != nil {
+        if self.postID != nil || self.updateNote != nil {
             self.firstImageView.layer.borderColor = UIColor.gray.cgColor
             self.addImageButton.isHidden = true
         } else {
@@ -675,7 +679,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             } else {
                 if self.updatePost == nil {
                     //회원 - 처음 작성
-                    PostManager.shared.uploadPost(tastingNote: tastingNote, images: selectedImages) {result in
+                    PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages) {result in
                         if result == true {
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
                         }

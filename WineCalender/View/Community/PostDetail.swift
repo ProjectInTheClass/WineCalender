@@ -85,7 +85,7 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
                     let addTastingNoteNav = storyboard.instantiateViewController(identifier: "AddTastingNoteNav")
                     addTastingNoteNav.modalPresentationStyle = .fullScreen
                     let addTastingNoteTVC = addTastingNoteNav.children.first as! AddTastingNoteTableViewController
-                    addTastingNoteTVC.updatePost = self.postDetailData
+                    addTastingNoteTVC.postID = self.postDetailData?.postID
                     self.present(addTastingNoteNav, animated: true, completion: nil)
                 }))
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
