@@ -14,7 +14,7 @@
 		087DBB79272BE79E0085FBC8 /* PostManager+Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */; };
 		087DBB7D272BEEEB0085FBC8 /* LikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DBB7C272BEEEB0085FBC8 /* LikeTests.swift */; };
 		08A5EC76E616238FE4A1344C /* Pods_WineCalenderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */; };
-		1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */; };
+		08DF013E272FF895008DE439 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08DF013D272FF895008DE439 /* GoogleService-Info.plist */; };
 		1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */; };
 		1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396726CFC10A00B7FB74 /* SignInViewController.swift */; };
 		1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396926CFC38900B7FB74 /* AuthenticationManager.swift */; };
@@ -108,9 +108,9 @@
 		083AE756270D9C20009A77F4 /* MyWinesVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesVMTests.swift; sourceTree = "<group>"; };
 		087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostManager+Like.swift"; sourceTree = "<group>"; };
 		087DBB7C272BEEEB0085FBC8 /* LikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTests.swift; sourceTree = "<group>"; };
+		08DF013D272FF895008DE439 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0DE066646E2C02D2B6FC876E /* Pods-WineCalenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		11236921FC67ADC3A00258B4 /* Pods-WineCalender-WineCalenderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender-WineCalenderUITests/Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		1223396726CFC10A00B7FB74 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		1223396926CFC38900B7FB74 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -411,7 +411,7 @@
 				1FCB9120267B846F008C93C7 /* LaunchScreen.storyboard */,
 				1FCB911E267B846F008C93C7 /* Assets.xcassets */,
 				1FCB9123267B846F008C93C7 /* Info.plist */,
-				1223396026CF9DFF00B7FB74 /* GoogleService-Info.plist */,
+				08DF013D272FF895008DE439 /* GoogleService-Info.plist */,
 				1FCB911B267B846C008C93C7 /* WineCalender.xcdatamodeld */,
 			);
 			path = WineCalender;
@@ -597,8 +597,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FCB9122267B846F008C93C7 /* LaunchScreen.storyboard in Resources */,
-				1223396126CF9DFF00B7FB74 /* GoogleService-Info.plist in Resources */,
 				C7BAABAC26E9CEA500471FB1 /* TastingNotes.storyboard in Resources */,
+				08DF013E272FF895008DE439 /* GoogleService-Info.plist in Resources */,
 				12B5560426FC9BDD00639807 /* Settings.storyboard in Resources */,
 				22FE4779272AA847000B7F40 /* ThumbnailCell.xib in Resources */,
 				1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */,
@@ -1104,7 +1104,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GT9Z4XZAWT;
+				DEVELOPMENT_TEAM = 3ZLXC439TG;
 				INFOPLIST_FILE = WineCalenderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
