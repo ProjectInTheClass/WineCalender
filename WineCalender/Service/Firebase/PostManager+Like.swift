@@ -15,6 +15,7 @@ import FirebaseDatabase
 enum LikeError: Error {
     case failedToLike
     case failedToUnlike
+    case failedToAuthenticateUser
     
     var localizedDescription: String {
         switch self {
@@ -22,6 +23,8 @@ enum LikeError: Error {
             return "Failed to like post"
         case .failedToUnlike:
             return "Failed to unlike post"
+        case .failedToAuthenticateUser:
+            return "Failed to authenticate user"
         }
     }
 }
@@ -43,7 +46,10 @@ extension PostManager {
     }
     
     func like(postUID: String, completion: @escaping (Result<Void, Error>) -> ()) {
-        guard let uid = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion(.failure(LikeError.failedToAuthenticateUser))
+            return
+        }
 
         let likeRef = PostManager.shared.likeRef.child(postUID).child(uid)
         likeRef.setValue(Date().timeIntervalSince1970.rounded()) { error, ref in
@@ -56,7 +62,10 @@ extension PostManager {
     }
     
     func unlike(postUID: String, completion: @escaping (Result<Void, Error>) ->()) {
-        guard let uid = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion(.failure(LikeError.failedToAuthenticateUser))
+            return
+        }
         
         let likeRef = PostManager.shared.likeRef.child(postUID).child(uid)
         likeRef.removeValue { error, _ in
@@ -69,7 +78,10 @@ extension PostManager {
     }
     
     func fetchLikes(postUID: String, completion: @escaping (Result<[String], Error>) -> ()) {
-        guard let _ = Auth.auth().currentUser else { fatalError("User not logged in") }
+        guard let _ = Auth.auth().currentUser else {
+            completion(.failure(LikeError.failedToAuthenticateUser))
+            return
+        }
         
         PostManager.shared.likeRef.child(postUID).observeSingleEvent(of: .value) { snapshot in
             guard let dict = snapshot.value as? [String : Any] else {
@@ -81,18 +93,21 @@ extension PostManager {
         }
     }
     
-    func likesPost(postUID: String, completion: @escaping (Bool) -> Void) {
-        guard let userUID = Auth.auth().currentUser?.uid else { fatalError("User not logged in") }
+    func likesPost(postUID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+        guard let userUID = Auth.auth().currentUser?.uid else {
+            completion(.failure(LikeError.failedToAuthenticateUser))
+            return
+        }
 
         PostManager.shared.likeRef.child(postUID).observe(.value) { snapshot in
             if let dict = snapshot.value as? NSDictionary {
                 if let _ = dict[userUID] {
-                    completion(true)
+                    completion(.success(true))
                 } else {
-                    completion(false)
+                    completion(.success(false))
                 }
             } else {
-                completion(false)
+                completion(.success(false))
             }
         }
     }

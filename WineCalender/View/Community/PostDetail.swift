@@ -152,18 +152,24 @@ extension PostDetail {
     func updateLikes() {
         guard let postUID = postDetailData?.postID else { return }
         
-        PostManager.shared.likesPost(postUID: postUID) { likes in
-            self.likesPost = likes
-            let image = likes ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-            self.heartButton.setImage(image, for: .normal)
-            
-            PostManager.shared.fetchLikes(postUID: postUID) { result in
-                switch result {
-                case .success(let likes):
-                    self.likeLabel.text = "\(likes.count)"
-                default:
-                    debugPrint("Failed to fetch likes")
+        PostManager.shared.likesPost(postUID: postUID) { result in
+            switch result {
+            case .success(let likes):
+                self.likesPost = likes
+                let image = likes ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+                self.heartButton.setImage(image, for: .normal)
+                
+                PostManager.shared.fetchLikes(postUID: postUID) { result in
+                    switch result {
+                    case .success(let likes):
+                        self.likeLabel.text = "\(likes.count)"
+                    default:
+                        debugPrint("Failed to fetch likes")
+                    }
                 }
+
+            case .failure(let err):
+                debugPrint(err.localizedDescription)
             }
         }
     }
