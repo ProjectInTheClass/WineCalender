@@ -20,6 +20,10 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     @IBOutlet weak var profileBg: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var heartButton: UIButton!
+    @IBOutlet weak var likeLabel: UILabel!
+    var likesPost: Bool = false
+    
     var currentCelIndex = 0
     
     var postDetailData : Post?
@@ -47,7 +51,10 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = UIColor.systemGray4.withAlphaComponent(0.8)
         pageControl.currentPageIndicatorTintColor = UIColor.systemGray6.withAlphaComponent(0.8)
+        
+        updateLikes()
      }
+    
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
 //        configureNonmemberUI()
@@ -126,7 +133,42 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         self.wineName.text = note.wineName
         self.mainText.text = note.memo
     }
+    
 }
+
+extension PostDetail {
+    
+    @IBAction func handleHeartTapped(_ sender: Any) {
+        guard let postUID = postDetailData?.postID else {
+            debugPrint("Unable to identify post UID")
+            return
+        }
+        
+        let task = likesPost ? PostManager.shared.unlike : PostManager.shared.like
+        task(postUID) { result in
+        }
+    }
+    
+    func updateLikes() {
+        guard let postUID = postDetailData?.postID else { return }
+        
+        PostManager.shared.likesPost(postUID: postUID) { likes in
+            self.likesPost = likes
+            let image = likes ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            self.heartButton.setImage(image, for: .normal)
+            
+            PostManager.shared.fetchLikes(postUID: postUID) { result in
+                switch result {
+                case .success(let likes):
+                    self.likeLabel.text = "\(likes.count)"
+                default:
+                    debugPrint("Failed to fetch likes")
+                }
+            }
+        }
+    }
+}
+
 extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postDetailData?.postImageURL.count ?? 0
