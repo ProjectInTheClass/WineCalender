@@ -645,7 +645,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             if Auth.auth().currentUser == nil {
                 //비회원 - 처음 작성
                 if self.updateNote == nil {
-                    DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages, completion: { result in
+                    DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages, completion: { result in
                         if result == true {
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
                         }

@@ -33,15 +33,28 @@ class DataManager {
         }
     }
     
-    func addWineTastingNote(tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void){
+    func addWineTastingNote(posting: Date?, updated: Date?, tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void){
         let object = NSEntityDescription.insertNewObject(forEntityName: "WineTastingNote", into: mainContext)
 
-        let postingDate = Date()
+        var postingDate: Date? = nil
+        if posting == nil {
+            postingDate = Date()
+        } else {
+            postingDate = posting
+        }
+        
+        var updatedDate: Date? = nil
+        if posting == nil {
+            updatedDate = nil
+        } else {
+            updatedDate = updated
+        }
         
         let compressedImagesDatas = images.map{ $0.jpegData(compressionQuality: 0.2) }
         let compressedImages = compressedImagesDatas.map{ UIImage(data:$0!) }
         
         object.setValue(postingDate, forKey: "postingDate")
+        object.setValue(updatedDate, forKey: "updatedDate")
         object.setValue(tastingNote.tastingDate, forKey: "tastingDate")
         object.setValue(tastingNote.place, forKey: "place")
         object.setValue(compressedImages, forKey: "image")
@@ -64,6 +77,11 @@ class DataManager {
         completion(true)
     }
     
+    func updateWineTastingNote(completion: @escaping (Bool) -> Void) {
+        saveContext()
+        completion(true)
+    }
+    
     func removeWineTastingNote(wineTastingNote: WineTastingNote?) {
         if let note = wineTastingNote {
             mainContext.delete(note)
@@ -71,9 +89,21 @@ class DataManager {
         }
     }
     
-    func updateWineTastingNote(completion: @escaping (Bool) -> Void) {
-        saveContext()
-        completion(true)
+    func removeAllWineTastingNotes(completion: @escaping (Bool) -> Void) {
+        DataManager.shared.fetchWineTastingNote { notes in
+            if notes.count == 0 {
+                completion(true)
+            } else {
+                for i in 1...notes.count {
+                    let num = i - 1
+                    let note = notes[num]
+                    DataManager.shared.removeWineTastingNote(wineTastingNote: note)
+                    if i == notes.count {
+                        completion(true)
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Calendar Data

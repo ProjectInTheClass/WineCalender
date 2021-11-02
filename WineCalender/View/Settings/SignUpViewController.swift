@@ -109,9 +109,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
                                                 profileImage: profileImage, warningLabel: warningLabel) { result in
                 if result == true,
                    let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
+                    myWinesVC.uploadNewMemberData()
+                    myWinesVC.updateMemberUI()
                     let alert = UIAlertController(title: "회원가입완료", message: "환영합니다:)", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
-                        myWinesVC.updateMemberUI()
                         self.navigationController?.popToRootViewController(animated: true)
                     })
                     self.present(alert, animated: true, completion: nil)

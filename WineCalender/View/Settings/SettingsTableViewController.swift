@@ -115,17 +115,23 @@ class SettingsTableViewController: UITableViewController {
                 let alert = UIAlertController(title: "탈퇴하기", message: "정말로 탈퇴하시겠습니까?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { action in
-                    AuthenticationManager.shared.deleteAccount { result in
-                        if result == true {
-                            let alert2 = UIAlertController(title: "탈퇴 완료", message: nil, preferredStyle: .alert)
-                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                            self.present(alert2, animated: true, completion: nil)
-                        } else {
-                            let alert2 = UIAlertController(title: "탈퇴 오류", message: "잠시 후에 다시 시도해 주세요.", preferredStyle: .alert)
-                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                            self.present(alert2, animated: true, completion: nil)
-                        }
-                    }
+//                    PostManager.shared.uploadDatafromFirebaseToCoreData { result in
+//                        if result == true {
+//
+//                        }
+//                    }
+                    
+//                    AuthenticationManager.shared.deleteAccount { result in
+//                        if result == true {
+//                            let alert2 = UIAlertController(title: "탈퇴 완료", message: nil, preferredStyle: .alert)
+//                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//                            self.present(alert2, animated: true, completion: nil)
+//                        } else {
+//                            let alert2 = UIAlertController(title: "탈퇴 오류", message: "잠시 후에 다시 시도해 주세요.", preferredStyle: .alert)
+//                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//                            self.present(alert2, animated: true, completion: nil)
+//                        }
+//                    }
                 }))
                 self.present(alert, animated: true, completion: nil)
             default:

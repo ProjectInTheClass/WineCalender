@@ -65,6 +65,23 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
 
+    //회원가입 직후?
+    func uploadNewMemberData() {
+        let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+        self.view.addSubview(activityIndicatorView)
+        activityIndicatorView.frame = CGRect(x: 0, y: 185, width: self.view.bounds.width, height: 50)
+        activityIndicatorView.startAnimating()
+        PostManager.shared.uploadDatafromCoreDataToFirebase { result in
+            if result == true {
+                DataManager.shared.removeAllWineTastingNotes { result in
+                    if result == true {
+                        activityIndicatorView.stopAnimating()
+                    }
+                }
+            }
+        }
+    }
+    
     //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
     func updateMemberUI() {
         self.insideoutCells = [:]
@@ -76,6 +93,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                     self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts)
                 }
             } else {
+                self.posts = [Post]()
                 AuthenticationManager.shared.fetchMyProfile { user in
                     self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
                 }

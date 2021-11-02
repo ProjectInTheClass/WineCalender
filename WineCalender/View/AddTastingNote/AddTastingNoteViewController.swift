@@ -355,7 +355,7 @@ class AddTastingNoteViewController: UIViewController, UIPickerViewDelegate, UIPi
             //print(wineTastingNote)
             
             if Auth.auth().currentUser == nil {
-                DataManager.shared.addWineTastingNote(tastingNote: tastingNote, images: selectedImages, completion: { result in
+                DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages, completion: { result in
                     if result == true {
                         NotificationCenter.default.post(name: AddTastingNoteViewController.uploadPost, object: nil)
                     }

@@ -9,6 +9,8 @@ import Foundation
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import Kingfisher
+import UIKit
 
 class PostManager {
     
@@ -41,8 +43,10 @@ class PostManager {
                     let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
 
                     let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote] as [String:Any]
+//                    let value = [postID : ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote]] as [String:Any]
                     
                     PostManager.shared.postRef.child(postID).updateChildValues(value)
+//                    PostManager.shared.postRef.child(uid).updateChildValues(value)
                     completion(true)
                 }
             }
@@ -63,6 +67,7 @@ class PostManager {
                                         print("이미지 등록함")
                                         let value = ["/\(postID)/postImageURL/\(index)":urlString]
                                         PostManager.shared.postRef.updateChildValues(value)
+//                                        PostManager.shared.postRef.child(uid).updateChildValues(value)
                                         if images.count == index + 1 {
                                             imageUploadCompletion(true)
                                         }
@@ -99,6 +104,27 @@ class PostManager {
                 
                 completion(myPosts)
             }
+            
+//            PostManager.shared.postRef.child(uid).observe(DataEventType.value) { snapshot in
+//                guard let snapshotDict = snapshot.value as? [String:Any] else {
+//                    completion(nil)
+//                    return
+//                }
+//
+//                let datas = Array(snapshotDict.values)
+//                guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
+//
+//                let decoder = JSONDecoder()
+//                decoder.dateDecodingStrategy = .secondsSince1970
+//
+//                guard let posts = try? decoder.decode([Post].self, from: data) else { return }
+//
+//                var myPosts: [Post] = posts
+//                myPosts.sort{ $0.postingDate > $1.postingDate }
+//
+//                completion(myPosts)
+//            }
+            
         }
     }
     
@@ -114,6 +140,18 @@ class PostManager {
             
             completion(post)
         }
+        
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        PostManager.shared.postRef.child(uid).child(postID).observeSingleEvent(of: .value) { snapshot in
+//            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
+//            guard let data = try? JSONSerialization.data(withJSONObject: snapshotDict, options: []) else { return }
+//            print(data)
+//            let decoder = JSONDecoder()
+//            decoder.dateDecodingStrategy = .secondsSince1970
+//            guard let post = try? decoder.decode(Post.self, from: data) else { return }
+//
+//            completion(post)
+//        }
     }
     
     func removeMyPost(postID: String, authorUID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
@@ -147,5 +185,67 @@ class PostManager {
         
         PostManager.shared.postRef.child(postID).updateChildValues(value)
         completion(true)
+    }
+    
+    func uploadDatafromCoreDataToFirebase(completion: @escaping (Bool) -> Void) {
+        DataManager.shared.fetchWineTastingNote { notes in
+            if notes.count == 0 {
+                completion(true)
+            } else {
+                for i in 1...notes.count {
+                    let num = i - 1
+                    let note = notes[num]
+                    var price: Int32? = nil
+                    if note.price == 0 {
+                        price = nil
+                    } else {
+                        price = note.price
+                    }
+                    var alcoholContent: Float? = nil
+                    if note.alcoholContent == 0 {
+                        alcoholContent = nil
+                    } else {
+                        alcoholContent = note.alcoholContent
+                    }
+                    let tastingNote = WineTastingNotes(tastingDate: note.tastingDate, place: note.place, wineName: note.wineName, category: note.category, varieties: note.varieties, producingCountry: note.producingCountry, producer: note.producer, vintage: note.vintage, price: price, alcoholContent: alcoholContent, sweet: note.sweet, acidity: note.acidity, tannin: note.tannin, body: note.body, aromasAndFlavors: note.aromasAndFlavors, memo: note.memo, rating: note.rating)
+                    PostManager.shared.uploadPost(posting: note.postingDate, updated: note.updatedDate, tastingNote: tastingNote, images: note.image) { result in
+                        if result == true && i == notes.count {
+                            completion(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func uploadDatafromFirebaseToCoreData(completion: @escaping (Bool) -> Void) {
+        PostManager.shared.fetchMyPosts { posts in
+            guard let posts = posts else {
+                completion(true)
+                return
+            }
+            for i in 1...posts.count {
+                let num = i - 1
+                let post = posts[num]
+                let tastingNote = WineTastingNotes(tastingDate: post.tastingNote.tastingDate, place: post.tastingNote.place, wineName: post.tastingNote.wineName, category: post.tastingNote.category, varieties: post.tastingNote.varieties, producingCountry: post.tastingNote.producingCountry, producer: post.tastingNote.producer, vintage: post.tastingNote.vintage, price: post.tastingNote.price, alcoholContent: post.tastingNote.alcoholContent, sweet: post.tastingNote.sweet, acidity: post.tastingNote.acidity, tannin: post.tastingNote.tannin, body: post.tastingNote.body, aromasAndFlavors: post.tastingNote.aromasAndFlavors, memo: post.tastingNote.memo, rating: post.tastingNote.rating)
+                var images = [UIImage]()
+                for urlString in post.postImageURL {
+                    let url = URL(string: urlString)!
+                    KingfisherManager.shared.retrieveImage(with: url) { result in
+                        switch result {
+                        case .success(let value):
+                            images.append(value.image)
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                }
+                DataManager.shared.addWineTastingNote(posting: post.postingDate, updated: post.updatedDate, tastingNote: tastingNote, images: images) { result in
+                    if result == true {
+                        completion(true)
+                    }
+                }
+            }
+        }
     }
 }

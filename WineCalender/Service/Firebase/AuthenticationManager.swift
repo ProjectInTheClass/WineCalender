@@ -80,8 +80,8 @@ class AuthenticationManager {
     }
 
     func saveUserProfile(uid: String, profileImage: UIImage, nickname: String, introduction: String, completion: @escaping(Bool) -> Void) {
+        let profileImageName = uid + ".jpg"
         if !profileImage.isSymbolImage {
-            let profileImageName = uid + ".jpg"
             if let profileImageData = profileImage.jpegData(compressionQuality: 0.1) {
                 self.userProfileImageRef.child(profileImageName).putData(profileImageData, metadata: nil) { metadata, error in
                     if let error = error {
@@ -110,6 +110,7 @@ class AuthenticationManager {
                 AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname])
                 completion(true)
             }
+            AuthenticationManager.shared.userProfileImageRef.child(profileImageName).delete()
         }
     }
     
@@ -218,7 +219,7 @@ class AuthenticationManager {
 //              completion(false)
 //          } else {
 //              // Account deleted.
-//              // delete post, likes, comments, postImage, profileImage
+//              // delete post, porfile, likes, comments, postImage, profileImage
 //              completion(true)
 //          }
         }
