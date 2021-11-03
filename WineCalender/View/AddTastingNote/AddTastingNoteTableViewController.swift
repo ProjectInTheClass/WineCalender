@@ -30,6 +30,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     @IBOutlet weak var secondImageView: UIImageView!
     @IBOutlet weak var thirdImageView: UIImageView!
     @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var imageWarningLabel: UILabel!
     @IBOutlet weak var wineNameTextField: UITextField!
     @IBOutlet weak var wineCategorySegmentedControl: UISegmentedControl!
     @IBOutlet weak var wineVarietiesLabel: UILabel!
@@ -258,6 +259,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         if self.postID != nil || self.updateNote != nil {
             self.firstImageView.layer.borderColor = UIColor.gray.cgColor
             self.addImageButton.isHidden = true
+            self.imageWarningLabel.isHidden = true
         } else {
             self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
         }
@@ -334,6 +336,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     picker?.dismiss(animated: true, completion: {
                         self.selectedImages = selectedItems
                         self.firstImageView.layer.borderColor = UIColor.gray.cgColor
+                        self.imageWarningLabel.isHidden = true
                         if self.wineNameTextField.text != "" {
                             self.doneButton.isEnabled = true
                         }
@@ -374,8 +377,6 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             WineVarietiesTVC.completionHandler = { wineVarieties in
                 self.selectedWineVarieties = wineVarieties
                 self.setupWineVarietiesLable()
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
             }
         }
     }
@@ -393,6 +394,8 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 self.wineVarietiesLabel.text = wineVarietiesString
             }
         }
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
     
     // MARK: - producing country
@@ -536,8 +539,6 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             wineAromasAndFlavorsCVC.completionHandler = { aromasAndFlavors in
                 self.selectedWineAromasAndFlavors = aromasAndFlavors
                 self.setupWineAromasAndFlavorsLable()
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
             }
         }
     }
@@ -555,6 +556,8 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 self.wineAromasAndFlavorsLabel.text = wineAromasAndFlavorsString
             }
         }
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
     
     // MARK: - memo UITextViewDelegate
@@ -566,7 +569,6 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        self.tableView.layoutIfNeeded()
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }

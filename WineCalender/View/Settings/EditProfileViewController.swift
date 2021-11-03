@@ -7,14 +7,16 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextViewDelegate {
+class EditProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var nicknameTextField: UITextField!
     @IBOutlet weak var introductionTextView: UITextView!
+    @IBOutlet weak var introductionCountLabel: UILabel!
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
+    let maximumTextViewCount = 200
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 if let introduction = user.introduction {
                     self.introductionTextView.text = introduction
                     self.introductionTextView.textColor = .label
+                    self.introductionCountLabel.text = String(self.maximumTextViewCount - introduction.count)
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
                 } else {
                     self.introductionTextView.text = "소개"
                     self.introductionTextView.textColor = UIColor.systemGray2
@@ -92,11 +97,43 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         dismiss(animated: true, completion: nil)
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        if textField == nicknameTextField {
+            return updatedText.count <= 15
+        } else {
+            return updatedText.count <= 50
+        }
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         if introductionTextView.text == "소개" {
             introductionTextView.text = ""
             introductionTextView.textColor = UIColor(named: "blackAndWhite")
         }
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let existingLinesArray = textView.text.components(separatedBy: CharacterSet.newlines)
+        let newLines = text.components(separatedBy: CharacterSet.newlines)
+        let currentLines = existingLinesArray.count + newLines.count - 1
+        let maximumNumberOfLines = 8
+        
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        let currentTextCount = updatedText.count
+        
+        return currentLines <= maximumNumberOfLines && currentTextCount <= maximumTextViewCount
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        introductionCountLabel.text = String(maximumTextViewCount - introductionTextView.text.count)
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -110,6 +147,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         guard nicknameTextField.text != "" else {
             warningLabel.text = "닉네임을 입력해 주세요."
             nicknameTextField.becomeFirstResponder()
+            return
+        }
+        guard nicknameTextField.text?.contains("비회원") == false && nicknameTextField.text?.contains(" ") == false else {
+            warningLabel.text = "사용할 수 없는 닉네임입니다."
             return
         }
         warningLabel.text = ""

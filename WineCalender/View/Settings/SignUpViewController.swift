@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
@@ -41,6 +41,18 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
     
     @IBAction func nicknameReturnKeyTapped(_ sender: UITextField) {
         sender.resignFirstResponder()
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        if textField == nicknameTextField {
+            return updatedText.count <= 15
+        } else {
+            return updatedText.count <= 50
+        }
     }
     
     @IBAction func imageButtonTapped(_ sender: UIButton) {
@@ -100,6 +112,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate & 
         
         guard passwordTextField.text == checkPasswordTextField.text else {
             warningLabel.text = "비밀번호가 일치하지 않습니다."
+            return
+        }
+        
+        guard nicknameTextField.text?.contains("비회원") == false && nicknameTextField.text?.contains(" ") == false else {
+            warningLabel.text = "사용할 수 없는 닉네임입니다."
             return
         }
         
