@@ -43,10 +43,8 @@ class PostManager {
                     let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
 
                     let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote] as [String:Any]
-//                    let value = [postID : ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote]] as [String:Any]
-                    
-                    PostManager.shared.postRef.child(postID).updateChildValues(value)
-//                    PostManager.shared.postRef.child(uid).updateChildValues(value)
+//                    PostManager.shared.postRef.child(postID).updateChildValues(value)
+                    PostManager.shared.postRef.child(uid).child(postID).updateChildValues(value)
                     completion(true)
                 }
             }
@@ -56,18 +54,22 @@ class PostManager {
                     let imageName = postID + String(index) + ".jpg"
                     if let postImageData = image.jpegData(compressionQuality: 0.2) {
                         PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+                        //storage 위치 변경
+//                        PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                             if let error = error {
                                 print("이미지 등록 에러 : \(error.localizedDescription)")
                             } else {
                                 PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
+                                //storage 위치 변경
+//                                PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).downloadURL { url, error in
                                     if let error = error {
                                         print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
                                     } else {
                                         guard let urlString: String = url?.absoluteString else { return }
                                         print("이미지 등록함")
-                                        let value = ["/\(postID)/postImageURL/\(index)":urlString]
-                                        PostManager.shared.postRef.updateChildValues(value)
-//                                        PostManager.shared.postRef.child(uid).updateChildValues(value)
+//                                        let value = ["/\(postID)/postImageURL/\(index)":urlString]
+//                                        PostManager.shared.postRef.updateChildValues(value)
+                                        PostManager.shared.postRef.child("\(uid)/\(postID)/postImageURL").updateChildValues(["\(index)":urlString])
                                         if images.count == index + 1 {
                                             imageUploadCompletion(true)
                                         }
@@ -85,78 +87,58 @@ class PostManager {
     func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
 //            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
-            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observe(DataEventType.value) { snapshot in
+//            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observe(DataEventType.value) { snapshot in
+            PostManager.shared.postRef.child(uid).observe(DataEventType.value) { snapshot in
                 guard let snapshotDict = snapshot.value as? [String:Any] else {
                     completion(nil)
                     return
                 }
-                
+
                 let datas = Array(snapshotDict.values)
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
-                
+
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
-                
+
                 guard let posts = try? decoder.decode([Post].self, from: data) else { return }
 
                 var myPosts: [Post] = posts
                 myPosts.sort{ $0.postingDate > $1.postingDate }
-                
+
                 completion(myPosts)
             }
-            
-//            PostManager.shared.postRef.child(uid).observe(DataEventType.value) { snapshot in
-//                guard let snapshotDict = snapshot.value as? [String:Any] else {
-//                    completion(nil)
-//                    return
-//                }
-//
-//                let datas = Array(snapshotDict.values)
-//                guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
-//
-//                let decoder = JSONDecoder()
-//                decoder.dateDecodingStrategy = .secondsSince1970
-//
-//                guard let posts = try? decoder.decode([Post].self, from: data) else { return }
-//
-//                var myPosts: [Post] = posts
-//                myPosts.sort{ $0.postingDate > $1.postingDate }
-//
-//                completion(myPosts)
-//            }
-            
         }
     }
     
     //For Update
     func fetchMyPost(postID: String, completion: @escaping (Post) -> Void) {
-        PostManager.shared.postRef.queryOrdered(byChild: "postID").queryEqual(toValue: postID).observeSingleEvent(of: .value) { snapshot in
-            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
-            guard let value = snapshotDict.value(forKey: postID) as? NSDictionary else { return }
-            guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            guard let post = try? decoder.decode(Post.self, from: data) else { return }
-            
-            completion(post)
-        }
-        
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//        PostManager.shared.postRef.child(uid).child(postID).observeSingleEvent(of: .value) { snapshot in
+//        PostManager.shared.postRef.queryOrdered(byChild: "postID").queryEqual(toValue: postID).observeSingleEvent(of: .value) { snapshot in
 //            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
-//            guard let data = try? JSONSerialization.data(withJSONObject: snapshotDict, options: []) else { return }
-//            print(data)
+//            guard let value = snapshotDict.value(forKey: postID) as? NSDictionary else { return }
+//            guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
 //            let decoder = JSONDecoder()
 //            decoder.dateDecodingStrategy = .secondsSince1970
 //            guard let post = try? decoder.decode(Post.self, from: data) else { return }
 //
 //            completion(post)
 //        }
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        PostManager.shared.postRef.child(uid).child(postID).observeSingleEvent(of: .value) { snapshot in
+            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
+            guard let data = try? JSONSerialization.data(withJSONObject: snapshotDict, options: []) else { return }
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            guard let post = try? decoder.decode(Post.self, from: data) else { return }
+
+            completion(post)
+        }
     }
     
     func removeMyPost(postID: String, authorUID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
         guard authorUID == Auth.auth().currentUser?.uid else { return }
-        PostManager.shared.postRef.child(postID).removeValue { error, databaseReference in
+//        PostManager.shared.postRef.child(postID).removeValue { error, databaseReference in
+        PostManager.shared.postRef.child(authorUID).child(postID).removeValue { error, databaseReference in
             if let error = error {
                 print(error)
             } else {
@@ -164,6 +146,8 @@ class PostManager {
                 for num in 1...numberOfImage {
                     let fileName = postID + String(num - 1) + ".jpg"
                     PostManager.shared.postImageRef.child(postID).child(fileName).delete { error in
+                        //storage 위치 변경
+//                    PostManager.shared.postImageRef.child(uid).child(postID).child(fileName).delete { error in
                         if let error = error {
                             completion(false)
                             print("post만 삭제되고 image는 삭제안됨 \(error)")
@@ -177,13 +161,15 @@ class PostManager {
     }
     
     func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Bool) -> Void) {
+        guard let authorUID = Auth.auth().currentUser?.uid else { return }
         let updatedDate: Double = (Date().timeIntervalSince1970).rounded()
         let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
         let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
         
         let value = ["updatedDate":updatedDate, "tastingNote":tastingNote] as [String:Any]
         
-        PostManager.shared.postRef.child(postID).updateChildValues(value)
+//        PostManager.shared.postRef.child(postID).updateChildValues(value)
+        PostManager.shared.postRef.child(authorUID).child(postID).updateChildValues(value)
         completion(true)
     }
     
