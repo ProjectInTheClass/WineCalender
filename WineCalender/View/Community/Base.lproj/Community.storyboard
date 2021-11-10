@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xhm-Lz-rB6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xhm-Lz-rB6">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -226,6 +226,11 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="uQA-CA-V2x" secondAttribute="height" multiplier="1:1" id="P4U-6g-kdg"/>
                                                                     </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="circleRadius">
+                                                                            <integer key="value" value="5"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
@@ -258,32 +263,12 @@
                                             <constraint firstItem="GLb-fM-B21" firstAttribute="leading" secondItem="6mt-CW-wca" secondAttribute="leading" id="uTW-oD-fgr"/>
                                         </constraints>
                                     </view>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pFf-BJ-29B">
-                                        <rect key="frame" x="0.0" y="438" width="414" height="0.0"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="1" translatesAutoresizingMaskIntoConstraints="NO" id="gSV-Vg-McJ">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
-                                                <color key="tintColor" systemColor="systemGrayColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <nil key="textColor"/>
-                                                <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kYD-Nh-geb">
-                                        <rect key="frame" x="0.0" y="446" width="414" height="12"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="1" translatesAutoresizingMaskIntoConstraints="NO" id="4ez-VZ-IFB">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="12"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fH3-kM-aQf">
-                                        <rect key="frame" x="0.0" y="466" width="414" height="281"/>
-                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5DA-N8-tgk">
+                                        <rect key="frame" x="0.0" y="438" width="414" height="309"/>
+                                        <connections>
+                                            <segue destination="sTd-sa-wh7" kind="embed" id="UlO-t1-gaU"/>
+                                        </connections>
+                                    </containerView>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="kef-kP-2ZW">
@@ -396,12 +381,11 @@
                         <outlet property="detailProfile" destination="eDs-gm-DbW" id="oFe-Sv-UYi"/>
                         <outlet property="heartButton" destination="be6-Fw-Z9K" id="uaz-qR-5Sk"/>
                         <outlet property="likeLabel" destination="2l8-nI-3el" id="DAX-BR-9R0"/>
-                        <outlet property="mainText" destination="4ez-VZ-IFB" id="Kk2-bI-pHM"/>
                         <outlet property="pageControl" destination="IJM-WG-3Fp" id="IS8-mX-aPU"/>
                         <outlet property="postCollection" destination="GLb-fM-B21" id="SiO-kl-JJN"/>
+                        <outlet property="postUpdateTime" destination="EhS-fo-806" id="sF4-KR-biB"/>
                         <outlet property="profileBg" destination="3dt-aW-Dz3" id="laq-Fp-i8h"/>
                         <outlet property="userName" destination="Enz-4H-gxj" id="GuH-wb-tUp"/>
-                        <outlet property="wineName" destination="gSV-Vg-McJ" id="gyf-jS-14z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="An8-CM-304" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -427,6 +411,46 @@
             </objects>
             <point key="canvasLocation" x="1224.6376811594205" y="2314.2857142857142"/>
         </scene>
+        <!--Post Bottom Table View Controller-->
+        <scene sceneID="Vta-OJ-gMo">
+            <objects>
+                <tableViewController id="sTd-sa-wh7" customClass="PostBottomTableViewController" customModule="WineCalender" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" id="tT5-l1-wVi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="89" id="jwa-zl-UPQ" customClass="BottomTableViewCell" customModule="WineCalender" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="89"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jwa-zl-UPQ" id="pcX-TA-TX8">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="89"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTa-qq-zUv">
+                                            <rect key="frame" x="20" y="33.5" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="sTd-sa-wh7" id="BSV-Cf-E7X"/>
+                            <outlet property="delegate" destination="sTd-sa-wh7" id="VAB-Wy-cwQ"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="table" destination="tT5-l1-wVi" id="WIH-6N-mrE"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ye7-xk-KfT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3134.7826086956525" y="2858.3705357142858"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
     <resources>
@@ -444,9 +468,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -42,7 +42,7 @@ class TabBarController: UITabBarController {
         
         let layout = ZigzagLayout()
         let communityCollectionVC = Community(collectionViewLayout: layout)
-        communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(systemName: "person.3"), selectedImage: UIImage(systemName: "person.3.fill"))
+        communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(named: "tab_Community"), selectedImage: UIImage(named: "tab_Community"))
         let communityNavContr = UINavigationController(rootViewController: communityCollectionVC)
         
         // TabBarItem

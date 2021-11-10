@@ -67,6 +67,7 @@
 		1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB9145267B8A44008C93C7 /* SearchPhotoViewController.swift */; };
 		1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */; };
 		224FFA6C271D4EF70015FC43 /* PostDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224FFA6B271D4EF70015FC43 /* PostDetailVM.swift */; };
+		2263BB3927326DC50004A793 /* PostBottomTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263BB3827326DC50004A793 /* PostBottomTable.swift */; };
 		227DED7326EF546E001CCCE0 /* PostThumbnailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */; };
 		227DED7426EF546E001CCCE0 /* CommunityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7026EF546D001CCCE0 /* CommunityVM.swift */; };
 		227DED7526EF546E001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */; };
@@ -74,7 +75,7 @@
 		227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */; };
 		227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */; };
 		227DED7D26EF549B001CCCE0 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7A26EF549B001CCCE0 /* Community.swift */; };
-		22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411526CE54A900F0D123 /* TapBarController.swift */; };
+		22AF411626CE54A900F0D123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411526CE54A900F0D123 /* TabBarController.swift */; };
 		22FE4775272A9F85000B7F40 /* ZigzagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE4774272A9F85000B7F40 /* ZigzagLayout.swift */; };
 		22FE4779272AA847000B7F40 /* ThumbnailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22FE4778272AA847000B7F40 /* ThumbnailCell.xib */; };
 		2D44FD482C6F8C9A9A8B5A3B /* Pods_WineCalender_WineCalenderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A530DBD10DB8474AD455ED35 /* Pods_WineCalender_WineCalenderUITests.framework */; };
@@ -170,6 +171,7 @@
 		1FE3543826A01809004AAF13 /* SearchDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailViewController.swift; sourceTree = "<group>"; };
 		21883CBE2ABA51F7A43023E7 /* Pods-WineCalender.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender.release.xcconfig"; path = "Target Support Files/Pods-WineCalender/Pods-WineCalender.release.xcconfig"; sourceTree = "<group>"; };
 		224FFA6B271D4EF70015FC43 /* PostDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailVM.swift; sourceTree = "<group>"; };
+		2263BB3827326DC50004A793 /* PostBottomTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBottomTable.swift; sourceTree = "<group>"; };
 		227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailVM.swift; sourceTree = "<group>"; };
 		227DED7026EF546D001CCCE0 /* CommunityVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityVM.swift; sourceTree = "<group>"; };
 		227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostCollectionViewCollectionViewController.swift; sourceTree = "<group>"; };
@@ -177,7 +179,7 @@
 		227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailCell.swift; sourceTree = "<group>"; };
 		227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		227DED7A26EF549B001CCCE0 /* Community.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
-		22AF411526CE54A900F0D123 /* TapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarController.swift; sourceTree = "<group>"; };
+		22AF411526CE54A900F0D123 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		22C743C658C7C294A97A0BA6 /* Pods-WineCalenderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.release.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.release.xcconfig"; sourceTree = "<group>"; };
 		22FE4774272A9F85000B7F40 /* ZigzagLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZigzagLayout.swift; sourceTree = "<group>"; };
 		22FE4778272AA847000B7F40 /* ThumbnailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThumbnailCell.xib; sourceTree = "<group>"; };
@@ -403,7 +405,7 @@
 				1F215B2526A0067200F0E526 /* Search */,
 				1F215B1F269EB8A300F0E526 /* Calendar */,
 				1F215B1D269EB85B00F0E526 /* Camera */,
-				22AF411526CE54A900F0D123 /* TapBarController.swift */,
+				22AF411526CE54A900F0D123 /* TabBarController.swift */,
 				1FCB9112267B846C008C93C7 /* AppDelegate.swift */,
 				1FCB9114267B846C008C93C7 /* SceneDelegate.swift */,
 				1FCB9116267B846C008C93C7 /* ViewController.swift */,
@@ -461,6 +463,7 @@
 				227DED7226EF546D001CCCE0 /* PostDetail.swift */,
 				227DED7A26EF549B001CCCE0 /* Community.swift */,
 				22FE4774272A9F85000B7F40 /* ZigzagLayout.swift */,
+				2263BB3827326DC50004A793 /* PostBottomTable.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -765,6 +768,7 @@
 				1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
+				2263BB3927326DC50004A793 /* PostBottomTable.swift in Sources */,
 				127DEF862726423C0002BA39 /* AddTastingNoteTableViewController.swift in Sources */,
 				122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */,
 				12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */,
@@ -775,7 +779,7 @@
 				12EC792F26D4C31C0003DE27 /* PostManager.swift in Sources */,
 				12C9D6BE2698547500911CF0 /* AddScheduleTableViewController.swift in Sources */,
 				087DBB79272BE79E0085FBC8 /* PostManager+Like.swift in Sources */,
-				22AF411626CE54A900F0D123 /* TapBarController.swift in Sources */,
+				22AF411626CE54A900F0D123 /* TabBarController.swift in Sources */,
 				12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */,
 				1FCB9115267B846C008C93C7 /* SceneDelegate.swift in Sources */,
 				1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */,
@@ -994,7 +998,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZLXC439TG;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1014,7 +1018,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZLXC439TG;
+				DEVELOPMENT_TEAM = GT9Z4XZAWT;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

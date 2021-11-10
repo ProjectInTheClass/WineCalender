@@ -13,7 +13,8 @@ let postCardColorSet = [
     UIColor(named:"postCard1"),
     UIColor(named:"postCard2"),
     UIColor(named:"postCard3"),
-    UIColor(named:"postCard4")
+    UIColor(named:"postCard4"),
+    
 ]
 
 struct PostThumbnailVM {

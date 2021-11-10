@@ -20,8 +20,11 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     @IBOutlet weak var profileBg: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var bottomTable: UITableView!
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var likeLabel: UILabel!
+    @IBOutlet weak var postUpdateTime: UILabel!
+    
     var likesPost: Bool = false
     
     var currentCelIndex = 0
@@ -30,7 +33,7 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     //nonmember
     var postDetailVM : PostDetailVM?
     var noteDetailData : WineTastingNote?
-
+    
     override func viewDidLoad() {
          super.viewDidLoad()
 
@@ -43,9 +46,9 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         profileBg.layer.cornerRadius = profileBg.frame.height/2
         profileBg.backgroundColor = UIColor(named: "whiteAndBlack")
         postCollection.backgroundColor = postDetailVM?.postCardColor
-        collectionBackground.backgroundColor = .blue
-        wineName.text = postDetailVM?.wineName
-        mainText.text = postDetailVM?.memo
+        
+//        wineName.text = postDetailVM?.wineName
+//        mainText.text = postDetailVM?.memo
         
         pageControl.numberOfPages = postDetailData?.postImageURL.count ?? 0
         pageControl.currentPage = 0
@@ -53,11 +56,12 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         pageControl.currentPageIndicatorTintColor = UIColor.systemGray6.withAlphaComponent(0.8)
         
         updateLikes()
+        
      }
     
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
-//        configureNonmemberUI()
+        configureNonmemberUI()
     }
     @IBAction func moreButtonTapped(_ sender: Any) {
         if let currentUserUID = Auth.auth().currentUser?.uid {
@@ -130,8 +134,8 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
     func configureNonmemberUI() {
         guard let note = noteDetailData else { return }
         self.userName.text = "비회원"
-        self.wineName.text = note.wineName
-        self.mainText.text = note.memo
+//        self.wineName.text = note.wineName
+//        self.mainText.text = note.memo
     }
     
 }
@@ -186,7 +190,6 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
-
         if let post = postDetailData {
             let imageURL = URL(string: (post.postImageURL[indexPath.row]))
             postCell.postImage.kf.setImage(with: imageURL)
@@ -196,11 +199,8 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
         return postCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
         return CGSize(width: postCollection.frame.width, height: postCollection.frame.height)
-
     }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
