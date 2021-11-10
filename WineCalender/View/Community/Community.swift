@@ -31,28 +31,31 @@ class Community : UICollectionViewController {
         
 //        setupCollectionViewInsets()
         
-        PostManager.shared.postRef.queryOrdered(byChild: "postingDate").observe(DataEventType.value, with: { snapshot in
+        PostManager.shared.recentPostRef.queryOrdered(byChild: "postedDate").queryLimited(toFirst: 10).observe(DataEventType.value, with: { snapshot in
             self.posts = []
             
             for child in snapshot.children.reversed() {
                 let snapshot = child as! DataSnapshot
                 guard let dictionary = snapshot.value as? [String:Any] else { return }
 
-//                let datas = Array(dictionary.values)
+                guard let authorID = dictionary["authorID"] as? String, let postID = dictionary["postID"] as? String else { return }
                 
-                guard let data = try? JSONSerialization.data(withJSONObject: dictionary, options: []) else { return }
-                
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                
-                guard let post = try? decoder.decode(Post.self, from: data) else { return }
-                AuthenticationManager.shared.fetchUserProfile(AuthorUID: post.authorUID) { url, username in
-                    self.posts.append((post,username,url))
-                    self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
-                    self.collectionView.reloadData()
+                PostManager.shared.postRef.child(authorID).child(postID).observeSingleEvent(of: .value) { snapshot in
+                    guard let d = snapshot.value as? [String : Any] else { return }
+                    
+                    guard let data = try? JSONSerialization.data(withJSONObject: d, options: []) else { return }
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .secondsSince1970
+                    
+                    guard let post = try? decoder.decode(Post.self, from: data) else { return }
+                    AuthenticationManager.shared.fetchUserProfile(AuthorUID: post.authorUID) { url, username in
+                        self.posts.append((post,username,url))
+                        self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
+                        self.collectionView.reloadData()
+                    }
                 }
             }
-            
             self.collectionView.reloadData()
         })
     }

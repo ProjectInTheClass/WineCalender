@@ -17,6 +17,8 @@ class PostManager {
     static let shared = PostManager()
     
     let postRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("Post")
+    let recentPostRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("RecentPost")
+    
     //let postRef = Database.database().reference().child("Post")
     let postImageRef = Storage.storage().reference().child("PostImage")
     
@@ -46,6 +48,12 @@ class PostManager {
 //                    PostManager.shared.postRef.child(postID).updateChildValues(value)
                     PostManager.shared.postRef.child(uid).child(postID).updateChildValues(value)
                     completion(true)
+                    
+                    // add recent post ID
+                    guard let recentPostID = PostManager.shared.recentPostRef.childByAutoId().key else { return }
+                    let recentPostValue = ["postID":postID, "authorID":uid, "postedDate":postingDate as Any] as [String:Any]
+                    PostManager.shared.recentPostRef.child(recentPostID).updateChildValues(recentPostValue)
+
                 }
             }
             
