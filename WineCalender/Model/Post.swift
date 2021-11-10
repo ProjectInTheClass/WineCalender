@@ -14,6 +14,6 @@ struct Post: Decodable {
     let updatedDate: Date?
     let postImageURL: [String]
     let tastingNote: WineTastingNotes
-    let likeUIDs: [String]?
+    let likeCount: Int?
     let comments: [Comment]?
 }

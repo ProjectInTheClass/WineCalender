@@ -25,6 +25,7 @@ struct PostThumbnailVM {
     let postSubText : String
     let postSubTextIsHidden : Bool
     let color : UIColor
+    let likeCount: String
     
     init(_ post:Post,_ username:String,_ profileImageUrl:URL?,_ index: Int) {
         let thumbnailURL = URL(string: post.postImageURL[0])
@@ -37,5 +38,7 @@ struct PostThumbnailVM {
         self.color = postCardColorSet[index % postCardColorSet.count]!
        
        self.postSubTextIsHidden = post.tastingNote.memo == nil ? true : false
+        
+        self.likeCount = "\(post.likeCount ?? 0)"
    }
 }

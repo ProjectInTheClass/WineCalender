@@ -151,13 +151,14 @@
             <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
             <connections>
                 <outlet property="cellImage" destination="wdB-wR-rr8" id="zRX-8P-hqc"/>
+                <outlet property="likesLabel" destination="b36-qu-kBV" id="cuc-iz-ThU"/>
                 <outlet property="mainTitle" destination="zBE-2i-1hJ" id="yF5-P2-3Da"/>
                 <outlet property="postCardView" destination="rI7-YU-yEU" id="JjY-Yw-QqO"/>
                 <outlet property="profileImage" destination="Miw-oI-tGw" id="A6Q-GX-z8O"/>
                 <outlet property="profileName" destination="r7p-ik-Vuy" id="80n-Ye-fPY"/>
                 <outlet property="subTitle" destination="nL0-cz-YVi" id="eGo-o2-qw6"/>
             </connections>
-            <point key="canvasLocation" x="257" y="-260"/>
+            <point key="canvasLocation" x="256" y="-239"/>
         </collectionViewCell>
     </objects>
     <resources>

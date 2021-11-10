@@ -45,7 +45,7 @@ extension PostManager {
         }
     }
     
-    func like(postUID: String, completion: @escaping (Result<Void, Error>) -> ()) {
+    func like(postUID: String, authorUID: String, completion: @escaping (Result<Void, Error>) -> ()) {
         guard let uid = Auth.auth().currentUser?.uid else {
             completion(.failure(LikeError.failedToAuthenticateUser))
             return
@@ -56,12 +56,26 @@ extension PostManager {
             if let _ = error {
                 completion(.failure(LikeError.failedToLike))
             } else {
-                completion(.success(()))
+                let likeCountRef = Database.database().reference().child("Post").child(authorUID).child(postUID).child("likeCount")
+                        likeCountRef.runTransactionBlock({ (mutableData) -> TransactionResult in
+                            let currentCount = mutableData.value as? Int ?? 0
+
+                            mutableData.value = currentCount + 1
+
+                            return TransactionResult.success(withValue: mutableData)
+                        }, andCompletionBlock: { (error, _, _) in
+                            if let error = error {
+                                assertionFailure(error.localizedDescription)
+                                completion(.failure(LikeError.failedToLike))
+                            } else {
+                                completion(.success(()))
+                            }
+                        })
             }
         }
     }
     
-    func unlike(postUID: String, completion: @escaping (Result<Void, Error>) ->()) {
+    func unlike(postUID: String, authorUID: String, completion: @escaping (Result<Void, Error>) ->()) {
         guard let uid = Auth.auth().currentUser?.uid else {
             completion(.failure(LikeError.failedToAuthenticateUser))
             return
@@ -72,7 +86,21 @@ extension PostManager {
             if let _ = error {
                 completion(.failure(LikeError.failedToUnlike))
             } else {
-                completion(.success(()))
+                let likeCountRef = Database.database().reference().child("Post").child(authorUID).child(postUID).child("likeCount")
+                        likeCountRef.runTransactionBlock({ (mutableData) -> TransactionResult in
+                            let currentCount = mutableData.value as? Int ?? 0
+
+                            mutableData.value = currentCount - 1
+
+                            return TransactionResult.success(withValue: mutableData)
+                        }, andCompletionBlock: { (error, _, _) in
+                            if let error = error {
+                                assertionFailure(error.localizedDescription)
+                                completion(.failure(LikeError.failedToLike))
+                            } else {
+                                completion(.success(()))
+                            }
+                        })
             }
         }
     }

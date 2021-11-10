@@ -143,13 +143,13 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
 extension PostDetail {
     
     @IBAction func handleHeartTapped(_ sender: Any) {
-        guard let postUID = postDetailData?.postID else {
+        guard let postUID = postDetailData?.postID, let authorUID = postDetailData?.authorUID else {
             debugPrint("Unable to identify post UID")
             return
         }
         
         let task = likesPost ? PostManager.shared.unlike : PostManager.shared.like
-        task(postUID) { result in
+        task(postUID, authorUID) { result in
         }
     }
     

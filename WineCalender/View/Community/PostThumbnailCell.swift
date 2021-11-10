@@ -17,6 +17,7 @@ class PostThumbnailCell : UICollectionViewCell {
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var thumnailBottom: UIView!
+    @IBOutlet weak var likesLabel: UILabel!
     
     
     var postThumbnailVM : PostThumbnailVM?{
@@ -49,5 +50,7 @@ class PostThumbnailCell : UICollectionViewCell {
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
         // 뷰의 경계에 맞춰준다
         profileImage.clipsToBounds = true
+        
+        likesLabel.text = vm.likeCount
     }
 }
