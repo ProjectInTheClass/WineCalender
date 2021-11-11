@@ -18,6 +18,7 @@ target 'WineCalender' do
   pod 'Firebase/Storage'
   pod 'Kingfisher', '~> 6.3'
   pod 'PanModal'
+  pod 'lottie-ios'
 
   target 'WineCalenderTests' do
     inherit! :search_paths

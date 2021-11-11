@@ -37,8 +37,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hkw-4l-b01">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hkw-4l-b01">
+                                                    <rect key="frame" x="10" y="10" width="108" height="108"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -129,17 +129,17 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="hZg-Qd-HG4" secondAttribute="bottom" id="3rS-Vf-HFi"/>
-                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="bottom" secondItem="hZg-Qd-HG4" secondAttribute="bottom" id="5qd-in-A6q"/>
+                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="bottom" secondItem="rbG-9f-XnJ" secondAttribute="bottom" constant="-10" id="5qd-in-A6q"/>
                                                 <constraint firstItem="hZg-Qd-HG4" firstAttribute="top" secondItem="rbG-9f-XnJ" secondAttribute="top" id="6fw-8y-ZF5"/>
                                                 <constraint firstAttribute="trailing" secondItem="hZg-Qd-HG4" secondAttribute="trailing" id="9nU-oh-7ta"/>
                                                 <constraint firstItem="I6K-BB-qEv" firstAttribute="leading" secondItem="hZg-Qd-HG4" secondAttribute="leading" constant="5" id="KPY-ld-Yeq"/>
                                                 <constraint firstItem="hZg-Qd-HG4" firstAttribute="bottom" secondItem="I6K-BB-qEv" secondAttribute="bottom" constant="5" id="QlG-6T-5Tk"/>
                                                 <constraint firstItem="hZg-Qd-HG4" firstAttribute="leading" secondItem="rbG-9f-XnJ" secondAttribute="leading" id="UfP-7M-ucc"/>
                                                 <constraint firstItem="9eL-Do-5kc" firstAttribute="leading" secondItem="hZg-Qd-HG4" secondAttribute="leading" constant="5" id="aGf-UD-4eN"/>
-                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="trailing" secondItem="hZg-Qd-HG4" secondAttribute="trailing" id="dDd-SM-zrN"/>
+                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="trailing" secondItem="rbG-9f-XnJ" secondAttribute="trailing" constant="-10" id="dDd-SM-zrN"/>
                                                 <constraint firstItem="hZg-Qd-HG4" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="I6K-BB-qEv" secondAttribute="trailing" constant="5" id="fVm-g6-NIi"/>
-                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="leading" secondItem="hZg-Qd-HG4" secondAttribute="leading" id="gEp-jG-hK0"/>
-                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="top" secondItem="hZg-Qd-HG4" secondAttribute="top" id="obf-wY-3jP"/>
+                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="leading" secondItem="rbG-9f-XnJ" secondAttribute="leading" constant="10" id="gEp-jG-hK0"/>
+                                                <constraint firstItem="Hkw-4l-b01" firstAttribute="top" secondItem="rbG-9f-XnJ" secondAttribute="top" constant="10" id="obf-wY-3jP"/>
                                                 <constraint firstItem="hZg-Qd-HG4" firstAttribute="trailing" secondItem="9eL-Do-5kc" secondAttribute="trailing" constant="5" id="qfQ-Jf-Z76"/>
                                                 <constraint firstItem="9eL-Do-5kc" firstAttribute="top" secondItem="hZg-Qd-HG4" secondAttribute="top" constant="50" id="sRb-MR-Hoy"/>
                                                 <constraint firstItem="I6K-BB-qEv" firstAttribute="top" secondItem="9eL-Do-5kc" secondAttribute="bottom" id="wuN-9T-OE1"/>
@@ -147,12 +147,13 @@
                                         </collectionViewCellContentView>
                                         <gestureRecognizers/>
                                         <connections>
-                                            <outlet property="backView" destination="rbG-9f-XnJ" id="tKH-Tl-rrg"/>
+                                            <outlet property="backColorView" destination="rbG-9f-XnJ" id="ylU-3C-fKn"/>
                                             <outlet property="imageView" destination="hZg-Qd-HG4" id="sBB-VS-DWw"/>
                                             <outlet property="imageViewBottomAnchor" destination="3rS-Vf-HFi" id="oBQ-Nd-o6r"/>
                                             <outlet property="imageViewLeadingAnchor" destination="UfP-7M-ucc" id="iIg-P1-QgH"/>
                                             <outlet property="imageViewTopAnchor" destination="6fw-8y-ZF5" id="a8O-FV-1b2"/>
                                             <outlet property="imageViewTrailingAnchor" destination="9nU-oh-7ta" id="O3q-dp-mbq"/>
+                                            <outlet property="imageWhiteBackView" destination="Hkw-4l-b01" id="XJI-Jm-Mje"/>
                                             <outlet property="likesComentsStackView" destination="I6K-BB-qEv" id="ycP-ui-JNp"/>
                                             <outlet property="numberOfComentsLabel" destination="DFa-aR-I36" id="yLT-d6-KcB"/>
                                             <outlet property="numberOfLikesLabel" destination="bHz-wk-gAG" id="oEs-ua-dwn"/>

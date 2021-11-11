@@ -9,8 +9,6 @@ import Foundation
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
-import Kingfisher
-import UIKit
 
 class PostManager {
     
@@ -22,65 +20,91 @@ class PostManager {
     //let postRef = Database.database().reference().child("Post")
     let postImageRef = Storage.storage().reference().child("PostImage")
     
-    func uploadPost(posting: Date?, updated: Date?, tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Bool) -> Void) {
-        if let uid = Auth.auth().currentUser?.uid {
-            guard let postID = PostManager.shared.postRef.childByAutoId().key else { return }
-            uploadImage { result in
-                if result == true {
-                    var postingDate: Double? = nil
-                    if posting == nil {
-                        postingDate = (Date().timeIntervalSince1970).rounded()
+    func uploadPost(posting: Date?, updated: Date?, tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Result<Void,PostError>) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let postID = PostManager.shared.postRef.childByAutoId().key else { return }
+        var postImageURLDict = [String:String]()
+        
+        uploadImage { [weak self] result in
+            if result == true {
+                var postingDate: Double? = nil
+                if posting == nil {
+                    postingDate = (Date().timeIntervalSince1970).rounded()
+                } else {
+                    postingDate = (posting!.timeIntervalSince1970).rounded()
+                }
+                
+                var updatedDate: Double? = nil
+                if updated == nil {
+                    updatedDate = nil
+                } else {
+                    updatedDate = (updated!.timeIntervalSince1970).rounded()
+                }
+                
+                let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
+                let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
+                
+                let value = ["postImageURL":postImageURLDict, "postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote] as [String:Any]
+                
+                PostManager.shared.postRef.child(uid).child(postID).updateChildValues(value) { error, ref in
+                    if let error = error {
+                        //error2) image만 업로드됨
+                        //image 삭제
+                        print("image만 업로드되고, DB에 업로드실패 : \(error.localizedDescription)")
+                        self?.removeMyPostImages(postID: postID, numberOfImage: images.count) { result in
+                            completion(.failure(PostError.failedToUploadPost))
+                        }
                     } else {
-                        postingDate = (posting!.timeIntervalSince1970).rounded()
+                        // add recent post ID
+                        guard let recentPostID = PostManager.shared.recentPostRef.childByAutoId().key else { return }
+                        let recentPostValue = ["postID":postID, "authorID":uid, "postedDate":postingDate as Any] as [String:Any]
+                        PostManager.shared.recentPostRef.child(recentPostID).updateChildValues(recentPostValue) { error, ref in
+                            if let error = error {
+                                //error3) image, postRef만 업로드됨
+                                //postRef, image 삭제
+                                print("image, postRef만 업로드되고, recentPostRef에 업로드실패 : \(error.localizedDescription)")
+                                self?.removeMyPost(postID: postID, authorUID: uid, numberOfImage: images.count) { result in
+                                    completion(.failure(PostError.failedToUploadPost))
+                                }
+                            } else {
+                                completion(.success(()))
+                            }
+                        }
                     }
-                    
-                    var updatedDate: Double? = nil
-                    if updated == nil {
-                        updatedDate = nil
-                    } else {
-                        updatedDate = (updated!.timeIntervalSince1970).rounded()
-                    }
-                    
-                    let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
-                    let tastingNote = ["tastingDate":tastingDate, "place":tastingNote.place as Any, "wineName":tastingNote.wineName as Any, "category":tastingNote.category as Any, "varieties":tastingNote.varieties as Any, "producingCountry":tastingNote.producingCountry as Any, "producer":tastingNote.producer as Any, "vintage":tastingNote.vintage as Any, "price":tastingNote.price as Any, "alcoholContent":tastingNote.alcoholContent as Any, "sweet":tastingNote.sweet as Any, "acidity":tastingNote.acidity as Any, "tannin":tastingNote.tannin as Any, "body":tastingNote.body as Any, "aromasAndFlavors":tastingNote.aromasAndFlavors as Any, "memo":tastingNote.memo as Any, "rating":tastingNote.rating as Any] as [String : Any]
-
-                    let value = ["postID":postID, "authorUID":uid, "postingDate":postingDate as Any, "updatedDate":updatedDate as Any, "tastingNote":tastingNote] as [String:Any]
-//                    PostManager.shared.postRef.child(postID).updateChildValues(value)
-                    PostManager.shared.postRef.child(uid).child(postID).updateChildValues(value)
-                    completion(true)
-                    
-                    // add recent post ID
-                    guard let recentPostID = PostManager.shared.recentPostRef.childByAutoId().key else { return }
-                    let recentPostValue = ["postID":postID, "authorID":uid, "postedDate":postingDate as Any] as [String:Any]
-                    PostManager.shared.recentPostRef.child(recentPostID).updateChildValues(recentPostValue)
-
+                }
+            } else {
+                //error1) image 업로드 중 에러
+                //image 삭제
+                self?.removeMyPostImages(postID: postID, numberOfImage: images.count) { result in
+                    completion(.failure(PostError.failedToUploadPost))
                 }
             }
-            
-            func uploadImage(imageUploadCompletion: @escaping (Bool) -> Void) {
-                for (index, image) in images.enumerated() {
-                    let imageName = postID + String(index) + ".jpg"
-                    if let postImageData = image.jpegData(compressionQuality: 0.2) {
-                        PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+        }
+        
+        func uploadImage(imageUploadCompletion: @escaping (Bool) -> Void) {
+            var uploadCount = 0
+            for (index, image) in images.enumerated() {
+                let imageName = postID + String(index) + ".jpg"
+                if let postImageData = image.jpegData(compressionQuality: 0.2) {
+                    PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                         //storage 위치 변경
-//                        PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
-                            if let error = error {
-                                print("이미지 등록 에러 : \(error.localizedDescription)")
-                            } else {
-                                PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
+                        //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+                        if let error = error {
+                            imageUploadCompletion(false)
+                            print("이미지 등록 에러 : \(error.localizedDescription)")
+                        } else {
+                            PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
                                 //storage 위치 변경
-//                                PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).downloadURL { url, error in
-                                    if let error = error {
-                                        print("데이터베이스에 이미지추가 실패 : \(error.localizedDescription)")
-                                    } else {
-                                        guard let urlString: String = url?.absoluteString else { return }
-                                        print("이미지 등록함")
-//                                        let value = ["/\(postID)/postImageURL/\(index)":urlString]
-//                                        PostManager.shared.postRef.updateChildValues(value)
-                                        PostManager.shared.postRef.child("\(uid)/\(postID)/postImageURL").updateChildValues(["\(index)":urlString])
-                                        if images.count == index + 1 {
-                                            imageUploadCompletion(true)
-                                        }
+                                //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).downloadURL { url, error in
+                                if let error = error {
+                                    imageUploadCompletion(false)
+                                    print("downloadURL 에러 : \(error.localizedDescription)")
+                                } else {
+                                    guard let urlString: String = url?.absoluteString else { return }
+                                    postImageURLDict["\(index)"] = urlString
+                                    uploadCount = uploadCount + 1
+                                    if images.count == uploadCount {
+                                        imageUploadCompletion(true)
                                     }
                                 }
                             }
@@ -94,14 +118,11 @@ class PostManager {
     //For My Wines
     func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
         if let uid = Auth.auth().currentUser?.uid {
-//            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
-//            PostManager.shared.postRef.queryOrdered(byChild: "authorUID").queryEqual(toValue: uid).observe(DataEventType.value) { snapshot in
             PostManager.shared.postRef.child(uid).observe(DataEventType.value) { snapshot in
                 guard let snapshotDict = snapshot.value as? [String:Any] else {
                     completion(nil)
                     return
                 }
-
                 let datas = Array(snapshotDict.values)
                 guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
 
@@ -120,17 +141,6 @@ class PostManager {
     
     //For Update
     func fetchMyPost(postID: String, completion: @escaping (Post) -> Void) {
-//        PostManager.shared.postRef.queryOrdered(byChild: "postID").queryEqual(toValue: postID).observeSingleEvent(of: .value) { snapshot in
-//            guard let snapshotDict = snapshot.value as? NSDictionary else { return }
-//            guard let value = snapshotDict.value(forKey: postID) as? NSDictionary else { return }
-//            guard let data = try? JSONSerialization.data(withJSONObject: value, options: []) else { return }
-//            let decoder = JSONDecoder()
-//            decoder.dateDecodingStrategy = .secondsSince1970
-//            guard let post = try? decoder.decode(Post.self, from: data) else { return }
-//
-//            completion(post)
-//        }
-        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         PostManager.shared.postRef.child(uid).child(postID).observeSingleEvent(of: .value) { snapshot in
             guard let snapshotDict = snapshot.value as? NSDictionary else { return }
@@ -145,24 +155,33 @@ class PostManager {
     
     func removeMyPost(postID: String, authorUID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
         guard authorUID == Auth.auth().currentUser?.uid else { return }
-//        PostManager.shared.postRef.child(postID).removeValue { error, databaseReference in
-        PostManager.shared.postRef.child(authorUID).child(postID).removeValue { error, databaseReference in
+        PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, databaseReference in
             if let error = error {
                 print(error)
             } else {
-                // File deleted successfully
-                for num in 1...numberOfImage {
-                    let fileName = postID + String(num - 1) + ".jpg"
-                    PostManager.shared.postImageRef.child(postID).child(fileName).delete { error in
-                        //storage 위치 변경
-//                    PostManager.shared.postImageRef.child(uid).child(postID).child(fileName).delete { error in
-                        if let error = error {
-                            completion(false)
-                            print("post만 삭제되고 image는 삭제안됨 \(error)")
-                        } else {
-                            completion(true)
-                        }
+                self?.removeMyPostImages(postID: postID, numberOfImage: numberOfImage) { result in
+                    if result == true {
+                        completion(true)
+                    } else {
+                        completion(false)
                     }
+                }
+            }
+        }
+    }
+    
+    func removeMyPostImages(postID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
+        for num in 1...numberOfImage {
+            let fileName = postID + String(num - 1) + ".jpg"
+            PostManager.shared.postImageRef.child(postID).child(fileName).delete { error in
+                //storage 위치 변경
+            //PostManager.shared.postImageRef.child(uid).child(postID).child(fileName).delete { error in
+                if let error = error {
+                    completion(false)
+                    print("post만 삭제되고 image는 삭제안됨 또는 존재하지 않는 image\(error)")
+                } else {
+                    completion(true)
+                    print("image삭제됨")
                 }
             }
         }
@@ -176,11 +195,10 @@ class PostManager {
         
         let value = ["updatedDate":updatedDate, "tastingNote":tastingNote] as [String:Any]
         
-//        PostManager.shared.postRef.child(postID).updateChildValues(value)
         PostManager.shared.postRef.child(authorUID).child(postID).updateChildValues(value)
         completion(true)
     }
-    
+/*
     func uploadDatafromCoreDataToFirebase(completion: @escaping (Bool) -> Void) {
         DataManager.shared.fetchWineTastingNote { notes in
             if notes.count == 0 {
@@ -203,15 +221,23 @@ class PostManager {
                     }
                     let tastingNote = WineTastingNotes(tastingDate: note.tastingDate, place: note.place, wineName: note.wineName, category: note.category, varieties: note.varieties, producingCountry: note.producingCountry, producer: note.producer, vintage: note.vintage, price: price, alcoholContent: alcoholContent, sweet: note.sweet, acidity: note.acidity, tannin: note.tannin, body: note.body, aromasAndFlavors: note.aromasAndFlavors, memo: note.memo, rating: note.rating)
                     PostManager.shared.uploadPost(posting: note.postingDate, updated: note.updatedDate, tastingNote: tastingNote, images: note.image) { result in
-                        if result == true && i == notes.count {
-                            completion(true)
-                        }
+//                        if result == true && i == notes.count {
+//                            completion(true)
+//                        }
+                        
+//                        switch result {
+//                        case .success(_):
+//                            print("")
+//                        case .failure(let error):
+//                            print(error)
+//                        }
                     }
                 }
             }
         }
     }
-    
+*/
+/*
     func uploadDatafromFirebaseToCoreData(completion: @escaping (Bool) -> Void) {
         PostManager.shared.fetchMyPosts { posts in
             guard let posts = posts else {
@@ -240,6 +266,18 @@ class PostManager {
                     }
                 }
             }
+        }
+    }
+*/
+}
+
+enum PostError: Error {
+    case failedToUploadPost
+    
+    var message: String {
+        switch self {
+        case .failedToUploadPost:
+            return "잠시 후 다시 시도해 주세요."
         }
     }
 }

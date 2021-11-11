@@ -1046,7 +1046,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="PPx-ZJ-UK3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <sections>
                             <tableViewSection headerTitle="언제 어디서 ?" id="tdo-bD-X5H">
                                 <cells>
@@ -1770,6 +1770,7 @@
                         <outlet property="aciditySegmentedControl" destination="Cd5-KP-FfX" id="ng3-Rp-288"/>
                         <outlet property="addImageButton" destination="axb-kY-klB" id="q6U-Ou-5oA"/>
                         <outlet property="bodySegmentedControl" destination="iRg-nu-1QI" id="i1n-QE-AhR"/>
+                        <outlet property="cancelButton" destination="YIG-vT-mfd" id="4V0-DU-8Wx"/>
                         <outlet property="doneButton" destination="YK2-Ei-zaR" id="9ib-3x-mon"/>
                         <outlet property="firstImageView" destination="Nuh-M4-kef" id="wSI-76-UEc"/>
                         <outlet property="imageWarningLabel" destination="dTV-JY-Ac4" id="XeR-ve-uzf"/>

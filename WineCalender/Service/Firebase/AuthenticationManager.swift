@@ -219,7 +219,7 @@ class AuthenticationManager {
 //              completion(false)
 //          } else {
 //              // Account deleted.
-//              // delete post, porfile, likes, comments, postImage, profileImage
+//              // delete post, recentPost, porfile, likes, comments, postImage, profileImage
 //              completion(true)
 //          }
         }

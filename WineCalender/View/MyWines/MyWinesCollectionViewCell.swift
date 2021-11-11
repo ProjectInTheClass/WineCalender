@@ -10,7 +10,8 @@ import Kingfisher
 
 class MyWinesCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var backColorView: UIView!
+    @IBOutlet weak var imageWhiteBackView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var wineNameLabel: UILabel!
     @IBOutlet weak var tastingDateLabel: UILabel!

@@ -108,6 +108,7 @@ PODS:
   - JJFloatingActionButton (2.5.0)
   - Kingfisher (6.3.0)
   - leveldb-library (1.22.1)
+  - lottie-ios (3.2.3)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -132,6 +133,7 @@ DEPENDENCIES:
   - FSCalendar
   - JJFloatingActionButton
   - Kingfisher (~> 6.3)
+  - lottie-ios
   - PanModal
   - Parchment (~> 3.0)
   - SnapKit (~> 5.0.0)
@@ -156,6 +158,7 @@ SPEC REPOS:
     - JJFloatingActionButton
     - Kingfisher
     - leveldb-library
+    - lottie-ios
     - nanopb
     - PanModal
     - Parchment
@@ -183,6 +186,7 @@ SPEC CHECKSUMS:
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
@@ -193,6 +197,6 @@ SPEC CHECKSUMS:
   SwiftyCam: 6e57914771d972fbe508e759dc9d0150a44a93fd
   YPImagePicker: 6f410f475bd22fa8cd430495b54d4b2f15865c2d
 
-PODFILE CHECKSUM: af50e36ae8a09b94ed9c991c593d335227df220c
+PODFILE CHECKSUM: 046658388212f3717371411e6440f946406e65a6
 
 COCOAPODS: 1.10.1

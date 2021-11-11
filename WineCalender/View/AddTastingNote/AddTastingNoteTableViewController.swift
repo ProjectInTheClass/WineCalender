@@ -8,6 +8,7 @@
 import UIKit
 import YPImagePicker
 import FirebaseAuth
+import Lottie
 
 class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
@@ -46,6 +47,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     @IBOutlet weak var bodySegmentedControl: UISegmentedControl!
     @IBOutlet weak var wineMemoTextView: UITextView!
     @IBOutlet weak var ratingSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
     override func viewDidLoad() {
@@ -596,6 +598,36 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         let alert = UIAlertController(title: "테이스팅 노트 등록", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [self] action in
+            
+            let animationView: AnimationView = {
+                let aniView = AnimationView(name: "swirling-wine")
+                aniView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                aniView.contentMode = .scaleAspectFill
+                aniView.loopMode = .loop
+                aniView.backgroundColor = .white
+                aniView.layer.cornerRadius = 50
+                return aniView
+            }()
+            
+            func animationPlay() {
+                tableView.isUserInteractionEnabled = false
+                cancelButton.isEnabled = false
+                doneButton.isEnabled = false
+                view.superview?.addSubview(animationView)
+                animationView.center = view.center
+                animationView.play()
+            }
+            
+            func animationStop() {
+                animationView.stop()
+                animationView.removeFromSuperview()
+                tableView.isUserInteractionEnabled = true
+                cancelButton.isEnabled = true
+                doneButton.isEnabled = true
+            }
+            
+            animationPlay()
+            
             let date = wineTastingdate.date
             var place: String? = nil
             if wineTastingPlaceTextField.text == "" {
@@ -643,19 +675,20 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             }
             
             let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: rating)
-
+            
             if Auth.auth().currentUser == nil {
                 //비회원 - 처음 작성
                 if self.updateNote == nil {
                     DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages, completion: { result in
                         if result == true {
+                            animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
                         }
-                    })    
+                    })
                 } else {
                     //비회원 - 수정
                     updateNote?.updatedDate = Date()
-                    updateNote?.tastingDate = date 
+                    updateNote?.tastingDate = date
                     updateNote?.place = place
                     updateNote?.wineName = name
                     updateNote?.category = category
@@ -674,31 +707,43 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     updateNote?.rating = rating ?? 0
                     DataManager.shared.updateWineTastingNote(completion: { result in
                         if result == true {
+                            animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
                         }
                     })
                 }
+                dismiss(animated: true, completion: nil)
             } else {
                 if self.updatePost == nil {
                     //회원 - 처음 작성
                     PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages) {result in
-                        if result == true {
+                        switch result {
+                        case .success(_):
+                            animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                            dismiss(animated: true, completion: nil)
+                        case .failure(let error):
+                            animationStop()
+                            let alert = UIAlertController(title: error.message, message: nil, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                            self.present(alert, animated: true)
                         }
                     }
                 } else {
                     //회원 - 수정
                     PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
                         if result == true {
+                            animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
 //                            let navVC = self.presentingViewController?.children.first
 //                            let postDetailVC = navVC?.children.last
                             //데이터넘기기?
+                            dismiss(animated: true, completion: nil)
                         }
                     }
                 }
             }
-            dismiss(animated: true, completion: nil)
+//            dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
     }

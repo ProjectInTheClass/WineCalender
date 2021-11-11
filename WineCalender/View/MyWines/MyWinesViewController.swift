@@ -67,19 +67,19 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 
     //회원가입 직후?
     func uploadNewMemberData() {
-        let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
-        self.view.addSubview(activityIndicatorView)
-        activityIndicatorView.frame = CGRect(x: 0, y: 185, width: self.view.bounds.width, height: 50)
-        activityIndicatorView.startAnimating()
-        PostManager.shared.uploadDatafromCoreDataToFirebase { result in
-            if result == true {
-                DataManager.shared.removeAllWineTastingNotes { result in
-                    if result == true {
-                        activityIndicatorView.stopAnimating()
-                    }
-                }
-            }
-        }
+//        let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+//        self.view.addSubview(activityIndicatorView)
+//        activityIndicatorView.frame = CGRect(x: 0, y: 185, width: self.view.bounds.width, height: 50)
+//        activityIndicatorView.startAnimating()
+//        PostManager.shared.uploadDatafromCoreDataToFirebase { result in
+//            if result == true {
+//                DataManager.shared.removeAllWineTastingNotes { result in
+//                    if result == true {
+//                        activityIndicatorView.stopAnimating()
+//                    }
+//                }
+//            }
+//        }
     }
     
     //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
@@ -153,6 +153,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.insideoutCells[indexPath.item] = indexPath.item
                 cell.imageView.alpha = 0.3
                 cell.imageView.layer.cornerRadius = 10
+                cell.imageWhiteBackView.isHidden = false
                 cell.wineStackView.isHidden = false
                 cell.likesComentsStackView.isHidden = false
                 cell.imageViewTopAnchor.constant = 10
@@ -189,7 +190,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
         
-        cell.backView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
+        cell.backColorView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
         
         //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
         if self.insideoutCells[indexPath.item] == indexPath.item {
@@ -255,7 +256,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
-        let cellColor = cell.backView.backgroundColor
+        let cellColor = cell.backColorView.backgroundColor
         
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
