@@ -724,7 +724,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                             dismiss(animated: true, completion: nil)
                         case .failure(let error):
                             animationStop()
-                            let alert = UIAlertController(title: error.message, message: nil, preferredStyle: .alert)
+                            let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                             self.present(alert, animated: true)
                         }
@@ -732,13 +732,19 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 } else {
                     //회원 - 수정
                     PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
-                        if result == true {
+                        switch result {
+                        case .success(_):
                             animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                            dismiss(animated: true, completion: nil)
 //                            let navVC = self.presentingViewController?.children.first
 //                            let postDetailVC = navVC?.children.last
                             //데이터넘기기?
-                            dismiss(animated: true, completion: nil)
+                        case .failure(let error):
+                            animationStop()
+                            let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                            self.present(alert, animated: true)
                         }
                     }
                 }

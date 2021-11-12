@@ -63,21 +63,40 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         configureMemberUI()
         configureNonmemberUI()
     }
+
+    func configureMemberUI() {
+       //Fetch User Profile
+       guard let authorUID = postDetailData?.authorUID else { return }
+       AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
+           self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+           self.userName.text = nickname
+       }
+    }
+    func configureNonmemberUI() {
+        guard let note = noteDetailData else { return }
+        self.userName.text = "비회원"
+//        self.wineName.text = note.wineName
+//        self.mainText.text = note.memo
+    }
+    
     @IBAction func moreButtonTapped(_ sender: Any) {
         if let currentUserUID = Auth.auth().currentUser?.uid {
             if postDetailData?.authorUID == currentUserUID {
                 //회원 - 내 글
-                let numberOfImage = postDetailData?.postImageURL.count
+                let numberOfImages = postDetailData?.postImageURL.count
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
                     let alert2 = UIAlertController(title: "정말로 삭제하시겠습니까?", message: nil, preferredStyle: .actionSheet)
                     alert2.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-                        PostManager.shared.removeMyPost(postID: self.postDetailData?.postID ?? "", authorUID: self.postDetailData?.authorUID ?? "", numberOfImage: numberOfImage ?? 0) { result in
-                            if result == true {
+                        PostManager.shared.removeMyPost(postID: self.postDetailData?.postID ?? "", authorUID: self.postDetailData?.authorUID ?? "", numberOfImages: numberOfImages ?? 0) { result in
+                            switch result {
+                            case .success(()):
                                 self.navigationController?.popViewController(animated: true)
                                 NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            } else {
-                                print("삭제오류")
+                            case .failure(let error):
+                                let alert3 = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+                                alert3.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                self.present(alert3, animated: true)
                             }
                         }
                     }))
@@ -123,21 +142,6 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
             self.present(alert, animated: true, completion: nil)
         }
     }
-    func configureMemberUI() {
-       //Fetch User Profile
-       guard let authorUID = postDetailData?.authorUID else { return }
-       AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
-           self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-           self.userName.text = nickname
-       }
-    }
-    func configureNonmemberUI() {
-        guard let note = noteDetailData else { return }
-        self.userName.text = "비회원"
-//        self.wineName.text = note.wineName
-//        self.mainText.text = note.memo
-    }
-    
 }
 
 extension PostDetail {

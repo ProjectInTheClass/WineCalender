@@ -51,19 +51,18 @@ class PostManager {
                         //error2) image만 업로드됨
                         //image 삭제
                         print("image만 업로드되고, DB에 업로드실패 : \(error.localizedDescription)")
-                        self?.removeMyPostImages(postID: postID, numberOfImage: images.count) { result in
+                        self?.removeMyPostImages(postID: postID, numberOfImages: images.count) { result in
                             completion(.failure(PostError.failedToUploadPost))
                         }
                     } else {
                         // add recent post ID
-                        guard let recentPostID = PostManager.shared.recentPostRef.childByAutoId().key else { return }
                         let recentPostValue = ["postID":postID, "authorID":uid, "postedDate":postingDate as Any] as [String:Any]
-                        PostManager.shared.recentPostRef.child(recentPostID).updateChildValues(recentPostValue) { error, ref in
+                        PostManager.shared.recentPostRef.child(postID).updateChildValues(recentPostValue) { error, ref in
                             if let error = error {
                                 //error3) image, postRef만 업로드됨
                                 //postRef, image 삭제
                                 print("image, postRef만 업로드되고, recentPostRef에 업로드실패 : \(error.localizedDescription)")
-                                self?.removeMyPost(postID: postID, authorUID: uid, numberOfImage: images.count) { result in
+                                self?.removeMyPost(postID: postID, authorUID: uid, numberOfImages: images.count) { result in
                                     completion(.failure(PostError.failedToUploadPost))
                                 }
                             } else {
@@ -75,7 +74,7 @@ class PostManager {
             } else {
                 //error1) image 업로드 중 에러
                 //image 삭제
-                self?.removeMyPostImages(postID: postID, numberOfImage: images.count) { result in
+                self?.removeMyPostImages(postID: postID, numberOfImages: images.count) { result in
                     completion(.failure(PostError.failedToUploadPost))
                 }
             }
@@ -86,12 +85,13 @@ class PostManager {
             for (index, image) in images.enumerated() {
                 let imageName = postID + String(index) + ".jpg"
                 if let postImageData = image.jpegData(compressionQuality: 0.2) {
+                    print("############")
                     PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                         //storage 위치 변경
                         //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                         if let error = error {
                             imageUploadCompletion(false)
-                            print("이미지 등록 에러 : \(error.localizedDescription)")
+                            print("image 업로드 에러 : \(error.localizedDescription)")
                         } else {
                             PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
                                 //storage 위치 변경
@@ -153,41 +153,59 @@ class PostManager {
         }
     }
     
-    func removeMyPost(postID: String, authorUID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
+    func removeMyPost(postID: String, authorUID: String, numberOfImages: Int, completion: @escaping (Result<Void,PostError>) -> Void) {
         guard authorUID == Auth.auth().currentUser?.uid else { return }
-        PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, databaseReference in
+        PostManager.shared.recentPostRef.child(postID).removeValue { error, ref in
             if let error = error {
-                print(error)
+                //error1)
+                print("recentPostRef 삭제 에러 : \(error.localizedDescription)")
+                completion(.failure(PostError.failedToRemovePost))
             } else {
-                self?.removeMyPostImages(postID: postID, numberOfImage: numberOfImage) { result in
-                    if result == true {
-                        completion(true)
+                PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, ref in
+                    if let error = error {
+                        //error2)
+                        print("postRef 삭제 에러 : \(error.localizedDescription)")
+                        completion(.failure(PostError.failedToRemovePost))
                     } else {
-                        completion(false)
+                        self?.removeMyPostImages(postID: postID, numberOfImages: numberOfImages) { result in
+                            if result == true {
+                                completion(.success(()))
+                            } else {
+                                //error3)
+                                completion(.failure(PostError.failedToRemovePost))
+                            }
+                        }
                     }
                 }
             }
         }
     }
     
-    func removeMyPostImages(postID: String, numberOfImage: Int, completion: @escaping (Bool) -> Void) {
-        for num in 1...numberOfImage {
-            let fileName = postID + String(num - 1) + ".jpg"
-            PostManager.shared.postImageRef.child(postID).child(fileName).delete { error in
-                //storage 위치 변경
-            //PostManager.shared.postImageRef.child(uid).child(postID).child(fileName).delete { error in
-                if let error = error {
+    func removeMyPostImages(postID: String, numberOfImages: Int, completion: @escaping (Bool) -> Void) {
+        var removeCount = 0
+        for num in 1...numberOfImages {
+            let imageName = postID + String(num - 1) + ".jpg"
+            PostManager.shared.postImageRef.child(postID).child(imageName).delete { error in
+            //storage 위치 변경
+            //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).delete { error in
+                if let error = error, error.localizedDescription.contains("does not exist.") {
+                    print("존재하지 않는 image : \(error.localizedDescription)")
+                    removeCount = removeCount + 1
+                } else if let error = error {
+                    print("image 삭제 에러 : \(error.localizedDescription)")
                     completion(false)
-                    print("post만 삭제되고 image는 삭제안됨 또는 존재하지 않는 image\(error)")
                 } else {
-                    completion(true)
-                    print("image삭제됨")
+                    print("image 삭제됨")
+                    removeCount = removeCount + 1
+                    if removeCount == numberOfImages {
+                        completion(true)
+                    }
                 }
             }
         }
     }
     
-    func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Bool) -> Void) {
+    func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Result<Void, PostError>) -> Void) {
         guard let authorUID = Auth.auth().currentUser?.uid else { return }
         let updatedDate: Double = (Date().timeIntervalSince1970).rounded()
         let tastingDate: Double = (tastingNote.tastingDate.timeIntervalSince1970).rounded()
@@ -195,8 +213,15 @@ class PostManager {
         
         let value = ["updatedDate":updatedDate, "tastingNote":tastingNote] as [String:Any]
         
-        PostManager.shared.postRef.child(authorUID).child(postID).updateChildValues(value)
-        completion(true)
+        PostManager.shared.postRef.child(authorUID).child(postID).updateChildValues(value) { error, ref in
+            if let error = error {
+                //error)
+                print("테이스팅 노트 수정 에러 : \(error.localizedDescription)")
+                completion(.failure(PostError.failedToUpdatePost))
+            } else {
+                completion(.success(()))
+            }
+        }
     }
 /*
     func uploadDatafromCoreDataToFirebase(completion: @escaping (Bool) -> Void) {
@@ -273,11 +298,23 @@ class PostManager {
 
 enum PostError: Error {
     case failedToUploadPost
+    case failedToRemovePost
+    case failedToUpdatePost
+    
+    var title: String {
+        switch self {
+        default: return "잠시 후 다시 시도해 주세요."
+        }
+    }
     
     var message: String {
         switch self {
         case .failedToUploadPost:
-            return "잠시 후 다시 시도해 주세요."
+            return "업로드를 실패했습니다. \n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+        case .failedToRemovePost:
+            return "삭제를 실패했습니다. \n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+        case .failedToUpdatePost:
+            return "수정을 실패했습니다. \n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
         }
     }
 }
