@@ -29,9 +29,14 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
                                 </collectionViewFlowLayout>
+                                <view key="backgroundView" contentMode="scaleToFill" id="Qz3-HT-thf">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </view>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyWinesCell" id="2be-Ii-jiq" customClass="MyWinesCollectionViewCell" customModule="WineCalender" customModuleProvider="target">
-                                        <rect key="frame" x="2" y="302" width="128" height="128"/>
+                                        <rect key="frame" x="2" y="363" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rbG-9f-XnJ">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -161,6 +166,79 @@
                                             <outlet property="tastingDateLabel" destination="J5o-eX-Kxy" id="tuN-oT-z18"/>
                                             <outlet property="wineNameLabel" destination="Jja-KH-jQR" id="QqT-po-wai"/>
                                             <outlet property="wineStackView" destination="9eL-Do-5kc" id="i3l-uN-5a3"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyWinesNoPostsCell" id="SCN-sz-9uo" customClass="MyWinesNoPostsCell" customModule="WineCalender" customModuleProvider="target">
+                                        <rect key="frame" x="132" y="302" width="250" height="250"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vWq-lV-7eN">
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qTf-CQ-m3d">
+                                                    <rect key="frame" x="10" y="30" width="230" height="212"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 작성한 게시물이 없습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWV-Km-fad">
+                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gyl-g5-BE2">
+                                                            <rect key="frame" x="0.0" y="38" width="230" height="40"/>
+                                                            <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="C1b-8o-INv"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="addTastingNoteTapped:" destination="NNa-q7-PN9" eventType="touchUpInside" id="H3X-d5-qu5"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfv-aN-OYe">
+                                                            <rect key="frame" x="0.0" y="98" width="230" height="40"/>
+                                                            <color key="backgroundColor" red="0.50588238240000005" green="0.2823529541" blue="0.2588235438" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="ztG-HX-yvA"/>
+                                                            </constraints>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="signUpAndSignInButtonTapped:" destination="NNa-q7-PN9" eventType="touchUpInside" id="5M9-45-H8R"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 로그인을 하시면 기록을 백업하고, 다른 사용자들과 기록을 공유할 수 있습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Aq-RE-XqL">
+                                                            <rect key="frame" x="0.0" y="158" width="230" height="54"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qTf-CQ-m3d" firstAttribute="centerX" secondItem="vWq-lV-7eN" secondAttribute="centerX" id="PCH-dh-yfI"/>
+                                                <constraint firstItem="qTf-CQ-m3d" firstAttribute="top" secondItem="vWq-lV-7eN" secondAttribute="top" constant="30" id="TUk-ah-W8C"/>
+                                                <constraint firstAttribute="trailing" secondItem="qTf-CQ-m3d" secondAttribute="trailing" constant="10" id="V4y-J4-wm6"/>
+                                                <constraint firstItem="qTf-CQ-m3d" firstAttribute="leading" secondItem="vWq-lV-7eN" secondAttribute="leading" constant="10" id="ypX-ty-hpU"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="250" height="250"/>
+                                        <connections>
+                                            <outlet property="addTastingNoteButton" destination="Gyl-g5-BE2" id="sA5-DK-Zhy"/>
+                                            <outlet property="descriptionLabel" destination="6Aq-RE-XqL" id="Z64-dm-4Id"/>
+                                            <outlet property="signUpAndSignInButton" destination="jfv-aN-OYe" id="cuL-4W-UN3"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

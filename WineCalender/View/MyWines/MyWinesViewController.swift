@@ -21,7 +21,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     lazy var posts = [Post]()
     lazy var notes = [WineTastingNote]()
-    
+    lazy var noPosts: Bool? = nil
     lazy var insideoutCells = [Int:Int]()
     
     override func viewDidLoad() {
@@ -85,17 +85,19 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
     func updateMemberUI() {
         self.insideoutCells = [:]
-        PostManager.shared.fetchMyPosts { myPosts in
+        PostManager.shared.fetchMyPosts { [weak self] myPosts in
             if let myPosts = myPosts {
-                self.posts = myPosts
-                let numberOfPosts = self.posts.count
+                self?.posts = myPosts
+                let numberOfPosts = self?.posts.count
                 AuthenticationManager.shared.fetchMyProfile { user in
-                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts)
+                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts ?? 0)
+                    self?.noPosts = false
                 }
             } else {
-                self.posts = [Post]()
+                self?.posts = [Post]()
                 AuthenticationManager.shared.fetchMyProfile { user in
-                    self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
+                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
+                    self?.noPosts = true
                 }
             }
         }
@@ -104,10 +106,15 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     //로그아웃, 비회원이 앱 실행할 때, 비회원이 글 쓸 때
     func updateNonmemberUI() {
         self.insideoutCells = [:]
-        DataManager.shared.fetchWineTastingNote { myNotes in
-            self.notes = myNotes
-            let numberOfNotes = self.notes.count
-            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes)
+        DataManager.shared.fetchWineTastingNote { [weak self] myNotes in
+            self?.notes = myNotes
+            let numberOfNotes = self?.notes.count
+            if numberOfNotes == 0 {
+                self?.noPosts = true
+            } else {
+                self?.noPosts = false
+            }
+            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes ?? 0)
         }
     }
 
@@ -173,6 +180,21 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
     }
+    
+    @IBAction func addTastingNoteTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "TastingNotes", bundle: nil)
+        let addTastingNoteNav = storyboard.instantiateViewController(identifier: "AddTastingNoteNav")
+        addTastingNoteNav.modalPresentationStyle = .fullScreen
+        self.present(addTastingNoteNav, animated: true, completion: nil)
+    }
+    
+    @IBAction func signUpAndSignInButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        let settingsVC = storyboard.instantiateViewController(identifier: "settings")
+        let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController")
+        self.navigationController?.pushViewController(settingsVC, animated: false)
+        self.navigationController?.pushViewController(signInVC, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -180,67 +202,94 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if Auth.auth().currentUser != nil {
+        if noPosts == true {
+            return 1
+        } else if Auth.auth().currentUser == nil {
+            return notes.count
+        } else if Auth.auth().currentUser != nil {
             return posts.count
         } else {
-            return notes.count
+            return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
+        let noPostsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesNoPostsCell", for: indexPath) as! MyWinesNoPostsCell
         
-        cell.backColorView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
-        
-        //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
-        if self.insideoutCells[indexPath.item] == indexPath.item {
-            cell.imageView.alpha = 0.3
-            cell.imageView.layer.cornerRadius = 10
-            cell.wineStackView.isHidden = false
-            cell.likesComentsStackView.isHidden = false
-            cell.imageViewTopAnchor.constant = 10
-            cell.imageViewLeadingAnchor.constant = 10
-            cell.imageViewTrailingAnchor.constant = 10
-            cell.imageViewBottomAnchor.constant = 10
+        if noPosts == true {
+            if Auth.auth().currentUser == nil {
+                noPostsCell.isMember = false
+            } else {
+                noPostsCell.isMember = true
+            }
+            noPostsCell.isHidden = false
+            
+            return noPostsCell
         } else {
-            cell.imageView.alpha = 1.0
-            cell.imageView.layer.cornerRadius = 0
-            cell.wineStackView.isHidden = true
-            cell.likesComentsStackView.isHidden = true
-            cell.imageViewTopAnchor.constant = 0
-            cell.imageViewLeadingAnchor.constant = 0
-            cell.imageViewTrailingAnchor.constant = 0
-            cell.imageViewBottomAnchor.constant = 0
+            noPostsCell.isHidden = true
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
+            
+            cell.backColorView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
+            
+            //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
+            if self.insideoutCells[indexPath.item] == indexPath.item {
+                cell.imageView.alpha = 0.3
+                cell.imageView.layer.cornerRadius = 10
+                cell.wineStackView.isHidden = false
+                cell.likesComentsStackView.isHidden = false
+                cell.imageViewTopAnchor.constant = 10
+                cell.imageViewLeadingAnchor.constant = 10
+                cell.imageViewTrailingAnchor.constant = 10
+                cell.imageViewBottomAnchor.constant = 10
+            } else {
+                cell.imageView.alpha = 1.0
+                cell.imageView.layer.cornerRadius = 0
+                cell.wineStackView.isHidden = true
+                cell.likesComentsStackView.isHidden = true
+                cell.imageViewTopAnchor.constant = 0
+                cell.imageViewLeadingAnchor.constant = 0
+                cell.imageViewTrailingAnchor.constant = 0
+                cell.imageViewBottomAnchor.constant = 0
+            }
+            
+            if Auth.auth().currentUser != nil {
+                cell.post = posts[indexPath.row]
+            } else {
+                cell.note = notes[indexPath.row]
+            }
+            
+            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+            swipeRight.delegate = self
+            swipeRight.delaysTouchesBegan = true
+            swipeRight.direction = .right
+            cell.addGestureRecognizer(swipeRight)
+            
+            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+            swipeLeft.delegate = self
+            swipeLeft.delaysTouchesBegan = true
+            swipeLeft.direction = .left
+            cell.addGestureRecognizer(swipeLeft)
+            
+            return cell
         }
-        
-        if Auth.auth().currentUser != nil {
-            cell.post = posts[indexPath.row]
-        } else {
-            cell.note = notes[indexPath.row]
-        }
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
-        swipeRight.delegate = self
-        swipeRight.delaysTouchesBegan = true
-        swipeRight.direction = .right
-        cell.addGestureRecognizer(swipeRight)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
-        swipeLeft.delegate = self
-        swipeLeft.delaysTouchesBegan = true
-        swipeLeft.direction = .left
-        cell.addGestureRecognizer(swipeLeft)
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let margin: CGFloat = 2
-        let spacing: CGFloat = 2
-        let width = (collectionView.bounds.width - margin * 2 - spacing) / 2
-        let height = width
-        
-        return CGSize(width: width, height: height)
+        if noPosts == true {
+            let margin: CGFloat = 30
+            let width = collectionView.bounds.width - margin * 2
+            let height = width
+            
+            return CGSize(width: width, height: height)
+        } else {
+            let margin: CGFloat = 2
+            let spacing: CGFloat = 2
+            let width = (collectionView.bounds.width - margin * 2 - spacing) / 2
+            let height = width
+            
+            return CGSize(width: width, height: height)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -255,9 +304,8 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
-        let cellColor = cell.backColorView.backgroundColor
-        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MyWinesCollectionViewCell else { return }
+        let cellColor = cell.backColorView.backgroundColor        
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         

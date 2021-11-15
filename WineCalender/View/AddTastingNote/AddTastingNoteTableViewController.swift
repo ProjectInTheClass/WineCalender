@@ -372,6 +372,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     
     // MARK: - varieties
     @IBAction func wineVarietiesButtonTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
         if let WineVarietiesTVC = storyboard?.instantiateViewController(identifier: "WineVarietiesTVC") as? WineVarietiesTableViewController {
             WineVarietiesTVC.selectedWineVarieties = selectedWineVarieties ?? []
             self.navigationController?.pushViewController(WineVarietiesTVC, animated: true)
@@ -402,6 +403,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     
     // MARK: - producing country
     @IBAction func wineProducingCountryButtonTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
         if let wineProducingCountriesTVC = storyboard?.instantiateViewController(identifier: "WineProducingCountriesTVC") as? WineProducingCountriesTableViewController {
             wineProducingCountriesTVC.selectedCountry = self.selectedWineProducingCountry ?? ""
             self.navigationController?.pushViewController(wineProducingCountriesTVC, animated: true)
@@ -422,6 +424,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     
     // MARK: - vintage
     @IBAction func wineVintageButtonTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let contentVC = UIViewController()
         let vintagePickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -534,6 +537,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     
     // MARK: - aromas and flavors
     @IBAction func wineAromasAndFlavorsButtonTapped(_ sender: UIButton) {
+        self.view.endEditing(true)
         if let wineAromasAndFlavorsCVC = storyboard?.instantiateViewController(identifier: "wineAromasAndFlavorsCVC") as? WineAromasAndFlavorsCollectionViewController {
             wineAromasAndFlavorsCVC.selectedWineAromasAndFlavors = selectedWineAromasAndFlavors ?? []
             self.navigationController?.pushViewController(wineAromasAndFlavorsCVC, animated: true)
