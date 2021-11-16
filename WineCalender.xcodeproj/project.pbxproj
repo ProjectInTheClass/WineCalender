@@ -42,6 +42,7 @@
 		12D9A61B26EA674600792C6E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D9A61A26EA674600792C6E /* Post.swift */; };
 		12D9A61D26EA69BD00792C6E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D9A61C26EA69BD00792C6E /* Comment.swift */; };
 		12D9A62126EA7AFE00792C6E /* MyWinesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D9A62026EA7AFE00792C6E /* MyWinesViewModel.swift */; };
+		12DAC3DA274123A90055B5E7 /* MyWinesNoPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */; };
 		12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */; };
 		12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */; };
 		12E188C326CBACBC0035964F /* WineTastingNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */; };
@@ -140,6 +141,7 @@
 		12D9A61A26EA674600792C6E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		12D9A61C26EA69BD00792C6E /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		12D9A62026EA7AFE00792C6E /* MyWinesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesViewModel.swift; sourceTree = "<group>"; };
+		12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesNoPostsCell.swift; sourceTree = "<group>"; };
 		12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleTableViewController.swift; sourceTree = "<group>"; };
 		12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWinesTableViewController.swift; sourceTree = "<group>"; };
 		12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WineTastingNote+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */,
 				1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */,
 				1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */,
+				12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -780,6 +783,7 @@
 				1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
+				12DAC3DA274123A90055B5E7 /* MyWinesNoPostsCell.swift in Sources */,
 				2263BB3927326DC50004A793 /* PostBottomTable.swift in Sources */,
 				127DEF862726423C0002BA39 /* AddTastingNoteTableViewController.swift in Sources */,
 				122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */,
@@ -1010,7 +1014,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZLXC439TG;
+				DEVELOPMENT_TEAM = 739U498273;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1030,7 +1034,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3ZLXC439TG;
+				DEVELOPMENT_TEAM = 739U498273;
 				INFOPLIST_FILE = WineCalender/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

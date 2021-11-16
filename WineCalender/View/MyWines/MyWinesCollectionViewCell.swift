@@ -19,7 +19,7 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var numberOfLikesLabel: UILabel!
     @IBOutlet weak var numberOfComentsLabel: UILabel!
     @IBOutlet weak var wineStackView: UIStackView!
-    @IBOutlet weak var likesComentsStackView: UIStackView!
+    @IBOutlet weak var likesCommentsStackView: UIStackView!
     @IBOutlet weak var imageViewTopAnchor: NSLayoutConstraint!
     @IBOutlet weak var imageViewLeadingAnchor: NSLayoutConstraint!
     @IBOutlet weak var imageViewBottomAnchor: NSLayoutConstraint!

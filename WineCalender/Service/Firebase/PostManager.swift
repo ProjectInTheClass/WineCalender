@@ -13,6 +13,7 @@ import FirebaseDatabase
 class PostManager {
     
     static let shared = PostManager()
+    private init() { }
     
     let postRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("Post")
     let recentPostRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("RecentPost")
@@ -85,7 +86,6 @@ class PostManager {
             for (index, image) in images.enumerated() {
                 let imageName = postID + String(index) + ".jpg"
                 if let postImageData = image.jpegData(compressionQuality: 0.2) {
-                    print("############")
                     PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                         //storage 위치 변경
                         //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
@@ -115,27 +115,42 @@ class PostManager {
         }
     }
     
+    func numberOfMyPosts(uid: String, completion: @escaping (Int) -> Void) {
+        PostManager.shared.postRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            completion(Int(snapshot.childrenCount))
+        }
+    }
+    
     //For My Wines
-    func fetchMyPosts(completion: @escaping ([Post]?) -> Void){
-        if let uid = Auth.auth().currentUser?.uid {
-            PostManager.shared.postRef.child(uid).observe(DataEventType.value) { snapshot in
-                guard let snapshotDict = snapshot.value as? [String:Any] else {
-                    completion(nil)
-                    return
-                }
-                let datas = Array(snapshotDict.values)
-                guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
+    func fetchMyPosts(lastFetchedValue: String?, completion: @escaping ([Post]) -> Void){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let queryLimited: UInt = 8
+        var queryRef: DatabaseQuery
+        if lastFetchedValue == nil {
+            queryRef = PostManager.shared.postRef.child(uid).queryOrdered(byChild: "postID").queryLimited(toLast: queryLimited)
+        } else {
+            queryRef = PostManager.shared.postRef.child(uid).queryOrdered(byChild: "postID").queryEnding(beforeValue: lastFetchedValue).queryLimited(toLast: queryLimited)
+        }
 
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-
-                guard let posts = try? decoder.decode([Post].self, from: data) else { return }
-
-                var myPosts: [Post] = posts
-                myPosts.sort{ $0.postingDate > $1.postingDate }
-
-                completion(myPosts)
+//        queryRef.observe(.value) { snapshot in
+        queryRef.observeSingleEvent(of: .value) { snapshot in
+            var newPosts = [Post]()
+            guard let snapshotDict = snapshot.value as? [String:Any] else {
+                completion(newPosts)
+                return
             }
+            let datas = Array(snapshotDict.values)
+            guard let data = try? JSONSerialization.data(withJSONObject: datas, options: []) else { return }
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            
+            guard let posts = try? decoder.decode([Post].self, from: data) else { return }
+            
+            newPosts = posts.sorted{ $0.postingDate > $1.postingDate }
+            print("newPosts : \(newPosts.count)개")
+            
+            completion(newPosts)
         }
     }
     

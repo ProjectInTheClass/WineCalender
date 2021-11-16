@@ -18,11 +18,15 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             collectionView.reloadData()
         }
     }
-    
+    lazy var user: User? = nil
     lazy var posts = [Post]()
     lazy var notes = [WineTastingNote]()
     lazy var noPosts: Bool? = nil
     lazy var insideoutCells = [Int:Int]()
+    
+    var lastFetchedValue: String? = nil
+    var fetchingMore = false
+    var endReached = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +61,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         NotificationCenter.default.addObserver(forName: MyWinesViewController.uploadUpdateDelete, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             if Auth.auth().currentUser != nil {
                 self?.insideoutCells = [:]
-                //self?.updateMemberUI()
+                self?.updatePosts()
             } else {
                 self?.insideoutCells = [:]
                 self?.updateNonmemberUI()
@@ -82,23 +86,62 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 //        }
     }
     
-    //로그인, 회원가입, 회원이 앱 실행할 때, 회원이 글 쓸 때
+    //로그인, 회원가입, 회원이 앱 실행할 때
     func updateMemberUI() {
         self.insideoutCells = [:]
-        PostManager.shared.fetchMyPosts { [weak self] myPosts in
-            if let myPosts = myPosts {
-                self?.posts = myPosts
-                let numberOfPosts = self?.posts.count
-                AuthenticationManager.shared.fetchMyProfile { user in
-                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts ?? 0)
-                    self?.noPosts = false
-                }
+        self.posts = []
+        self.lastFetchedValue = nil
+        self.endReached = false
+        PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
+            if numberOfMyPosts == 0 {
+                self?.noPosts = true
             } else {
-                self?.posts = [Post]()
-                AuthenticationManager.shared.fetchMyProfile { user in
-                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
-                    self?.noPosts = true
-                }
+                self?.noPosts = false
+            }
+            AuthenticationManager.shared.fetchMyProfile { user in
+                self?.user = user
+                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+            }
+            self?.beginBatchFetch()
+        }
+    }
+    
+    //회원이 글 쓸 때, 삭제할 때
+    func updatePosts() {
+        self.insideoutCells = [:]
+        self.posts = []
+        self.lastFetchedValue = nil
+        self.endReached = false
+        PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
+            if numberOfMyPosts == 0 {
+                self?.noPosts = true
+            } else {
+                self?.noPosts = false
+            }
+            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: self?.user, posts: numberOfMyPosts)
+            self?.beginBatchFetch()
+        }
+    }
+    
+    //fetch My Posts
+    func beginBatchFetch() {
+        guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
+        fetchingMore = true
+        PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { newPosts in
+            self.posts.append(contentsOf: newPosts)
+            self.endReached = newPosts.count == 0
+            self.fetchingMore = false
+            self.lastFetchedValue = newPosts.last?.postID
+            self.collectionView.reloadData()
+        }
+    }
+    
+    //프로필 수정 후
+    func fetchMyProfile() {
+        PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
+            AuthenticationManager.shared.fetchMyProfile { user in
+                self?.user = user
+                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
             }
         }
     }
@@ -115,14 +158,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self?.noPosts = false
             }
             self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes ?? 0)
-        }
-    }
-
-    //프로필 수정 후
-    func fetchMyProfile() {
-        AuthenticationManager.shared.fetchMyProfile { user in
-            let numberOfPosts = self.posts.count
-            self.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfPosts)
         }
     }
     
@@ -162,7 +197,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 cell.imageView.layer.cornerRadius = 10
                 cell.imageWhiteBackView.isHidden = false
                 cell.wineStackView.isHidden = false
-                cell.likesComentsStackView.isHidden = false
+                cell.likesCommentsStackView.isHidden = false
                 cell.imageViewTopAnchor.constant = 10
                 cell.imageViewLeadingAnchor.constant = 10
                 cell.imageViewTrailingAnchor.constant = 10
@@ -171,8 +206,9 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.insideoutCells[indexPath.item] = nil
                 cell.imageView.alpha = 1.0
                 cell.imageView.layer.cornerRadius = 0
+                cell.imageWhiteBackView.isHidden = true
                 cell.wineStackView.isHidden = true
-                cell.likesComentsStackView.isHidden = true
+                cell.likesCommentsStackView.isHidden = true
                 cell.imageViewTopAnchor.constant = 0
                 cell.imageViewLeadingAnchor.constant = 0
                 cell.imageViewTrailingAnchor.constant = 0
@@ -236,8 +272,9 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             if self.insideoutCells[indexPath.item] == indexPath.item {
                 cell.imageView.alpha = 0.3
                 cell.imageView.layer.cornerRadius = 10
+                cell.imageWhiteBackView.isHidden = false
                 cell.wineStackView.isHidden = false
-                cell.likesComentsStackView.isHidden = false
+                cell.likesCommentsStackView.isHidden = false
                 cell.imageViewTopAnchor.constant = 10
                 cell.imageViewLeadingAnchor.constant = 10
                 cell.imageViewTrailingAnchor.constant = 10
@@ -245,8 +282,9 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             } else {
                 cell.imageView.alpha = 1.0
                 cell.imageView.layer.cornerRadius = 0
+                cell.imageWhiteBackView.isHidden = true
                 cell.wineStackView.isHidden = true
-                cell.likesComentsStackView.isHidden = true
+                cell.likesCommentsStackView.isHidden = true
                 cell.imageViewTopAnchor.constant = 0
                 cell.imageViewLeadingAnchor.constant = 0
                 cell.imageViewTrailingAnchor.constant = 0
@@ -329,6 +367,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         headerView.update(vm: vm)
         
         return headerView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > collectionView.contentSize.height - scrollView.frame.size.height - 100 {
+            beginBatchFetch()
+        }
     }
 }
 

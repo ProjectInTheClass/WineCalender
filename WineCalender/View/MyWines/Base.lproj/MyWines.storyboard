@@ -159,7 +159,7 @@
                                             <outlet property="imageViewTopAnchor" destination="6fw-8y-ZF5" id="a8O-FV-1b2"/>
                                             <outlet property="imageViewTrailingAnchor" destination="9nU-oh-7ta" id="O3q-dp-mbq"/>
                                             <outlet property="imageWhiteBackView" destination="Hkw-4l-b01" id="XJI-Jm-Mje"/>
-                                            <outlet property="likesComentsStackView" destination="I6K-BB-qEv" id="ycP-ui-JNp"/>
+                                            <outlet property="likesCommentsStackView" destination="I6K-BB-qEv" id="ycP-ui-JNp"/>
                                             <outlet property="numberOfComentsLabel" destination="DFa-aR-I36" id="yLT-d6-KcB"/>
                                             <outlet property="numberOfLikesLabel" destination="bHz-wk-gAG" id="oEs-ua-dwn"/>
                                             <outlet property="ratingLabel" destination="2mA-z4-0Di" id="m5p-7Q-hdc"/>
