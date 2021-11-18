@@ -28,10 +28,13 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     var fetchingMore = false
     var endReached = false
     
+    let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adjustCollectionViewTopAnchor()
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.register(MyWinesFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
         uploadUpdateDeleteNotiObserver()
         
         if Auth.auth().currentUser != nil {
@@ -46,15 +49,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
-    }
-    
-    func adjustCollectionViewTopAnchor() {
-        let window = UIApplication.shared.windows.first{ $0.isKeyWindow }
-        let statusbarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let navigationbarHeight = self.navigationController?.navigationBar.frame.height ?? 0
-
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: -(statusbarHeight+navigationbarHeight)).isActive = true
     }
     
     func uploadUpdateDeleteNotiObserver() {
@@ -92,6 +86,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         self.posts = []
         self.lastFetchedValue = nil
         self.endReached = false
+        self.activityIndicatorView.startAnimating()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
             if numberOfMyPosts == 0 {
                 self?.noPosts = true
@@ -127,12 +122,17 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     func beginBatchFetch() {
         guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
         fetchingMore = true
-        PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { newPosts in
-            self.posts.append(contentsOf: newPosts)
-            self.endReached = newPosts.count == 0
-            self.fetchingMore = false
-            self.lastFetchedValue = newPosts.last?.postID
-            self.collectionView.reloadData()
+        activityIndicatorView.startAnimating()
+        PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
+            if let newPosts = newPosts {
+                self?.posts.append(contentsOf: newPosts)
+                self?.lastFetchedValue = newPosts.last?.postID
+            } else {
+                self?.endReached = true
+            }
+            self?.fetchingMore = false
+            self?.activityIndicatorView.stopAnimating()
+            self?.collectionView.reloadData()
         }
     }
     
@@ -331,7 +331,6 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-
         let indexPath = IndexPath(row: 0, section: section)
         let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath) as! MyWinesHeaderView
         headerView.introductionLabel.text = myWinesHeaderVM?.introduction
@@ -339,6 +338,14 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
                                                   withHorizontalFittingPriority: .required,
                                                   verticalFittingPriority: .fittingSizeLevel)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if activityIndicatorView.isAnimating {
+            return CGSize(width: collectionView.bounds.width, height: 100)
+        } else {
+            return CGSize.zero
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -358,15 +365,21 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
-        
-        self.navigationItem.title = self.myWinesHeaderVM?.nickname
-        
-        guard let vm = self.myWinesHeaderVM else { return headerView }
-        headerView.update(vm: vm)
-        
-        return headerView
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
+
+            self.navigationItem.title = self.myWinesHeaderVM?.nickname
+
+            guard let vm = self.myWinesHeaderVM else { return headerView }
+            headerView.update(vm: vm)
+
+            return headerView
+        } else {
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath) as! MyWinesFooterView
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 100)
+            footerView.addSubview(activityIndicatorView)
+            return footerView
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

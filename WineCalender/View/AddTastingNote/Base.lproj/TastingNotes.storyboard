@@ -1087,6 +1087,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="장소를 입력해 주세요." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="S4r-Pj-GQZ">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="44"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="hth-nF-Kt7"/>
                                                     </constraints>
@@ -1195,6 +1196,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="와인 이름을 입력해 주세요." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UXR-Az-YBZ">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="43.5"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43.5" id="bhp-0I-jA1"/>
                                                     </constraints>
@@ -1345,6 +1347,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="생산자를 입력해 주세요." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Hml-Xg-Ohh">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="43.5"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43.5" id="HLP-Cf-Jib"/>
                                                     </constraints>
@@ -1415,6 +1418,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="가격을 입력해 주세요. (숫자)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FAD-p4-ytV">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="43.5"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43.5" id="6Mz-8e-M01"/>
                                                     </constraints>
@@ -1443,6 +1447,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="알코올 도수를 입력해 주세요. (숫자)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sla-q2-dXx">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="43.5"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="43.5" id="51P-gf-SrR"/>
                                                     </constraints>
@@ -1683,6 +1688,7 @@
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" text="와인 테이스팅 메모를 입력해 주세요." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aDu-cO-Cmy">
                                                     <rect key="frame" x="20" y="7" width="344" height="50.5"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="gae-en-nOf"/>
                                                     </constraints>

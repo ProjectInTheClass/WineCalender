@@ -49,7 +49,8 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
                     self.tableView.endUpdates()
                 } else {
                     self.introductionTextView.text = "소개"
-                    self.introductionTextView.textColor = UIColor.systemGray2
+                    self.introductionTextView.textColor = UIColor.systemGray3
+                    self.introductionCountLabel.text = "200"
                 }
             }
         }
@@ -139,7 +140,7 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
     func textViewDidEndEditing(_ textView: UITextView) {
         if introductionTextView.text == "" || introductionTextView.text == "소개" {
             introductionTextView.text = "소개"
-            introductionTextView.textColor = UIColor.systemGray2
+            introductionTextView.textColor = UIColor.systemGray3
         }
     }
     

@@ -32,6 +32,7 @@
 		125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */; };
 		125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */; };
 		126810B326D407150061B9A5 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126810B226D407150061B9A5 /* FindPasswordViewController.swift */; };
+		127DBFEA2744D7EA00958422 /* MyWinesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */; };
 		127DEF862726423C0002BA39 /* AddTastingNoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DEF852726423C0002BA39 /* AddTastingNoteTableViewController.swift */; };
 		1280D8A926E654A20052226A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8A826E654A20052226A /* User.swift */; };
 		1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8AA26E654B30052226A /* MyWinesHeaderViewModel.swift */; };
@@ -131,6 +132,7 @@
 		125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewController.swift; sourceTree = "<group>"; };
 		125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewCell.swift; sourceTree = "<group>"; };
 		126810B226D407150061B9A5 /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
+		127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesFooterView.swift; sourceTree = "<group>"; };
 		127DEF852726423C0002BA39 /* AddTastingNoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTastingNoteTableViewController.swift; sourceTree = "<group>"; };
 		1280D8A826E654A20052226A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1280D8AA26E654B30052226A /* MyWinesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */,
 				1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */,
 				12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */,
+				127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -770,6 +773,7 @@
 				224FFA6C271D4EF70015FC43 /* PostDetailVM.swift in Sources */,
 				227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */,
 				125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */,
+				127DBFEA2744D7EA00958422 /* MyWinesFooterView.swift in Sources */,
 				1284F5EE26DB51860033CFD0 /* MyWinesCollectionViewCell.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
 				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,
@@ -1020,7 +1024,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.WineCalendar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.min.WineCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1040,7 +1044,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.codershigh.WineCalendar;
+				PRODUCT_BUNDLE_IDENTIFIER = com.min.WineCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

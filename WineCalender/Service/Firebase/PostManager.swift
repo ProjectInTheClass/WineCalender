@@ -122,7 +122,7 @@ class PostManager {
     }
     
     //For My Wines
-    func fetchMyPosts(lastFetchedValue: String?, completion: @escaping ([Post]) -> Void){
+    func fetchMyPosts(lastFetchedValue: String?, completion: @escaping ([Post]?) -> Void){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let queryLimited: UInt = 8
         var queryRef: DatabaseQuery
@@ -134,9 +134,8 @@ class PostManager {
 
 //        queryRef.observe(.value) { snapshot in
         queryRef.observeSingleEvent(of: .value) { snapshot in
-            var newPosts = [Post]()
             guard let snapshotDict = snapshot.value as? [String:Any] else {
-                completion(newPosts)
+                completion(nil)
                 return
             }
             let datas = Array(snapshotDict.values)
@@ -146,8 +145,7 @@ class PostManager {
             decoder.dateDecodingStrategy = .secondsSince1970
             
             guard let posts = try? decoder.decode([Post].self, from: data) else { return }
-            
-            newPosts = posts.sorted{ $0.postingDate > $1.postingDate }
+            let newPosts = posts.sorted{ $0.postingDate > $1.postingDate }
             print("newPosts : \(newPosts.count)개")
             
             completion(newPosts)

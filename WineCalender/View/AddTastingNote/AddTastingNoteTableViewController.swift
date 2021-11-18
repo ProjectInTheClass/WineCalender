@@ -119,8 +119,8 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             }
             if let ac = self.updatePost?.tastingNote.alcoholContent {
                 self.alcoholContent = ac
-                var alcoholContentString = String(ac)
-                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+                let alcoholContentString = String(ac)
+//                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
                 self.wineAlcoholContentTextField.text = alcoholContentString
             }
             self.selectedWineAromasAndFlavors = self.updatePost?.tastingNote.aromasAndFlavors
@@ -207,8 +207,8 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         if let ac = updateNote?.alcoholContent {
             if ac != 0 {
                 self.alcoholContent = ac
-                var alcoholContentString = String(ac)
-                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+                let alcoholContentString = String(ac)
+//                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
                 self.wineAlcoholContentTextField.text = alcoholContentString
             }
         }
@@ -335,14 +335,13 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     } else {
                         return
                     }
-                    picker?.dismiss(animated: true, completion: {
-                        self.selectedImages = selectedItems
-                        self.firstImageView.layer.borderColor = UIColor.gray.cgColor
-                        self.imageWarningLabel.isHidden = true
-                        if self.wineNameTextField.text != "" {
-                            self.doneButton.isEnabled = true
-                        }
-                    })
+                    self.selectedImages = selectedItems
+                    self.firstImageView.layer.borderColor = UIColor.gray.cgColor
+                    self.imageWarningLabel.isHidden = true
+                    if self.wineNameTextField.text != "" {
+                        self.doneButton.isEnabled = true
+                    }
+                    picker?.dismiss(animated: true, completion: nil)
                 case .video:
                     print("video")
                 }
@@ -361,12 +360,11 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     
     // MARK: - name
     @IBAction func wineNameTextFieldEditingChanged(_ sender: UITextField) {
-        if sender.text != "", firstImageView.image != nil  {
+        if sender.text != "", firstImageView.image != nil {
             doneButton.isEnabled = true
-            self.firstImageView.layer.borderColor = UIColor.gray.cgColor
-        } else {
+        }
+        if sender.text == "" {
             doneButton.isEnabled = false
-            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
         }
     }
     
@@ -601,7 +599,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         self.view.endEditing(true)
         let alert = UIAlertController(title: "테이스팅 노트 등록", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [self] action in
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
             
             let animationView: AnimationView = {
                 let aniView = AnimationView(name: "swirling-wine")
@@ -614,76 +612,76 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             }()
             
             func animationPlay() {
-                tableView.isUserInteractionEnabled = false
-                cancelButton.isEnabled = false
-                doneButton.isEnabled = false
-                view.superview?.addSubview(animationView)
-                animationView.center = view.center
+                self.tableView.isUserInteractionEnabled = false
+                self.cancelButton.isEnabled = false
+                self.doneButton.isEnabled = false
+                self.view.superview?.addSubview(animationView)
+                animationView.center = self.view.center
                 animationView.play()
             }
             
             func animationStop() {
                 animationView.stop()
                 animationView.removeFromSuperview()
-                tableView.isUserInteractionEnabled = true
-                cancelButton.isEnabled = true
-                doneButton.isEnabled = true
+                self.tableView.isUserInteractionEnabled = true
+                self.cancelButton.isEnabled = true
+                self.doneButton.isEnabled = true
             }
             
             animationPlay()
             
-            let date = wineTastingdate.date
+            let date = self.wineTastingdate.date
             var place: String? = nil
-            if wineTastingPlaceTextField.text == "" {
+            if self.wineTastingPlaceTextField.text == "" {
                 place = nil
             } else {
-                place = wineTastingPlaceTextField.text
+                place = self.wineTastingPlaceTextField.text
             }
-            let name = wineNameTextField.text ?? ""
-            let selectedCategoryIndex = wineCategorySegmentedControl.selectedSegmentIndex
-            let category = wineCategorySegmentedControl.titleForSegment(at: selectedCategoryIndex)
+            let name = self.wineNameTextField.text ?? ""
+            let selectedCategoryIndex = self.wineCategorySegmentedControl.selectedSegmentIndex
+            let category = self.wineCategorySegmentedControl.titleForSegment(at: selectedCategoryIndex)
             var producer: String? = nil
-            if wineProducerTextField.text == "" {
+            if self.wineProducerTextField.text == "" {
                 producer = nil
             } else {
-                producer = wineProducerTextField.text
+                producer = self.wineProducerTextField.text
             }
-            var sweet: Int16? = Int16(sweetSegmentedControl.selectedSegmentIndex) + 1
+            var sweet: Int16? = Int16(self.sweetSegmentedControl.selectedSegmentIndex) + 1
             if sweet == 6 {
                 sweet = nil
             }
-            var acidity: Int16? = Int16(aciditySegmentedControl.selectedSegmentIndex) + 1
+            var acidity: Int16? = Int16(self.aciditySegmentedControl.selectedSegmentIndex) + 1
             if acidity == 6 {
                 acidity = nil
             }
-            var tannin: Int16? = Int16(tanninSegmentedControl.selectedSegmentIndex) + 1
+            var tannin: Int16? = Int16(self.tanninSegmentedControl.selectedSegmentIndex) + 1
             if tannin == 6 {
                 tannin = nil
             }
-            var body: Int16? = Int16(bodySegmentedControl.selectedSegmentIndex) + 1
+            var body: Int16? = Int16(self.bodySegmentedControl.selectedSegmentIndex) + 1
             if body == 6 {
                 body = nil
             }
             let memo: String? = {
-                if wineMemoTextView.text == "와인 테이스팅 메모를 입력해 주세요." {
+                if self.wineMemoTextView.text == "와인 테이스팅 메모를 입력해 주세요." {
                     let text: String? = nil
                     return text
                 } else {
-                    let text = wineMemoTextView.text
+                    let text = self.wineMemoTextView.text
                     return text
                 }
             }()
-            var rating: Int16? = Int16(ratingSegmentedControl.selectedSegmentIndex) + 1
+            var rating: Int16? = Int16(self.ratingSegmentedControl.selectedSegmentIndex) + 1
             if rating == 6 {
                 rating = nil
             }
             
-            let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: selectedWineVarieties, producingCountry: selectedWineProducingCountry, producer: producer, vintage: selectedVintage, price: price, alcoholContent: alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: selectedWineAromasAndFlavors, memo: memo, rating: rating)
+            let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: self.selectedWineVarieties, producingCountry: self.selectedWineProducingCountry, producer: producer, vintage: self.selectedVintage, price: self.price, alcoholContent: self.alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: self.selectedWineAromasAndFlavors, memo: memo, rating: rating)
             
             if Auth.auth().currentUser == nil {
                 //비회원 - 처음 작성
                 if self.updateNote == nil {
-                    DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages, completion: { result in
+                    DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages, completion: { result in
                         if result == true {
                             animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
@@ -691,24 +689,24 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     })
                 } else {
                     //비회원 - 수정
-                    updateNote?.updatedDate = Date()
-                    updateNote?.tastingDate = date
-                    updateNote?.place = place
-                    updateNote?.wineName = name
-                    updateNote?.category = category
-                    updateNote?.varieties = selectedWineVarieties
-                    updateNote?.producingCountry = selectedWineProducingCountry
-                    updateNote?.producer = producer
-                    updateNote?.vintage = selectedVintage
-                    updateNote?.price = price ?? 0
-                    updateNote?.alcoholContent = alcoholContent ?? 0
-                    updateNote?.sweet = sweet ?? 0
-                    updateNote?.acidity = acidity ?? 0
-                    updateNote?.tannin = tannin ?? 0
-                    updateNote?.body = body ?? 0
-                    updateNote?.aromasAndFlavors = selectedWineAromasAndFlavors
-                    updateNote?.memo = memo
-                    updateNote?.rating = rating ?? 0
+                    self.updateNote?.updatedDate = Date()
+                    self.updateNote?.tastingDate = date
+                    self.updateNote?.place = place
+                    self.updateNote?.wineName = name
+                    self.updateNote?.category = category
+                    self.updateNote?.varieties = self.selectedWineVarieties
+                    self.updateNote?.producingCountry = self.selectedWineProducingCountry
+                    self.updateNote?.producer = producer
+                    self.updateNote?.vintage = self.selectedVintage
+                    self.updateNote?.price = self.price ?? 0
+                    self.updateNote?.alcoholContent = self.alcoholContent ?? 0
+                    self.updateNote?.sweet = sweet ?? 0
+                    self.updateNote?.acidity = acidity ?? 0
+                    self.updateNote?.tannin = tannin ?? 0
+                    self.updateNote?.body = body ?? 0
+                    self.updateNote?.aromasAndFlavors = self.selectedWineAromasAndFlavors
+                    self.updateNote?.memo = memo
+                    self.updateNote?.rating = rating ?? 0
                     DataManager.shared.updateWineTastingNote(completion: { result in
                         if result == true {
                             animationStop()
@@ -716,16 +714,16 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                         }
                     })
                 }
-                dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: nil)
             } else {
                 if self.updatePost == nil {
                     //회원 - 처음 작성
-                    PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: selectedImages) {result in
+                    PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages) {result in
                         switch result {
                         case .success(_):
                             animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            dismiss(animated: true, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
                         case .failure(let error):
                             animationStop()
                             let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
@@ -735,12 +733,12 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                     }
                 } else {
                     //회원 - 수정
-                    PostManager.shared.updateMyPost(postID: updatePost?.postID ?? "", tastingNote: tastingNote) { result in
+                    PostManager.shared.updateMyPost(postID: self.updatePost?.postID ?? "", tastingNote: tastingNote) { result in
                         switch result {
                         case .success(_):
                             animationStop()
                             NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            dismiss(animated: true, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
 //                            let navVC = self.presentingViewController?.children.first
 //                            let postDetailVC = navVC?.children.last
                             //데이터넘기기?
