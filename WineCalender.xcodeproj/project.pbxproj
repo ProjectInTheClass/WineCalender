@@ -19,7 +19,6 @@
 		1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396726CFC10A00B7FB74 /* SignInViewController.swift */; };
 		1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396926CFC38900B7FB74 /* AuthenticationManager.swift */; };
 		1223396C26CFC5AF00B7FB74 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */; };
-		122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */; };
 		122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */; };
 		122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122536DE26C3A20200190CA1 /* WineVarieties.swift */; };
 		1226FF4426E8731F003ACE3A /* MyWinesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */; };
@@ -32,7 +31,6 @@
 		125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */; };
 		125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */; };
 		126810B326D407150061B9A5 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126810B226D407150061B9A5 /* FindPasswordViewController.swift */; };
-		127DBFEA2744D7EA00958422 /* MyWinesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */; };
 		127DEF862726423C0002BA39 /* AddTastingNoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DEF852726423C0002BA39 /* AddTastingNoteTableViewController.swift */; };
 		1280D8A926E654A20052226A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8A826E654A20052226A /* User.swift */; };
 		1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280D8AA26E654B30052226A /* MyWinesHeaderViewModel.swift */; };
@@ -119,7 +117,6 @@
 		1223396726CFC10A00B7FB74 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		1223396926CFC38900B7FB74 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1223396B26CFC5AF00B7FB74 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTastingNoteViewController.swift; sourceTree = "<group>"; };
 		122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarietiesTableViewController.swift; sourceTree = "<group>"; };
 		122536DE26C3A20200190CA1 /* WineVarieties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineVarieties.swift; sourceTree = "<group>"; };
 		1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesHeaderView.swift; sourceTree = "<group>"; };
@@ -132,7 +129,6 @@
 		125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewController.swift; sourceTree = "<group>"; };
 		125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewCell.swift; sourceTree = "<group>"; };
 		126810B226D407150061B9A5 /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
-		127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesFooterView.swift; sourceTree = "<group>"; };
 		127DEF852726423C0002BA39 /* AddTastingNoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTastingNoteTableViewController.swift; sourceTree = "<group>"; };
 		1280D8A826E654A20052226A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1280D8AA26E654B30052226A /* MyWinesHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesHeaderViewModel.swift; sourceTree = "<group>"; };
@@ -302,7 +298,6 @@
 			children = (
 				C7BAABAA26E9CEA500471FB1 /* TastingNotes.storyboard */,
 				127DEF852726423C0002BA39 /* AddTastingNoteTableViewController.swift */,
-				122536DA26C3925B00190CA1 /* AddTastingNoteViewController.swift */,
 				123DEC4626C449B600DE45F7 /* WineProducingCountriesTableViewController.swift */,
 				122536DC26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift */,
 				125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */,
@@ -342,7 +337,6 @@
 				1226FF4326E8731F003ACE3A /* MyWinesHeaderView.swift */,
 				1284F5ED26DB51860033CFD0 /* MyWinesCollectionViewCell.swift */,
 				12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */,
-				127DBFE92744D7EA00958422 /* MyWinesFooterView.swift */,
 			);
 			path = MyWines;
 			sourceTree = "<group>";
@@ -766,14 +760,12 @@
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
 				12EC792B26D4AE800003DE27 /* UpdatePasswordViewController.swift in Sources */,
 				12E188C326CBACBC0035964F /* WineTastingNote+CoreDataClass.swift in Sources */,
-				122536DB26C3925B00190CA1 /* AddTastingNoteViewController.swift in Sources */,
 				123DEC4926C44AFD00DE45F7 /* Countries.swift in Sources */,
 				227DED7D26EF549B001CCCE0 /* Community.swift in Sources */,
 				123DEC4726C449B600DE45F7 /* WineProducingCountriesTableViewController.swift in Sources */,
 				224FFA6C271D4EF70015FC43 /* PostDetailVM.swift in Sources */,
 				227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */,
 				125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */,
-				127DBFEA2744D7EA00958422 /* MyWinesFooterView.swift in Sources */,
 				1284F5EE26DB51860033CFD0 /* MyWinesCollectionViewCell.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
 				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,

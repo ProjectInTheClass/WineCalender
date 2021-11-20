@@ -34,7 +34,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.register(MyWinesFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
         uploadUpdateDeleteNotiObserver()
         
         if Auth.auth().currentUser != nil {
@@ -97,8 +97,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self?.user = user
                 self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
             }
-            self?.beginBatchFetch()
         }
+        self.beginBatchFetch()
     }
     
     //회원이 글 쓸 때, 삭제할 때
@@ -375,7 +375,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
 
             return headerView
         } else {
-            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath) as! MyWinesFooterView
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath)
             activityIndicatorView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 100)
             footerView.addSubview(activityIndicatorView)
             return footerView
@@ -391,4 +391,28 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
 
 extension MyWinesViewController {
     static let uploadUpdateDelete = Notification.Name(rawValue: "uploadUpdateDelete")
+}
+
+final class StretchableUICollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        let layoutAttributes = super.layoutAttributesForElements(in: rect)
+        layoutAttributes?.forEach({ attributes in
+            if attributes.representedElementKind == UICollectionView.elementKindSectionHeader {
+                guard let collectionView = collectionView else { return }
+                let contentOffsetY = collectionView.contentOffset.y
+                if contentOffsetY > 0 {
+                    return
+                }
+                let width = collectionView.frame.width
+                let height = attributes.frame.height - contentOffsetY
+
+                attributes.frame = CGRect(x: 0, y: contentOffsetY, width: width, height: height)
+            }
+        })
+        return layoutAttributes
+    }
 }
