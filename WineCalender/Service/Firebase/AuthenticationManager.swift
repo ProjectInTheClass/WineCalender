@@ -13,8 +13,9 @@ import FirebaseDatabase
 class AuthenticationManager {
     
     static let shared = AuthenticationManager()
-    
-    let userRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("User")
+    private init() { }
+
+    let userRef = Database.database().reference().child("User")
     let userProfileImageRef = Storage.storage().reference().child("ProfileImage")
     
     func checkNetworkConnection(completion: @escaping(Result<Void,AuthError>) -> Void) {

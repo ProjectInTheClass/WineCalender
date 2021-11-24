@@ -15,10 +15,8 @@ class PostManager {
     static let shared = PostManager()
     private init() { }
     
-    let postRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("Post")
-    let recentPostRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("RecentPost")
-    
-    //let postRef = Database.database().reference().child("Post")
+    let postRef = Database.database().reference().child("Post")
+    let recentPostRef = Database.database().reference().child("RecentPost")
     let postImageRef = Storage.storage().reference().child("PostImage")
     
     func uploadPost(posting: Date?, updated: Date?, tastingNote: WineTastingNotes, images: [UIImage], completion: @escaping (Result<Void,PostError>) -> Void) {
@@ -86,16 +84,12 @@ class PostManager {
             for (index, image) in images.enumerated() {
                 let imageName = postID + String(index) + ".jpg"
                 if let postImageData = image.jpegData(compressionQuality: 0.2) {
-                    PostManager.shared.postImageRef.child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
-                        //storage 위치 변경
-                        //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
+                    PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).putData(postImageData, metadata: nil) { metadata, error in
                         if let error = error {
                             imageUploadCompletion(false)
                             print("image 업로드 에러 : \(error.localizedDescription)")
                         } else {
-                            PostManager.shared.postImageRef.child(postID).child(imageName).downloadURL { url, error in
-                                //storage 위치 변경
-                                //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).downloadURL { url, error in
+                            PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).downloadURL { url, error in
                                 if let error = error {
                                     imageUploadCompletion(false)
                                     print("downloadURL 에러 : \(error.localizedDescription)")
@@ -166,58 +160,6 @@ class PostManager {
         }
     }
     
-    func removeMyPost(postID: String, authorUID: String, numberOfImages: Int, completion: @escaping (Result<Void,PostError>) -> Void) {
-        guard authorUID == Auth.auth().currentUser?.uid else { return }
-        PostManager.shared.recentPostRef.child(postID).removeValue { error, ref in
-            if let error = error {
-                //error1)
-                print("recentPostRef 삭제 에러 : \(error.localizedDescription)")
-                completion(.failure(PostError.failedToRemovePost))
-            } else {
-                PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, ref in
-                    if let error = error {
-                        //error2)
-                        print("postRef 삭제 에러 : \(error.localizedDescription)")
-                        completion(.failure(PostError.failedToRemovePost))
-                    } else {
-                        self?.removeMyPostImages(postID: postID, numberOfImages: numberOfImages) { result in
-                            if result == true {
-                                completion(.success(()))
-                            } else {
-                                //error3)
-                                completion(.failure(PostError.failedToRemovePost))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func removeMyPostImages(postID: String, numberOfImages: Int, completion: @escaping (Bool) -> Void) {
-        var removeCount = 0
-        for num in 1...numberOfImages {
-            let imageName = postID + String(num - 1) + ".jpg"
-            PostManager.shared.postImageRef.child(postID).child(imageName).delete { error in
-            //storage 위치 변경
-            //PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).delete { error in
-                if let error = error, error.localizedDescription.contains("does not exist.") {
-                    print("존재하지 않는 image : \(error.localizedDescription)")
-                    removeCount = removeCount + 1
-                } else if let error = error {
-                    print("image 삭제 에러 : \(error.localizedDescription)")
-                    completion(false)
-                } else {
-                    print("image 삭제됨")
-                    removeCount = removeCount + 1
-                    if removeCount == numberOfImages {
-                        completion(true)
-                    }
-                }
-            }
-        }
-    }
-    
     func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Result<Void, PostError>) -> Void) {
         guard let authorUID = Auth.auth().currentUser?.uid else { return }
         let updatedDate: Double = (Date().timeIntervalSince1970).rounded()
@@ -236,6 +178,61 @@ class PostManager {
             }
         }
     }
+    
+    func removeMyPost(postID: String, authorUID: String, numberOfImages: Int, completion: @escaping (Result<Void,PostError>) -> Void) {
+//        guard authorUID == Auth.auth().currentUser?.uid else { return }
+//        PostManager.shared.recentPostRef.child(postID).removeValue { error, ref in
+//            if let error = error {
+//                //error1)
+//                print("recentPostRef 삭제 에러 : \(error.localizedDescription)")
+//                completion(.failure(PostError.failedToRemovePost))
+//            } else {
+//                PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, ref in
+//                    if let error = error {
+//                        //error2)
+//                        print("postRef 삭제 에러 : \(error.localizedDescription)")
+//                        completion(.failure(PostError.failedToRemovePost))
+//                    } else {
+//                        self?.removeMyPostImages(postID: postID, numberOfImages: numberOfImages) { result in
+//                            if result == true {
+//                                completion(.success(()))
+//                            } else {
+//                                //error3)
+//                                completion(.failure(PostError.failedToRemovePost))
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+    
+    func removeMyPostImages(postID: String, numberOfImages: Int, completion: @escaping (Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        var removeCount = 0
+        for num in 1...numberOfImages {
+            let imageName = postID + String(num - 1) + ".jpg"
+            PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).delete { error in
+                if let error = error, error.localizedDescription.contains("does not exist.") {
+                    print("존재하지 않는 image : \(error.localizedDescription)")
+                    removeCount = removeCount + 1
+                } else if let error = error {
+                    print("image 삭제 에러 : \(error.localizedDescription)")
+                    completion(false)
+                } else {
+                    print("image 삭제됨")
+                    removeCount = removeCount + 1
+                    if removeCount == numberOfImages {
+                        completion(true)
+                    }
+                }
+            }
+        }
+    }
+
 /*
     func uploadDatafromCoreDataToFirebase(completion: @escaping (Bool) -> Void) {
         DataManager.shared.fetchWineTastingNote { notes in
@@ -269,38 +266,6 @@ class PostManager {
 //                        case .failure(let error):
 //                            print(error)
 //                        }
-                    }
-                }
-            }
-        }
-    }
-*/
-/*
-    func uploadDatafromFirebaseToCoreData(completion: @escaping (Bool) -> Void) {
-        PostManager.shared.fetchMyPosts { posts in
-            guard let posts = posts else {
-                completion(true)
-                return
-            }
-            for i in 1...posts.count {
-                let num = i - 1
-                let post = posts[num]
-                let tastingNote = WineTastingNotes(tastingDate: post.tastingNote.tastingDate, place: post.tastingNote.place, wineName: post.tastingNote.wineName, category: post.tastingNote.category, varieties: post.tastingNote.varieties, producingCountry: post.tastingNote.producingCountry, producer: post.tastingNote.producer, vintage: post.tastingNote.vintage, price: post.tastingNote.price, alcoholContent: post.tastingNote.alcoholContent, sweet: post.tastingNote.sweet, acidity: post.tastingNote.acidity, tannin: post.tastingNote.tannin, body: post.tastingNote.body, aromasAndFlavors: post.tastingNote.aromasAndFlavors, memo: post.tastingNote.memo, rating: post.tastingNote.rating)
-                var images = [UIImage]()
-                for urlString in post.postImageURL {
-                    let url = URL(string: urlString)!
-                    KingfisherManager.shared.retrieveImage(with: url) { result in
-                        switch result {
-                        case .success(let value):
-                            images.append(value.image)
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
-                }
-                DataManager.shared.addWineTastingNote(posting: post.postingDate, updated: post.updatedDate, tastingNote: tastingNote, images: images) { result in
-                    if result == true {
-                        completion(true)
                     }
                 }
             }

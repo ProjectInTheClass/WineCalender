@@ -32,16 +32,10 @@ enum LikeError: Error {
 /**
  like 기능 관련만 모아둠 ~~
  */
-extension PostManager {
-    var baseUrl: String {
-        get {
-            return "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/"
-        }
-    }
-    
+extension PostManager {    
     var likeRef: DatabaseReference {
         get {
-            return Database.database(url: baseUrl).reference().child("Like")
+            return Database.database().reference().child("Like")
         }
     }
     

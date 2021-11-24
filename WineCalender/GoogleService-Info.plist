@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>540181639042-qv4gvcmhk3rsj9406v8ngd9bsop0qgg1.apps.googleusercontent.com</string>
+	<string>903934311122-5bgi8rj88f9tbdr5q2p4g7p0v4h4rn4i.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.540181639042-qv4gvcmhk3rsj9406v8ngd9bsop0qgg1</string>
+	<string>com.googleusercontent.apps.903934311122-5bgi8rj88f9tbdr5q2p4g7p0v4h4rn4i</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA8_D8VwLA4ON98ywVrRRupe-JIIKXtlcE</string>
+	<string>AIzaSyD1aN1pOf8lHkFoId_bjg7rJpJbwjDjK5w</string>
 	<key>GCM_SENDER_ID</key>
-	<string>540181639042</string>
+	<string>903934311122</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.codershigh.WineCalendar</string>
+	<string>com.codershigh.ThatWine</string>
 	<key>PROJECT_ID</key>
-	<string>wine-calendar-3e6a1</string>
+	<string>that-wine-2938a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>wine-calendar-3e6a1.appspot.com</string>
+	<string>that-wine-2938a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:540181639042:ios:2bf48c9d30c7229ee2a99b</string>
+	<string>1:903934311122:ios:310f66560a8dbb63aecb0b</string>
 	<key>DATABASE_URL</key>
-	<string>https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+	<string>https://that-wine-2938a-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
