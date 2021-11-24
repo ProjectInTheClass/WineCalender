@@ -46,7 +46,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
     }
@@ -93,9 +92,16 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 self?.noPosts = false
             }
-            AuthenticationManager.shared.fetchMyProfile { user in
-                self?.user = user
-                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+            AuthenticationManager.shared.fetchMyProfile { result in
+                switch result {
+                case .success(let user):
+                    self?.user = user
+                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+                case .failure(let error):
+                    if error == AuthError.failedToFetchMyProfile {
+                        self?.moveToEditProfileVC(error: error)
+                    }
+                }
             }
         }
         self.beginBatchFetch()
@@ -123,6 +129,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
         fetchingMore = true
         activityIndicatorView.startAnimating()
+        collectionView.reloadItems(at: [IndexPath(item: 2, section: 0)])
         PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
             if let newPosts = newPosts {
                 self?.posts.append(contentsOf: newPosts)
@@ -139,11 +146,30 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     //프로필 수정 후
     func fetchMyProfile() {
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
-            AuthenticationManager.shared.fetchMyProfile { user in
-                self?.user = user
-                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+            AuthenticationManager.shared.fetchMyProfile { result in
+                switch result {
+                case .success(let user):
+                    self?.user = user
+                    self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+                case .failure(let error):
+                    if error == AuthError.failedToFetchMyProfile {
+                        self?.moveToEditProfileVC(error: error)
+                    }
+                }
             }
         }
+    }
+    
+    func moveToEditProfileVC(error: AuthError) {
+        let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+            let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+            let settingsVC = storyboard.instantiateViewController(identifier: "settings")
+            let editProfileVC = storyboard.instantiateViewController(identifier: "EditProfileViewController")
+            self.navigationController?.pushViewController(settingsVC, animated: false)
+            self.navigationController?.pushViewController(editProfileVC, animated: true)
+        })
+        self.present(alert, animated: true, completion: nil)
     }
     
     //로그아웃, 비회원이 앱 실행할 때, 비회원이 글 쓸 때
@@ -342,7 +368,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if activityIndicatorView.isAnimating {
-            return CGSize(width: collectionView.bounds.width, height: 100)
+            return CGSize(width: collectionView.bounds.width, height: 50)
         } else {
             return CGSize.zero
         }
@@ -376,7 +402,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             return headerView
         } else {
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath)
-            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 100)
+            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 50)
             footerView.addSubview(activityIndicatorView)
             return footerView
         }

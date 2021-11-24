@@ -31,16 +31,19 @@ class FindPasswordViewController: UIViewController {
             warningLabel.text = "이메일 주소를 입력해 주세요."
             return
         }
+        warningLabel.text = ""
+        
         if let email = emailTextField.text {
-            AuthenticationManager.shared.resetPassword(email: email) { result in
-                if result == false {
-                    self.warningLabel.text = "이메일 주소를 다시 확인해 주세요."
-                } else {
+            AuthenticationManager.shared.resetPassword(email: email) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.warningLabel.text = error.message
+                case .success(()):
                     let alert = UIAlertController(title: nil, message: "비밀번호 재설정 이메일 전송했습니다. 이메일을 확인해 주세요.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                        self.navigationController?.popViewController(animated: true)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self?.navigationController?.popViewController(animated: true)
                     }))
-                    self.present(alert, animated: true, completion: nil)
+                    self?.present(alert, animated: true, completion: nil)
                 }
             }
         }

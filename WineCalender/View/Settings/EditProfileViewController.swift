@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EditProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
 
@@ -34,24 +35,30 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
     }
     
     func fetchMyProfile() {
-        AuthenticationManager.shared.fetchMyProfile { user in
-            DispatchQueue.main.async {
-                if let url = user.profileImageURL {
-                    self.profileImageView.kf.setImage(with: url)
+        AuthenticationManager.shared.fetchMyProfile { [weak self] result in
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    if let url = user.profileImageURL {
+                        self?.profileImageView.kf.setImage(with: url)
+                    }
+                    self?.emailLabel.text = user.email
+                    self?.nicknameTextField.text = user.nickname
+                    if let introduction = user.introduction {
+                        self?.introductionTextView.text = introduction
+                        self?.introductionTextView.textColor = .label
+                        self?.introductionCountLabel.text = String((self?.maximumTextViewCount ?? 200) - introduction.count)
+                        self?.tableView.beginUpdates()
+                        self?.tableView.endUpdates()
+                    } else {
+                        self?.introductionTextView.text = "소개"
+                        self?.introductionTextView.textColor = UIColor.systemGray3
+                        self?.introductionCountLabel.text = "200"
+                    }
                 }
-                self.emailLabel.text = user.email
-                self.nicknameTextField.text = user.nickname
-                if let introduction = user.introduction {
-                    self.introductionTextView.text = introduction
-                    self.introductionTextView.textColor = .label
-                    self.introductionCountLabel.text = String(self.maximumTextViewCount - introduction.count)
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
-                } else {
-                    self.introductionTextView.text = "소개"
-                    self.introductionTextView.textColor = UIColor.systemGray3
-                    self.introductionCountLabel.text = "200"
-                }
+            case .failure(_):
+                self?.emailLabel.text = Auth.auth().currentUser?.email
+                self?.introductionTextView.text = "소개"
             }
         }
     }
@@ -161,23 +168,32 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
         
         let alert = UIAlertController(title: "프로필 수정", message: "프로필을 수정하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-            
-            let profileImage = self.profileImageView.image!
-            let nickname = self.nicknameTextField.text!
-            var introduction = ""
-            if self.introductionTextView.text != "소개" {
-                introduction = self.introductionTextView.text
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
+            var profileImage: UIImage? {
+                if self?.profileImageView.image?.isSymbolImage == true {
+                    return nil
+                } else {
+                    return self?.profileImageView.image
+                }
+            }
+            let nickname = self?.nicknameTextField.text!
+            var introduction: String? {
+                if self?.introductionTextView.text == "소개" {
+                    return nil
+                } else {
+                    return self?.introductionTextView.text
+                }
             }
             
-            AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction, warningLabel: self.warningLabel) { result in
-                if result == true,
-                   let myWinesVC = self.navigationController?.children.first as? MyWinesViewController{
-                    myWinesVC.fetchMyProfile()
-                    self.navigationController?.popToRootViewController(animated: true)
-                } else {
-                    print("프로필 수정 오류")
-                    //self.warningLabel.text = "오류 잠시 후 다시 시도해 주세요. "
+            AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname!, introduction: introduction) { result in
+                switch result {
+                case .failure(let error):
+                    self?.warningLabel.text = error.message
+                case .success(()):
+                    if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController{
+                        myWinesVC.fetchMyProfile()
+                        self?.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }))

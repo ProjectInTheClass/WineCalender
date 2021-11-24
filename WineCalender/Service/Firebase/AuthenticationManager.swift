@@ -17,29 +17,67 @@ class AuthenticationManager {
     let userRef = Database.database(url: "https://wine-calendar-3e6a1-default-rtdb.asia-southeast1.firebasedatabase.app/").reference().child("User")
     let userProfileImageRef = Storage.storage().reference().child("ProfileImage")
     
-    func signUp(email: String, password: String, nickname: String, profileImage: UIImage, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
-        checkNickname(uid: nil, nickname: nickname) { result in
-            if result == false {
-                warningLabel.text = "사용할 수 없는 닉네임입니다."
-            } else {
-                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                    if let error = error {
-                        print("회원가입 오류 - \(error.localizedDescription)")
-                        if error.localizedDescription.contains("The email address is badly formatted.") {
-                            warningLabel.text = "이메일 형식을 확인해 주세요."
-                        } else if error.localizedDescription.contains("The email address is already in use by another account.") {
-                            warningLabel.text = "이미 사용 중인 이메일 주소입니다."
+    func checkNetworkConnection(completion: @escaping(Result<Void,AuthError>) -> Void) {
+        let connectedRef = Database.database().reference(withPath: ".info/connected")
+        connectedRef.observeSingleEvent(of: .value) { snapshot in
+            guard let connected = snapshot.value as? Bool, connected else {
+                print("네트워크 오류 : \(AuthError.failedToConnectToNetwork.message)")
+                completion(.failure(AuthError.failedToConnectToNetwork))
+                return
+            }
+            completion(.success(()))
+        }
+    }
+    
+    func signUp(email: String, password: String, nickname: String, completion: @escaping(Result<Void,AuthError>) -> Void) {
+        checkNetworkConnection { [weak self] result in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    completion(.failure(error))
+                }
+            case .success(()):
+                if let currentUserUID = Auth.auth().currentUser?.uid {
+                    self?.checkNickname(uid: nil, nickname: nickname) { result in
+                        if result == false {
+                            print("닉네임 등록 오류 : \(AuthError.unavailableNickname.message)")
+                            completion(.failure(AuthError.unavailableNickname))
                         } else {
-                            warningLabel.text = "입력한 내용을 다시 확인해 주세요."
+                            AuthenticationManager.shared.saveUserNickname(uid: currentUserUID, nickname: nickname ) { result in
+                                if result == true {
+                                    completion(.success(()))
+                                } else {
+                                    completion(.failure(AuthError.failedToSaveUserNickname))
+                                }
+                            }
                         }
-                        return
-                    } else {
-                        guard let uid = Auth.auth().currentUser?.uid else { return }
-                        self.saveUserProfile(uid: uid, profileImage: profileImage, nickname: nickname, introduction: "" ) { result in
-                            if result == true {
-                                return completion(true)
-                            } else {
-                                return completion(false)
+                    }
+                } else {
+                    self?.checkNickname(uid: nil, nickname: nickname) { result in
+                        if result == false {
+                            print("회원가입 오류 : \(AuthError.unavailableNickname.message)")
+                            completion(.failure(AuthError.unavailableNickname))
+                        } else {
+                            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                                if error != nil {
+                                    print("회원가입 오류 : \(error?.localizedDescription ?? "")")
+                                    if error.debugDescription.contains("ERROR_INVALID_EMAIL") {
+                                        completion(.failure(AuthError.invalidEmail))
+                                    } else if error.debugDescription.contains("ERROR_EMAIL_ALREADY_IN_USE") {
+                                        completion(.failure(AuthError.emailAlreadyInUse))
+                                    } else {
+                                        completion(.failure(AuthError.failedToSignUp))
+                                    }
+                                } else {
+                                    guard let uid = authResult?.user.uid else { return }
+                                    AuthenticationManager.shared.saveUserNickname(uid: uid, nickname: nickname) { result in
+                                        if result == true {
+                                            completion(.success(()))
+                                        } else {
+                                            completion(.failure(AuthError.failedToSaveUserNickname))
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -48,17 +86,28 @@ class AuthenticationManager {
         }
     }
     
-    func editUserProfile(profileImage: UIImage, nickname: String, introduction: String, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        checkNickname(uid: uid, nickname: nickname) { result in
-            if result == false {
-                warningLabel.text = "사용할 수 없는 닉네임입니다."
-            } else {
-                self.saveUserProfile(uid: uid, profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
-                    if result == true {
-                        completion(true)
+    func editUserProfile(profileImage: UIImage?, nickname: String, introduction: String?, completion: @escaping(Result<Void,AuthError>) -> Void) {
+        checkNetworkConnection { [weak self] result in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    completion(.failure(error))
+                }
+            case .success(()):
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                self?.checkNickname(uid: uid, nickname: nickname) { result in
+                    if result == false {
+                        print("프로필 수정 오류 : \(AuthError.unavailableNickname.message)")
+                        completion(.failure(AuthError.unavailableNickname))
                     } else {
-                        completion(false)
+                        self?.saveUserProfile(uid: uid, profileImage: profileImage, nickname: nickname, introduction: introduction, completion: { result in
+                            switch result {
+                            case .failure(let error):
+                                completion(.failure(error))
+                            case .success(()):
+                                completion(.success(()))
+                            }
+                        })
                     }
                 }
             }
@@ -79,71 +128,70 @@ class AuthenticationManager {
         }
     }
 
-    func saveUserProfile(uid: String, profileImage: UIImage, nickname: String, introduction: String, completion: @escaping(Bool) -> Void) {
+    func saveUserNickname(uid: String, nickname: String, completion: @escaping(Bool) -> Void) {
+        AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname]) { error, ref in
+            if error == nil {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func saveUserProfile(uid: String, profileImage: UIImage?, nickname: String, introduction: String?, completion: @escaping(Result<Void,AuthError>) -> Void) {
         let profileImageName = uid + ".jpg"
-        if !profileImage.isSymbolImage {
+        if let profileImage = profileImage {
             if let profileImageData = profileImage.jpegData(compressionQuality: 0.1) {
                 self.userProfileImageRef.child(profileImageName).putData(profileImageData, metadata: nil) { metadata, error in
                     if let error = error {
                         print("프로필 이미지 등록 에러 : \(error.localizedDescription)")
-                        completion(false)
+                        completion(.failure(AuthError.failedToSaveUserProfile))
                     } else {
-                        print("프로필 이미지 등록함")
                         self.userProfileImageRef.child(profileImageName).downloadURL { url, error in
                             guard let urlString: String = url?.absoluteString else { return }
-                            if introduction != "" {
+                            if let introduction = introduction {
                                 AuthenticationManager.shared.userRef.child(uid).setValue(["profileImageURL": urlString, "nickname": nickname, "introduction": introduction])
-                                completion(true)
+                                completion(.success(()))
                             } else {
                                 AuthenticationManager.shared.userRef.child(uid).setValue(["profileImageURL": urlString, "nickname": nickname])
-                                completion(true)
+                                completion(.success(()))
                             }
                         }
                     }
                 }
             }
         } else {
-            if introduction != "" {
-                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname, "introduction": introduction])
-                completion(true)
+            if let introduction = introduction {
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname, "introduction": introduction]) { error, ref in
+                    if error == nil {
+                        completion(.success(()))
+                    } else {
+                        completion(.failure(AuthError.failedToSaveUserProfile))
+                    }
+                }
             } else {
-                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname])
-                completion(true)
+                AuthenticationManager.shared.userRef.child(uid).setValue(["nickname": nickname]) { error, ref in
+                    if error == nil {
+                        completion(.success(()))
+                    } else {
+                        completion(.failure(AuthError.failedToSaveUserProfile))
+                    }
+                }
             }
             AuthenticationManager.shared.userProfileImageRef.child(profileImageName).delete()
         }
     }
     
-    func signIn(email: String, password: String, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) { uthResult, error in
-            if let error = error {
-                print("이메일 로그인 에러 : \(error.localizedDescription)" )
-                warningLabel.text = "입력하신 정보가 맞는지 다시 확인해 주세요."
-                return
-            } else {
-                completion(true)
-            }
-        }
-    }
-    
-    func signOut(completion: @escaping(Bool) -> Void) {
-        do {
-            try Auth.auth().signOut()
-            completion(true)
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-            completion(false)
-        }
-    }
-    
     //My profile
-    func fetchMyProfile(completion: @escaping (User) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid,
-              let email = Auth.auth().currentUser?.email else { return }
-        
+    func fetchMyProfile(completion: @escaping (Result<User,AuthError>) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email else {
+            return
+        }
         userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
-            guard let values = snapshot.value as? [String : String] else { return }
-            
+            guard let values = snapshot.value as? [String : String] else {
+                completion(.failure(AuthError.failedToFetchMyProfile))
+                return
+            }
             var profileImageURL: URL? = nil
             if let url = values["profileImageURL"] {
                 profileImageURL = URL(string: url)
@@ -158,7 +206,7 @@ class AuthenticationManager {
             
             let user = User(uid: uid, email: email, profileImageURL: profileImageURL, nickname: nickname, introduction: introduction)
             
-            completion(user)
+            completion(.success(user))
         }
     }
     
@@ -178,50 +226,183 @@ class AuthenticationManager {
         }
     }
     
-    func resetPassword(email: String, completion: @escaping(Bool) -> Void) {
-        Auth.auth().languageCode = "ko_kr"
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let error = error {
-                print("비밀번호 찾기 에러: \(error.localizedDescription)")
-                completion(false)
+    func signIn(email: String, password: String, completion: @escaping(Result<Void,AuthError>) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { uthResult, error in
+            if error != nil {
+                print("로그인 오류 : \(error?.localizedDescription ?? "")")
+                if error.debugDescription.contains("ERROR_NETWORK_REQUEST_FAILED") {
+                    completion(.failure(AuthError.failedToConnectToNetwork))
+                } else if error.debugDescription.contains("ERROR_INVALID_EMAIL") {
+                    completion(.failure(AuthError.invalidEmail))
+                } else if error.debugDescription.contains("ERROR_WRONG_PASSWORD") {
+                    completion(.failure(AuthError.wrongPassword))
+                } else if error.debugDescription.contains("ERROR_USER_NOT_FOUND") {
+                    completion(.failure(AuthError.userNotFound))
+                } else {
+                    completion(.failure(AuthError.failedToSignIn))
+                }
             } else {
-                print("이메일 보냄")
-                completion(true)
+                completion(.success(()))
             }
         }
     }
     
-    func updatePassword(presentPassword: String, newPassword: String, warningLabel: UILabel, completion: @escaping(Bool) -> Void) {
-        if let email = Auth.auth().currentUser?.email {
-            signIn(email: email, password: presentPassword, warningLabel: warningLabel) { result in
-                if result == true {
-                    Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
-                        if error != nil {
-                            warningLabel.text = "비밀번호 변경 오류"
-                            print("비밀번호 변경 오류")
-                            completion(false)
+    func signOut(completion: @escaping(Result<Void,AuthError>) -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(.success(()))
+        } catch let signOutError as NSError {
+            print("로그아웃 오류 : ", signOutError)
+            completion(.failure(AuthError.failedToSignOut))
+        }
+    }
+    
+    func resetPassword(email: String, completion: @escaping(Result<Void,AuthError>) -> Void) {
+        checkNetworkConnection { result in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    completion(.failure(error))
+                }
+            case .success(()):
+                Auth.auth().languageCode = "ko_kr"
+                Auth.auth().sendPasswordReset(withEmail: email) { error in
+                    if error != nil {
+                        print("비밀번호 찾기 오류 : \(error?.localizedDescription ?? "")")
+                        if error.debugDescription.contains("ERROR_INVALID_EMAIL") {
+                            completion(.failure(AuthError.invalidEmail))
+                        } else if error.debugDescription.contains("ERROR_USER_NOT_FOUND") {
+                            completion(.failure(AuthError.userNotFound))
                         } else {
-                            print("비밀번호 변경됨")
-                            completion(true)
+                            completion(.failure(AuthError.failedToResetPassword))
                         }
-                    })
+                    } else {
+                        completion(.success(()))
+                    }
                 }
             }
         }
     }
     
-    func deleteAccount(completion: @escaping (Bool) -> Void) {
-        guard let user = Auth.auth().currentUser else { return }
-        user.delete { error in
-//          if let error = error {
-//              // An error happened.
-//              print(error.localizedDescription)
-//              completion(false)
-//          } else {
-//              // Account deleted.
-//              // delete post, recentPost, porfile, likes, comments, postImage, profileImage
-//              completion(true)
-//          }
+    func updatePassword(presentPassword: String, newPassword: String, completion: @escaping(Result<Void,AuthError>) -> Void) {
+        checkNetworkConnection { [weak self] result in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    completion(.failure(error))
+                }
+            case .success(()):
+                if let email = Auth.auth().currentUser?.email {
+                    self?.signIn(email: email, password: presentPassword) { result in
+                        switch result {
+                        case .failure(let error):
+                                completion(.failure(error))
+                        case .success(()):
+                            Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
+                                if error != nil {
+                                    print("비밀번호 변경 오류 : \(error?.localizedDescription ?? "")")
+                                    completion(.failure(AuthError.failedToUpdatePassword))
+                                } else {
+                                    completion(.success(()))
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteAccount(password: String, completion: @escaping (Result<Void,AuthError>) -> Void) {
+        guard let user = Auth.auth().currentUser, let email = user.email else { return }
+        signIn(email: email, password: password) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(()):
+                user.delete { error in
+                    if error != nil {
+                        print("탈퇴하기 오류 : \(error?.localizedDescription ?? "")")
+                        completion(.failure(AuthError.failedToDeleteAccount))
+                    } else {
+                        // Account deleted.
+                        // delete post, recentPost, porfile, likes, comments, postImage, profileImage
+                        // completion(.success(()))
+                    }
+                }
+            }
+        }
+    }
+}
+
+enum AuthError: Error {
+    case failedToConnectToNetwork
+    
+    case unavailableNickname
+    case invalidEmail
+    case emailAlreadyInUse
+    case failedToSaveUserNickname
+    case failedToSignUp
+ 
+    case failedToFetchMyProfile
+    case failedToSaveUserProfile
+    
+    case wrongPassword
+    case userNotFound
+    case failedToSignIn
+    
+    case failedToSignOut
+    
+    case failedToResetPassword
+    
+    case failedToUpdatePassword
+    
+    case failedToDeleteAccount
+    
+    //case userTokenExpired
+    
+    var message: String {
+        switch self {
+        case .failedToConnectToNetwork:
+            return "네트워크에 연결할 수 없습니다.\n네트워크 상태 확인 후 다시 시도해 주세요."
+
+        case .unavailableNickname:
+            return "사용할 수 없는 닉네임입니다."
+        case .invalidEmail:
+            return "이메일 주소를 정확하게 입력해 주세요."
+        case .emailAlreadyInUse:
+            return "이미 사용 중인 이메일 주소입니다."
+        case .failedToSaveUserNickname:
+            return "닉네임 등록에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+        case .failedToSignUp:
+            return "회원가입에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+   
+        case .failedToFetchMyProfile:
+            return "프로필을 불러올 수 없습니다. 프로필을 다시 등록해 주세요."
+        case .failedToSaveUserProfile:
+            return "프로필 저장에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+            
+        case .wrongPassword:
+            return "입력하신 정보가 맞는지 다시 확인해 주세요."
+        case .userNotFound:
+            return "입력하신 정보가 맞는지 다시 확인해 주세요."
+        case .failedToSignIn:
+            return "로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+            
+        case .failedToSignOut:
+            return "로그아웃에 실패했습니다.\n잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+            
+        case .failedToResetPassword:
+            return "이메일 전송에 실패했습니다.\n잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+            
+        case .failedToUpdatePassword:
+            return "비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
+      
+        case .failedToDeleteAccount:
+            return ""
+            
+//        case .userTokenExpired:
+//            return "인증 세션이 만료되었습니다. 다시 로그인해 주세요."
         }
     }
 }

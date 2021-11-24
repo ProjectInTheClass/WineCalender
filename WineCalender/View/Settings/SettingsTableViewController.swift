@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class SettingsTableViewController: UITableViewController {
     
-    let section0 = ["공지사항", "도움말", "문의하기", "이용약관", "개인정보 취급방침"]
+    let section0 = ["공지사항", "도움말", "이용약관", "개인정보 취급방침"]
     lazy var section1 = [String]()
     lazy var section2 = [String]()
     
@@ -80,68 +80,68 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
-        
-        if Auth.auth().currentUser != nil {
-            let editProfileIndexPath = IndexPath(row: 0, section: 1)
-            let changePasswordIndexPath = IndexPath(row: 1, section: 1)
-            let signOutIndexPath = IndexPath(row: 2, section: 1)
-            let deleteAccountIndexPath = IndexPath(row: 0, section: 2)
-
-            switch indexPath {
-            case editProfileIndexPath:
-                if let editProfileVC = storyboard.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
-                    self.navigationController?.pushViewController(editProfileVC, animated: true)
+        if indexPath.section == 0 {
+            
+        } else {
+            let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+            if Auth.auth().currentUser == nil {
+                let signInIndexPath = IndexPath(row: 0, section: 1)
+                if indexPath == signInIndexPath {
+                    let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController") as! SignInViewController
+                    self.navigationController?.pushViewController(signInVC, animated: true)
                 }
-            case changePasswordIndexPath:
-                if let updatePasswordVC = storyboard.instantiateViewController(identifier: "UpdatePasswordViewController") as? UpdatePasswordViewController {
-                    self.navigationController?.pushViewController(updatePasswordVC, animated: true)
-                }
-            case signOutIndexPath:
-                let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                    AuthenticationManager.shared.signOut { result in
-                        if result == true,
-                           let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                            myWinesVC.posts = [Post]()
-                            myWinesVC.updateNonmemberUI()
-                            self.navigationController?.popViewController(animated: true)
+            } else {
+                AuthenticationManager.shared.checkNetworkConnection { [weak self] result in
+                    switch result {
+                    case .failure(let error):
+                        let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self?.present(alert, animated: true, completion: nil)
+                        
+                    case .success(()):
+                        let editProfileIndexPath = IndexPath(row: 0, section: 1)
+                        let changePasswordIndexPath = IndexPath(row: 1, section: 1)
+                        let signOutIndexPath = IndexPath(row: 2, section: 1)
+                        let deleteAccountIndexPath = IndexPath(row: 0, section: 2)
+                        
+                        switch indexPath {
+                        case editProfileIndexPath:
+                            if let editProfileVC = storyboard.instantiateViewController(identifier: "EditProfileViewController") as? EditProfileViewController {
+                                self?.navigationController?.pushViewController(editProfileVC, animated: true)
+                            }
+                        case changePasswordIndexPath:
+                            if let updatePasswordVC = storyboard.instantiateViewController(identifier: "UpdatePasswordViewController") as? UpdatePasswordViewController {
+                                self?.navigationController?.pushViewController(updatePasswordVC, animated: true)
+                            }
+                        case signOutIndexPath:
+                            let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+                                AuthenticationManager.shared.signOut { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        let alert2 = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                                        alert2.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+                                        self?.present(alert2, animated: true, completion: nil)
+                                    case .success(()):
+                                        if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
+                                            myWinesVC.posts = [Post]()
+                                            myWinesVC.updateNonmemberUI()
+                                            self?.navigationController?.popViewController(animated: true)
+                                        }
+                                    }
+                                }
+                            }))
+                            self?.present(alert, animated: true, completion: nil)
+                        case deleteAccountIndexPath:
+                            if let editProfileVC = storyboard.instantiateViewController(identifier: "DeleteAccountViewController") as? DeleteAccountViewController {
+                                self?.navigationController?.pushViewController(editProfileVC, animated: true)
+                            }
+                        default:
+                            return
                         }
                     }
-                }))
-                self.present(alert, animated: true, completion: nil)
-            case deleteAccountIndexPath:
-                let alert = UIAlertController(title: "탈퇴하기", message: "정말로 탈퇴하시겠습니까?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-                alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { action in
-//                    PostManager.shared.uploadDatafromFirebaseToCoreData { result in
-//                        if result == true {
-//
-//                        }
-//                    }
-                    
-//                    AuthenticationManager.shared.deleteAccount { result in
-//                        if result == true {
-//                            let alert2 = UIAlertController(title: "탈퇴 완료", message: nil, preferredStyle: .alert)
-//                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//                            self.present(alert2, animated: true, completion: nil)
-//                        } else {
-//                            let alert2 = UIAlertController(title: "탈퇴 오류", message: "잠시 후에 다시 시도해 주세요.", preferredStyle: .alert)
-//                            alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//                            self.present(alert2, animated: true, completion: nil)
-//                        }
-//                    }
-                }))
-                self.present(alert, animated: true, completion: nil)
-            default:
-                return
-            }
-        } else {
-            let signInIndexPath = IndexPath(row: 0, section: 1)
-            if indexPath == signInIndexPath {
-                let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController") as! SignInViewController
-                self.navigationController?.pushViewController(signInVC, animated: true)
+                }
             }
         }
     }

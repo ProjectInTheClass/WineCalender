@@ -42,12 +42,22 @@ class SignInViewController: UIViewController {
                 warningLabel.text = "비밀번호를 입력해 주세요."
                 return
             }
-            AuthenticationManager.shared.signIn(email: email, password: password, warningLabel: warningLabel) { result in
-                if result == true,
-                   let myWinesVC = self.navigationController?.children.first as? MyWinesViewController {
-                    myWinesVC.notes = [WineTastingNote]()
-                    myWinesVC.updateMemberUI()
-                    self.navigationController?.popToRootViewController(animated: true)
+            guard password.count >= 6 else {
+                warningLabel.text = "입력하신 정보가 맞는지 다시 확인해 주세요."
+                return
+            }
+            warningLabel.text = ""
+
+            AuthenticationManager.shared.signIn(email: email, password: password) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.warningLabel.text = error.message
+                case .success(()):
+                    if  let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.notes = [WineTastingNote]()
+                        myWinesVC.updateMemberUI()
+                        self?.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }

@@ -44,6 +44,11 @@ class UpdatePasswordViewController: UIViewController {
             return
         }
         
+        guard (presentPasswordTextField.text?.count)! >= 6 else {
+            warningLabel.text = "입력하신 정보가 맞는지 다시 확인해 주세요."
+            return
+        }
+        
         guard (newPasswordTextField.text?.count)! >= 6 else {
             warningLabel.text = "비밀번호는 6글자 이상으로 설정해 주세요."
             return
@@ -54,14 +59,19 @@ class UpdatePasswordViewController: UIViewController {
             return
         }
         
+        warningLabel.text = ""
+        
         if let presentPassword = presentPasswordTextField.text, let newPassword = newPasswordTextField.text {
-            AuthenticationManager.shared.updatePassword(presentPassword: presentPassword, newPassword: newPassword, warningLabel: self.warningLabel) { result in
-                if result == true {
-                    let alret = UIAlertController(title: "비밀번호 변경 완료", message: nil, preferredStyle: .alert)
-                    alret.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                        self.navigationController?.popViewController(animated: true)
+            AuthenticationManager.shared.updatePassword(presentPassword: presentPassword, newPassword: newPassword) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.warningLabel.text = error.message
+                case .success(()):
+                    let alert = UIAlertController(title: nil, message: "비밀번호가 변경됐습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self?.navigationController?.popViewController(animated: true)
                     }))
-                    self.present(alret, animated: true, completion: nil)
+                    self?.present(alert, animated: true, completion: nil)
                 }
             }
         }
@@ -70,14 +80,21 @@ class UpdatePasswordViewController: UIViewController {
     @IBAction func forgotPasswordButtonTapped(_ sender: UIButton) {
         if let email = Auth.auth().currentUser?.email {
             let message = "이메일 주소 : \(email)"
-            let alert = UIAlertController(title: "비밀번호 재설정 이메일을 전송합니다. 이메일을 확인해 주세요.", message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: "비밀번호 재설정 이메일을 전송합니다.", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
-                AuthenticationManager.shared.resetPassword(email: email) { result in
-                    if result == true {
-                        //print("이메일 전송 완료")
-                    } else {
-                        //print("이메일 전송 오류")
+                AuthenticationManager.shared.resetPassword(email: email) { [weak self] result in
+                    switch result {
+                    case .failure(let error):
+                        let alert2 = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                        alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self?.present(alert2, animated: true, completion: nil)
+                    case .success(()):
+                        let alert3 = UIAlertController(title: nil, message: "비밀번호 재설정 이메일을 전송했습니다. 이메일을 확인해 주세요.", preferredStyle: .alert)
+                        alert3.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        }))
+                        self?.present(alert3, animated: true, completion: nil)
                     }
                 }
             }))
