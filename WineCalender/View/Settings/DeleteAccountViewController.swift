@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class DeleteAccountViewController: UIViewController {
 
@@ -36,8 +37,52 @@ class DeleteAccountViewController: UIViewController {
         }
         warningLabel.text = ""
         
-        AuthenticationManager.shared.deleteAccount(password: password) { result in
-            
+        let animationView: AnimationView = {
+            let aniView = AnimationView(name: "swirling-wine")
+            aniView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+            aniView.contentMode = .scaleAspectFill
+            aniView.loopMode = .loop
+            aniView.backgroundColor = .white
+            aniView.layer.cornerRadius = 50
+            return aniView
+        }()
+        
+        func animationPlay() {
+            self.view.isUserInteractionEnabled = false
+            self.navigationController?.navigationBar.isUserInteractionEnabled = false
+            self.tabBarController?.tabBar.isUserInteractionEnabled = false
+            self.view.superview?.addSubview(animationView)
+            animationView.center = self.view.center
+            animationView.play()
+        }
+        
+        func animationStop() {
+            animationView.stop()
+            animationView.removeFromSuperview()
+            self.view.isUserInteractionEnabled = true
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
+            self.tabBarController?.tabBar.isUserInteractionEnabled = true
+        }
+        
+        animationPlay()
+        
+        AuthenticationManager.shared.deleteAccount(password: password) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                animationStop()
+                self?.warningLabel.text = error.message
+            case .success(()):
+                animationStop()
+                let alert = UIAlertController(title: "회원 탈퇴가 완료되었습니다.", message: "이용해 주셔서 감사합니다.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
+                        myWinesVC.posts = [Post]()
+                        myWinesVC.updateNonmemberUI()
+                        self?.navigationController?.popToRootViewController(animated: true)
+                    }
+                }))
+                self?.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

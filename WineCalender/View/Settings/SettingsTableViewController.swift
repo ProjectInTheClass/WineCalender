@@ -23,6 +23,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
+        authListener()
     }
     
     func configureRow() {
@@ -34,6 +35,30 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
+    func authListener() {
+        AuthenticationManager.shared.authListener { [weak self] result in
+            switch result {
+            case .success(_):
+                return
+            case .failure(let error):
+                if error == AuthError.userTokenExpired {
+                    self?.configureRow()
+                    self?.tableView.reloadData()
+                    let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                } else if error == AuthError.failedToConnectToNetwork || error == AuthError.unknown {
+                    let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                } else if error == AuthError.nonmember {
+                    self?.configureRow()
+                    self?.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

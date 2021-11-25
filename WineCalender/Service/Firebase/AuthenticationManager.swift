@@ -294,14 +294,31 @@ class AuthenticationManager {
                 }
             case .success(()):
                 if let email = Auth.auth().currentUser?.email {
+                    //현재 비밀번호 확인을 위한 signIn
                     self?.signIn(email: email, password: presentPassword) { result in
                         switch result {
                         case .failure(let error):
                                 completion(.failure(error))
                         case .success(()):
                             Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
-                                if error != nil {
-                                    print("비밀번호 변경 오류 : \(error?.localizedDescription ?? "")")
+                                if error != nil, error.debugDescription.contains("ERROR_REQUIRES_RECENT_LOGIN") {
+                                    self?.reauthenticate(email: email, password: presentPassword) { result in
+                                        if result == true {
+                                            Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { error in
+                                                if error != nil {
+                                                    print("비밀번호 변경 오류 : ", error?.localizedDescription ?? "")
+                                                    completion(.failure(AuthError.failedToUpdatePassword))
+                                                } else {
+                                                    completion(.success(()))
+                                                }
+                                            })
+                                        } else {
+                                            print("비밀번호 변경 오류 - 재인증 실패 : ", error?.localizedDescription ?? "")
+                                            completion(.failure(AuthError.failedToUpdatePassword))
+                                        }
+                                    }
+                                } else if error != nil {
+                                    print("비밀번호 변경 오류 : ", error?.localizedDescription ?? "")
                                     completion(.failure(AuthError.failedToUpdatePassword))
                                 } else {
                                     completion(.success(()))
@@ -315,22 +332,127 @@ class AuthenticationManager {
     }
     
     func deleteAccount(password: String, completion: @escaping (Result<Void,AuthError>) -> Void) {
+        //todo : like, likeCount -1 , comment
         guard let user = Auth.auth().currentUser, let email = user.email else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        //비밀번호 확인을 위한 signIn
         signIn(email: email, password: password) { result in
             switch result {
             case .failure(let error):
-                completion(.failure(error))
+                    completion(.failure(error))
             case .success(()):
-                user.delete { error in
-                    if error != nil {
-                        print("탈퇴하기 오류 : \(error?.localizedDescription ?? "")")
+                PostManager.shared.fetchMyPostIDs { result, postIDs in
+                    if result == false {
+                        print("탈퇴 오류 : post 삭제 오류")
                         completion(.failure(AuthError.failedToDeleteAccount))
-                    } else {
-                        // Account deleted.
-                        // delete post, recentPost, porfile, likes, comments, postImage, profileImage
-                        // completion(.success(()))
+                    }
+                    if result == true, postIDs == nil {
+                        deleteProfileAndAccount()
+                    }
+                    if result == true, let postIDs = postIDs {
+                        for i in 0...postIDs.count-1 {
+                            let postID = postIDs[i]
+                            PostManager.shared.removeMyPost(postID: postID, authorUID: uid, numberOfImages: 3) { result in
+                                switch result {
+                                case .failure(_):
+                                    completion(.failure(AuthError.failedToDeleteAccount))
+                                case .success(()):
+                                    deleteProfileAndAccount()
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        }
+        
+        func deleteProfileAndAccount() {
+            let profileImageName = uid + ".jpg"
+            AuthenticationManager.shared.userProfileImageRef.child(profileImageName).delete { error in
+                if let error = error, error.localizedDescription.contains("does not exist.") {
+                    deleteUserRefAndAccount()
+                } else if let error = error {
+                    print("탈퇴 오류 - 프로필 이미지 삭제 오류 : ", error.localizedDescription)
+                    completion(.failure(AuthError.failedToDeleteAccount))
+                } else {
+                    deleteUserRefAndAccount()
+                }
+            }
+            
+            func deleteUserRefAndAccount() {
+                AuthenticationManager.shared.userRef.child(uid).removeValue { error, ref in
+                    if let error = error {
+                        print("탈퇴 오류 - userRef 삭제 오류 : ", error.localizedDescription)
+                        completion(.failure(AuthError.failedToDeleteAccount))
+                    } else {
+                        user.delete { [weak self] error in
+                            if error != nil {
+                                print("탈퇴 오류 : ", error?.localizedDescription ?? "")
+                                if error.debugDescription.contains("ERROR_REQUIRES_RECENT_LOGIN") {
+                                    self?.reauthenticate(email: email, password: password) { result in
+                                        if result == true {
+                                            user.delete { error in
+                                                if error != nil {
+                                                    print("탈퇴 오류 : ", error?.localizedDescription ?? "")
+                                                    completion(.failure(AuthError.failedToDeleteAccount))
+                                                } else {
+                                                    completion(.success(()))
+                                                }
+                                            }
+                                        } else {
+                                            completion(.failure(AuthError.failedToDeleteAccount))
+                                        }
+                                    }
+                                } else {
+                                    completion(.failure(AuthError.failedToDeleteAccount))
+                                }
+                            } else {
+                                completion(.success(()))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func reauthenticate(email: String, password: String, completion: @escaping (Bool) -> Void) {
+        let user = Auth.auth().currentUser
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: email, password: password)
+        user?.reauthenticate(with: credential) { result, error in
+            if let error = error {
+                print("재인증 오류 : ", error.localizedDescription)
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
+    
+    func authListener(completion: @escaping (Result<Void,AuthError>) -> Void) {
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user == nil {
+                completion(.failure(AuthError.nonmember))
+            } else {
+                user?.reload(completion: { error in
+                    if error != nil {
+                        print(error.debugDescription)
+                        if error.debugDescription.contains("ERROR_USER_TOKEN_EXPIRED") {
+                            completion(.failure(AuthError.userTokenExpired))
+                        } else if error.debugDescription.contains("ERROR_USER_NOT_FOUND") {
+                            completion(.failure(AuthError.userTokenExpired))
+                        } else if error.debugDescription.contains("ERROR_NETWORK_REQUEST_FAILED") {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completion(.failure(AuthError.failedToConnectToNetwork))
+                            }
+                        } else {
+                            completion(.failure(AuthError.unknown))
+                        }
+                    } else {
+                        completion(.success(()))
+                    }
+                })
+                
             }
         }
     }
@@ -360,7 +482,9 @@ enum AuthError: Error {
     
     case failedToDeleteAccount
     
-    //case userTokenExpired
+    case userTokenExpired
+    case unknown
+    case nonmember
     
     var message: String {
         switch self {
@@ -400,10 +524,14 @@ enum AuthError: Error {
             return "비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
       
         case .failedToDeleteAccount:
-            return ""
+            return "일시적인 오류가 있습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
             
-//        case .userTokenExpired:
-//            return "인증 세션이 만료되었습니다. 다시 로그인해 주세요."
+        case .userTokenExpired:
+            return "사용자 토큰이 만료되어 로그아웃되었습니다.\n다시 로그인해 주세요."
+        case .unknown:
+            return "서버로부터 데이터를 불러오는데 실패했습니다.\n앱을 재실행해 주세요."
+        case .nonmember:
+            return ""
         }
     }
 }

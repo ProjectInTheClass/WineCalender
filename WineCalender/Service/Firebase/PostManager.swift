@@ -160,6 +160,22 @@ class PostManager {
         }
     }
     
+    //for delete account
+    func fetchMyPostIDs(completion: @escaping (Bool, [String]?) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion(false, nil)
+            return
+        }
+        PostManager.shared.postRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let snapshotDict = snapshot.value as? NSDictionary else {
+                completion(true, nil)
+                return
+            }
+            let postIDs = snapshotDict.allKeys as? [String]
+            completion(true, postIDs)
+        }
+    }
+    
     func updateMyPost(postID: String, tastingNote: WineTastingNotes, completion: @escaping (Result<Void, PostError>) -> Void) {
         guard let authorUID = Auth.auth().currentUser?.uid else { return }
         let updatedDate: Double = (Date().timeIntervalSince1970).rounded()
@@ -180,31 +196,32 @@ class PostManager {
     }
     
     func removeMyPost(postID: String, authorUID: String, numberOfImages: Int, completion: @escaping (Result<Void,PostError>) -> Void) {
-//        guard authorUID == Auth.auth().currentUser?.uid else { return }
-//        PostManager.shared.recentPostRef.child(postID).removeValue { error, ref in
-//            if let error = error {
-//                //error1)
-//                print("recentPostRef 삭제 에러 : \(error.localizedDescription)")
-//                completion(.failure(PostError.failedToRemovePost))
-//            } else {
-//                PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, ref in
-//                    if let error = error {
-//                        //error2)
-//                        print("postRef 삭제 에러 : \(error.localizedDescription)")
-//                        completion(.failure(PostError.failedToRemovePost))
-//                    } else {
-//                        self?.removeMyPostImages(postID: postID, numberOfImages: numberOfImages) { result in
-//                            if result == true {
-//                                completion(.success(()))
-//                            } else {
-//                                //error3)
-//                                completion(.failure(PostError.failedToRemovePost))
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        guard authorUID == Auth.auth().currentUser?.uid else { return }
+        PostManager.shared.recentPostRef.child(postID).removeValue { error, ref in
+            if let error = error {
+                //error1)
+                print("recentPostRef 삭제 에러 : \(error.localizedDescription)")
+                completion(.failure(PostError.failedToRemovePost))
+            } else {
+                PostManager.shared.postRef.child(authorUID).child(postID).removeValue { [weak self] error, ref in
+                    if let error = error {
+                        //error2)
+                        print("postRef 삭제 에러 : \(error.localizedDescription)")
+                        completion(.failure(PostError.failedToRemovePost))
+                    } else {
+                        self?.removeMyPostImages(postID: postID, numberOfImages: numberOfImages) { result in
+                            if result == true {
+                                completion(.success(()))
+                            } else {
+                                //error3)
+                                completion(.failure(PostError.failedToRemovePost))
+                            }
+                        }
+                    }
+                }
+                PostManager.shared.likeRef.child(postID).removeValue()
+            }
+        }
     }
     
     func removeMyPostImages(postID: String, numberOfImages: Int, completion: @escaping (Bool) -> Void) {
@@ -217,14 +234,13 @@ class PostManager {
             let imageName = postID + String(num - 1) + ".jpg"
             PostManager.shared.postImageRef.child(uid).child(postID).child(imageName).delete { error in
                 if let error = error, error.localizedDescription.contains("does not exist.") {
-                    print("존재하지 않는 image : \(error.localizedDescription)")
-                    removeCount = removeCount + 1
+                    removeCount += 1
                 } else if let error = error {
                     print("image 삭제 에러 : \(error.localizedDescription)")
                     completion(false)
                 } else {
                     print("image 삭제됨")
-                    removeCount = removeCount + 1
+                    removeCount += 1
                     if removeCount == numberOfImages {
                         completion(true)
                     }

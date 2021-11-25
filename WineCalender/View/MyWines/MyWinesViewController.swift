@@ -48,6 +48,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        authListener()
     }
     
     func uploadUpdateDeleteNotiObserver() {
@@ -58,6 +59,30 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 self?.insideoutCells = [:]
                 self?.updateNonmemberUI()
+            }
+        }
+    }
+    
+    func authListener() {
+        AuthenticationManager.shared.authListener { [weak self] result in
+            switch result {
+            case .success(_):
+                return
+            case .failure(let error):
+                if error == AuthError.userTokenExpired {
+                    self?.updateNonmemberUI()
+                    let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
+                        self?.signUpAndSignInButtonTapped(nil)
+                    })
+                    self?.present(alert, animated: true, completion: nil)
+                } else if error == AuthError.failedToConnectToNetwork || error == AuthError.unknown {
+                    let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                } else if error == AuthError.nonmember {
+                    self?.updateNonmemberUI()
+                }
             }
         }
     }
@@ -250,7 +275,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         self.present(addTastingNoteNav, animated: true, completion: nil)
     }
     
-    @IBAction func signUpAndSignInButtonTapped(_ sender: UIButton) {
+    @IBAction func signUpAndSignInButtonTapped(_ sender: UIButton?) {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)
         let settingsVC = storyboard.instantiateViewController(identifier: "settings")
         let signInVC = storyboard.instantiateViewController(identifier: "SignInViewController")
