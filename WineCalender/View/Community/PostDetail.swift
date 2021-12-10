@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 import Kingfisher
 import FirebaseAuth
+import PanModal
 
-class PostDetail : UIViewController,UIGestureRecognizerDelegate{
+class PostDetail : UITableViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var detailProfile: UIImageView!
     @IBOutlet weak var mainText: UILabel!
@@ -54,6 +55,8 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = UIColor.systemGray4.withAlphaComponent(0.8)
         pageControl.currentPageIndicatorTintColor = UIColor.systemGray6.withAlphaComponent(0.8)
+        
+        mainText.text = "sdjfilaesjflisejflijfilsjflseifjalsefjise\nfejsila\nfseelaijfsleafjlsie"
         
         updateLikes()
         
@@ -142,10 +145,41 @@ class PostDetail : UIViewController,UIGestureRecognizerDelegate{
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func handleWineInfoTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+        if let wineVC = storyboard.instantiateViewController(withIdentifier: "WineDetailController") as? WineDetailController,
+            let note = noteDetailData {
+            wineVC.viewModel = WineDetailVM(note)
+            presentPanModal(wineVC)
+        }
+    }
+    
+    @IBAction func handleCommentTapped(_ sender: Any) {
+        print("comment tapped")
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return tableView.frame.width + 80
+        } else if indexPath.row == 1 {
+            return UITableView.automaticDimension
+        } else if indexPath.row == 2 {
+            return 100
+        } else if indexPath.row == 3 {
+            return 120
+        } else {
+            return 44
+        }
+    }
+    
 }
 
 extension PostDetail {
-    
     @IBAction func handleHeartTapped(_ sender: Any) {
         guard let postUID = postDetailData?.postID, let authorUID = postDetailData?.authorUID else {
             debugPrint("Unable to identify post UID")
@@ -187,7 +221,8 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postDetailData?.postImageURL.count ?? 0
     }
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let page = Int(targetContentOffset.pointee.x / view.frame.width)
         self.pageControl.currentPage = page
       }
