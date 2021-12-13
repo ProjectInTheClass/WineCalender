@@ -12,6 +12,11 @@ class TabBarController: UITabBarController {
     
     let addButton: UIButton = {
         let button = UIButton()
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 2
+        button.setImage(UIImage(named: "tab_Add"), for: .normal)
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -42,17 +47,17 @@ class TabBarController: UITabBarController {
         
         let layout = ZigzagLayout()
         let communityCollectionVC = Community(collectionViewLayout: layout)
-        communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(named: "tab_Community"), selectedImage: UIImage(named: "tab_Community"))
+        communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(named: "tab_Community_normal"), selectedImage: UIImage(named: "tab_Community_selected"))
         let communityNavContr = UINavigationController(rootViewController: communityCollectionVC)
         
-        // TabBarItem
         let add = UIViewController()
-        add.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "AddButton2"), selectedImage: nil)
+        add.tabBarItem = UITabBarItem(title: "", image: UIImage(), selectedImage: nil)
+        setAddButton()
+        
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
         myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
-        self.viewControllers = [communityNavContr, add, myWines]
         
-        setAddButton()
+        self.viewControllers = [communityNavContr, add, myWines]
     }
     
     func setAddButton() {
@@ -60,7 +65,7 @@ class TabBarController: UITabBarController {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        let height = self.tabBar.frame.size.height
+        let height = self.tabBar.frame.size.height + 15
         addButton.heightAnchor.constraint(equalToConstant: height).isActive = true
         let width = self.tabBar.frame.size.width / 3
         addButton.widthAnchor.constraint(equalToConstant: width).isActive = true
