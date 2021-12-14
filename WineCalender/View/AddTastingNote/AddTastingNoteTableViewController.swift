@@ -207,8 +207,11 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         if let ac = updateNote?.alcoholContent {
             if ac != 0 {
                 self.alcoholContent = ac
-                let alcoholContentString = String(ac)
-//                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
+                var alcoholContentString = String(ac)
+                if alcoholContentString.hasSuffix(".0") {
+                    alcoholContentString.removeLast()
+                    alcoholContentString.removeLast()
+                }
                 self.wineAlcoholContentTextField.text = alcoholContentString
             }
         }

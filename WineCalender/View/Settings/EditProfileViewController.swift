@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import Lottie
 
 class EditProfileViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
 
@@ -169,6 +170,33 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
         let alert = UIAlertController(title: "프로필 수정", message: "프로필을 수정하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
+            let animationView: AnimationView = {
+                let aniView = AnimationView(name: "swirling-wine")
+                aniView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                aniView.contentMode = .scaleAspectFill
+                aniView.loopMode = .loop
+                aniView.backgroundColor = .white
+                aniView.layer.cornerRadius = 50
+                return aniView
+            }()
+            
+            func animationPlay() {
+                self?.tableView.isUserInteractionEnabled = false
+                self?.navigationController?.navigationBar.isUserInteractionEnabled = false
+                self?.tableView.superview?.addSubview(animationView)
+                animationView.center = self?.view.center ?? CGPoint(x: 0, y: 0)
+                animationView.play()
+            }
+            
+            func animationStop() {
+                animationView.stop()
+                animationView.removeFromSuperview()
+                self?.tableView.isUserInteractionEnabled = true
+                self?.navigationController?.navigationBar.isUserInteractionEnabled = true
+            }
+            
+            animationPlay()
+            
             var profileImage: UIImage? {
                 if self?.profileImageView.image?.isSymbolImage == true {
                     return nil
@@ -188,8 +216,10 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
             AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname!, introduction: introduction) { result in
                 switch result {
                 case .failure(let error):
+                    animationStop()
                     self?.warningLabel.text = error.message
                 case .success(()):
+                    animationStop()
                     if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController{
                         myWinesVC.fetchMyProfile()
                         self?.navigationController?.popToRootViewController(animated: true)
