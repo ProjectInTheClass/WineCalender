@@ -84,8 +84,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 switch result {
                 case .success(()):
                     if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.uploadNewMemberData()
-                        myWinesVC.updateMemberUI()
+                        myWinesVC.updateNewMemberUI()
                         let alert = UIAlertController(title: "회원가입이 완료됐습니다!", message: "환영합니다:)", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
                             self?.navigationController?.popToRootViewController(animated: true)

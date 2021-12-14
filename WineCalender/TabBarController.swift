@@ -10,7 +10,7 @@ import Parchment
 
 class TabBarController: UITabBarController {
     
-    let addButton: UIButton = {
+    static let addButton: UIButton = {
         let button = UIButton()
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -61,6 +61,7 @@ class TabBarController: UITabBarController {
     }
     
     func setAddButton() {
+        let addButton = TabBarController.addButton
         view.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true

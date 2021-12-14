@@ -17,6 +17,9 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "설정"
+        self.tabBarController?.tabBar.isHidden = true
+        let addButton = TabBarController.addButton
+        addButton.isHidden = true
         configureRow()
     }
     
@@ -150,8 +153,7 @@ class SettingsTableViewController: UITableViewController {
                                         self?.present(alert2, animated: true, completion: nil)
                                     case .success(()):
                                         if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                                            myWinesVC.posts = [Post]()
-                                            myWinesVC.updateNonmemberUI()
+                                            myWinesVC.signOutUI()
                                             self?.navigationController?.popViewController(animated: true)
                                         }
                                     }

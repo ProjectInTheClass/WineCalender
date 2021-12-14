@@ -169,7 +169,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyWinesNoPostsCell" id="SCN-sz-9uo" customClass="MyWinesNoPostsCell" customModule="WineCalender" customModuleProvider="target">
-                                        <rect key="frame" x="132" y="302" width="250" height="250"/>
+                                        <rect key="frame" x="162" y="302" width="250" height="250"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vWq-lV-7eN">
                                             <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
@@ -245,6 +245,47 @@
                                             <outlet property="descriptionLabel" destination="6Aq-RE-XqL" id="Z64-dm-4Id"/>
                                             <outlet property="signUpAndSignInButton" destination="jfv-aN-OYe" id="cuL-4W-UN3"/>
                                         </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyWinesNotSharedCell" id="AQr-S8-HPX">
+                                        <rect key="frame" x="2" y="554" width="410" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pi3-XX-5Jz">
+                                            <rect key="frame" x="0.0" y="0.0" width="410" height="55"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zck-iK-GPE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="410" height="1"/>
+                                                    <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="5QY-eN-ulV"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="공유하지 않은 게시물 ↓" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Et-Mn-dl2">
+                                                    <rect key="frame" x="135" y="18.5" width="140.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nj7-jX-Fps">
+                                                    <rect key="frame" x="0.0" y="54" width="410" height="1"/>
+                                                    <color key="backgroundColor" systemColor="systemGray2Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="n9R-BH-NwE"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zck-iK-GPE" firstAttribute="top" secondItem="Pi3-XX-5Jz" secondAttribute="top" id="4Gf-oy-QZf"/>
+                                                <constraint firstItem="9Et-Mn-dl2" firstAttribute="centerY" secondItem="Pi3-XX-5Jz" secondAttribute="centerY" id="TBa-xx-cZp"/>
+                                                <constraint firstAttribute="trailing" secondItem="zck-iK-GPE" secondAttribute="trailing" id="WbP-An-fCd"/>
+                                                <constraint firstAttribute="bottom" secondItem="Nj7-jX-Fps" secondAttribute="bottom" id="el8-kA-043"/>
+                                                <constraint firstAttribute="trailing" secondItem="Nj7-jX-Fps" secondAttribute="trailing" id="nLk-z0-ScO"/>
+                                                <constraint firstItem="Nj7-jX-Fps" firstAttribute="leading" secondItem="Pi3-XX-5Jz" secondAttribute="leading" id="oFC-ON-mty"/>
+                                                <constraint firstItem="zck-iK-GPE" firstAttribute="leading" secondItem="Pi3-XX-5Jz" secondAttribute="leading" id="shM-li-OpL"/>
+                                                <constraint firstItem="9Et-Mn-dl2" firstAttribute="centerX" secondItem="Pi3-XX-5Jz" secondAttribute="centerX" id="tdS-D3-Fe0"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="410" height="55"/>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyWinesHeaderView" id="mbc-Qj-YIg" customClass="MyWinesHeaderView" customModule="WineCalender" customModuleProvider="target">

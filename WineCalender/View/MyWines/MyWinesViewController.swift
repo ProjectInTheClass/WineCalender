@@ -11,6 +11,8 @@ import Kingfisher
 
 class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var myWinesHeaderVM: MyWinesHeaderViewModel? = nil {
@@ -22,13 +24,16 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     lazy var posts = [Post]()
     lazy var notes = [WineTastingNote]()
     lazy var noPosts: Bool? = nil
-    lazy var insideoutCells = [Int:Int]()
+    lazy var insideoutCellsInSectionZero = [Int:Int]()
+    lazy var insideoutCellsInSectionTwo = [Int:Int]()
     
     var lastFetchedValue: String? = nil
     var fetchingMore = false
     var endReached = false
     
     let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +51,23 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = false
+        let addButton = TabBarController.addButton
+        addButton.isHidden = false
+        
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         authListener()
     }
     
+    // MARK: - Helpers
+    
     func uploadUpdateDeleteNotiObserver() {
         NotificationCenter.default.addObserver(forName: MyWinesViewController.uploadUpdateDelete, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             if Auth.auth().currentUser != nil {
-                self?.insideoutCells = [:]
                 self?.updatePosts()
             } else {
-                self?.insideoutCells = [:]
                 self?.updateNonmemberUI()
             }
         }
@@ -86,31 +96,34 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
     }
+    
+    func resetProperties() {
+        insideoutCellsInSectionZero = [:]
+        insideoutCellsInSectionTwo = [:]
+        posts = []
+        lastFetchedValue = nil
+        endReached = false
+    }
 
-    //회원가입 직후?
-    func uploadNewMemberData() {
-//        let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
-//        self.view.addSubview(activityIndicatorView)
-//        activityIndicatorView.frame = CGRect(x: 0, y: 185, width: self.view.bounds.width, height: 50)
-//        activityIndicatorView.startAnimating()
-//        PostManager.shared.uploadDatafromCoreDataToFirebase { result in
-//            if result == true {
-//                DataManager.shared.removeAllWineTastingNotes { result in
-//                    if result == true {
-//                        activityIndicatorView.stopAnimating()
-//                    }
-//                }
-//            }
-//        }
+    //회원가입 직후
+    func updateNewMemberUI() {
+        AuthenticationManager.shared.fetchMyProfile { [weak self] result in
+            switch result {
+            case .success(let user):
+                self?.user = user
+                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
+            case .failure(let error):
+                if error == AuthError.failedToFetchMyProfile {
+                    self?.moveToEditProfileVC(error: error)
+                }
+            }
+        }
     }
     
-    //로그인, 회원가입, 회원이 앱 실행할 때
+    //로그인, 회원이 앱 실행할 때
     func updateMemberUI() {
-        self.insideoutCells = [:]
-        self.posts = []
-        self.lastFetchedValue = nil
-        self.endReached = false
-        self.activityIndicatorView.startAnimating()
+        resetProperties()
+        activityIndicatorView.startAnimating()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
             if numberOfMyPosts == 0 {
                 self?.noPosts = true
@@ -129,15 +142,22 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 }
             }
         }
-        self.beginBatchFetch()
+        beginBatchFetch()
+        if notes.isEmpty {
+            fetchTastingNotes()
+        }
+    }
+    
+    //회원 - 공유하지 않은 게시물
+    func fetchTastingNotes() {
+        DataManager.shared.fetchWineTastingNote { [weak self] notes in
+            self?.notes = notes
+        }
     }
     
     //회원이 글 쓸 때, 삭제할 때
     func updatePosts() {
-        self.insideoutCells = [:]
-        self.posts = []
-        self.lastFetchedValue = nil
-        self.endReached = false
+        resetProperties()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
             if numberOfMyPosts == 0 {
                 self?.noPosts = true
@@ -154,7 +174,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
         fetchingMore = true
         activityIndicatorView.startAnimating()
-        collectionView.reloadItems(at: [IndexPath(item: 2, section: 0)])
         PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
             if let newPosts = newPosts {
                 self?.posts.append(contentsOf: newPosts)
@@ -197,9 +216,17 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    //로그아웃, 비회원이 앱 실행할 때, 비회원이 글 쓸 때
+    //로그아웃, 탈퇴
+    func signOutUI() {
+        user = nil
+        posts = []
+        self.insideoutCellsInSectionTwo = [:]
+        updateNonmemberUI()
+    }
+    
+    //비회원이 앱 실행할 때, 비회원이 글 쓸 때
     func updateNonmemberUI() {
-        self.insideoutCells = [:]
+        self.insideoutCellsInSectionZero = [:]
         DataManager.shared.fetchWineTastingNote { [weak self] myNotes in
             self?.notes = myNotes
             let numberOfNotes = self?.notes.count
@@ -211,6 +238,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes ?? 0)
         }
     }
+    
+    // MARK: - Actions
     
 //    @IBAction func moreButtonTapped(_ sender: UIButton) {
 //        let superview = sender.superview?.superview?.superview?.superview
@@ -243,7 +272,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
             if cell.imageView.alpha == 1.0 {
-                self.insideoutCells[indexPath.item] = indexPath.item
+                if indexPath.section == 0 {
+                    self.insideoutCellsInSectionZero[indexPath.item] = indexPath.item
+                } else {
+                    self.insideoutCellsInSectionTwo[indexPath.item] = indexPath.item
+                }
                 cell.imageView.alpha = 0.3
                 cell.imageView.layer.cornerRadius = 10
                 cell.imageWhiteBackView.isHidden = false
@@ -254,7 +287,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 cell.imageViewTrailingAnchor.constant = 10
                 cell.imageViewBottomAnchor.constant = 10
             } else {
-                self.insideoutCells[indexPath.item] = nil
+                if indexPath.section == 0 {
+                    self.insideoutCellsInSectionZero[indexPath.item] = nil
+                } else {
+                    self.insideoutCellsInSectionTwo[indexPath.item] = nil
+                }
                 cell.imageView.alpha = 1.0
                 cell.imageView.layer.cornerRadius = 0
                 cell.imageWhiteBackView.isHidden = true
@@ -284,116 +321,143 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 
 extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if Auth.auth().currentUser == nil {
+            return 1
+        } else {
+            return 3
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if noPosts == true {
             return 1
         } else if Auth.auth().currentUser == nil {
             return notes.count
-        } else if Auth.auth().currentUser != nil {
+        } else if Auth.auth().currentUser != nil && section == 0 {
             return posts.count
+        } else if Auth.auth().currentUser != nil && section == 1 && !notes.isEmpty {
+            return 1
+        } else if Auth.auth().currentUser != nil && section == 2 && !notes.isEmpty {
+            return notes.count
         } else {
             return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let noPostsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesNoPostsCell", for: indexPath) as! MyWinesNoPostsCell
+        let myWinesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
         
-        if noPosts == true {
-            if Auth.auth().currentUser == nil {
-                noPostsCell.isMember = false
+        myWinesCell.backColorView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+        swipeRight.delegate = self
+        swipeRight.delaysTouchesBegan = true
+        swipeRight.direction = .right
+        myWinesCell.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
+        swipeLeft.delegate = self
+        swipeLeft.delaysTouchesBegan = true
+        swipeLeft.direction = .left
+        myWinesCell.addGestureRecognizer(swipeLeft)
+        
+        if indexPath.section == 0 {
+            let noPostsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesNoPostsCell", for: indexPath) as! MyWinesNoPostsCell
+            
+            if noPosts == true {
+                if Auth.auth().currentUser == nil {
+                    noPostsCell.isMember = false
+                } else {
+                    noPostsCell.isMember = true
+                }
+                noPostsCell.isHidden = false
+                
+                return noPostsCell
             } else {
-                noPostsCell.isMember = true
+                noPostsCell.isHidden = true
+                
+                //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
+                if self.insideoutCellsInSectionZero[indexPath.item] == indexPath.item {
+                    myWinesCell.configureInsideoutCell()
+                } else {
+                    myWinesCell.prepareForReuse()
+                }
+                
+                if Auth.auth().currentUser != nil {
+                    myWinesCell.post = posts[indexPath.row]
+                } else {
+                    myWinesCell.note = notes[indexPath.row]
+                }
+                
+                return myWinesCell
             }
-            noPostsCell.isHidden = false
-            
-            return noPostsCell
-        } else {
-            noPostsCell.isHidden = true
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesCell", for: indexPath) as! MyWinesCollectionViewCell
-            
-            cell.backColorView.backgroundColor = UIColor(named: "postCard\(indexPath.item % 5)")
-            
-            //셀재사용으로 인해 UI적용에 문제가 있어서 셀이 선택됐는지 확인 후 UI적용
-            if self.insideoutCells[indexPath.item] == indexPath.item {
-                cell.imageView.alpha = 0.3
-                cell.imageView.layer.cornerRadius = 10
-                cell.imageWhiteBackView.isHidden = false
-                cell.wineStackView.isHidden = false
-                cell.likesCommentsStackView.isHidden = false
-                cell.imageViewTopAnchor.constant = 10
-                cell.imageViewLeadingAnchor.constant = 10
-                cell.imageViewTrailingAnchor.constant = 10
-                cell.imageViewBottomAnchor.constant = 10
-            } else {
-                cell.imageView.alpha = 1.0
-                cell.imageView.layer.cornerRadius = 0
-                cell.imageWhiteBackView.isHidden = true
-                cell.wineStackView.isHidden = true
-                cell.likesCommentsStackView.isHidden = true
-                cell.imageViewTopAnchor.constant = 0
-                cell.imageViewLeadingAnchor.constant = 0
-                cell.imageViewTrailingAnchor.constant = 0
-                cell.imageViewBottomAnchor.constant = 0
-            }
-            
-            if Auth.auth().currentUser != nil {
-                cell.post = posts[indexPath.row]
-            } else {
-                cell.note = notes[indexPath.row]
-            }
-            
-            let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
-            swipeRight.delegate = self
-            swipeRight.delaysTouchesBegan = true
-            swipeRight.direction = .right
-            cell.addGestureRecognizer(swipeRight)
-            
-            let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(gestureRecognizer:)))
-            swipeLeft.delegate = self
-            swipeLeft.delaysTouchesBegan = true
-            swipeLeft.direction = .left
-            cell.addGestureRecognizer(swipeLeft)
+        } else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesNotSharedCell", for: indexPath)
             
             return cell
+        } else {
+            if self.insideoutCellsInSectionTwo[indexPath.item] == indexPath.item {
+                myWinesCell.configureInsideoutCell()
+            } else {
+                myWinesCell.prepareForReuse()
+            }
+            
+            myWinesCell.note = notes[indexPath.row]
+            
+            return myWinesCell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if noPosts == true {
-            let margin: CGFloat = 30
-            let width = collectionView.bounds.width - margin * 2
-            let height = width
-            
-            return CGSize(width: width, height: height)
+        let margin: CGFloat = 2
+        let spacing: CGFloat = 2
+        let width = (collectionView.bounds.width - margin * 2 - spacing) / 2
+        let height = width
+        let myWinesCellSize = CGSize(width: width, height: height)
+        
+        if indexPath.section == 0 {
+            if noPosts == true {
+                let margin: CGFloat = 30
+                let width = collectionView.bounds.width - margin * 2
+                let height = width
+                
+                return CGSize(width: width, height: height)
+            } else {
+                return myWinesCellSize
+            }
+        } else if indexPath.section == 1 {
+            return CGSize(width: collectionView.frame.width, height: 50)
         } else {
-            let margin: CGFloat = 2
-            let spacing: CGFloat = 2
-            let width = (collectionView.bounds.width - margin * 2 - spacing) / 2
-            let height = width
-            
-            return CGSize(width: width, height: height)
+            return myWinesCellSize
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath) as! MyWinesHeaderView
-        headerView.introductionLabel.text = myWinesHeaderVM?.introduction
+        if section == 0 {
+            let indexPath = IndexPath(row: 0, section: section)
+            let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath) as! MyWinesHeaderView
+            headerView.introductionLabel.text = myWinesHeaderVM?.introduction
 
-        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
-                                                  withHorizontalFittingPriority: .required,
-                                                  verticalFittingPriority: .fittingSizeLevel)
+            return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
+                                                      withHorizontalFittingPriority: .required,
+                                                      verticalFittingPriority: .fittingSizeLevel)
+        } else {
+            return CGSize.zero
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if activityIndicatorView.isAnimating {
-            return CGSize(width: collectionView.bounds.width, height: 50)
+            if section == 0 {
+                return CGSize(width: collectionView.bounds.width, height: 50)
+            } else {
+                return CGSize.zero
+            }
         } else {
             return CGSize.zero
         }
@@ -406,9 +470,14 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         
         if Auth.auth().currentUser != nil {
-            postDetailVC.postDetailData = posts[indexPath.row]
-            postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
-        } else {
+            if indexPath.section == 0 {
+                postDetailVC.postDetailData = posts[indexPath.row]
+                postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
+            } else { //회원 - 공유하지 않은 게시물
+                postDetailVC.noteDetailData = notes[indexPath.row]
+//                postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], myWinesHeaderVM!.nickname, nil, cellColor ?? .white)
+            }
+        } else { //비회원
             postDetailVC.noteDetailData = notes[indexPath.row]
 //            postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], myWinesHeaderVM!.nickname, nil, cellColor ?? .white)
         }
@@ -440,9 +509,13 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 }
 
+// MARK: - Notification
+
 extension MyWinesViewController {
     static let uploadUpdateDelete = Notification.Name(rawValue: "uploadUpdateDelete")
 }
+
+// MARK: - UICollectionViewFlowLayout
 
 final class StretchableUICollectionViewFlowLayout: UICollectionViewFlowLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

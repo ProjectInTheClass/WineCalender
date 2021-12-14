@@ -76,8 +76,7 @@ class DeleteAccountViewController: UIViewController {
                 let alert = UIAlertController(title: "회원 탈퇴가 완료되었습니다.", message: "이용해 주셔서 감사합니다.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                     if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.posts = [Post]()
-                        myWinesVC.updateNonmemberUI()
+                        myWinesVC.signOutUI()
                         self?.navigationController?.popToRootViewController(animated: true)
                     }
                 }))

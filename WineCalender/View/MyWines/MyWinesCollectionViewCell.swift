@@ -55,4 +55,28 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
             ratingLabel.text = vm.ratingDescription
         }
     }
+    
+    override func prepareForReuse() {
+        imageView.alpha = 1.0
+        imageView.layer.cornerRadius = 0
+        imageWhiteBackView.isHidden = true
+        wineStackView.isHidden = true
+        likesCommentsStackView.isHidden = true
+        imageViewTopAnchor.constant = 0
+        imageViewLeadingAnchor.constant = 0
+        imageViewTrailingAnchor.constant = 0
+        imageViewBottomAnchor.constant = 0
+    }
+    
+    func configureInsideoutCell() {
+        imageView.alpha = 0.3
+        imageView.layer.cornerRadius = 10
+        imageWhiteBackView.isHidden = false
+        wineStackView.isHidden = false
+        likesCommentsStackView.isHidden = false
+        imageViewTopAnchor.constant = 10
+        imageViewLeadingAnchor.constant = 10
+        imageViewTrailingAnchor.constant = 10
+        imageViewBottomAnchor.constant = 10
+    }
 }
