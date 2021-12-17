@@ -73,6 +73,8 @@ class MyWinesViewModel {
         var like: String = ""
         if let post = post, let count = post.likeCount {
             like = String(count)
+        } else {
+            like = "0"
         }
         return like
     }
