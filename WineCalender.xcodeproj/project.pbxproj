@@ -43,6 +43,7 @@
 		12D9A61D26EA69BD00792C6E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D9A61C26EA69BD00792C6E /* Comment.swift */; };
 		12D9A62126EA7AFE00792C6E /* MyWinesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D9A62026EA7AFE00792C6E /* MyWinesViewModel.swift */; };
 		12DAC3DA274123A90055B5E7 /* MyWinesNoPostsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */; };
+		12DF47AC276B5C280093D62E /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 12DF47AB276B5C280093D62E /* loading.json */; };
 		12DF7CF6269DC3A90083AE2B /* DetailScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */; };
 		12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */; };
 		12E188C326CBACBC0035964F /* WineTastingNote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */; };
@@ -143,6 +144,7 @@
 		12D9A61C26EA69BD00792C6E /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		12D9A62026EA7AFE00792C6E /* MyWinesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesViewModel.swift; sourceTree = "<group>"; };
 		12DAC3D9274123A90055B5E7 /* MyWinesNoPostsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesNoPostsCell.swift; sourceTree = "<group>"; };
+		12DF47AB276B5C280093D62E /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		12DF7CF5269DC3A90083AE2B /* DetailScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScheduleTableViewController.swift; sourceTree = "<group>"; };
 		12DF7CF7269DC3C30083AE2B /* DetailMyWinesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWinesTableViewController.swift; sourceTree = "<group>"; };
 		12E188C126CBACBC0035964F /* WineTastingNote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WineTastingNote+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 		123A23282740BF1A004039E9 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				12DF47AB276B5C280093D62E /* loading.json */,
 				123A23292740BF34004039E9 /* swirling-wine.json */,
 			);
 			path = Lottie;
@@ -620,6 +623,7 @@
 				C7BAABAC26E9CEA500471FB1 /* TastingNotes.storyboard in Resources */,
 				12B5560426FC9BDD00639807 /* Settings.storyboard in Resources */,
 				22FE4779272AA847000B7F40 /* ThumbnailCell.xib in Resources */,
+				12DF47AC276B5C280093D62E /* loading.json in Resources */,
 				1FCB911F267B846F008C93C7 /* Assets.xcassets in Resources */,
 				C7BAABA626E9CC6400471FB1 /* Community.storyboard in Resources */,
 				123A232A2740BF34004039E9 /* swirling-wine.json in Resources */,

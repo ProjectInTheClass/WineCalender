@@ -9,12 +9,25 @@ import Foundation
 import UIKit
 import Firebase
 import Parchment
-
+import Lottie
 
 
 class Community : UICollectionViewController {
     private let cellId = "ThumbnailCell"
     var posts = [(post: Post, username: String, profileImageUrl: URL?)]()
+    
+    lazy var lastFetchedValue: String? = nil
+    lazy var fetchingMore = false
+    lazy var endReached = false
+    
+    lazy var loadingAnimationView: AnimationView = {
+        let aniView = AnimationView(name: "loading")
+        aniView.contentMode = .scaleAspectFill
+        aniView.loopMode = .loop
+        aniView.layer.cornerRadius = 50
+        aniView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        return aniView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +44,47 @@ class Community : UICollectionViewController {
         
 //        setupCollectionViewInsets()
         
-        PostManager.shared.recentPostRef.queryOrdered(byChild: "postedDate").queryLimited(toFirst: 10).observe(DataEventType.value, with: { snapshot in
-            self.posts = []
+        fetchPosts()
+    }
+    
+    func fetchPosts() {
+        beginBatchFetch { [weak self] in
+            self?.fetchingMore = false
+            self?.lastFetchedValue = self?.posts.last?.post.postID
+            self?.loadingAnimationStop()
+            self?.collectionView.reloadData()
+        }
+    }
+        
+    func beginBatchFetch(completion: @escaping () -> Void) {
+        guard !fetchingMore && !endReached else { return }
+        fetchingMore = true
+        loadingAnimationPlay()
+
+        let queryLimited: UInt = 6
+        var queryRef: DatabaseQuery
+        
+        if lastFetchedValue == nil {
+            queryRef = PostManager.shared.recentPostRef.queryOrdered(byChild: "postID").queryLimited(toLast: queryLimited)
+        } else {
+            queryRef = PostManager.shared.recentPostRef.queryOrdered(byChild: "postID").queryEnding(beforeValue: lastFetchedValue).queryLimited(toLast: queryLimited)
+        }
+        
+        queryRef.observeSingleEvent(of: .value, with: { snapshot in
+            let snashotCount = snapshot.childrenCount
+            if snashotCount == 0 {
+                self.endReached = true
+                completion()
+            }
+            var fetchCount = 0 {
+                didSet {
+                    if snashotCount == fetchCount {
+                        completion()
+                    }
+                }
+            }
             
-            for child in snapshot.children.reversed() {
+            for child in snapshot.children {
                 let snapshot = child as! DataSnapshot
                 guard let dictionary = snapshot.value as? [String:Any] else { return }
 
@@ -52,12 +102,30 @@ class Community : UICollectionViewController {
                     AuthenticationManager.shared.fetchUserProfile(AuthorUID: post.authorUID) { url, username in
                         self.posts.append((post,username,url))
                         self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
-                        self.collectionView.reloadData()
+                        fetchCount += 1
                     }
                 }
             }
-            self.collectionView.reloadData()
         })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if view.subviews.contains(loadingAnimationView) {
+            loadingAnimationPlay()
+        }
+    }
+    
+    func loadingAnimationPlay() {
+        view.addSubview(loadingAnimationView)
+        loadingAnimationView.center = view.center
+        loadingAnimationView.play()
+    }
+    
+    func loadingAnimationStop() {
+        loadingAnimationView.stop()
+        loadingAnimationView.removeFromSuperview()
     }
 }
 
@@ -82,6 +150,12 @@ extension Community {
         let cell = collectionView.cellForItem(at: IndexPath(row: row, section: 0)) as? PostThumbnailCell
         self.navigationController?.pushViewController(postDetail, animated: true)
         postDetail.postDetailVM = PostDetailVM(data.0, data.1, data.2, cell?.postThumbnailVM?.color ?? .white)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > collectionView.contentSize.height - scrollView.frame.size.height - 100 {
+            fetchPosts()
+        }
     }
 }
 

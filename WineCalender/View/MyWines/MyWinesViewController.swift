@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import Kingfisher
+import Lottie
 
 class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -27,11 +28,18 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     lazy var insideoutCellsInSectionZero = [Int:Int]()
     lazy var insideoutCellsInSectionTwo = [Int:Int]()
     
-    var lastFetchedValue: String? = nil
-    var fetchingMore = false
-    var endReached = false
+    lazy var lastFetchedValue: String? = nil
+    lazy var fetchingMore = false
+    lazy var endReached = false
     
-    let activityIndicatorView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+    let loadingAnimationView: AnimationView = {
+        let aniView = AnimationView(name: "loading")
+        aniView.contentMode = .scaleAspectFill
+        aniView.loopMode = .loop
+        aniView.layer.cornerRadius = 50
+        return aniView
+    }()
+    lazy var isLoadingAnimationPlaying = false
     
     // MARK: - Lifecycle
     
@@ -56,9 +64,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         let addButton = TabBarController.addButton
         addButton.isHidden = false
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         authListener()
+        
+        isLoadingAnimationPlaying ? loadingAnimationPlay() : loadingAnimationStop()
     }
     
     // MARK: - Helpers
@@ -123,7 +133,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     //로그인, 회원이 앱 실행할 때
     func updateMemberUI() {
         resetProperties()
-        activityIndicatorView.startAnimating()
+        loadingAnimationPlay()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
             if numberOfMyPosts == 0 {
                 self?.noPosts = true
@@ -173,7 +183,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     func beginBatchFetch() {
         guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
         fetchingMore = true
-        activityIndicatorView.startAnimating()
+        loadingAnimationPlay()
+        
         PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
             if let newPosts = newPosts {
                 self?.posts.append(contentsOf: newPosts)
@@ -182,7 +193,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self?.endReached = true
             }
             self?.fetchingMore = false
-            self?.activityIndicatorView.stopAnimating()
+            self?.loadingAnimationStop()
             self?.collectionView.reloadData()
         }
     }
@@ -237,6 +248,17 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes ?? 0)
         }
+    }
+    
+    func loadingAnimationPlay() {
+        isLoadingAnimationPlaying = true
+        loadingAnimationView.play()
+    }
+    
+    func loadingAnimationStop() {
+        loadingAnimationView.stop()
+        loadingAnimationView.removeFromSuperview()
+        isLoadingAnimationPlaying = false
     }
     
     // MARK: - Actions
@@ -452,9 +474,9 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if activityIndicatorView.isAnimating {
+        if isLoadingAnimationPlaying {
             if section == 0 {
-                return CGSize(width: collectionView.bounds.width, height: 50)
+                return CGSize(width: collectionView.frame.width, height: 100)
             } else {
                 return CGSize.zero
             }
@@ -496,8 +518,20 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             return headerView
         } else {
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath)
-            activityIndicatorView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 50)
-            footerView.addSubview(activityIndicatorView)
+           
+            footerView.addSubview(loadingAnimationView)
+//            animationView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 100)
+            
+            loadingAnimationView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let constraints = [
+                loadingAnimationView.widthAnchor.constraint(equalToConstant: 100),
+                loadingAnimationView.heightAnchor.constraint(equalToConstant: 100),
+                loadingAnimationView.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
+                loadingAnimationView.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
+            ]
+            NSLayoutConstraint.activate(constraints)
+
             return footerView
         }
     }
