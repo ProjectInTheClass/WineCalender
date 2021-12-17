@@ -68,6 +68,14 @@ class MyWinesViewModel {
         }
         return "⭐️ " + rating
     }
+    
+    var likeCount: String {
+        var like: String = ""
+        if let post = post, let count = post.likeCount {
+            like = String(count)
+        }
+        return like
+    }
 
     //FireBase
     init(post: Post) {
