@@ -14,31 +14,41 @@ let postCardColorSet = [
     UIColor(named:"postCard2"),
     UIColor(named:"postCard3"),
     UIColor(named:"postCard4"),
-    
 ]
 
 struct PostThumbnailVM {
+    // 바로 알 수 있는 것
+    let postID: String
+    let authorID: String
     let thumbnailImageURL : URL?
-    let userName : String
-    let profileImageURL : URL?
-    let postMainText : String
-    let postSubText : String
-    let postSubTextIsHidden : Bool
+    let mainText : String
+    let subText : String
+    let subTextIsHidden : Bool
     let color : UIColor
     let likeCount: String
+    let commentCount: String
     
+    // 받아와야 하는 것
+    let userName : String
+    let profileImageURL : URL?
+
     init(_ post:Post,_ username:String,_ profileImageUrl:URL?,_ index: Int) {
-        let thumbnailURL = URL(string: post.postImageURL[0])
-       
-       self.thumbnailImageURL = thumbnailURL
-       self.userName = username
-       self.profileImageURL = profileImageUrl
-       self.postMainText = post.tastingNote.wineName
-       self.postSubText = post.tastingNote.memo ?? ""
+        self.postID = post.postID
+        self.authorID = post.authorUID
+        self.thumbnailImageURL = URL(string: post.postImageURL[0])
+        self.userName = username
+        self.profileImageURL = profileImageUrl
+        self.mainText = post.tastingNote.wineName
+        self.subText = post.tastingNote.memo ?? ""
         self.color = postCardColorSet[index % postCardColorSet.count]!
-       
-       self.postSubTextIsHidden = post.tastingNote.memo == nil ? true : false
+        
+        self.subTextIsHidden = post.tastingNote.memo == nil ? true : false
         
         self.likeCount = "\(post.likeCount ?? 0)"
-   }
+        self.commentCount = "\(post.commentCount ?? 0)"
+    }
+    
+    func profileImage(completion: (User)->()) {
+        
+    }
 }
