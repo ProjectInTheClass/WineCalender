@@ -600,11 +600,14 @@
                         <outlet property="heartButton" destination="be6-Fw-Z9K" id="bv5-I7-spQ"/>
                         <outlet property="likeLabel" destination="2l8-nI-3el" id="lbK-rN-PyN"/>
                         <outlet property="mainText" destination="wyU-sN-81t" id="iXy-eq-ehM"/>
+                        <outlet property="moreButton" destination="Dje-Fj-Get" id="gRM-on-TT7"/>
                         <outlet property="pageControl" destination="IJM-WG-3Fp" id="ueS-UE-NSo"/>
                         <outlet property="postCollection" destination="GLb-fM-B21" id="B25-vr-QQi"/>
                         <outlet property="postUpdateTime" destination="EhS-fo-806" id="3RZ-9H-l5S"/>
+                        <outlet property="producingCountryLabel" destination="AoO-QS-qGy" id="nWP-1Q-yP7"/>
                         <outlet property="profileBg" destination="3dt-aW-Dz3" id="An4-lK-6nq"/>
                         <outlet property="userName" destination="Enz-4H-gxj" id="G1d-lh-juG"/>
+                        <outlet property="vintageLabel" destination="b1z-SZ-NaZ" id="6zr-qh-uea"/>
                         <outlet property="wineName" destination="4US-e0-Td6" id="xf2-6O-NcA"/>
                     </connections>
                 </viewController>
@@ -620,7 +623,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2833.3333333333335" y="2331.6964285714284"/>
+            <point key="canvasLocation" x="2987" y="2314"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9BV-PV-4LJ">
