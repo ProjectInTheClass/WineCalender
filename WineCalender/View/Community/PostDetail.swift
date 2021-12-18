@@ -11,7 +11,7 @@ import Kingfisher
 import FirebaseAuth
 import PanModal
 
-class PostDetail : UITableViewController, UIGestureRecognizerDelegate{
+class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var detailProfile: UIImageView!
     @IBOutlet weak var mainText: UILabel!
@@ -36,50 +36,42 @@ class PostDetail : UITableViewController, UIGestureRecognizerDelegate{
     var noteDetailData : WineTastingNote?
     
     override func viewDidLoad() {
-         super.viewDidLoad()
-
-         postCollection.delegate = self
-         postCollection.dataSource = self
-         
-         detailProfile.image = UIImage(named: "AppIcon")
-         detailProfile.layer.cornerRadius = detailProfile.frame.height/2
-//         detailProfile.layer.borderWidth = 3.5
-        profileBg.layer.cornerRadius = profileBg.frame.height/2
-        profileBg.backgroundColor = UIColor(named: "whiteAndBlack")
+        super.viewDidLoad()
+        
+        postCollection.delegate = self
+        postCollection.dataSource = self
+        
         postCollection.backgroundColor = postDetailVM?.postCardColor
         
-//        wineName.text = postDetailVM?.wineName
-//        mainText.text = postDetailVM?.memo
+        wineName.text = postDetailVM?.wineName
+        mainText.text = postDetailVM?.memo
         
         pageControl.numberOfPages = postDetailData?.postImageURL.count ?? 0
-        pageControl.currentPage = 0
-        pageControl.pageIndicatorTintColor = UIColor.systemGray4.withAlphaComponent(0.8)
-        pageControl.currentPageIndicatorTintColor = UIColor.systemGray6.withAlphaComponent(0.8)
         
         mainText.text = "sdjfilaesjflisejflijfilsjflseifjalsefjise\nfejsila\nfseelaijfsleafjlsie"
         
         updateLikes()
-        
-     }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         configureMemberUI()
         configureNonmemberUI()
     }
-
+    
     func configureMemberUI() {
-       //Fetch User Profile
-       guard let authorUID = postDetailData?.authorUID else { return }
-       AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
-           self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-           self.userName.text = nickname
-       }
+        //Fetch User Profile
+        guard let authorUID = postDetailData?.authorUID else { return }
+        AuthenticationManager.shared.fetchUserProfile(AuthorUID: authorUID) { imageURL, nickname in
+            self.detailProfile.kf.setImage(with: imageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
+            self.userName.text = nickname
+        }
     }
+    
     func configureNonmemberUI() {
         guard let note = noteDetailData else { return }
         self.userName.text = "비회원"
-//        self.wineName.text = note.wineName
-//        self.mainText.text = note.memo
+        self.wineName.text = note.wineName
+        self.mainText.text = note.memo
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
@@ -149,7 +141,7 @@ class PostDetail : UITableViewController, UIGestureRecognizerDelegate{
     @IBAction func handleWineInfoTapped(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         if let wineVC = storyboard.instantiateViewController(withIdentifier: "WineDetailController") as? WineDetailController,
-            let note = noteDetailData {
+           let note = noteDetailData {
             wineVC.viewModel = WineDetailVM(note)
             presentPanModal(wineVC)
         }
@@ -157,24 +149,6 @@ class PostDetail : UITableViewController, UIGestureRecognizerDelegate{
     
     @IBAction func handleCommentTapped(_ sender: Any) {
         print("comment tapped")
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        0
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return tableView.frame.width + 80
-        } else if indexPath.row == 1 {
-            return UITableView.automaticDimension
-        } else if indexPath.row == 2 {
-            return 100
-        } else if indexPath.row == 3 {
-            return 120
-        } else {
-            return 44
-        }
     }
     
 }
@@ -209,7 +183,7 @@ extension PostDetail {
                         debugPrint("Failed to fetch likes")
                     }
                 }
-
+                
             case .failure(let err):
                 debugPrint(err.localizedDescription)
             }
@@ -217,16 +191,16 @@ extension PostDetail {
     }
 }
 
-extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
+extension PostDetail: UICollectionViewDelegate,  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postDetailData?.postImageURL.count ?? 0
     }
     
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let page = Int(targetContentOffset.pointee.x / view.frame.width)
         self.pageControl.currentPage = page
-      }
-
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let postCell = postCollection.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
         if let post = postDetailData {
@@ -237,9 +211,11 @@ extension PostDetail : UICollectionViewDelegate,UICollectionViewDataSource,UICol
         }
         return postCell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: postCollection.frame.width, height: postCollection.frame.height)
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }

@@ -16,12 +16,12 @@ class PostThumbnailCell : UICollectionViewCell {
     @IBOutlet weak var subTitle: UILabel!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var thumnailBottom: UIView!
     @IBOutlet weak var likesLabel: UILabel!
     
+    let profileImagePlaceholder = UIImage(systemName: "person.circle.fill")//?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
     
     var postThumbnailVM : PostThumbnailVM?{
-        didSet{
+        didSet {
             updateView()
         }
     }
@@ -31,26 +31,18 @@ class PostThumbnailCell : UICollectionViewCell {
     }
     
     func updateView(){
-        
         guard let vm = postThumbnailVM else { return }
         
-        subTitle.isHidden = vm.postSubTextIsHidden
+        subTitle.isHidden = vm.subTextIsHidden
         postCardView.backgroundColor = vm.color
-//        thumnailBottom.backgroundColor = vm.color
         cellImage.kf.setImage(with: vm.thumbnailImageURL)
-        profileName.text = vm.userName
-        profileImage.kf.setImage(with: vm.profileImageURL, placeholder: UIImage(systemName: "person.circle.fill")!.withTintColor(.systemPurple, renderingMode: .alwaysOriginal))
-
-        mainTitle.text = vm.postMainText
-        subTitle.text = vm.postSubText
-
-        cellImage.layer.cornerRadius = 5
-        profileImage.layer.borderWidth = 0.1
-        profileImage.layer.borderColor = UIColor.lightGray.cgColor
-        profileImage.layer.cornerRadius = profileImage.frame.width / 2
-        // 뷰의 경계에 맞춰준다
-        profileImage.clipsToBounds = true
         
+        profileName.text = vm.userName
+        profileImage.layer.borderColor = UIColor.lightGray.cgColor
+        profileImage.kf.setImage(with: vm.profileImageURL, placeholder: profileImagePlaceholder)
+
+        mainTitle.text = vm.mainText
+        subTitle.text = vm.subText
         likesLabel.text = vm.likeCount
     }
 }

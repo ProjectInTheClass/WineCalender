@@ -14,6 +14,7 @@
 		087DBB79272BE79E0085FBC8 /* PostManager+Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */; };
 		087DBB7D272BEEEB0085FBC8 /* LikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087DBB7C272BEEEB0085FBC8 /* LikeTests.swift */; };
 		08A5EC76E616238FE4A1344C /* Pods_WineCalenderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB530CB5E85DD562B7F598F4 /* Pods_WineCalenderTests.framework */; };
+		08E17CAB276C110A00A5F467 /* WineDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E17CAA276C110A00A5F467 /* WineDetailVM.swift */; };
 		1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */; };
 		1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396726CFC10A00B7FB74 /* SignInViewController.swift */; };
 		1223396A26CFC38900B7FB74 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1223396926CFC38900B7FB74 /* AuthenticationManager.swift */; };
@@ -72,11 +73,8 @@
 		224FFA6C271D4EF70015FC43 /* PostDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224FFA6B271D4EF70015FC43 /* PostDetailVM.swift */; };
 		2263BB3927326DC50004A793 /* PostBottomTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263BB3827326DC50004A793 /* PostBottomTable.swift */; };
 		227DED7326EF546E001CCCE0 /* PostThumbnailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */; };
-		227DED7426EF546E001CCCE0 /* CommunityVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7026EF546D001CCCE0 /* CommunityVM.swift */; };
-		227DED7526EF546E001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */; };
 		227DED7626EF546E001CCCE0 /* PostDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7226EF546D001CCCE0 /* PostDetail.swift */; };
 		227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */; };
-		227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */; };
 		227DED7D26EF549B001CCCE0 /* Community.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227DED7A26EF549B001CCCE0 /* Community.swift */; };
 		22AF411626CE54A900F0D123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF411526CE54A900F0D123 /* TabBarController.swift */; };
 		22BAF6512762F30F009362D4 /* WineDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BAF6502762F30F009362D4 /* WineDetailController.swift */; };
@@ -113,6 +111,7 @@
 		083AE756270D9C20009A77F4 /* MyWinesVMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesVMTests.swift; sourceTree = "<group>"; };
 		087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostManager+Like.swift"; sourceTree = "<group>"; };
 		087DBB7C272BEEEB0085FBC8 /* LikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTests.swift; sourceTree = "<group>"; };
+		08E17CAA276C110A00A5F467 /* WineDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineDetailVM.swift; sourceTree = "<group>"; };
 		0DE066646E2C02D2B6FC876E /* Pods-WineCalenderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalenderTests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalenderTests/Pods-WineCalenderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		11236921FC67ADC3A00258B4 /* Pods-WineCalender-WineCalenderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; path = "Target Support Files/Pods-WineCalender-WineCalenderUITests/Pods-WineCalender-WineCalenderUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		1223396226CFA1A100B7FB74 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -180,11 +179,8 @@
 		224FFA6B271D4EF70015FC43 /* PostDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailVM.swift; sourceTree = "<group>"; };
 		2263BB3827326DC50004A793 /* PostBottomTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBottomTable.swift; sourceTree = "<group>"; };
 		227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailVM.swift; sourceTree = "<group>"; };
-		227DED7026EF546D001CCCE0 /* CommunityVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityVM.swift; sourceTree = "<group>"; };
-		227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostCollectionViewCollectionViewController.swift; sourceTree = "<group>"; };
 		227DED7226EF546D001CCCE0 /* PostDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetail.swift; sourceTree = "<group>"; };
 		227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostThumbnailCell.swift; sourceTree = "<group>"; };
-		227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		227DED7A26EF549B001CCCE0 /* Community.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Community.swift; sourceTree = "<group>"; };
 		22AF411526CE54A900F0D123 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		22BAF6502762F30F009362D4 /* WineDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineDetailController.swift; sourceTree = "<group>"; };
@@ -465,9 +461,8 @@
 			isa = PBXGroup;
 			children = (
 				227DED6F26EF546D001CCCE0 /* PostThumbnailVM.swift */,
-				227DED7026EF546D001CCCE0 /* CommunityVM.swift */,
-				227DED7126EF546D001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift */,
 				224FFA6B271D4EF70015FC43 /* PostDetailVM.swift */,
+				08E17CAA276C110A00A5F467 /* WineDetailVM.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -476,12 +471,11 @@
 			isa = PBXGroup;
 			children = (
 				C7BAABA426E9CC6400471FB1 /* Community.storyboard */,
-				22FE4778272AA847000B7F40 /* ThumbnailCell.xib */,
-				227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */,
-				227DED7926EF549B001CCCE0 /* ImageCollectionViewCell.swift */,
-				227DED7226EF546D001CCCE0 /* PostDetail.swift */,
 				227DED7A26EF549B001CCCE0 /* Community.swift */,
 				22FE4774272A9F85000B7F40 /* ZigzagLayout.swift */,
+				22FE4778272AA847000B7F40 /* ThumbnailCell.xib */,
+				227DED7826EF549B001CCCE0 /* PostThumbnailCell.swift */,
+				227DED7226EF546D001CCCE0 /* PostDetail.swift */,
 				2263BB3827326DC50004A793 /* PostBottomTable.swift */,
 				22BAF6502762F30F009362D4 /* WineDetailController.swift */,
 			);
@@ -765,7 +759,6 @@
 				125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
 				1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */,
-				227DED7526EF546E001CCCE0 /* DetailPostCollectionViewCollectionViewController.swift in Sources */,
 				12D9A61B26EA674600792C6E /* Post.swift in Sources */,
 				1223396C26CFC5AF00B7FB74 /* SignUpViewController.swift in Sources */,
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
@@ -775,18 +768,17 @@
 				227DED7D26EF549B001CCCE0 /* Community.swift in Sources */,
 				123DEC4726C449B600DE45F7 /* WineProducingCountriesTableViewController.swift in Sources */,
 				224FFA6C271D4EF70015FC43 /* PostDetailVM.swift in Sources */,
-				227DED7C26EF549B001CCCE0 /* ImageCollectionViewCell.swift in Sources */,
 				125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */,
 				1284F5EE26DB51860033CFD0 /* MyWinesCollectionViewCell.swift in Sources */,
 				12DF7CF8269DC3C30083AE2B /* DetailMyWinesTableViewController.swift in Sources */,
 				1223396326CFA1A100B7FB74 /* SettingsTableViewController.swift in Sources */,
 				12D9A61D26EA69BD00792C6E /* Comment.swift in Sources */,
+				08E17CAB276C110A00A5F467 /* WineDetailVM.swift in Sources */,
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */,
 				22FE4775272A9F85000B7F40 /* ZigzagLayout.swift in Sources */,
 				227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */,
 				122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */,
-				227DED7426EF546E001CCCE0 /* CommunityVM.swift in Sources */,
 				1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
