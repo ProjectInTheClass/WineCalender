@@ -22,9 +22,12 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var bottomTable: UITableView!
+    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var postUpdateTime: UILabel!
+    @IBOutlet weak var producingCountryLabel: UILabel!
+    @IBOutlet weak var vintageLabel: UILabel!
     
     var likesPost: Bool = false
     
@@ -41,14 +44,20 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         postCollection.delegate = self
         postCollection.dataSource = self
         
-        postCollection.backgroundColor = postDetailVM?.postCardColor
+        guard let vm = postDetailVM else { return }
+        postCollection.backgroundColor = vm.backgroundColor
+        postUpdateTime.text = vm.date
         
-        wineName.text = postDetailVM?.wineName
-        mainText.text = postDetailVM?.memo
+        moreButton.isHidden = vm.isMoreButtonHidden
+        heartButton.isHidden = vm.isLikeHidden
+        likeLabel.isHidden = vm.isLikeHidden
         
-        pageControl.numberOfPages = postDetailData?.postImageURL.count ?? 0
+        pageControl.numberOfPages = vm.imageCount
+        mainText.text = vm.memo
+        wineName.text = vm.wineName
         
-        mainText.text = "sdjfilaesjflisejflijfilsjflseifjalsefjise\nfejsila\nfseelaijfsleafjlsie"
+        producingCountryLabel.text = vm.producingCountry
+        vintageLabel.text = vm.vintage
         
         updateLikes()
     }
