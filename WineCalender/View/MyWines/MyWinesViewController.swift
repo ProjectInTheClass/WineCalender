@@ -497,11 +497,11 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
                 postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
             } else { //회원 - 공유하지 않은 게시물
                 postDetailVC.noteDetailData = notes[indexPath.row]
-//                postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], myWinesHeaderVM!.nickname, nil, cellColor ?? .white)
+                postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], cellColor ?? .white)
             }
         } else { //비회원
             postDetailVC.noteDetailData = notes[indexPath.row]
-//            postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], myWinesHeaderVM!.nickname, nil, cellColor ?? .white)
+            postDetailVC.postDetailVM = PostDetailVM(notes[indexPath.row], cellColor ?? .white)
         }
         self.navigationController?.pushViewController(postDetailVC, animated: true)
     }
