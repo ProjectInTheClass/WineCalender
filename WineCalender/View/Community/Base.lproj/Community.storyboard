@@ -204,10 +204,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pk8-cV-CI1">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="739"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="712"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="muK-EJ-fUO" userLabel="Images Stack View">
-                                                <rect key="frame" x="0.0" y="27" width="414" height="712"/>
+                                                <rect key="frame" x="0.0" y="27" width="414" height="685"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6mt-CW-wca">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="444"/>
@@ -270,16 +270,16 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="와인한잔치얼스" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyU-sN-81t">
-                                                        <rect key="frame" x="0.0" y="452" width="414" height="44"/>
+                                                        <rect key="frame" x="0.0" y="452" width="414" height="17"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="JXH-Xu-mEE"/>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" id="JXH-Xu-mEE"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S1h-Oe-e6s">
-                                                        <rect key="frame" x="0.0" y="504" width="414" height="208"/>
+                                                        <rect key="frame" x="0.0" y="477" width="414" height="208"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ia-ib-mHw" userLabel="Wine Info View">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -364,7 +364,6 @@
                                                                         </subviews>
                                                                     </stackView>
                                                                 </subviews>
-                                                                <color key="backgroundColor" systemColor="systemRedColor"/>
                                                                 <gestureRecognizers/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="bottom" secondItem="0X2-Oq-xxs" secondAttribute="bottom" constant="8" id="MBl-7X-4Eo"/>
@@ -619,6 +618,7 @@
                         <outlet property="profileBg" destination="3dt-aW-Dz3" id="An4-lK-6nq"/>
                         <outlet property="userName" destination="Enz-4H-gxj" id="G1d-lh-juG"/>
                         <outlet property="vintageLabel" destination="b1z-SZ-NaZ" id="6zr-qh-uea"/>
+                        <outlet property="wineInfoView" destination="6ia-ib-mHw" id="YaA-b4-gLM"/>
                         <outlet property="wineName" destination="4US-e0-Td6" id="xf2-6O-NcA"/>
                     </connections>
                 </viewController>
@@ -1204,9 +1204,6 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

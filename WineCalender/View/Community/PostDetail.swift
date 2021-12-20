@@ -26,6 +26,7 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var postUpdateTime: UILabel!
+    @IBOutlet weak var wineInfoView: UIView!
     @IBOutlet weak var producingCountryLabel: UILabel!
     @IBOutlet weak var vintageLabel: UILabel!
     
@@ -65,6 +66,12 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         vm.setProfileImage(of: detailProfile)
         
         updateLikes()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        wineInfoView.layer.addBorder([.top, .bottom], color: .systemGray6, width: 1)
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
