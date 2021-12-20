@@ -307,7 +307,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-jh-jtY">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-jh-jtY">
                                             <rect key="frame" x="30" y="106.5" width="100" height="99"/>
                                             <color key="backgroundColor" systemColor="systemGray4Color"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -315,8 +315,6 @@
                                                 <constraint firstAttribute="height" priority="999" constant="100" id="2mC-ux-Xza"/>
                                                 <constraint firstAttribute="width" constant="100" id="zah-4E-u40"/>
                                             </constraints>
-                                            <imageReference key="image" image="person.circle.fill" catalog="system" symbolScale="default"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="10"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                     <integer key="value" value="50"/>
@@ -501,7 +499,7 @@
             <point key="canvasLocation" x="1097" y="-50"/>
         </scene>
     </scenes>
-    <color key="tintColor" name="ThatWineColor"/>
+    <color key="tintColor" systemColor="tintColor"/>
     <resources>
         <image name="MyWines001" width="375" height="125"/>
         <image name="MyWinesTabBarItem" width="25" height="25"/>
@@ -523,6 +521,9 @@
         </systemColor>
         <systemColor name="systemGray4Color">
             <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

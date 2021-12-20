@@ -6,12 +6,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--추천게시글-->
+        <!--Community-->
         <scene sceneID="07v-qx-jNX">
             <objects>
                 <viewController wantsFullScreenLayout="YES" id="MUZ-EU-hAR" customClass="Community" customModule="WineCalender" customModuleProvider="target" sceneMemberID="viewController">
@@ -44,6 +45,8 @@
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jmh-43-1b1">
                                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="16"/>
+                                                                    <color key="backgroundColor" name="ThatWineColor"/>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="25" id="el9-vf-Po0"/>
                                                                         <constraint firstAttribute="height" constant="25" id="zTO-yG-VD4"/>
@@ -179,7 +182,11 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="추천게시글" largeTitleDisplayMode="never" id="KRr-O8-qYx"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KRr-O8-qYx">
+                        <barButtonItem key="backBarButtonItem" title="Community" id="lsJ-vt-P4E">
+                            <color key="tintColor" systemColor="tintColor"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0et-X2-mgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -402,9 +409,10 @@
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nVL-Zc-8yA">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="366" height="50"/>
                                                                                         <subviews>
-                                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eXG-EC-ofK">
-                                                                                                <rect key="frame" x="0.0" y="3" width="44" height="44"/>
-                                                                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eXG-EC-ofK">
+                                                                                                <rect key="frame" x="0.0" y="3.5" width="44" height="43"/>
+                                                                                                <color key="backgroundColor" name="ThatWineColor"/>
+                                                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="height" constant="44" id="NIy-ZX-J0b"/>
                                                                                                     <constraint firstAttribute="width" constant="44" id="seJ-a1-OhH"/>
@@ -466,8 +474,10 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dt-aW-Dz3">
                                                         <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-gm-DbW">
-                                                                <rect key="frame" x="2" y="2" width="50" height="50"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-gm-DbW">
+                                                                <rect key="frame" x="2" y="2.5" width="50" height="49"/>
+                                                                <color key="backgroundColor" name="ThatWineColor"/>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="eDs-gm-DbW" secondAttribute="height" multiplier="1:1" id="DRX-3l-P40"/>
                                                                     <constraint firstAttribute="width" constant="50" id="aBj-u0-r0A"/>
@@ -585,6 +595,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="U7s-ho-srh"/>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Mce-7k-g9l"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="cfg-mE-u42" firstAttribute="leading" secondItem="xIN-rn-wZC" secondAttribute="leading" id="UDE-ZN-H9n"/>
@@ -633,7 +644,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="C8a-yL-4bf">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" name="blackAndWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1152,17 +1162,18 @@
             <point key="canvasLocation" x="4175" y="2449"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.50980395079999996" green="0.28627452250000002" blue="0.26274511220000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+    <color key="tintColor" name="ThatWineColor"/>
     <resources>
         <image name="chevron.up.chevron.down" catalog="system" width="128" height="128"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="blackAndWhite">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ThatWineColor">
+            <color red="0.92500001192092896" green="0.3919999897480011" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="themeDarkItemColor">
             <color red="0.92500001192092896" green="0.95099997520446777" blue="0.75700002908706665" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

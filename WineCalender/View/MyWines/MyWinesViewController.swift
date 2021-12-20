@@ -48,6 +48,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
+        
         uploadUpdateDeleteNotiObserver()
         
         if Auth.auth().currentUser != nil {
@@ -64,8 +65,13 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         let addButton = TabBarController.addButton
         addButton.isHidden = false
         
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
+        if collectionView.contentOffset.y == 0 {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        } else {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
+        }
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        
         authListener()
         
         isLoadingAnimationPlaying ? loadingAnimationPlay() : loadingAnimationStop()
@@ -299,30 +305,14 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 } else {
                     self.insideoutCellsInSectionTwo[indexPath.item] = indexPath.item
                 }
-                cell.imageView.alpha = 0.3
-                cell.imageView.layer.cornerRadius = 10
-                cell.imageWhiteBackView.isHidden = false
-                cell.wineStackView.isHidden = false
-                cell.likesCommentsStackView.isHidden = false
-                cell.imageViewTopAnchor.constant = 10
-                cell.imageViewLeadingAnchor.constant = 10
-                cell.imageViewTrailingAnchor.constant = 10
-                cell.imageViewBottomAnchor.constant = 10
+                cell.configureInsideoutCell()
             } else {
                 if indexPath.section == 0 {
                     self.insideoutCellsInSectionZero[indexPath.item] = nil
                 } else {
                     self.insideoutCellsInSectionTwo[indexPath.item] = nil
                 }
-                cell.imageView.alpha = 1.0
-                cell.imageView.layer.cornerRadius = 0
-                cell.imageWhiteBackView.isHidden = true
-                cell.wineStackView.isHidden = true
-                cell.likesCommentsStackView.isHidden = true
-                cell.imageViewTopAnchor.constant = 0
-                cell.imageViewLeadingAnchor.constant = 0
-                cell.imageViewTrailingAnchor.constant = 0
-                cell.imageViewBottomAnchor.constant = 0
+                cell.prepareForReuse()
             }
         }
     }
@@ -537,6 +527,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 10 {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
+        } else {
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        }
+        
         if scrollView.contentOffset.y > collectionView.contentSize.height - scrollView.frame.size.height - 100 {
             beginBatchFetch()
         }

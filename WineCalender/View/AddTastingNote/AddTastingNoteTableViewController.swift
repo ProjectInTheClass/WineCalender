@@ -568,8 +568,10 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     // MARK: - memo UITextViewDelegate
+    let memoTextViewPlaceholder = "와인 테이스팅 메모를 입력해 주세요."
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "와인 테이스팅 메모를 입력해 주세요." {
+        if textView.text == memoTextViewPlaceholder {
             textView.text = ""
             textView.textColor = .label
         }
@@ -581,8 +583,8 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" || textView.text == "와인 테이스팅 메모를 입력해 주세요." {
-            textView.text = "와인 테이스팅 메모를 입력해 주세요."
+        if textView.text == "" || textView.text == memoTextViewPlaceholder {
+            textView.text = memoTextViewPlaceholder
             textView.textColor = UIColor.systemGray2
         }
     }
@@ -666,7 +668,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 body = nil
             }
             let memo: String? = {
-                if self.wineMemoTextView.text == "와인 테이스팅 메모를 입력해 주세요." {
+                if self.wineMemoTextView.text == self.memoTextViewPlaceholder {
                     let text: String? = nil
                     return text
                 } else {

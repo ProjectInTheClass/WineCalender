@@ -29,6 +29,8 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Miw-oI-tGw">
                                                 <rect key="frame" x="0.0" y="2.5" width="25" height="25"/>
+                                                <color key="backgroundColor" name="ThatWineColor"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="25" id="DS8-gg-Fzi"/>
                                                     <constraint firstAttribute="height" constant="25" id="NW2-NU-8lj"/>
@@ -78,6 +80,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcW-ux-kOd">
                                                                 <rect key="frame" x="0.0" y="0.0" width="20.5" height="25"/>
+                                                                <color key="tintColor" name="ThatWineColor"/>
                                                                 <state key="normal" image="heart" catalog="system"/>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b36-qu-kBV">
@@ -93,6 +96,7 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHy-5R-erX">
                                                                 <rect key="frame" x="0.0" y="0.0" width="22.5" height="25"/>
+                                                                <color key="tintColor" name="ThatWineColor"/>
                                                                 <state key="normal" image="text.bubble" catalog="system"/>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSH-6e-izy">
@@ -177,6 +181,9 @@
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
+        <namedColor name="ThatWineColor">
+            <color red="0.92500001192092896" green="0.3919999897480011" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="themeDarkItemColor">
             <color red="0.92500001192092896" green="0.95099997520446777" blue="0.75700002908706665" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

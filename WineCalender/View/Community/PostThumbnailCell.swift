@@ -18,8 +18,6 @@ class PostThumbnailCell : UICollectionViewCell {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var likesLabel: UILabel!
     
-    let profileImagePlaceholder = UIImage(systemName: "person.circle.fill")//?.withTintColor(.systemPurple, renderingMode: .alwaysOriginal)
-    
     var postThumbnailVM : PostThumbnailVM?{
         didSet {
             updateView()
