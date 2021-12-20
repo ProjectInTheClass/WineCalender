@@ -476,7 +476,7 @@
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-gm-DbW">
                                                                 <rect key="frame" x="2" y="2.5" width="50" height="49"/>
-                                                                <color key="backgroundColor" name="ThatWineColor"/>
+                                                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="eDs-gm-DbW" secondAttribute="height" multiplier="1:1" id="DRX-3l-P40"/>

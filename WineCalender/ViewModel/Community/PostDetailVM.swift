@@ -102,6 +102,9 @@ struct PostDetailVM {
     }
     
     func setProfileImage(of imageView: UIImageView) {
-        imageView.kf.setImage(with: profileImageURL, placeholder: UIImage(systemName: "person.circle.fill"))
+        if !isCoreData {
+            imageView.backgroundColor = UIColor(named: "ThatWineColor")
+        }
+        imageView.kf.setImage(with: profileImageURL, placeholder: profileImagePlaceholder)
     }
 }
