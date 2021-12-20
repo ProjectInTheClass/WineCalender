@@ -182,11 +182,7 @@
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KRr-O8-qYx">
-                        <barButtonItem key="backBarButtonItem" title="Community" id="lsJ-vt-P4E">
-                            <color key="tintColor" systemColor="tintColor"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KRr-O8-qYx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0et-X2-mgL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

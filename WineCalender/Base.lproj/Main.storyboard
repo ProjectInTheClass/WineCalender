@@ -970,7 +970,7 @@
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="trash" catalog="system" width="121" height="128"/>
         <namedColor name="ThatWineColor">
-            <color red="0.92549026010000002" green="0.39215683940000001" blue="0.42352938649999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.92500001192092896" green="0.3919999897480011" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="themeDarkItemColor">
             <color red="0.92500001192092896" green="0.95099997520446777" blue="0.75700002908706665" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
