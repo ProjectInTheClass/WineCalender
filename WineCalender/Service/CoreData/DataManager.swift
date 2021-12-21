@@ -82,29 +82,30 @@ class DataManager {
         completion(true)
     }
     
-    func removeWineTastingNote(wineTastingNote: WineTastingNote?) {
+    func removeWineTastingNote(wineTastingNote: WineTastingNote?, completion: @escaping (Bool) -> Void) {
         if let note = wineTastingNote {
             mainContext.delete(note)
             saveContext()
+            completion(true)
         }
     }
     
-    func removeAllWineTastingNotes(completion: @escaping (Bool) -> Void) {
-        DataManager.shared.fetchWineTastingNote { notes in
-            if notes.count == 0 {
-                completion(true)
-            } else {
-                for i in 1...notes.count {
-                    let num = i - 1
-                    let note = notes[num]
-                    DataManager.shared.removeWineTastingNote(wineTastingNote: note)
-                    if i == notes.count {
-                        completion(true)
-                    }
-                }
-            }
-        }
-    }
+//    func removeAllWineTastingNotes(completion: @escaping (Bool) -> Void) {
+//        DataManager.shared.fetchWineTastingNote { notes in
+//            if notes.count == 0 {
+//                completion(true)
+//            } else {
+//                for i in 1...notes.count {
+//                    let num = i - 1
+//                    let note = notes[num]
+//                    DataManager.shared.removeWineTastingNote(wineTastingNote: note)
+//                    if i == notes.count {
+//                        completion(true)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     // MARK: - Calendar Data
     

@@ -10,11 +10,21 @@ import YPImagePicker
 import FirebaseAuth
 import Lottie
 
+enum PostingMode: String {
+    case addPost
+    case updatePost
+    case addNote
+    case updateNoteOfNonmember
+    case updateNoteOfMember
+}
+
 class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
+    var postingMode: PostingMode? = nil
+    
     lazy var postID: String? = nil
-    lazy var updatePost: Post? = nil
-    lazy var updateNote: WineTastingNote? = nil
+    lazy var post: Post? = nil
+    lazy var note: WineTastingNote? = nil
     
     var selectedImages: [UIImage] = []
     var selectedWineVarieties: [String]?
@@ -53,7 +63,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
-        configureUI()
+        configure()
         configureImageViewsUI()
     }
     
@@ -65,99 +75,119 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
         sender.resignFirstResponder()
     }
     
-    func configureUI() {
-        if self.postID != nil {
-            self.navigationItem.title = "테이스팅 노트 수정"
-            self.doneButton.isEnabled = true
-            setupDataForUpdatePost()
-        } else if self.updateNote != nil {
-            self.navigationItem.title = "테이스팅 노트 수정"
-            self.doneButton.isEnabled = true
-            setupDataForUpdateNote()
+    func configure() {
+        if Auth.auth().currentUser != nil {
+            if postID == nil && note == nil {
+                postingMode = .addPost
+                self.navigationItem.title = "테이스팅 노트 작성"
+            } else if postID != nil {
+                postingMode = .updatePost
+                self.navigationItem.title = "테이스팅 노트 수정"
+                self.doneButton.isEnabled = true
+                setupDataForUpdatePost()
+            } else {
+                postingMode = .updateNoteOfMember
+                self.navigationItem.title = "테이스팅 노트 수정"
+                self.doneButton.isEnabled = true
+                setupDataForUpdateNote()
+            }
         } else {
-            self.navigationItem.title = "테이스팅 노트 작성"
+            if note == nil {
+                postingMode = .addNote
+                self.navigationItem.title = "테이스팅 노트 작성"
+            } else {
+                postingMode = .updateNoteOfNonmember
+                self.navigationItem.title = "테이스팅 노트 수정"
+                self.doneButton.isEnabled = true
+                setupDataForUpdateNote()
+            }
         }
     }
     
     func setupDataForUpdatePost() {
         PostManager.shared.fetchMyPost(postID: self.postID ?? "") { myPost in
-            self.updatePost = myPost
+            self.post = myPost
             
-            self.wineTastingdate.date = self.updatePost?.tastingNote.tastingDate ?? Date()
-            self.wineTastingPlaceTextField.text = self.updatePost?.tastingNote.place
-            let numberOfPostImage = self.updatePost?.postImageURL.count
+            self.wineTastingdate.date = self.post?.tastingNote.tastingDate ?? Date()
+            self.wineTastingPlaceTextField.text = self.post?.tastingNote.place
+            let numberOfPostImage = self.post?.postImageURL.count
             if numberOfPostImage == 1 {
-                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
+                self.firstImageView.kf.setImage(with: URL(string: self.post?.postImageURL[0] ?? ""))
             }
             if numberOfPostImage == 2 {
-                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
-                self.secondImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[1] ?? ""))
+                self.firstImageView.kf.setImage(with: URL(string: self.post?.postImageURL[0] ?? ""))
+                self.secondImageView.kf.setImage(with: URL(string: self.post?.postImageURL[1] ?? ""))
             }
             if numberOfPostImage == 3 {
-                self.firstImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[0] ?? ""))
-                self.secondImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[1] ?? ""))
-                self.thirdImageView.kf.setImage(with: URL(string: self.updatePost?.postImageURL[2] ?? ""))
+                self.firstImageView.kf.setImage(with: URL(string: self.post?.postImageURL[0] ?? ""))
+                self.secondImageView.kf.setImage(with: URL(string: self.post?.postImageURL[1] ?? ""))
+                self.thirdImageView.kf.setImage(with: URL(string: self.post?.postImageURL[2] ?? ""))
             }
-            self.wineNameTextField.text = self.updatePost?.tastingNote.wineName
+            self.wineNameTextField.text = self.post?.tastingNote.wineName
             for index in 0...4 {
-                if self.wineCategorySegmentedControl.titleForSegment(at: index) == self.updatePost?.tastingNote.category {
+                if self.wineCategorySegmentedControl.titleForSegment(at: index) == self.post?.tastingNote.category {
                     self.wineCategorySegmentedControl.selectedSegmentIndex = index
                 }
             }
-            self.selectedWineVarieties = self.updatePost?.tastingNote.varieties
+            self.selectedWineVarieties = self.post?.tastingNote.varieties
             self.setupWineVarietiesLable()
-            self.selectedWineProducingCountry = self.updatePost?.tastingNote.producingCountry
+            self.selectedWineProducingCountry = self.post?.tastingNote.producingCountry
             self.setupWineProducingCoutryLable()
-            self.wineProducerTextField.text = self.updatePost?.tastingNote.producer
-            self.selectedVintage = self.updatePost?.tastingNote.vintage
+            self.wineProducerTextField.text = self.post?.tastingNote.producer
+            self.selectedVintage = self.post?.tastingNote.vintage
             self.setupWineVintageLable()
-            if let p = self.updatePost?.tastingNote.price {
+            if let p = self.post?.tastingNote.price {
                 self.price = p
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .decimal
                 self.winePriceTextField.text = numberFormatter.string(for: p)
             }
-            if let ac = self.updatePost?.tastingNote.alcoholContent {
-                self.alcoholContent = ac
-                let alcoholContentString = String(ac)
-//                alcoholContentString = alcoholContentString.replacingOccurrences(of: ".0", with: "")
-                self.wineAlcoholContentTextField.text = alcoholContentString
+            if let ac = self.post?.tastingNote.alcoholContent {
+                if ac != 0 {
+                    self.alcoholContent = ac
+                    var alcoholContentString = String(ac)
+                    if alcoholContentString.hasSuffix(".0") {
+                        alcoholContentString.removeLast()
+                        alcoholContentString.removeLast()
+                    }
+                    self.wineAlcoholContentTextField.text = alcoholContentString
+                }
             }
-            self.selectedWineAromasAndFlavors = self.updatePost?.tastingNote.aromasAndFlavors
+            self.selectedWineAromasAndFlavors = self.post?.tastingNote.aromasAndFlavors
             self.setupWineAromasAndFlavorsLable()
-            if let s = self.updatePost?.tastingNote.sweet {
+            if let s = self.post?.tastingNote.sweet {
                 for index in 0...4 {
                     if self.sweetSegmentedControl.titleForSegment(at: index) == String(s) {
                         self.sweetSegmentedControl.selectedSegmentIndex = index
                     }
                 }
             }
-            if let a = self.updatePost?.tastingNote.acidity {
+            if let a = self.post?.tastingNote.acidity {
                 for index in 0...4 {
                     if self.aciditySegmentedControl.titleForSegment(at: index) == String(a) {
                         self.aciditySegmentedControl.selectedSegmentIndex = index
                     }
                 }
             }
-            if let t = self.updatePost?.tastingNote.tannin {
+            if let t = self.post?.tastingNote.tannin {
                 for index in 0...4 {
                     if self.tanninSegmentedControl.titleForSegment(at: index) == String(t) {
                         self.tanninSegmentedControl.selectedSegmentIndex = index
                     }
                 }
             }
-            if let b = self.updatePost?.tastingNote.body {
+            if let b = self.post?.tastingNote.body {
                 for index in 0...4 {
                     if self.bodySegmentedControl.titleForSegment(at: index) == String(b) {
                         self.bodySegmentedControl.selectedSegmentIndex = index
                     }
                 }
             }
-            if let memo = self.updatePost?.tastingNote.memo {
+            if let memo = self.post?.tastingNote.memo {
                 self.wineMemoTextView.text = memo
                 self.wineMemoTextView.textColor = .label
             }
-            if let r = self.updatePost?.tastingNote.rating {
+            if let r = self.post?.tastingNote.rating {
                 for index in 0...4 {
                     if self.ratingSegmentedControl.titleForSegment(at: index) == String(r) {
                         self.ratingSegmentedControl.selectedSegmentIndex = index
@@ -168,35 +198,35 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     }
     
     func setupDataForUpdateNote() {
-        self.wineTastingdate.date = updateNote?.tastingDate ?? Date()
-        self.wineTastingPlaceTextField.text = updateNote?.place
-        let numberOfPostImage = updateNote?.image.count
+        self.wineTastingdate.date = note?.tastingDate ?? Date()
+        self.wineTastingPlaceTextField.text = note?.place
+        let numberOfPostImage = note?.image.count
         if numberOfPostImage == 1 {
-            self.firstImageView.image = updateNote?.image[0]
+            self.firstImageView.image = note?.image[0]
         }
         if numberOfPostImage == 2 {
-            self.firstImageView.image = updateNote?.image[0]
-            self.secondImageView.image = updateNote?.image[1]
+            self.firstImageView.image = note?.image[0]
+            self.secondImageView.image = note?.image[1]
         }
         if numberOfPostImage == 3 {
-            self.firstImageView.image = updateNote?.image[0]
-            self.secondImageView.image = updateNote?.image[1]
-            self.thirdImageView.image = updateNote?.image[2]
+            self.firstImageView.image = note?.image[0]
+            self.secondImageView.image = note?.image[1]
+            self.thirdImageView.image = note?.image[2]
         }
-        self.wineNameTextField.text = updateNote?.wineName
+        self.wineNameTextField.text = note?.wineName
         for index in 0...4 {
-            if wineCategorySegmentedControl.titleForSegment(at: index) == updateNote?.category {
+            if wineCategorySegmentedControl.titleForSegment(at: index) == note?.category {
                 wineCategorySegmentedControl.selectedSegmentIndex = index
             }
         }
-        self.selectedWineVarieties = updateNote?.varieties
+        self.selectedWineVarieties = note?.varieties
         self.setupWineVarietiesLable()
-        self.selectedWineProducingCountry = updateNote?.producingCountry
+        self.selectedWineProducingCountry = note?.producingCountry
         self.setupWineProducingCoutryLable()
-        self.wineProducerTextField.text = updateNote?.producer
-        self.selectedVintage = updateNote?.vintage
+        self.wineProducerTextField.text = note?.producer
+        self.selectedVintage = note?.vintage
         self.setupWineVintageLable()
-        if let p = updateNote?.price {
+        if let p = note?.price {
             if p != 0 {
                 self.price = p
                 let numberFormatter = NumberFormatter()
@@ -204,7 +234,7 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 self.winePriceTextField.text = numberFormatter.string(for: p)
             }
         }
-        if let ac = updateNote?.alcoholContent {
+        if let ac = note?.alcoholContent {
             if ac != 0 {
                 self.alcoholContent = ac
                 var alcoholContentString = String(ac)
@@ -215,41 +245,41 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
                 self.wineAlcoholContentTextField.text = alcoholContentString
             }
         }
-        self.selectedWineAromasAndFlavors = updateNote?.aromasAndFlavors
+        self.selectedWineAromasAndFlavors = note?.aromasAndFlavors
         self.setupWineAromasAndFlavorsLable()
-        if let s = updateNote?.sweet {
+        if let s = note?.sweet {
             for index in 0...4 {
                 if sweetSegmentedControl.titleForSegment(at: index) == String(s) {
                     sweetSegmentedControl.selectedSegmentIndex = index
                 }
             }
         }
-        if let a = updateNote?.acidity {
+        if let a = note?.acidity {
             for index in 0...4 {
                 if aciditySegmentedControl.titleForSegment(at: index) == String(a) {
                     aciditySegmentedControl.selectedSegmentIndex = index
                 }
             }
         }
-        if let t = updateNote?.tannin {
+        if let t = note?.tannin {
             for index in 0...4 {
                 if tanninSegmentedControl.titleForSegment(at: index) == String(t) {
                     tanninSegmentedControl.selectedSegmentIndex = index
                 }
             }
         }
-        if let b = updateNote?.body {
+        if let b = note?.body {
             for index in 0...4 {
                 if bodySegmentedControl.titleForSegment(at: index) == String(b) {
                     bodySegmentedControl.selectedSegmentIndex = index
                 }
             }
         }
-        if let memo = updateNote?.memo {
+        if let memo = note?.memo {
             self.wineMemoTextView.text = memo
             self.wineMemoTextView.textColor = .label
         }
-        if let r = updateNote?.rating {
+        if let r = note?.rating {
             for index in 0...4 {
                 if ratingSegmentedControl.titleForSegment(at: index) == String(r) {
                     ratingSegmentedControl.selectedSegmentIndex = index
@@ -261,12 +291,12 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
     // MARK: - image
     func configureImageViewsUI() {
         self.firstImageView.layer.borderWidth = 1
-        if self.postID != nil || self.updateNote != nil {
+        if postingMode == .addNote || postingMode == .addPost {
+            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
+        } else {
             self.firstImageView.layer.borderColor = UIColor.gray.cgColor
             self.addImageButton.isHidden = true
             self.imageWarningLabel.isHidden = true
-        } else {
-            self.firstImageView.layer.borderColor = UIColor.systemPink.cgColor
         }
         self.secondImageView.layer.borderWidth = 1
         self.secondImageView.layer.borderColor = UIColor.gray.cgColor
@@ -683,82 +713,78 @@ class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDele
             
             let tastingNote = WineTastingNotes(tastingDate: date, place: place, wineName: name, category: category, varieties: self.selectedWineVarieties, producingCountry: self.selectedWineProducingCountry, producer: producer, vintage: self.selectedVintage, price: self.price, alcoholContent: self.alcoholContent, sweet: sweet, acidity: acidity, tannin: tannin, body: body, aromasAndFlavors: self.selectedWineAromasAndFlavors, memo: memo, rating: rating)
             
-            if Auth.auth().currentUser == nil {
+            if self.postingMode == .addNote {
                 //비회원 - 처음 작성
-                if self.updateNote == nil {
-                    DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages, completion: { result in
-                        if result == true {
-                            animationStop()
-                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                        }
-                    })
-                } else {
-                    //비회원 - 수정
-                    self.updateNote?.updatedDate = Date()
-                    self.updateNote?.tastingDate = date
-                    self.updateNote?.place = place
-                    self.updateNote?.wineName = name
-                    self.updateNote?.category = category
-                    self.updateNote?.varieties = self.selectedWineVarieties
-                    self.updateNote?.producingCountry = self.selectedWineProducingCountry
-                    self.updateNote?.producer = producer
-                    self.updateNote?.vintage = self.selectedVintage
-                    self.updateNote?.price = self.price ?? 0
-                    self.updateNote?.alcoholContent = self.alcoholContent ?? 0
-                    self.updateNote?.sweet = sweet ?? 0
-                    self.updateNote?.acidity = acidity ?? 0
-                    self.updateNote?.tannin = tannin ?? 0
-                    self.updateNote?.body = body ?? 0
-                    self.updateNote?.aromasAndFlavors = self.selectedWineAromasAndFlavors
-                    self.updateNote?.memo = memo
-                    self.updateNote?.rating = rating ?? 0
-                    DataManager.shared.updateWineTastingNote(completion: { result in
-                        if result == true {
-                            animationStop()
-                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                        }
-                    })
-                }
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                if self.updatePost == nil {
-                    //회원 - 처음 작성
-                    PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages) {result in
-                        switch result {
-                        case .success(_):
-                            animationStop()
-                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            self.dismiss(animated: true, completion: nil)
-                        case .failure(let error):
-                            animationStop()
-                            let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                            self.present(alert, animated: true)
-                        }
+                DataManager.shared.addWineTastingNote(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages, completion: { result in
+                    if result == true {
+                        animationStop()
+                        NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        self.dismiss(animated: true, completion: nil)
                     }
-                } else {
-                    //회원 - 수정
-                    PostManager.shared.updateMyPost(postID: self.updatePost?.postID ?? "", tastingNote: tastingNote) { result in
-                        switch result {
-                        case .success(_):
-                            animationStop()
-                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
-                            self.dismiss(animated: true, completion: nil)
-//                            let navVC = self.presentingViewController?.children.first
-//                            let postDetailVC = navVC?.children.last
-                            //데이터넘기기?
-                        case .failure(let error):
-                            animationStop()
-                            let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                            self.present(alert, animated: true)
-                        }
+                })
+            } else if self.postingMode == .updateNoteOfMember || self.postingMode == .updateNoteOfNonmember {
+                //회원, 비회원 - 노트 수정
+                self.note?.updatedDate = Date()
+                self.note?.tastingDate = date
+                self.note?.place = place
+                self.note?.wineName = name
+                self.note?.category = category
+                self.note?.varieties = self.selectedWineVarieties
+                self.note?.producingCountry = self.selectedWineProducingCountry
+                self.note?.producer = producer
+                self.note?.vintage = self.selectedVintage
+                self.note?.price = self.price ?? 0
+                self.note?.alcoholContent = self.alcoholContent ?? 0
+                self.note?.sweet = sweet ?? 0
+                self.note?.acidity = acidity ?? 0
+                self.note?.tannin = tannin ?? 0
+                self.note?.body = body ?? 0
+                self.note?.aromasAndFlavors = self.selectedWineAromasAndFlavors
+                self.note?.memo = memo
+                self.note?.rating = rating ?? 0
+                DataManager.shared.updateWineTastingNote(completion: { result in
+                    if result == true {
+                        animationStop()
+                        NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                    }
+                })
+                self.dismiss(animated: true, completion: nil)
+            } else if self.postingMode == .addPost {
+                //회원 - 처음 작성
+                PostManager.shared.uploadPost(posting: nil, updated: nil, tastingNote: tastingNote, images: self.selectedImages) {result in
+                    switch result {
+                    case .success(_):
+                        animationStop()
+                        NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        self.dismiss(animated: true, completion: nil)
+                    case .failure(let error):
+                        animationStop()
+                        let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
+                }
+            } else {
+                //회원 - 수정
+                PostManager.shared.updateMyPost(postID: self.post?.postID ?? "", tastingNote: tastingNote) { result in
+                    switch result {
+                    case .success(_):
+                        animationStop()
+                        NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        self.dismiss(animated: true, completion: nil)
+                        //let navVC = self.presentingViewController?.children.first
+                        //let postDetailVC = navVC?.children.last
+                        //데이터넘기기?
+                    case .failure(let error):
+                        animationStop()
+                        let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self.present(alert, animated: true)
                     }
                 }
             }
-//            dismiss(animated: true, completion: nil)
         }))
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source

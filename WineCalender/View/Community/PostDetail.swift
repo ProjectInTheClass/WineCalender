@@ -78,15 +78,18 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         guard let vm = postDetailVM else { return }
         
         if vm.isCoreData {
-            //비회원 - 내 글
+            //비회원 - 내 게시물 or 회원 - 공유하지 않은 게시물
             guard noteDetailData != nil else { return }
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
                 let alert2 = UIAlertController(title: "정말로 삭제하시겠습니까?", message: nil, preferredStyle: .actionSheet)
                 alert2.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-                    DataManager.shared.removeWineTastingNote(wineTastingNote: self.noteDetailData)
-                    self.navigationController?.popViewController(animated: true)
-                    NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                    DataManager.shared.removeWineTastingNote(wineTastingNote: self.noteDetailData) { result in
+                        if result ==  true {
+                            self.navigationController?.popViewController(animated: true)
+                            NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                        }
+                    }
                 }))
                 alert2.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 self.present(alert2, animated: true, completion: nil)
@@ -96,15 +99,36 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
                 let addTastingNoteNav = storyboard.instantiateViewController(identifier: "AddTastingNoteNav")
                 addTastingNoteNav.modalPresentationStyle = .fullScreen
                 let addTastingNoteTVC = addTastingNoteNav.children.first as! AddTastingNoteTableViewController
-                addTastingNoteTVC.updateNote = self.noteDetailData
+                addTastingNoteTVC.note = self.noteDetailData
                 self.present(addTastingNoteNav, animated: true, completion: nil)
             }))
+            //회원 - 공유하지 않은 게시물 공유
+            if Auth.auth().currentUser != nil, let note = noteDetailData {
+                alert.addAction(UIAlertAction(title: "커뮤니티에 공유", style: .default, handler: { _ in
+                    let alert2 = UIAlertController(title: "커뮤니티에 공유한 후 다시 되돌릴 수 없습니다. 공유하시겠습니까?", message: nil, preferredStyle: .actionSheet)
+                    alert2.addAction(UIAlertAction(title: "확인", style: .default, handler: { action in
+                        PostManager.shared.uploadDatafromCoreDataToFirebase(note: note) { result in
+                            switch result {
+                            case .success(()):
+                                self.navigationController?.popViewController(animated: true)
+                                NotificationCenter.default.post(name: MyWinesViewController.uploadUpdateDelete, object: nil)
+                            case .failure(let error):
+                                let alert3 = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+                                alert3.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                self.present(alert3, animated: true)
+                            }
+                        }
+                    }))
+                    alert2.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    self.present(alert2, animated: true, completion: nil)
+                }))
+            }
             alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
             guard let currentUserUID = Auth.auth().currentUser?.uid  else { return }
             if postDetailData?.authorUID == currentUserUID {
-                //회원 - 내 글
+                //회원 - 내 게시물
                 let numberOfImages = postDetailData?.postImageURL.count
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in

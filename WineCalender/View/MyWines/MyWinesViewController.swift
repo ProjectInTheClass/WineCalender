@@ -83,6 +83,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         NotificationCenter.default.addObserver(forName: MyWinesViewController.uploadUpdateDelete, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
             if Auth.auth().currentUser != nil {
                 self?.updatePosts()
+                self?.fetchTastingNotes()
             } else {
                 self?.updateNonmemberUI()
             }
@@ -159,12 +160,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
         beginBatchFetch()
-        if notes.isEmpty {
-            fetchTastingNotes()
-        }
+        
+        fetchTastingNotes()
     }
     
-    //회원 - 공유하지 않은 게시물
+    //회원 - 공유하지 않은 게시물 불러오기
     func fetchTastingNotes() {
         DataManager.shared.fetchWineTastingNote { [weak self] notes in
             self?.notes = notes

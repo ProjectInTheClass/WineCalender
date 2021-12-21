@@ -248,46 +248,26 @@ class PostManager {
             }
         }
     }
-
-/*
-    func uploadDatafromCoreDataToFirebase(completion: @escaping (Bool) -> Void) {
-        DataManager.shared.fetchWineTastingNote { notes in
-            if notes.count == 0 {
-                completion(true)
-            } else {
-                for i in 1...notes.count {
-                    let num = i - 1
-                    let note = notes[num]
-                    var price: Int32? = nil
-                    if note.price == 0 {
-                        price = nil
-                    } else {
-                        price = note.price
-                    }
-                    var alcoholContent: Float? = nil
-                    if note.alcoholContent == 0 {
-                        alcoholContent = nil
-                    } else {
-                        alcoholContent = note.alcoholContent
-                    }
-                    let tastingNote = WineTastingNotes(tastingDate: note.tastingDate, place: note.place, wineName: note.wineName, category: note.category, varieties: note.varieties, producingCountry: note.producingCountry, producer: note.producer, vintage: note.vintage, price: price, alcoholContent: alcoholContent, sweet: note.sweet, acidity: note.acidity, tannin: note.tannin, body: note.body, aromasAndFlavors: note.aromasAndFlavors, memo: note.memo, rating: note.rating)
-                    PostManager.shared.uploadPost(posting: note.postingDate, updated: note.updatedDate, tastingNote: tastingNote, images: note.image) { result in
-//                        if result == true && i == notes.count {
-//                            completion(true)
-//                        }
-                        
-//                        switch result {
-//                        case .success(_):
-//                            print("")
-//                        case .failure(let error):
-//                            print(error)
-//                        }
+    
+    func uploadDatafromCoreDataToFirebase(note: WineTastingNote ,completion: @escaping (Result<Void,PostError>) -> Void) {
+        let postingDate = note.postingDate
+        let updatedDate = note.updatedDate
+        let tastingNote = WineTastingNotes(tastingDate: note.tastingDate, place: note.place, wineName: note.wineName, category: note.category, varieties: note.varieties, producingCountry: note.producingCountry, producer: note.producer, vintage: note.vintage, price: note.price, alcoholContent: note.alcoholContent, sweet: note.sweet, acidity: note.acidity, tannin: note.tannin, body: note.body, aromasAndFlavors: note.aromasAndFlavors, memo: note.memo, rating: note.rating)
+        let images = note.image
+        
+        PostManager.shared.uploadPost(posting: postingDate, updated: updatedDate, tastingNote: tastingNote, images: images) { result in
+            switch result {
+            case .success(_):
+                DataManager.shared.removeWineTastingNote(wineTastingNote: note) { result in
+                    if result == true {
+                        completion(.success(()))
                     }
                 }
+            case .failure(_):
+                completion(.failure(PostError.failedToUploadPost))
             }
         }
     }
-*/
 }
 
 enum PostError: Error {

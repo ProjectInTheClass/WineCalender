@@ -99,6 +99,7 @@
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssk-ho-PsP">
                                                                     <rect key="frame" x="0.0" y="0.0" width="20.5" height="30"/>
+                                                                    <color key="tintColor" name="ThatWineColor"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="heart" catalog="system"/>
                                                                 </button>
@@ -115,6 +116,7 @@
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTV-Xt-xrY">
                                                                     <rect key="frame" x="0.0" y="0.0" width="22.5" height="30"/>
+                                                                    <color key="tintColor" name="ThatWineColor"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="text.bubble" catalog="system"/>
                                                                 </button>
