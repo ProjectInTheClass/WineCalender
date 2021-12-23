@@ -45,10 +45,12 @@ class TabBarController: UITabBarController {
          pagingViewController.tabBarItem = UITabBarItem(title:"Community",image:UIImage(systemName: ""),selectedImage: nil)
          */
         
+        view.tintColor = UIColor(named: "ThatWineColor")
+        
         let layout = ZigzagLayout()
         let communityCollectionVC = Community(collectionViewLayout: layout)
         communityCollectionVC.tabBarItem = UITabBarItem(title: "Community", image: UIImage(named: "tab_Community_normal"), selectedImage: UIImage(named: "tab_Community_selected"))
-        communityCollectionVC.title = "모든 게시글"
+        communityCollectionVC.navigationItem.title = "모든 게시글"
         let communityNavContr = UINavigationController(rootViewController: communityCollectionVC)
         
         let add = UIViewController()

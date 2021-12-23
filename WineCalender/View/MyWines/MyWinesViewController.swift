@@ -443,7 +443,8 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
                 return myWinesCellSize
             }
         } else if indexPath.section == 1 {
-            return CGSize(width: collectionView.frame.width, height: 50)
+            let margin: CGFloat = 2
+            return CGSize(width: collectionView.bounds.width - margin * 2, height: 50)
         } else {
             return myWinesCellSize
         }

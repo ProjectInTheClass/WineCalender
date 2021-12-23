@@ -59,6 +59,7 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        //super.prepareForReuse()
         imageView.alpha = 1.0
         imageView.layer.cornerRadius = 0
         imageWhiteBackView.isHidden = true
