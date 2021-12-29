@@ -10,15 +10,15 @@ target 'WineCalender' do
   pod "SwiftyCam"
   pod 'JJFloatingActionButton'
   pod 'SnapKit', '~> 5.0.0'
-  pod 'Parchment', '~> 3.0'
   pod 'YPImagePicker'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
-  pod 'Kingfisher', '~> 6.3'
+  pod 'Kingfisher'
   pod 'PanModal'
   pod 'lottie-ios'
+  pod 'Parchment'
 
   target 'WineCalenderTests' do
     inherit! :search_paths

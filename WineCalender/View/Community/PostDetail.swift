@@ -29,6 +29,7 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var wineInfoView: UIView!
     @IBOutlet weak var producingCountryLabel: UILabel!
     @IBOutlet weak var vintageLabel: UILabel!
+    @IBOutlet weak var commentView: UIView!
     
     var likesPost: Bool = false
     
@@ -64,6 +65,8 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         
         userName.text = vm.userName
         vm.setProfileImage(of: detailProfile)
+        
+        commentView.isHidden = true
         
         updateLikes()
     }

@@ -19,6 +19,9 @@ enum PostingMode: String {
 }
 
 class AddTastingNoteTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, YPImagePickerDelegate, UITextViewDelegate, UITextFieldDelegate {
+    func imagePickerHasNoItemsInLibrary(_ picker: YPImagePicker) {
+        
+    }
     
     var postingMode: PostingMode? = nil
     
