@@ -332,7 +332,6 @@ class AuthenticationManager {
     }
     
     func deleteAccount(password: String, completion: @escaping (Result<Void,AuthError>) -> Void) {
-        //todo : like, likeCount -1 , comment
         guard let user = Auth.auth().currentUser, let email = user.email else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
         //비밀번호 확인을 위한 signIn
@@ -347,21 +346,34 @@ class AuthenticationManager {
                         completion(.failure(AuthError.failedToDeleteAccount))
                     }
                     if result == true, postIDs == nil {
+                        //보류
+                        //deleteLikesAndComments()
                         deleteProfileAndAccount()
                     }
                     if result == true, let postIDs = postIDs {
-                        for i in 0...postIDs.count-1 {
-                            let postID = postIDs[i]
-                            PostManager.shared.removeMyPost(postID: postID, authorUID: uid, numberOfImages: 3) { result in
-                                switch result {
-                                case .failure(_):
-                                    completion(.failure(AuthError.failedToDeleteAccount))
-                                case .success(()):
-                                    deleteProfileAndAccount()
-                                }
+                        PostManager.shared.removeMyPosts(postIDs: postIDs, authorUID: uid, numberOfImages: 3) { result in
+                            
+                            switch result {
+                            case false:
+                                completion(.failure(AuthError.failedToDeleteAccount))
+                            case true:
+                                //보류
+                                //deleteLikesAndComments()
+                                deleteProfileAndAccount()
                             }
                         }
                     }
+                }
+            }
+        }
+        
+        func deleteLikesAndComments() {
+            PostManager.shared.removeMyLikesAndComments(authorUID: uid) { result in
+                switch result {
+                case false:
+                    completion(.failure(AuthError.failedToDeleteAccount))
+                case true:
+                    deleteProfileAndAccount()
                 }
             }
         }
@@ -452,7 +464,6 @@ class AuthenticationManager {
                         completion(.success(()))
                     }
                 })
-                
             }
         }
     }

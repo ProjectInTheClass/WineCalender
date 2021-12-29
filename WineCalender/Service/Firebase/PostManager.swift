@@ -249,6 +249,50 @@ class PostManager {
         }
     }
     
+    func removeMyPosts(postIDs: [String], authorUID: String, numberOfImages: Int, completion: @escaping (Bool) -> Void) {
+        var removeCount = 0
+        postIDs.forEach {
+            PostManager.shared.removeMyPost(postID: $0, authorUID: authorUID, numberOfImages: 3) { result in
+                switch result {
+                case .failure(_):
+                    completion(false)
+                    break
+                case .success(()):
+                    removeCount += 1
+                    if removeCount == postIDs.count {
+                        completion(true)
+                    }
+                }
+            }
+        }
+    }
+    
+    func removeMyLikesAndComments(authorUID: String, completion: @escaping (Bool) -> Void) {
+//        PostManager.shared.likeRef.queryOrdered(byChild: authorUID).queryEqual(toValue: "시간").observeSingleEvent(of: .value) {
+        PostManager.shared.likeRef.queryOrdered(byChild: authorUID).queryEqual(toValue: 1640532959).observeSingleEvent(of: .value) {
+              snapshot in
+
+            guard let snapshotDict = snapshot.value as? [String:Any] else {
+                //좋아한 포스트 없음
+                completion(true)
+                return
+            }
+            
+            let postUIDs = snapshotDict.keys
+            postUIDs.forEach {
+                PostManager.shared.unlike(postUID: $0, authorUID: authorUID) { result in
+                    switch result {
+                    case .failure(_):
+                        completion(false)
+                    case .success(()):
+                        print("성공")
+                        //comment삭제
+                    }
+                }
+            }
+        }
+    }
+    
     func uploadDatafromCoreDataToFirebase(note: WineTastingNote ,completion: @escaping (Result<Void,PostError>) -> Void) {
         let postingDate = note.postingDate
         let updatedDate = note.updatedDate
