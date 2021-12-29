@@ -340,6 +340,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if Auth.auth().currentUser == nil {
             return 1
+        } else if noPosts == true && notes.isEmpty {
+            return 1
+        } else if noPosts == true && !notes.isEmpty {
+            return 3
+        } else if noPosts == false && notes.isEmpty {
+            return 1
         } else {
             return 3
         }
