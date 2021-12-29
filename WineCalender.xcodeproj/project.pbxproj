@@ -28,6 +28,14 @@
 		123DEC4926C44AFD00DE45F7 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEC4826C44AFD00DE45F7 /* Countries.swift */; };
 		12578E7A2697517500F2FF20 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E792697517500F2FF20 /* CalendarViewController.swift */; };
 		12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */; };
+		1258ADA4277C2364003C2FF1 /* NoticeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADA3277C2364003C2FF1 /* NoticeController.swift */; };
+		1258ADA6277C23DC003C2FF1 /* NoticeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADA5277C23DC003C2FF1 /* NoticeCell.swift */; };
+		1258ADA8277C35EE003C2FF1 /* HelpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADA7277C35EE003C2FF1 /* HelpController.swift */; };
+		1258ADAA277C4A90003C2FF1 /* HelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADA9277C4A90003C2FF1 /* HelpCell.swift */; };
+		1258ADAC277C582D003C2FF1 /* NoticeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADAB277C582D003C2FF1 /* NoticeManager.swift */; };
+		1258ADAE277C67BD003C2FF1 /* NoticeDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADAD277C67BD003C2FF1 /* NoticeDetailController.swift */; };
+		1258ADB0277C682F003C2FF1 /* NoticeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADAF277C682F003C2FF1 /* NoticeDetailCell.swift */; };
+		1258ADB2277C7A5C003C2FF1 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1258ADB1277C7A5C003C2FF1 /* UILabel+Extension.swift */; };
 		125EBDE526C693A70081E5D8 /* WineAromasAndFlavors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */; };
 		125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */; };
 		125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */; };
@@ -128,6 +136,14 @@
 		123DEC4826C44AFD00DE45F7 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		12578E792697517500F2FF20 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		12578E7B2697542700F2FF20 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		1258ADA3277C2364003C2FF1 /* NoticeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeController.swift; sourceTree = "<group>"; };
+		1258ADA5277C23DC003C2FF1 /* NoticeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCell.swift; sourceTree = "<group>"; };
+		1258ADA7277C35EE003C2FF1 /* HelpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpController.swift; sourceTree = "<group>"; };
+		1258ADA9277C4A90003C2FF1 /* HelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCell.swift; sourceTree = "<group>"; };
+		1258ADAB277C582D003C2FF1 /* NoticeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeManager.swift; sourceTree = "<group>"; };
+		1258ADAD277C67BD003C2FF1 /* NoticeDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeDetailController.swift; sourceTree = "<group>"; };
+		1258ADAF277C682F003C2FF1 /* NoticeDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeDetailCell.swift; sourceTree = "<group>"; };
+		1258ADB1277C7A5C003C2FF1 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		125EBDE426C693A70081E5D8 /* WineAromasAndFlavors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavors.swift; sourceTree = "<group>"; };
 		125EBDE626C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewController.swift; sourceTree = "<group>"; };
 		125EBDE826C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineAromasAndFlavorsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				0897E827277075650009D9B7 /* CALayer+Extension.swift */,
+				1258ADB1277C7A5C003C2FF1 /* UILabel+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -259,6 +276,7 @@
 				1223396926CFC38900B7FB74 /* AuthenticationManager.swift */,
 				12EC792E26D4C31C0003DE27 /* PostManager.swift */,
 				087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */,
+				1258ADAB277C582D003C2FF1 /* NoticeManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -346,6 +364,12 @@
 				126810B226D407150061B9A5 /* FindPasswordViewController.swift */,
 				12EC792A26D4AE800003DE27 /* UpdatePasswordViewController.swift */,
 				126325D3274BAB6E0013CA33 /* DeleteAccountViewController.swift */,
+				1258ADA3277C2364003C2FF1 /* NoticeController.swift */,
+				1258ADA5277C23DC003C2FF1 /* NoticeCell.swift */,
+				1258ADAD277C67BD003C2FF1 /* NoticeDetailController.swift */,
+				1258ADAF277C682F003C2FF1 /* NoticeDetailCell.swift */,
+				1258ADA7277C35EE003C2FF1 /* HelpController.swift */,
+				1258ADA9277C4A90003C2FF1 /* HelpCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -779,7 +803,10 @@
 				125EBDE926C695AC0081E5D8 /* WineAromasAndFlavorsCollectionViewCell.swift in Sources */,
 				12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */,
 				1223396826CFC10A00B7FB74 /* SignInViewController.swift in Sources */,
+				1258ADA6277C23DC003C2FF1 /* NoticeCell.swift in Sources */,
 				0897E828277075650009D9B7 /* CALayer+Extension.swift in Sources */,
+				1258ADA8277C35EE003C2FF1 /* HelpController.swift in Sources */,
+				1258ADAC277C582D003C2FF1 /* NoticeManager.swift in Sources */,
 				12D9A61B26EA674600792C6E /* Post.swift in Sources */,
 				1223396C26CFC5AF00B7FB74 /* SignUpViewController.swift in Sources */,
 				1FCB9117267B846C008C93C7 /* ViewController.swift in Sources */,
@@ -797,17 +824,21 @@
 				08E17CAB276C110A00A5F467 /* WineDetailVM.swift in Sources */,
 				1FE3543926A01809004AAF13 /* SearchDetailViewController.swift in Sources */,
 				12F1FDAB26D3D94800342BE2 /* EditProfileViewController.swift in Sources */,
+				1258ADA4277C2364003C2FF1 /* NoticeController.swift in Sources */,
 				22FE4775272A9F85000B7F40 /* ZigzagLayout.swift in Sources */,
 				227DED7B26EF549B001CCCE0 /* PostThumbnailCell.swift in Sources */,
 				122536DD26C3A1BC00190CA1 /* WineVarietiesTableViewController.swift in Sources */,
 				1280D8AB26E654B30052226A /* MyWinesHeaderViewModel.swift in Sources */,
 				12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */,
 				1FCB9113267B846C008C93C7 /* AppDelegate.swift in Sources */,
+				1258ADB0277C682F003C2FF1 /* NoticeDetailCell.swift in Sources */,
+				1258ADAA277C4A90003C2FF1 /* HelpCell.swift in Sources */,
 				12DAC3DA274123A90055B5E7 /* MyWinesNoPostsCell.swift in Sources */,
 				2263BB3927326DC50004A793 /* PostBottomTable.swift in Sources */,
 				22BAF6512762F30F009362D4 /* WineDetailController.swift in Sources */,
 				127DEF862726423C0002BA39 /* AddTastingNoteTableViewController.swift in Sources */,
 				122536DF26C3A20200190CA1 /* WineVarieties.swift in Sources */,
+				1258ADB2277C7A5C003C2FF1 /* UILabel+Extension.swift in Sources */,
 				12C9D6BC26984D0000911CF0 /* Categories.swift in Sources */,
 				12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */,
 				1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */,
@@ -823,6 +854,7 @@
 				126810B326D407150061B9A5 /* FindPasswordViewController.swift in Sources */,
 				1FCB9146267B8A44008C93C7 /* SearchPhotoViewController.swift in Sources */,
 				1FBF148E269BF25E00B8C59D /* PhotoViewController.swift in Sources */,
+				1258ADAE277C67BD003C2FF1 /* NoticeDetailController.swift in Sources */,
 				125EBDE726C694550081E5D8 /* WineAromasAndFlavorsCollectionViewController.swift in Sources */,
 				227DED7626EF546E001CCCE0 /* PostDetail.swift in Sources */,
 				227DED7326EF546E001CCCE0 /* PostThumbnailVM.swift in Sources */,

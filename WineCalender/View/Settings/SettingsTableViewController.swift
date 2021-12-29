@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class SettingsTableViewController: UITableViewController {
     
-    let section0 = ["공지사항", "도움말", "이용약관", "개인정보 취급방침"]
+    let section0 = ["공지사항", "도움말"]
     lazy var section1 = [String]()
     lazy var section2 = [String]()
     
@@ -25,7 +25,8 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "blackAndWhite")!]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         authListener()
     }
     
@@ -109,7 +110,16 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if indexPath.section == 0 {
-            
+            let noticeIndexPath = IndexPath(row: 0, section: 0)
+            let helpIndexPath = IndexPath(row: 1, section: 0)
+            switch indexPath {
+            case noticeIndexPath:
+                navigationController?.pushViewController(NoticeController(), animated: true)
+            case helpIndexPath:
+                navigationController?.pushViewController(HelpController(), animated: true)
+            default:
+                return
+            }
         } else {
             let storyboard = UIStoryboard(name: "Settings", bundle: nil)
             if Auth.auth().currentUser == nil {
