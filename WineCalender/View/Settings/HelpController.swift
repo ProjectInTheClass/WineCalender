@@ -16,8 +16,6 @@ private let reuseIdentifier = "HelpCell"
 
 class HelpController: UITableViewController {
     
-    private let help: [Help] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "도움말"
@@ -35,6 +33,14 @@ extension HelpController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! HelpCell
         cell.titleLabel.text = help[indexPath.row].title
+        cell.detailLabel.text = help[indexPath.row].detail
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! HelpCell
+        tableView.performBatchUpdates {
+            cell.showingDetail = !cell.showingDetail
+        }
     }
 }

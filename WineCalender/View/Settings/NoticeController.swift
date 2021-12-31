@@ -50,6 +50,7 @@ extension NoticeController {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NoticeCell
         cell.dateLabel.text = notice[indexPath.row].date
         cell.titleLabel.text = notice[indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }

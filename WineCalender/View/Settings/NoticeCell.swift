@@ -19,7 +19,7 @@ class NoticeCell: UITableViewCell {
     
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.systemFont(ofSize: 17)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

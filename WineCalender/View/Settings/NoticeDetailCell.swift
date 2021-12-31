@@ -29,7 +29,6 @@ class NoticeDetailCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
         label.text = " "
         label.lineSpacing()
         label.translatesAutoresizingMaskIntoConstraints = false

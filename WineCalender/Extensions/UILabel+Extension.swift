@@ -13,6 +13,7 @@ extension UILabel {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
+        paragraphStyle.lineBreakStrategy = .hangulWordPriority
         
         let attrString = NSMutableAttributedString(string: text)
         attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
