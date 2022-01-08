@@ -18,26 +18,21 @@ class MyWinesHeaderView: UICollectionReusableView {
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     
-    func update(vm: MyWinesHeaderViewModel) {
+    func update(vm: MyWinesHeaderViewModel, isMember: Bool) {
         DispatchQueue.main.async {
-            if Auth.auth().currentUser != nil {
+            if isMember { //회원, 다른 유저
                 self.profileImageView.backgroundColor = UIColor(named: "ThatWineColor")
                 if let url = vm.profileImageURL {
                     self.profileImageView.kf.setImage(with: url, placeholder: profileImagePlaceholder)
                 }
                 self.introductionLabel.text = vm.introduction
-            } else {
+            } else { //비회원
                 self.profileImageView.backgroundColor = .systemGray4
             }
             self.nicknameLabel.text = vm.nickname
             self.numberOfPostsLabel.text = vm.numberOfPosts
             self.numberOfPostsLabel.textColor = vm.numberOfPostsColor
         }
-    }
-    
-    func updateNonmember() {
-        profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
 //    다크모드 변화 감지

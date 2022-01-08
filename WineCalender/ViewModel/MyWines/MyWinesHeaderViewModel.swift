@@ -16,10 +16,10 @@ class MyWinesHeaderViewModel {
     var numberOfPosts: String
     var numberOfPostsColor: UIColor
     
-    init (user: User?, posts: Int) {
-        self.profileImageURL = user?.profileImageURL
-        self.nickname = user?.nickname ?? "비회원"
-        self.introduction = user?.introduction
+    init (user: User, posts: Int) {
+        self.profileImageURL = user.profileImageURL
+        self.nickname = user.nickname
+        self.introduction = user.introduction
         
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal

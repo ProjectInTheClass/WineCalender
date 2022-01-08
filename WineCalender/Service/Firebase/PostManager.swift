@@ -116,8 +116,8 @@ class PostManager {
     }
     
     //For My Wines
-    func fetchMyPosts(lastFetchedValue: String?, completion: @escaping ([Post]?) -> Void){
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func fetchMyPosts(uid: String, lastFetchedValue: String?, completion: @escaping ([Post]?) -> Void){
+        
         let queryLimited: UInt = 8
         var queryRef: DatabaseQuery
         if lastFetchedValue == nil {

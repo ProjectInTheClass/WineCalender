@@ -54,7 +54,7 @@ class SignInViewController: UIViewController {
                     self?.warningLabel.text = error.message
                 case .success(()):
                     if  let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.updateMemberUI()
+                        myWinesVC.configureMemberUI()
                         self?.navigationController?.popToRootViewController(animated: true)
                     }
                 }

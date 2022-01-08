@@ -183,7 +183,7 @@ class AuthenticationManager {
         }
     }
     
-    //My profile
+    ///My profile
     func fetchMyProfile(completion: @escaping (Result<User,AuthError>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid, let email = Auth.auth().currentUser?.email else {
             return
@@ -211,7 +211,7 @@ class AuthenticationManager {
         }
     }
     
-    //Post Author Profile
+    ///Post Author Profile
     func fetchUserProfile(AuthorUID: String, completion: @escaping (URL?, String) -> Void) {
         userRef.child(AuthorUID).observeSingleEvent(of: .value) { snapshot in
             guard let values = snapshot.value as? [String : String] else { return }
@@ -224,6 +224,27 @@ class AuthenticationManager {
             let nickname = values["nickname"]!
             
             completion(profileImageURL, nickname)
+        }
+    }
+    
+    ///Another user profile
+    func fetchAnotherUserProfile(uid: String, completion: @escaping (URL?, String, String?) -> Void) {
+        userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let values = snapshot.value as? [String : String] else { return }
+            
+            var profileImageURL: URL? = nil
+            if let url = values["profileImageURL"] {
+                profileImageURL = URL(string: url)
+            }
+            
+            let nickname = values["nickname"]!
+            
+            var introduction: String? = nil
+            if let value = values["introduction"] {
+                introduction = value
+            }
+            
+            completion(profileImageURL, nickname, introduction)
         }
     }
     
@@ -538,7 +559,7 @@ enum AuthError: Error {
             return "일시적인 오류가 있습니다. 잠시 후 다시 시도해 주세요.\n이 오류가 반복되면 [설정]-[도움말]을 참고해 주세요."
             
         case .userTokenExpired:
-            return "사용자 토큰이 만료되어 로그아웃되었습니다.\n다시 로그인해 주세요."
+            return "사용자 토큰이 만료되었습니다."
         case .unknown:
             return "서버로부터 데이터를 불러오는데 실패했습니다.\n앱을 재실행해 주세요."
         case .nonmember:

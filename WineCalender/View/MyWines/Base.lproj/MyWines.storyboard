@@ -443,7 +443,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="u0M-g3-xQV">
-                        <barButtonItem key="backBarButtonItem" title="My Wines" id="bEK-C9-3ho"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="uGI-Re-o5t"/>
                         <barButtonItem key="rightBarButtonItem" id="xU7-41-hdp">
                             <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                             <color key="tintColor" name="blackAndWhite"/>

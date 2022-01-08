@@ -69,6 +69,8 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         commentView.isHidden = true
         
         updateLikes()
+        
+        addTapGestureRecognizer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -220,6 +222,25 @@ extension PostDetail {
                 debugPrint(err.localizedDescription)
             }
         }
+    }
+}
+
+//show User Profile
+extension PostDetail {
+    func addTapGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(showUserProfile))
+        detailProfile.isUserInteractionEnabled = true
+        detailProfile.addGestureRecognizer(tap)
+    }
+    
+    @objc func showUserProfile() {
+        navigationItem.backButtonTitle = ""
+        let storyboard = UIStoryboard(name: "MyWines", bundle: nil)
+        let myWinesVC = storyboard.instantiateViewController(identifier: "MyWinesVC") as! MyWinesViewController
+        if Auth.auth().currentUser?.uid != postDetailData?.authorUID {
+            myWinesVC.anotherUserUid = postDetailData?.authorUID
+        }
+        navigationController?.pushViewController(myWinesVC, animated: true)
     }
 }
 

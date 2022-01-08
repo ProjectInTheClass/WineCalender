@@ -13,6 +13,8 @@ class DeleteAccountViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var warningLabel: UILabel!
     
+    let addButton = TabBarController.addButton
+    
     override func viewDidLoad() {
         self.navigationItem.title = "탈퇴하기"
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
@@ -75,9 +77,20 @@ class DeleteAccountViewController: UIViewController {
                 animationStop()
                 let alert = UIAlertController(title: "회원 탈퇴가 완료되었습니다.", message: "이용해 주셔서 감사합니다.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                    if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                        myWinesVC.signOutUI()
-                        self?.navigationController?.popToRootViewController(animated: true)
+//                    if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
+//                        myWinesVC.signOutUI()
+//                    }
+                    self?.navigationController?.popToRootViewController(animated: true)
+                    self?.tabBarController?.tabBar.isHidden = false
+                    self?.addButton.isHidden = false
+                    
+                    AuthenticationManager.shared.authListener { result in
+                        switch result {
+                        case .success(_):
+                            return
+                        case .failure(_):
+                            return
+                        }
                     }
                 }))
                 self?.present(alert, animated: true, completion: nil)

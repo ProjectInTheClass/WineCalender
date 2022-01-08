@@ -41,6 +41,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }()
     lazy var isLoadingAnimationPlaying = false
     
+    var anotherUserUid: String? = nil
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -51,10 +53,14 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         
         uploadUpdateDeleteNotiObserver()
         
-        if Auth.auth().currentUser != nil {
-            updateMemberUI()
+        if anotherUserUid == nil {
+            if Auth.auth().currentUser != nil {
+                configureMemberUI()
+            } else {
+                configureNonmemberUI()
+            }
         } else {
-            updateNonmemberUI()
+            configureAnotherUserUI()
         }
     }
     
@@ -65,6 +71,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         let addButton = TabBarController.addButton
         addButton.isHidden = false
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         if collectionView.contentOffset.y == 0 {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         } else {
@@ -72,7 +80,9 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         
-        authListener()
+        if anotherUserUid == nil {
+            authListener()
+        }
         
         isLoadingAnimationPlaying ? loadingAnimationPlay() : loadingAnimationStop()
     }
@@ -85,7 +95,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 self?.updatePosts()
                 self?.fetchTastingNotes()
             } else {
-                self?.updateNonmemberUI()
+                self?.configureNonmemberUI()
             }
         }
     }
@@ -97,7 +107,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 return
             case .failure(let error):
                 if error == AuthError.userTokenExpired {
-                    self?.updateNonmemberUI()
+                    self?.configureNonmemberUI()
                     let alert = UIAlertController(title: nil, message: error.message, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default) { done in
                         self?.signUpAndSignInButtonTapped(nil)
@@ -108,7 +118,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                     self?.present(alert, animated: true, completion: nil)
                 } else if error == AuthError.nonmember {
-                    self?.updateNonmemberUI()
+                    self?.configureNonmemberUI()
                 }
             }
         }
@@ -123,12 +133,13 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     //회원가입 직후
-    func updateNewMemberUI() {
+    func configureNewMemberUI() {
         AuthenticationManager.shared.fetchMyProfile { [weak self] result in
             switch result {
             case .success(let user):
                 self?.user = user
                 self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: 0)
+                self?.noPosts = true
             case .failure(let error):
                 if error == AuthError.failedToFetchMyProfile {
                     self?.moveToEditProfileVC(error: error)
@@ -138,7 +149,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     //로그인, 회원이 앱 실행할 때
-    func updateMemberUI() {
+    func configureMemberUI() {
         resetProperties()
         loadingAnimationPlay()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
@@ -180,18 +191,27 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 self?.noPosts = false
             }
-            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: self?.user, posts: numberOfMyPosts)
+            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: self?.user ?? User(uid: "", email: "", profileImageURL: nil, nickname: "", introduction: nil), posts: numberOfMyPosts)
             self?.beginBatchFetch()
         }
     }
     
     //fetch My Posts
     func beginBatchFetch() {
-        guard !fetchingMore && !endReached && Auth.auth().currentUser != nil else { return }
+        var uid: String = ""
+        
+        if let anotherUserUid = anotherUserUid {
+            uid = anotherUserUid
+        } else {
+            guard !fetchingMore && !endReached else { return }
+            guard let currentUid = Auth.auth().currentUser?.uid else { return }
+            uid = currentUid
+        }
+        
         fetchingMore = true
         loadingAnimationPlay()
         
-        PostManager.shared.fetchMyPosts(lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
+        PostManager.shared.fetchMyPosts(uid: uid, lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
             if let newPosts = newPosts {
                 self?.posts.append(contentsOf: newPosts)
                 self?.lastFetchedValue = newPosts.last?.postID
@@ -238,11 +258,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         user = nil
         posts = []
         self.insideoutCellsInSectionTwo = [:]
-        updateNonmemberUI()
+        configureNonmemberUI()
     }
     
     //비회원이 앱 실행할 때, 비회원이 글 쓸 때
-    func updateNonmemberUI() {
+    func configureNonmemberUI() {
         self.insideoutCellsInSectionZero = [:]
         DataManager.shared.fetchWineTastingNote { [weak self] myNotes in
             self?.notes = myNotes
@@ -252,8 +272,29 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 self?.noPosts = false
             }
-            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: nil, posts: numberOfNotes ?? 0)
+            self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: User(uid: "", email: "", profileImageURL: nil, nickname: "비회원", introduction: nil), posts: numberOfNotes ?? 0)
         }
+    }
+    
+    //다른 유저
+    func configureAnotherUserUI() {
+        navigationItem.rightBarButtonItems = []
+        
+        resetProperties()
+        loadingAnimationPlay()
+        
+        guard let uid = anotherUserUid else { return }
+        
+        PostManager.shared.numberOfMyPosts(uid: uid) { [weak self] numberOfMyPosts in
+            AuthenticationManager.shared.fetchAnotherUserProfile(uid: uid) { url, nickname, introduction in
+                let anotherUser = User(uid: uid, email: "", profileImageURL: url, nickname: nickname, introduction: introduction)
+                self?.user = anotherUser
+                self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: anotherUser, posts: numberOfMyPosts)
+               
+            }
+        }
+        
+        beginBatchFetch()
     }
     
     func loadingAnimationPlay() {
@@ -268,25 +309,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Actions
-    
-//    @IBAction func moreButtonTapped(_ sender: UIButton) {
-//        let superview = sender.superview?.superview?.superview?.superview
-//
-//        guard let cell = superview as? MyWinesCollectionViewCell else { return }
-//        guard let indexPath = collectionView.indexPath(for: cell) else { return }
-//        print(indexPath.row)
-//
-//        let storyboard = UIStoryboard(name: "Community", bundle: nil)
-//        let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
-//
-//        if Auth.auth().currentUser != nil {
-//            postDetailVC.postDetailData = posts[indexPath.row]
-//        } else {
-//            postDetailVC.noteDetailData = notes[indexPath.row]
-//        }
-//
-//        self.navigationController?.pushViewController(postDetailVC, animated: true)
-//    }
 
     @objc func handleSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
         let point = gestureRecognizer.location(in: collectionView)
@@ -338,32 +360,40 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
 extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if Auth.auth().currentUser == nil {
-            return 1
-        } else if noPosts == true && notes.isEmpty {
-            return 1
-        } else if noPosts == true && !notes.isEmpty {
-            return 3
-        } else if noPosts == false && notes.isEmpty {
+        if anotherUserUid != nil {
             return 1
         } else {
-            return 3
+            if Auth.auth().currentUser == nil {
+                return 1
+            } else if noPosts == true && notes.isEmpty {
+                return 1
+            } else if noPosts == true && !notes.isEmpty {
+                return 3
+            } else if noPosts == false && notes.isEmpty {
+                return 1
+            } else {
+                return 3
+            }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if noPosts == true {
-            return 1
-        } else if Auth.auth().currentUser == nil {
-            return notes.count
-        } else if Auth.auth().currentUser != nil && section == 0 {
+        if anotherUserUid != nil {
             return posts.count
-        } else if Auth.auth().currentUser != nil && section == 1 && !notes.isEmpty {
-            return 1
-        } else if Auth.auth().currentUser != nil && section == 2 && !notes.isEmpty {
-            return notes.count
         } else {
-            return 0
+            if noPosts == true && section == 0 {
+                return 1
+            } else if Auth.auth().currentUser == nil {
+                return notes.count
+            } else if Auth.auth().currentUser != nil && section == 0 {
+                return posts.count
+            } else if Auth.auth().currentUser != nil && section == 1 && !notes.isEmpty {
+                return 1
+            } else if Auth.auth().currentUser != nil && section == 2 && !notes.isEmpty {
+                return notes.count
+            } else {
+                return 0
+            }
         }
     }
     
@@ -386,8 +416,16 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         if indexPath.section == 0 {
             let noPostsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyWinesNoPostsCell", for: indexPath) as! MyWinesNoPostsCell
-            
-            if noPosts == true {
+            if anotherUserUid != nil {
+                if self.insideoutCellsInSectionZero[indexPath.item] == indexPath.item {
+                    myWinesCell.configureInsideoutCell()
+                } else {
+                    myWinesCell.prepareForReuse()
+                }
+                myWinesCell.post = posts[indexPath.row]
+                
+                return myWinesCell
+            } else if noPosts == true {
                 if Auth.auth().currentUser == nil {
                     noPostsCell.isMember = false
                 } else {
@@ -439,7 +477,9 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         let myWinesCellSize = CGSize(width: width, height: height)
         
         if indexPath.section == 0 {
-            if noPosts == true {
+            if anotherUserUid != nil {
+                return myWinesCellSize
+            } else if noPosts == true {
                 let margin: CGFloat = 30
                 let width = collectionView.bounds.width - margin * 2
                 let height = width - 70
@@ -488,7 +528,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         let postDetailVC = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
         
-        if Auth.auth().currentUser != nil {
+        if anotherUserUid != nil {//다른 유저
+            if indexPath.section == 0 {
+                postDetailVC.postDetailData = posts[indexPath.row]
+                postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
+            }
+        } else if Auth.auth().currentUser != nil {
             if indexPath.section == 0 {
                 postDetailVC.postDetailData = posts[indexPath.row]
                 postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
@@ -510,7 +555,12 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             self.navigationItem.title = self.myWinesHeaderVM?.nickname
 
             guard let vm = self.myWinesHeaderVM else { return headerView }
-            headerView.update(vm: vm)
+            
+            if anotherUserUid != nil || Auth.auth().currentUser?.uid != nil {
+                headerView.update(vm: vm, isMember: true)
+            } else {
+                headerView.update(vm: vm, isMember: false)
+            }
 
             return headerView
         } else {

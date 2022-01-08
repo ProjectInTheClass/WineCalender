@@ -13,12 +13,12 @@ class SettingsTableViewController: UITableViewController {
     let section0 = ["공지사항", "도움말"]
     lazy var section1 = [String]()
     lazy var section2 = [String]()
+    let addButton = TabBarController.addButton
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "설정"
         self.tabBarController?.tabBar.isHidden = true
-        let addButton = TabBarController.addButton
         addButton.isHidden = true
         configureRow()
     }
@@ -162,10 +162,12 @@ class SettingsTableViewController: UITableViewController {
                                         alert2.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                                         self?.present(alert2, animated: true, completion: nil)
                                     case .success(()):
-                                        if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-                                            myWinesVC.signOutUI()
-                                            self?.navigationController?.popViewController(animated: true)
-                                        }
+//                                        if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
+//                                            myWinesVC.signOutUI()
+//                                        }
+                                        self?.navigationController?.popToRootViewController(animated: true)
+                                        self?.tabBarController?.tabBar.isHidden = false
+                                        self?.addButton.isHidden = false
                                     }
                                 }
                             }))

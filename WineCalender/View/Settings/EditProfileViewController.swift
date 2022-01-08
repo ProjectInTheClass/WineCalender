@@ -19,6 +19,7 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
     @IBOutlet weak var warningLabel: UILabel!
     @IBOutlet weak var doneButton: UIButton!
     let maximumTextViewCount = 200
+    let addButton = TabBarController.addButton
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -223,7 +224,11 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
                     if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController{
                         myWinesVC.fetchMyProfile()
                         self?.navigationController?.popToRootViewController(animated: true)
+                    } else {
+                        self?.navigationController?.popToRootViewController(animated: true)
                     }
+                    self?.tabBarController?.tabBar.isHidden = false
+                    self?.addButton.isHidden = false
                 }
             }
         }))
