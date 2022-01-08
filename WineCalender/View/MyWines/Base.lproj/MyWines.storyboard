@@ -174,7 +174,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qTf-CQ-m3d">
-                                                    <rect key="frame" x="10" y="30" width="230" height="212"/>
+                                                    <rect key="frame" x="10" y="30" width="230" height="138"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 작성한 게시물이 없습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWV-Km-fad">
                                                             <rect key="frame" x="0.0" y="0.0" width="230" height="18"/>
@@ -221,12 +221,6 @@
                                                                 <action selector="signUpAndSignInButtonTapped:" destination="NNa-q7-PN9" eventType="touchUpInside" id="5M9-45-H8R"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 로그인을 하시면 기록을 백업하고, 다른 사용자들과 기록을 공유할 수 있습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Aq-RE-XqL">
-                                                            <rect key="frame" x="0.0" y="158" width="230" height="54"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -240,7 +234,6 @@
                                         <size key="customSize" width="250" height="250"/>
                                         <connections>
                                             <outlet property="addTastingNoteButton" destination="Gyl-g5-BE2" id="sA5-DK-Zhy"/>
-                                            <outlet property="descriptionLabel" destination="6Aq-RE-XqL" id="Z64-dm-4Id"/>
                                             <outlet property="signUpAndSignInButton" destination="jfv-aN-OYe" id="cuL-4W-UN3"/>
                                         </connections>
                                     </collectionViewCell>

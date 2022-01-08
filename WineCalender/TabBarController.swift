@@ -58,7 +58,7 @@ class TabBarController: UITabBarController {
         setAddButton()
         
         let myWines = (storyboard?.instantiateViewController(identifier: "MyWines"))!
-        myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "MyWinesTabBarItem"), selectedImage: nil)
+        myWines.tabBarItem = UITabBarItem(title: "My Wines", image: UIImage(named: "tab_MyWines_normal"), selectedImage: UIImage(named: "tab_MyWines_selected"))
         
         self.viewControllers = [communityNavContr, add, myWines]
     }

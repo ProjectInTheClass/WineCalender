@@ -442,7 +442,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             if noPosts == true {
                 let margin: CGFloat = 30
                 let width = collectionView.bounds.width - margin * 2
-                let height = width
+                let height = width - 70
                 
                 return CGSize(width: width, height: height)
             } else {
