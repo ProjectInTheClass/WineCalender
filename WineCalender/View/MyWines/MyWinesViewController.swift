@@ -87,6 +87,11 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         isLoadingAnimationPlaying ? loadingAnimationPlay() : loadingAnimationStop()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: MyWinesViewController.uploadUpdateDelete, object: nil)
+    }
+    
     // MARK: - Helpers
     
     func uploadUpdateDeleteNotiObserver() {
