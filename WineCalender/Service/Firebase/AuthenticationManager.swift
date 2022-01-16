@@ -211,10 +211,13 @@ class AuthenticationManager {
         }
     }
     
-    ///Post Author Profile
-    func fetchUserProfile(AuthorUID: String, completion: @escaping (URL?, String) -> Void) {
-        userRef.child(AuthorUID).observeSingleEvent(of: .value) { snapshot in
-            guard let values = snapshot.value as? [String : String] else { return }
+    ///Post, Comment Profile
+    func fetchUserProfile(uid: String, completion: @escaping (URL?, String) -> Void) {
+        userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let values = snapshot.value as? [String : String] else {
+                completion(nil, "")
+                return
+            }
             
             var profileImageURL: URL? = nil
             if let url = values["profileImageURL"] {

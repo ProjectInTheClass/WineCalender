@@ -29,7 +29,12 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var wineInfoView: UIView!
     @IBOutlet weak var producingCountryLabel: UILabel!
     @IBOutlet weak var vintageLabel: UILabel!
+    
     @IBOutlet weak var commentView: UIView!
+    @IBOutlet weak var commentCountLabel: UILabel!
+    @IBOutlet weak var commentDetailView: UIStackView!
+    @IBOutlet weak var commentProfileImageView: UIImageView!
+    @IBOutlet weak var commentLabel: UILabel!
     
     var likesPost: Bool = false
     
@@ -66,9 +71,13 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         userName.text = vm.userName
         vm.setProfileImage(of: detailProfile)
         
-        commentView.isHidden = true
+        commentView.isHidden = vm.isCommentHidden
+        commentDetailView.isHidden = vm.isCommentDetailHidden
+        commentCountLabel.text = vm.commentCount
         
         updateLikes()
+        
+        updateComments()
         
         addTapGestureRecognizer()
     }
@@ -182,7 +191,12 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     }
     
     @IBAction func handleCommentTapped(_ sender: Any) {
-        print("comment tapped")
+        guard let post = postDetailData else { return }
+        let storyboard = UIStoryboard(name: "Community", bundle: nil)
+        if let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentDetailController") as? CommentDetailController {
+            commentVC.post = post
+            presentPanModal(commentVC)
+        }
     }
     
 }
@@ -221,6 +235,20 @@ extension PostDetail {
             case .failure(let err):
                 debugPrint(err.localizedDescription)
             }
+        }
+    }
+}
+
+extension PostDetail {
+    func updateComments() {
+        guard let postID = postDetailData?.postID,
+              postDetailData?.commentCount ?? 0 > 0 else { return }
+        PostManager.shared.fetchFirstComment(postID: postID) { [weak self] comment in
+            guard let self = self else { return }
+            let attributedString = NSMutableAttributedString(string: "\(comment.nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
+            attributedString.append(NSAttributedString(string: comment.text, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
+            self.commentLabel.attributedText = attributedString
+            self.commentProfileImageView.kf.setImage(with: comment.profileImageUrl, placeholder: profileImagePlaceholder)
         }
     }
 }
