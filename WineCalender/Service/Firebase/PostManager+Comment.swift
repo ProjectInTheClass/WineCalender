@@ -8,11 +8,11 @@
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
-import Foundation
 
 enum CommentError: Error {
     case failedToAuthenticateUser
     case failedToUploadComment
+    case failedToDeleteComment
     
     var localizedDescription: String {
         switch self {
@@ -20,6 +20,8 @@ enum CommentError: Error {
             return "Failed to authenticate user"
         case .failedToUploadComment:
             return "Failed to upload Comment"
+        case .failedToDeleteComment:
+            return "Failed to delete Comment"
         }
     }
 }
@@ -97,6 +99,32 @@ extension PostManager {
                         completion(comments)
                     }
                 }
+            }
+        }
+    }
+    
+    func deleteComment(postUID: String, authorUID: String, commentID: String, completion: @escaping (Result<Void, CommentError>) -> Void) {
+        PostManager.shared.commentRef.child(postUID).child(commentID).removeValue { error, _ in
+            if error != nil {
+                completion(.failure(.failedToDeleteComment))
+                
+            } else {
+                let commentRef =
+                Database.database().reference().child("Post").child(authorUID).child(postUID).child("commentCount")
+                commentRef.runTransactionBlock({ (mutableData) -> TransactionResult in
+                    let currentCount = mutableData.value as? Int ?? 0
+                    
+                    mutableData.value = currentCount - 1
+                    
+                    return TransactionResult.success(withValue: mutableData)
+                }, andCompletionBlock: { (error, _, _) in
+                    if let error = error {
+                        assertionFailure(error.localizedDescription)
+                        completion(.failure(.failedToDeleteComment))
+                    } else {
+                        completion(.success(()))
+                    }
+                })
             }
         }
     }

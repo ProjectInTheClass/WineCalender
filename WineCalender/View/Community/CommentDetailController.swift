@@ -7,6 +7,7 @@
 
 import UIKit
 import PanModal
+import FirebaseAuth
 
 class CommentDetailController: UIViewController, UITextViewDelegate {
     
@@ -98,12 +99,32 @@ class CommentDetailController: UIViewController, UITextViewDelegate {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(_):
-                print("success")
                 self.commentTextView.text = nil
                 self.view.endEditing(true)
                 self.fetchComments()
             }
         }
+    }
+    
+    @IBAction func moreButtonTapped(_ sender: UIButton) {
+        guard let cell = sender.superview?.superview as? CommentDetailCell,
+              let indexPath = tableView.indexPath(for: cell),
+              comments[indexPath.row].uid == Auth.auth().currentUser?.uid,
+              let post = post else { return }
+
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+            PostManager.shared.deleteComment(postUID: post.postID, authorUID: post.authorUID, commentID: self.comments[indexPath.row].commentID) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(()):
+                    self?.fetchComments()
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -15,11 +15,13 @@ class CommentDetailCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var moreButton: UIButton!
     
     func configure() {
         guard let vm = viewModel else { return }
         profileImageView.kf.setImage(with: vm.profileImageUrl, placeholder: profileImagePlaceholder)
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         commentLabel.attributedText = vm.commentLabelText()
+        moreButton.isHidden = vm.isMoreButtonHidden
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 struct CommentDetailVM {
     
@@ -17,6 +18,8 @@ struct CommentDetailVM {
     var commentText: String
     
     var date: String
+    
+    var isMoreButtonHidden: Bool
     
     func commentLabelText() -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: "\(nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
@@ -51,6 +54,12 @@ struct CommentDetailVM {
             self.date = "\(diff) 전"
         } else {
             self.date = DateFormatter().string(from: comment.date)
+        }
+        
+        if comment.uid == Auth.auth().currentUser?.uid {
+            isMoreButtonHidden = false
+        } else {
+            isMoreButtonHidden = true
         }
     }
 }

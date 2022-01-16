@@ -220,6 +220,7 @@ class PostManager {
                     }
                 }
                 PostManager.shared.likeRef.child(postID).removeValue()
+                PostManager.shared.commentRef.child(postID).removeValue()
             }
         }
     }
