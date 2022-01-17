@@ -17,6 +17,7 @@ class PostThumbnailCell : UICollectionViewCell {
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet weak var commentsLabel: UILabel!
     
     var postThumbnailVM : PostThumbnailVM?{
         didSet {
@@ -42,5 +43,6 @@ class PostThumbnailCell : UICollectionViewCell {
         mainTitle.text = vm.mainText
         subTitle.text = vm.subText
         likesLabel.text = vm.likeCount
+        commentsLabel.text = vm.commentCount
     }
 }

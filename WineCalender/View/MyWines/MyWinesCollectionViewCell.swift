@@ -44,6 +44,7 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
             tastingDateLabel.text = vm.tastingDateDescription
             ratingLabel.text = vm.ratingDescription
             numberOfLikesLabel.text = vm.likeCount
+            numberOfComentsLabel.text = vm.commentCount
         }
     }
     

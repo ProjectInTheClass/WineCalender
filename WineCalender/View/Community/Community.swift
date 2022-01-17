@@ -99,7 +99,7 @@ class Community : UICollectionViewController {
                     decoder.dateDecodingStrategy = .secondsSince1970
                     
                     guard let post = try? decoder.decode(Post.self, from: data) else { return }
-                    AuthenticationManager.shared.fetchUserProfile(AuthorUID: post.authorUID) { url, username in
+                    AuthenticationManager.shared.fetchUserProfile(uid: post.authorUID) { url, username in
                         self.posts.append((post,username,url))
                         self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
                         fetchCount += 1

@@ -19,7 +19,7 @@ struct PostDetailVM {
     
     let isMoreButtonHidden: Bool
     let isLikeHidden: Bool
-    
+
     let postImageUrls: [URL]?
     let postImages: [UIImage]?
     let imageCount: Int
@@ -28,6 +28,10 @@ struct PostDetailVM {
     let wineName: String
     let producingCountry: String
     let vintage: String
+    
+    let isCommentHidden: Bool
+    let isCommentDetailHidden: Bool
+    let commentCount: String?
     
     let isCoreData: Bool
     
@@ -63,6 +67,10 @@ struct PostDetailVM {
         self.producingCountry = post.tastingNote.producingCountry ?? "--"
         self.vintage = post.tastingNote.vintage ?? "--"
         
+        self.isCommentHidden = false
+        self.isCommentDetailHidden = post.commentCount == nil || post.commentCount == 0
+        self.commentCount = "\(post.commentCount ?? 0)"
+        
         self.isCoreData = false
     }
 
@@ -97,6 +105,10 @@ struct PostDetailVM {
         self.wineName = tastingNote.wineName
         self.producingCountry = tastingNote.producingCountry ?? "--"
         self.vintage = tastingNote.vintage ?? "--"
+        
+        self.isCommentHidden = true
+        self.isCommentDetailHidden = true
+        self.commentCount = nil
         
         self.isCoreData = true
     }
