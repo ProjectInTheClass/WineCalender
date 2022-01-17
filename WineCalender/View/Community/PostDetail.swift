@@ -22,7 +22,6 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var bottomTable: UITableView!
-    @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var heartButton: UIButton!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var postUpdateTime: UILabel!
@@ -57,7 +56,9 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         postCollection.backgroundColor = vm.backgroundColor
         postUpdateTime.text = vm.date
         
-        moreButton.isHidden = vm.isMoreButtonHidden
+        if vm.isMoreButtonHidden {
+            navigationItem.rightBarButtonItem = nil
+        }
         heartButton.isHidden = vm.isLikeHidden
         likeLabel.isHidden = vm.isLikeHidden
         
@@ -191,6 +192,7 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     }
     
     @IBAction func handleCommentTapped(_ sender: Any) {
+        guard Auth.auth().currentUser != nil else { return }
         guard let post = postDetailData else { return }
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         if let commentVC = storyboard.instantiateViewController(withIdentifier: "CommentDetailController") as? CommentDetailController {
@@ -199,6 +201,13 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
         }
     }
     
+    @IBAction func pageControlTapped(_ sender: UIPageControl) {
+        let page: Int? = sender.currentPage
+        var frame: CGRect = self.postCollection.frame
+        frame.origin.x = frame.size.width * CGFloat(page ?? 0)
+        frame.origin.y = 0
+        postCollection.scrollRectToVisible(frame, animated: true)
+    }
 }
 
 extension PostDetail {

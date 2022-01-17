@@ -78,6 +78,16 @@ class MyWinesViewModel {
         }
         return like
     }
+    
+    var commentCount: String {
+        var comment: String = ""
+        if let post = post, let count = post.commentCount {
+            comment = String(count)
+        } else {
+            comment = "0"
+        }
+        return comment
+    }
 
     //FireBase
     init(post: Post) {

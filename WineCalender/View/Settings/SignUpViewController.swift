@@ -72,14 +72,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        guard nicknameTextField.text?.contains("비회원") == false && nicknameTextField.text?.contains(" ") == false else {
+        guard let nickname = nicknameTextField.text?.lowercased() else { return }
+        
+        if nickname.contains("비회원") || nickname.contains("그때그와인") ||
+            nickname.contains("thatwine") || nickname.contains(" ") {
             warningLabel.text = "사용할 수 없는 닉네임입니다."
             return
         }
         warningLabel.text = ""
         
-        if let email = emailTextField.text, let password = passwordTextField.text,
-           let nickname = nicknameTextField.text {
+        if let email = emailTextField.text, let password = passwordTextField.text {
             AuthenticationManager.shared.signUp(email: email, password: password, nickname: nickname) { [weak self] result in
                 switch result {
                 case .success(()):

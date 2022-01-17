@@ -252,6 +252,9 @@
                                                                 <rect key="frame" x="0.0" y="418" width="414" height="26"/>
                                                                 <color key="pageIndicatorTintColor" systemColor="systemGray4Color"/>
                                                                 <color key="currentPageIndicatorTintColor" systemColor="systemGray6Color"/>
+                                                                <connections>
+                                                                    <action selector="pageControlTapped:" destination="WgV-Qn-Tcw" eventType="valueChanged" id="Ifb-vi-KBU"/>
+                                                                </connections>
                                                             </pageControl>
                                                         </subviews>
                                                         <constraints>
@@ -506,31 +509,12 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8Nr-eI-SAr">
                                                         <rect key="frame" x="58" y="0.0" width="324" height="54"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbB-Df-R8K">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Enz-4H-gxj">
                                                                 <rect key="frame" x="0.0" y="0.0" width="324" height="27"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Enz-4H-gxj">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="284" height="27"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dje-Fj-Get">
-                                                                        <rect key="frame" x="284" y="0.0" width="40" height="27"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="40" id="vBO-Wq-lwg"/>
-                                                                        </constraints>
-                                                                        <color key="tintColor" systemColor="labelColor"/>
-                                                                        <state key="normal" image="ellipsis" catalog="system">
-                                                                            <color key="titleColor" name="AccentColor"/>
-                                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
-                                                                        </state>
-                                                                        <connections>
-                                                                            <action selector="moreButtonTapped:" destination="WgV-Qn-Tcw" eventType="touchUpInside" id="KPK-z7-oIw"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdz-dI-ivg">
                                                                 <rect key="frame" x="0.0" y="27" width="324" height="27"/>
                                                                 <subviews>
@@ -601,7 +585,14 @@
                             <constraint firstAttribute="bottom" secondItem="cfg-mE-u42" secondAttribute="bottom" id="uOj-pO-HO9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="z4u-op-1wc"/>
+                    <navigationItem key="navigationItem" id="z4u-op-1wc">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="JYk-6w-fMd">
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <connections>
+                                <action selector="moreButtonTapped:" destination="WgV-Qn-Tcw" id="t4S-Ur-nf4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionBackground" destination="6mt-CW-wca" id="nN0-IU-YtE"/>
                         <outlet property="commentCountLabel" destination="gwc-kG-v00" id="Q1u-4P-jmz"/>
@@ -613,7 +604,6 @@
                         <outlet property="heartButton" destination="be6-Fw-Z9K" id="bv5-I7-spQ"/>
                         <outlet property="likeLabel" destination="2l8-nI-3el" id="lbK-rN-PyN"/>
                         <outlet property="mainText" destination="wyU-sN-81t" id="iXy-eq-ehM"/>
-                        <outlet property="moreButton" destination="Dje-Fj-Get" id="gRM-on-TT7"/>
                         <outlet property="pageControl" destination="IJM-WG-3Fp" id="ueS-UE-NSo"/>
                         <outlet property="postCollection" destination="GLb-fM-B21" id="B25-vr-QQi"/>
                         <outlet property="postUpdateTime" destination="EhS-fo-806" id="3RZ-9H-l5S"/>
@@ -637,7 +627,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2986.9565217391305" y="2313.6160714285711"/>
+            <point key="canvasLocation" x="3232" y="2239"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9BV-PV-4LJ">
@@ -1320,9 +1310,6 @@
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="person.circle.fill" catalog="system" width="128" height="121"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ThatWineColor">
             <color red="0.92500001192092896" green="0.3919999897480011" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

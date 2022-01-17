@@ -168,6 +168,7 @@
             <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
             <connections>
                 <outlet property="cellImage" destination="wdB-wR-rr8" id="zRX-8P-hqc"/>
+                <outlet property="commentsLabel" destination="gSH-6e-izy" id="WOg-7i-ZIX"/>
                 <outlet property="likesLabel" destination="b36-qu-kBV" id="cuc-iz-ThU"/>
                 <outlet property="mainTitle" destination="zBE-2i-1hJ" id="yF5-P2-3Da"/>
                 <outlet property="postCardView" destination="rI7-YU-yEU" id="JjY-Yw-QqO"/>
