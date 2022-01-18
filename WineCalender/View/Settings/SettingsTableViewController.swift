@@ -10,7 +10,8 @@ import FirebaseAuth
 
 class SettingsTableViewController: UITableViewController {
     
-    let section0 = ["공지사항", "도움말"]
+    var section0 = ["공지사항", "도움말", "앱 버전"]
+    var theLatestVersion: Bool?
     lazy var section1 = [String]()
     lazy var section2 = [String]()
     let addButton = TabBarController.addButton
@@ -28,6 +29,7 @@ class SettingsTableViewController: UITableViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         authListener()
+        checkVersion()
     }
     
     func configureRow() {
@@ -36,6 +38,23 @@ class SettingsTableViewController: UITableViewController {
         } else {
             self.section1 = ["프로필 수정", "비밀번호 변경", "로그아웃"]
             self.section2 = ["탈퇴하기"]
+        }
+    }
+    
+    func checkVersion() {
+        guard let info = Bundle.main.infoDictionary,
+              let currentVersion = info["CFBundleShortVersionString"] as? String,
+              let identifier = info["CFBundleIdentifier"] as? String,
+              let url = URL(string: "http://itunes.apple.com/lookup?bundleId=\(identifier)"),
+              let data = try? Data(contentsOf: url),
+              let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
+              let results = json["results"] as? [[String: Any]], results.count > 0,
+              let appStoreVersion = results[0]["version"] as? String else { return }
+        
+        if currentVersion == appStoreVersion {
+            theLatestVersion = true
+        } else{
+            theLatestVersion = false
         }
     }
 
@@ -89,12 +108,19 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell")
         switch indexPath.section {
+        case 0:
+            cell?.textLabel?.text = section0[indexPath.row]
+            if indexPath.row == 2, let theLatestVersion = theLatestVersion {
+                let attributedString = NSMutableAttributedString(string: section0[indexPath.row])
+                attributedString.append(NSAttributedString(string: theLatestVersion ? " (최신 버전입니다)" : " (업데이트가 있어요)", attributes: [ .foregroundColor: UIColor.systemGray2]))
+                cell?.textLabel?.attributedText = attributedString
+            }
         case 1:
             cell?.textLabel?.text = section1[indexPath.row]
         case 2:
             cell?.textLabel?.text = section2[indexPath.row]
         default:
-            cell?.textLabel?.text = section0[indexPath.row]
+            break
         }
         return cell!
     }
@@ -112,11 +138,21 @@ class SettingsTableViewController: UITableViewController {
         if indexPath.section == 0 {
             let noticeIndexPath = IndexPath(row: 0, section: 0)
             let helpIndexPath = IndexPath(row: 1, section: 0)
+            let appVersionIndexPath = IndexPath(row: 2, section: 0)
             switch indexPath {
             case noticeIndexPath:
                 navigationController?.pushViewController(NoticeController(), animated: true)
             case helpIndexPath:
                 navigationController?.pushViewController(HelpController(), animated: true)
+            case appVersionIndexPath:
+                guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1591166167") else { return }
+                    if UIApplication.shared.canOpenURL(url) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        } else {
+                            UIApplication.shared.openURL(url)
+                        }
+                    }
             default:
                 return
             }
@@ -162,9 +198,6 @@ class SettingsTableViewController: UITableViewController {
                                         alert2.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                                         self?.present(alert2, animated: true, completion: nil)
                                     case .success(()):
-//                                        if let myWinesVC = self?.navigationController?.children.first as? MyWinesViewController {
-//                                            myWinesVC.signOutUI()
-//                                        }
                                         self?.navigationController?.popToRootViewController(animated: true)
                                         self?.tabBarController?.tabBar.isHidden = false
                                         self?.addButton.isHidden = false

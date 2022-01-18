@@ -203,12 +203,12 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     //fetch My Posts
     func beginBatchFetch() {
+        guard !fetchingMore && !endReached else { return }
         var uid: String = ""
         
         if let anotherUserUid = anotherUserUid {
             uid = anotherUserUid
         } else {
-            guard !fetchingMore && !endReached else { return }
             guard let currentUid = Auth.auth().currentUser?.uid else { return }
             uid = currentUid
         }
