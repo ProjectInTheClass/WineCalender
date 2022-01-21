@@ -283,14 +283,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" image="MyWines001" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-GT-qxA">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="156"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MyWines001" translatesAutoresizingMaskIntoConstraints="NO" id="Fkr-GT-qxA">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="140" id="xCd-qc-di2"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16c-pJ-Jvg" userLabel="ProfileImageBackgroundView">
-                                            <rect key="frame" x="24" y="100" width="112" height="112"/>
+                                            <rect key="frame" x="24" y="84" width="112" height="112"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -299,7 +299,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAl-jh-jtY">
-                                            <rect key="frame" x="30" y="106.5" width="100" height="99"/>
+                                            <rect key="frame" x="30" y="90.5" width="100" height="99"/>
                                             <color key="backgroundColor" systemColor="systemGray4Color"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -313,13 +313,13 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cw-pV-8gc">
-                                            <rect key="frame" x="140" y="166" width="0.0" height="0.0"/>
+                                            <rect key="frame" x="140" y="150" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                             <color key="textColor" name="blackAndWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="7Kt-Gi-tpu">
-                                            <rect key="frame" x="30" y="221" width="61" height="25"/>
+                                            <rect key="frame" x="30" y="205" width="61" height="25"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="0mh-2g-8bI">
                                                     <rect key="frame" x="0.0" y="0.0" width="61" height="25"/>
@@ -377,8 +377,8 @@
                                                 <constraint firstAttribute="height" priority="999" constant="25" id="tLR-9u-7M4"/>
                                             </constraints>
                                         </stackView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-kT-g1L">
-                                            <rect key="frame" x="30" y="261" width="0.0" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvZ-kT-g1L">
+                                            <rect key="frame" x="30" y="245" width="0.0" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="18" id="a2A-qh-JXe"/>
                                             </constraints>

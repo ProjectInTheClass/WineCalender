@@ -145,7 +145,8 @@ class SettingsTableViewController: UITableViewController {
             case helpIndexPath:
                 navigationController?.pushViewController(HelpController(), animated: true)
             case appVersionIndexPath:
-                guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1591166167") else { return }
+                guard let url = URL(string: "itms-apps://itunes.apple.com/app/id1591166167"),
+                      theLatestVersion == false else { return }
                     if UIApplication.shared.canOpenURL(url) {
                         if #available(iOS 10.0, *) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)

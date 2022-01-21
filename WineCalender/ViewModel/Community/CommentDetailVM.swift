@@ -35,7 +35,7 @@ struct CommentDetailVM {
         self.profileImageUrl = comment.profileImageUrl
         
         if comment.profileImageUrl == nil && comment.nickname == "" {
-            self.nickname = "탈퇴한 사용자"
+            self.nickname = "알 수 없는 사용자"
             self.commentText = ""
         } else {
             self.nickname = comment.nickname

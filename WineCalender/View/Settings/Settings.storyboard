@@ -717,7 +717,7 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dos-A1-R2D">
                                 <rect key="frame" x="60" y="302" width="294" height="30"/>
-                                <state key="normal" title="비밀번호를 잊으셨나요?">
+                                <state key="normal" title="비밀번호 찾기">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>

@@ -19,7 +19,8 @@ class MyWinesHeaderView: UICollectionReusableView {
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     
     func update(vm: MyWinesHeaderViewModel, isMember: Bool) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             if isMember { //회원, 다른 유저
                 self.profileImageView.backgroundColor = UIColor(named: "ThatWineColor")
                 if let url = vm.profileImageURL {
@@ -32,6 +33,7 @@ class MyWinesHeaderView: UICollectionReusableView {
             self.nicknameLabel.text = vm.nickname
             self.numberOfPostsLabel.text = vm.numberOfPosts
             self.numberOfPostsLabel.textColor = vm.numberOfPostsColor
+            self.introductionLabel.setContentHuggingPriority(UILayoutPriority(Float(252)), for: .vertical)
         }
     }
     

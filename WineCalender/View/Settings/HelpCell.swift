@@ -84,6 +84,7 @@ class HelpCell: UITableViewCell {
             
             accessary.text = "△"
         } else {
+            detailLabel.removeFromSuperview()
             configureCell()
         }
     }

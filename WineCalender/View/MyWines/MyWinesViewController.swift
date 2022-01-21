@@ -168,6 +168,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 case .success(let user):
                     self?.user = user
                     self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: user, posts: numberOfMyPosts)
+                    self?.beginBatchFetch()
                 case .failure(let error):
                     if error == AuthError.failedToFetchMyProfile {
                         self?.moveToEditProfileVC(error: error)
@@ -175,8 +176,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 }
             }
         }
-        beginBatchFetch()
-        
         fetchTastingNotes()
     }
     
@@ -505,11 +504,10 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         if section == 0 {
             let indexPath = IndexPath(row: 0, section: section)
             let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath) as! MyWinesHeaderView
-            headerView.introductionLabel.text = myWinesHeaderVM?.introduction
-
-            return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height),
-                                                      withHorizontalFittingPriority: .required,
-                                                      verticalFittingPriority: .fittingSizeLevel)
+            if let vm = myWinesHeaderVM {
+                headerView.introductionLabel.text = vm.introduction
+            }
+                return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingCompressedSize.height))
         } else {
             return CGSize.zero
         }
