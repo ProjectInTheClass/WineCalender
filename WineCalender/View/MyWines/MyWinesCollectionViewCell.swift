@@ -39,12 +39,16 @@ class MyWinesCollectionViewCell: UICollectionViewCell {
     func updatePost() {
         if let post = post {
             let vm = MyWinesViewModel(post: post)
-            imageView.kf.setImage(with: vm.firstImageURL)
-            wineNameLabel.text = vm.wineNameDescription
-            tastingDateLabel.text = vm.tastingDateDescription
-            ratingLabel.text = vm.ratingDescription
-            numberOfLikesLabel.text = vm.likeCount
-            numberOfComentsLabel.text = vm.commentCount
+            if let isReported = vm.post?.isReported, isReported == true {
+                imageView.backgroundColor = .systemGray5
+            } else {
+                imageView.kf.setImage(with: vm.firstImageURL)
+                wineNameLabel.text = vm.wineNameDescription
+                tastingDateLabel.text = vm.tastingDateDescription
+                ratingLabel.text = vm.ratingDescription
+                numberOfLikesLabel.text = vm.likeCount
+                numberOfComentsLabel.text = vm.commentCount
+            }
         }
     }
     

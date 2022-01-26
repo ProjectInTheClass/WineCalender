@@ -319,6 +319,8 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         if let indexPath = collectionView?.indexPathForItem(at: point) {
             let cell = collectionView.cellForItem(at: indexPath) as! MyWinesCollectionViewCell
             
+            if !posts.isEmpty, posts[indexPath.row].isReported == true { return }
+            
             if gestureRecognizer.direction == .right {
                 UIView.transition(with: cell, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
             } else if gestureRecognizer.direction == .left {
@@ -533,11 +535,19 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         
         if anotherUserUid != nil {//다른 유저
             if indexPath.section == 0 {
+                guard posts[indexPath.row].isReported == false || posts[indexPath.row].isReported == nil else { return }
                 postDetailVC.postDetailData = posts[indexPath.row]
                 postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
             }
         } else if Auth.auth().currentUser != nil {
             if indexPath.section == 0 {
+                if let isReported = posts[indexPath.row].isReported, isReported == true {
+                    let alert = UIAlertController(title: "신고가 접수된 게시물입니다.", message: "검토 후 게시물이 다시 업로드되거나 삭제될 수 있습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                }
+
                 postDetailVC.postDetailData = posts[indexPath.row]
                 postDetailVC.postDetailVM = PostDetailVM(posts[indexPath.row], myWinesHeaderVM!.nickname, myWinesHeaderVM?.profileImageURL, cellColor ?? .white)
             } else { //회원 - 공유하지 않은 게시물
