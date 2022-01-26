@@ -13,6 +13,9 @@ import Lottie
 
 
 class Community : UICollectionViewController {
+    
+    // MARK: - Properties
+    
     private let cellId = "ThumbnailCell"
     var posts = [(post: Post, username: String, profileImageUrl: URL?)]()
     
@@ -28,6 +31,8 @@ class Community : UICollectionViewController {
         aniView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         return aniView
     }()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +51,15 @@ class Community : UICollectionViewController {
         
         fetchPosts()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if view.subviews.contains(loadingAnimationView) {
+            loadingAnimationPlay()
+        }
+    }
+    
+    // MARK: - helpers
     
     func fetchPosts() {
         beginBatchFetch { [weak self] in
@@ -99,22 +113,19 @@ class Community : UICollectionViewController {
                     decoder.dateDecodingStrategy = .secondsSince1970
                     
                     guard let post = try? decoder.decode(Post.self, from: data) else { return }
-                    AuthenticationManager.shared.fetchUserProfile(uid: post.authorUID) { url, username in
-                        self.posts.append((post,username,url))
-                        self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
+                    if let isReported = post.isReported, isReported == true {
                         fetchCount += 1
+                        return
+                    } else {
+                        AuthenticationManager.shared.fetchUserProfile(uid: post.authorUID) { url, username in
+                            self.posts.append((post,username,url))
+                            self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
+                            fetchCount += 1
+                        }
                     }
                 }
             }
         })
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if view.subviews.contains(loadingAnimationView) {
-            loadingAnimationPlay()
-        }
     }
     
     func loadingAnimationPlay() {
@@ -128,6 +139,8 @@ class Community : UICollectionViewController {
         loadingAnimationView.removeFromSuperview()
     }
 }
+
+// MARK: - CollectionViewDataSource, CollectionViewDelegate
 
 extension Community {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -144,6 +157,7 @@ extension Community {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Community", bundle: nil)
         let postDetail = storyboard.instantiateViewController(identifier: "PostDetail") as! PostDetail
+        postDetail.delegate = self
         let row = indexPath.row
         postDetail.postDetailData = posts[row].0
         let data = posts[row]
@@ -159,6 +173,19 @@ extension Community {
     }
 }
 
+// MARK: - UICollectionViewCell
+
 class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var postImage: UIImageView!
+}
+
+// MARK: - PostDetailDelegate
+
+extension Community: PostDetailDelegate {
+    func userDidReport() {
+        posts = []
+        lastFetchedValue = nil
+        endReached = false
+        fetchPosts()
+    }
 }

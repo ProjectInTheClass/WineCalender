@@ -16,4 +16,5 @@ struct Post: Decodable {
     let tastingNote: WineTastingNotes
     let likeCount: Int?
     let commentCount: Int?
+    let isReported: Bool?
 }

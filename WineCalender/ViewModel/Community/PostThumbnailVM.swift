@@ -27,6 +27,7 @@ struct PostThumbnailVM {
     let color : UIColor
     let likeCount: String
     let commentCount: String
+    let isReported: Bool?
     
     // 받아와야 하는 것
     let userName : String
@@ -46,6 +47,8 @@ struct PostThumbnailVM {
         
         self.likeCount = "\(post.likeCount ?? 0)"
         self.commentCount = "\(post.commentCount ?? 0)"
+        
+        self.isReported = post.isReported
     }
     
     func profileImage(completion: (User)->()) {
