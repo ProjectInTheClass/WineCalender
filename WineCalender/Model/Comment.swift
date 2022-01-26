@@ -14,6 +14,7 @@ struct Comment {
     let text: String
     let date: Date
     let commentID: String
+    let isReported: Bool?
     
     init(dictionary: [String: Any], url: URL?, nickname: String) {
         self.uid = dictionary["uid"] as? String ?? ""
@@ -26,5 +27,6 @@ struct Comment {
             self.date = Date()
         }
         self.commentID = dictionary["commentID"] as? String ?? ""
+        self.isReported = dictionary["isReported"] as? Bool
     }
 }

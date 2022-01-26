@@ -300,11 +300,18 @@ extension PostDetail {
         PostManager.shared.fetchFirstComment(postID: postID) { [weak self] comment in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let attributedString = NSMutableAttributedString(string: "\(comment.nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
-                attributedString.append(NSAttributedString(string: comment.text, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
-                self.commentLabel.attributedText = attributedString
-                self.commentProfileImageView.kf.setImage(with: comment.profileImageUrl, placeholder: profileImagePlaceholder)
-                self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                if comment.isReported == true || comment.nickname.isEmpty {
+                    self.commentLabel.text = "알 수 없는 사용자"
+                    self.commentLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                    self.commentProfileImageView.image = profileImagePlaceholder
+                    self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                } else {
+                    let attributedString = NSMutableAttributedString(string: "\(comment.nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
+                    attributedString.append(NSAttributedString(string: comment.text, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
+                    self.commentLabel.attributedText = attributedString
+                    self.commentProfileImageView.kf.setImage(with: comment.profileImageUrl, placeholder: profileImagePlaceholder)
+                    self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                }
             }
         }
     }

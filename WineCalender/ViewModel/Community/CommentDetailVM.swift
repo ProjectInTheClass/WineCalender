@@ -32,14 +32,21 @@ struct CommentDetailVM {
     }
     
     init(_ comment: Comment) {
-        self.profileImageUrl = comment.profileImageUrl
+        
         
         if comment.profileImageUrl == nil && comment.nickname == "" {
             self.nickname = "알 수 없는 사용자"
             self.commentText = ""
+            self.isMoreButtonHidden = true
+        } else if comment.isReported == true {
+            self.nickname = "알 수 없는 사용자"
+            self.commentText = "신고된 댓글입니다."
+            self.isMoreButtonHidden = true
         } else {
+            self.profileImageUrl = comment.profileImageUrl
             self.nickname = comment.nickname
             self.commentText = comment.text
+            self.isMoreButtonHidden = false
         }
         
         let formatter = DateComponentsFormatter()
@@ -54,12 +61,6 @@ struct CommentDetailVM {
             self.date = "\(diff) 전"
         } else {
             self.date = DateFormatter().string(from: comment.date)
-        }
-        
-        if comment.uid == Auth.auth().currentUser?.uid {
-            isMoreButtonHidden = false
-        } else {
-            isMoreButtonHidden = true
         }
     }
 }
