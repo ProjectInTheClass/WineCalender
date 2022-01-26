@@ -109,22 +109,63 @@ class CommentDetailController: UIViewController, UITextViewDelegate {
     @IBAction func moreButtonTapped(_ sender: UIButton) {
         guard let cell = sender.superview?.superview as? CommentDetailCell,
               let indexPath = tableView.indexPath(for: cell),
-              comments[indexPath.row].uid == Auth.auth().currentUser?.uid,
               let post = post else { return }
-
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-            PostManager.shared.deleteComment(postUID: post.postID, authorUID: post.authorUID, commentID: self.comments[indexPath.row].commentID) { [weak self] result in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                case .success(()):
-                    self?.fetchComments()
+        
+        let commentID = self.comments[indexPath.row].commentID
+        
+        if comments[indexPath.row].uid == Auth.auth().currentUser?.uid {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+                PostManager.shared.deleteComment(postUID: post.postID, authorUID: post.authorUID, commentID: commentID) { [weak self] result in
+                    switch result {
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    case .success(()):
+                        self?.fetchComments()
+                    }
                 }
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: { action in
+                let alert2 = UIAlertController(title: "댓글을 신고하시겠습니까?\n신고된 댓글은 검토 후 삭제될 수 있으며 신고가 누적된 사용자는 사용이 제한될 수 있습니다.", message: nil, preferredStyle: .actionSheet)
+                alert2.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { [weak self] action in
+                    guard let self = self else { return }
+                    guard let post = self.post else { return }
+                    PostManager.shared.checkIfReportedComment(postID: post.postID, commentID: commentID, completion: { result in
+                        switch result {
+                        case true:
+                            let alert3 = UIAlertController(title: "이미 신고가 접수된 댓글입니다.", message: nil, preferredStyle: .alert)
+                            alert3.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                                self.fetchComments()
+                            }))
+                            self.present(alert3, animated: true, completion: nil)
+                        case false:
+                            print("신고")
+                            guard let uid = Auth.auth().currentUser?.uid else { return }
+                            PostManager.shared.reportComment(postID: post.postID, commentID: commentID, authorUID: post.authorUID, currentUserUID: uid, completion: { result in
+                                switch result {
+                                case .failure(let error):
+                                    print(error)
+                                case .success(()):
+                                    let alert4 = UIAlertController(title: "신고가 접수되었습니다.", message: nil, preferredStyle: .alert)
+                                    alert4.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                                        self.fetchComments()
+                                    }))
+                                    self.present(alert4, animated: true, completion: nil)
+                                }
+                            })
+                        }
+                    })
+                }))
+                alert2.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(alert2, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

@@ -65,6 +65,7 @@
 		12E188C426CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */; };
 		12E188C626CBB1F00035964F /* WineTastingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E188C526CBB1F00035964F /* WineTastingNotes.swift */; };
 		12E2D82026CEEABC0016A851 /* MyWinesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */; };
+		12E9BE8E27A10B0000ABA7D4 /* PostManager+Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E9BE8D27A10B0000ABA7D4 /* PostManager+Report.swift */; };
 		12EC792B26D4AE800003DE27 /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EC792A26D4AE800003DE27 /* UpdatePasswordViewController.swift */; };
 		12EC792F26D4C31C0003DE27 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EC792E26D4C31C0003DE27 /* PostManager.swift */; };
 		12EEA68F269AD9FC00D850F0 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EEA68E269AD9FC00D850F0 /* DataManager.swift */; };
@@ -177,6 +178,7 @@
 		12E188C226CBACBC0035964F /* WineTastingNote+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WineTastingNote+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		12E188C526CBB1F00035964F /* WineTastingNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WineTastingNotes.swift; sourceTree = "<group>"; };
 		12E2D81F26CEEABC0016A851 /* MyWinesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWinesViewController.swift; sourceTree = "<group>"; };
+		12E9BE8D27A10B0000ABA7D4 /* PostManager+Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostManager+Report.swift"; sourceTree = "<group>"; };
 		12EC792A26D4AE800003DE27 /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
 		12EC792E26D4C31C0003DE27 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		12EEA68E269AD9FC00D850F0 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				12EC792E26D4C31C0003DE27 /* PostManager.swift */,
 				087DBB78272BE79E0085FBC8 /* PostManager+Like.swift */,
 				12B9350D2791626800183205 /* PostManager+Comment.swift */,
+				12E9BE8D27A10B0000ABA7D4 /* PostManager+Report.swift */,
 				1258ADAB277C582D003C2FF1 /* NoticeManager.swift */,
 			);
 			path = Firebase;
@@ -857,6 +860,7 @@
 				12578E7C2697542700F2FF20 /* CalendarTableViewCell.swift in Sources */,
 				1FCB911D267B846C008C93C7 /* WineCalender.xcdatamodeld in Sources */,
 				1F21DCFF26AA7E2D000C6A59 /* SearchTableViewCell.swift in Sources */,
+				12E9BE8E27A10B0000ABA7D4 /* PostManager+Report.swift in Sources */,
 				1226FF4426E8731F003ACE3A /* MyWinesHeaderView.swift in Sources */,
 				12EC792F26D4C31C0003DE27 /* PostManager.swift in Sources */,
 				12B935122791880100183205 /* CommentDetailVM.swift in Sources */,

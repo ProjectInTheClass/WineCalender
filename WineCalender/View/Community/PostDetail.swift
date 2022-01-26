@@ -11,6 +11,10 @@ import Kingfisher
 import FirebaseAuth
 import PanModal
 
+protocol PostDetailDelegate: AnyObject {
+    func userDidReport()
+}
+
 class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var postCollection: UICollectionView!
     @IBOutlet weak var detailProfile: UIImageView!
@@ -42,6 +46,8 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
     var postDetailVM : PostDetailVM?
     var postDetailData : Post?
     var noteDetailData : WineTastingNote?
+    
+    weak var delegate : PostDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,6 +180,45 @@ class PostDetail: UIViewController, UIGestureRecognizerDelegate{
                 }))
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+            } else {
+                //회원 - 다른 유저 게시물
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: { action in
+                    let alert2 = UIAlertController(title: "게시물을 신고하시겠습니까?\n신고된 게시물은 검토 후 삭제될 수 있으며 신고가 누적된 사용자는 사용이 제한될 수 있습니다.", message: nil, preferredStyle: .actionSheet)
+                    alert2.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { [weak self] action in
+                        guard let self = self else { return }
+                        guard let post = self.postDetailData else { return }
+                        PostManager.shared.checkIfReportedPost(postID: post.postID, authorUID: post.authorUID, completion: { result in
+                            switch result {
+                            case true:
+                                let alert3 = UIAlertController(title: "이미 신고가 접수된 게시물입니다.", message: nil, preferredStyle: .alert)
+                                alert3.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                                    self.delegate?.userDidReport()
+                                    self.navigationController?.popToRootViewController(animated: true)
+                                }))
+                                self.present(alert3, animated: true, completion: nil)
+                            case false:
+                                PostManager.shared.reportPost(postID: post.postID, authorUID: post.authorUID, currentUserUID: currentUserUID, completion: { result in
+                                    switch result {
+                                    case .failure(let error):
+                                        print(error)
+                                    case .success(()):
+                                        let alert4 = UIAlertController(title: "신고가 접수되었습니다.", message: nil, preferredStyle: .alert)
+                                        alert4.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                                            self.delegate?.userDidReport()
+                                            self.navigationController?.popToRootViewController(animated: true)
+                                        }))
+                                        self.present(alert4, animated: true, completion: nil)
+                                    }
+                                })
+                            }
+                        })
+                    }))
+                    alert2.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                    self.present(alert2, animated: true, completion: nil)
+                }))
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -255,11 +300,18 @@ extension PostDetail {
         PostManager.shared.fetchFirstComment(postID: postID) { [weak self] comment in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let attributedString = NSMutableAttributedString(string: "\(comment.nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
-                attributedString.append(NSAttributedString(string: comment.text, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
-                self.commentLabel.attributedText = attributedString
-                self.commentProfileImageView.kf.setImage(with: comment.profileImageUrl, placeholder: profileImagePlaceholder)
-                self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                if comment.isReported == true || comment.nickname.isEmpty {
+                    self.commentLabel.text = "알 수 없는 사용자"
+                    self.commentLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                    self.commentProfileImageView.image = profileImagePlaceholder
+                    self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                } else {
+                    let attributedString = NSMutableAttributedString(string: "\(comment.nickname) ", attributes: [.font: UIFont.boldSystemFont(ofSize: 16)])
+                    attributedString.append(NSAttributedString(string: comment.text, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
+                    self.commentLabel.attributedText = attributedString
+                    self.commentProfileImageView.kf.setImage(with: comment.profileImageUrl, placeholder: profileImagePlaceholder)
+                    self.commentProfileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                }
             }
         }
     }

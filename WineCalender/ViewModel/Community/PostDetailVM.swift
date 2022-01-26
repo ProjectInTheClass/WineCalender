@@ -55,7 +55,7 @@ struct PostDetailVM {
             self.date = DateFormatter().string(from: post.postingDate)
         }
         
-        self.isMoreButtonHidden = Auth.auth().currentUser?.uid != post.authorUID
+        self.isMoreButtonHidden = Auth.auth().currentUser == nil
         self.isLikeHidden = false
         
         self.postImageUrls = post.postImageURL.compactMap { URL(string: $0) }
