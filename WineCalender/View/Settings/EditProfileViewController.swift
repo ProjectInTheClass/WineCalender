@@ -159,7 +159,11 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
             nicknameTextField.becomeFirstResponder()
             return
         }
-        guard nicknameTextField.text?.contains("비회원") == false && nicknameTextField.text?.contains(" ") == false else {
+        
+        guard let nickname = nicknameTextField.text?.lowercased() else { return }
+        
+        if nickname.contains("비회원") || nickname.contains("그때그와인") ||
+            nickname.contains("thatwine") || nickname.contains(" ") {
             warningLabel.text = "사용할 수 없는 닉네임입니다."
             return
         }
@@ -205,7 +209,7 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
                     return self?.profileImageView.image
                 }
             }
-            let nickname = self?.nicknameTextField.text!
+            
             var introduction: String? {
                 if self?.introductionTextView.text == "소개" {
                     return nil
@@ -214,7 +218,7 @@ class EditProfileViewController: UITableViewController, UIImagePickerControllerD
                 }
             }
             
-            AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname!, introduction: introduction) { result in
+            AuthenticationManager.shared.editUserProfile(profileImage: profileImage, nickname: nickname, introduction: introduction) { result in
                 switch result {
                 case .failure(let error):
                     animationStop()
