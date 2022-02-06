@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "community.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "community@2x.png",
+      "filename" : "MyWines002@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },

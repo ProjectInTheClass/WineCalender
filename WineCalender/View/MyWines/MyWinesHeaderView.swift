@@ -18,22 +18,30 @@ class MyWinesHeaderView: UICollectionReusableView {
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     
-    func update(vm: MyWinesHeaderViewModel, isMember: Bool) {
+    var vm: MyWinesHeaderViewModel? {
+        didSet {
+            update()
+        }
+    }
+    
+    var isMember: Bool?
+    
+    func update() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let vm = self?.vm, let isMember = self?.isMember else { return }
             if isMember { //회원, 다른 유저
-                self.profileImageView.backgroundColor = UIColor(named: "ThatWineColor")
+                self?.profileImageView.backgroundColor = UIColor(named: "ThatWineColor")
                 if let url = vm.profileImageURL {
-                    self.profileImageView.kf.setImage(with: url, placeholder: profileImagePlaceholder)
+                    self?.profileImageView.kf.setImage(with: url, placeholder: profileImagePlaceholder)
                 }
-                self.introductionLabel.text = vm.introduction
+                self?.introductionLabel.text = vm.introduction
             } else { //비회원
-                self.profileImageView.backgroundColor = .systemGray4
+                self?.profileImageView.backgroundColor = .systemGray4
             }
-            self.nicknameLabel.text = vm.nickname
-            self.numberOfPostsLabel.text = vm.numberOfPosts
-            self.numberOfPostsLabel.textColor = vm.numberOfPostsColor
-            self.introductionLabel.setContentHuggingPriority(UILayoutPriority(Float(252)), for: .vertical)
+            self?.nicknameLabel.text = vm.nickname
+            self?.numberOfPostsLabel.text = vm.numberOfPosts
+            self?.numberOfPostsLabel.textColor = vm.numberOfPostsColor
+            self?.introductionLabel.setContentHuggingPriority(UILayoutPriority(Float(252)), for: .vertical)
         }
     }
     

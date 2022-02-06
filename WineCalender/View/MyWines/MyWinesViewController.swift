@@ -32,15 +32,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     lazy var fetchingMore = false
     lazy var endReached = false
     
-    let loadingAnimationView: AnimationView = {
-        let aniView = AnimationView(name: "loading")
-        aniView.contentMode = .scaleAspectFill
-        aniView.loopMode = .loop
-        aniView.layer.cornerRadius = 50
-        return aniView
-    }()
-    lazy var isLoadingAnimationPlaying = false
-    
     var anotherUserUid: String? = nil
     
     // MARK: - Lifecycle
@@ -49,7 +40,7 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         
         collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
+        collectionView.register(MyWinesFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyWinesFooterView")
         
         uploadUpdateDeleteNotiObserver()
         
@@ -83,8 +74,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         if anotherUserUid == nil {
             authListener()
         }
-        
-        isLoadingAnimationPlaying ? loadingAnimationPlay() : loadingAnimationStop()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -156,7 +145,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     //로그인, 회원이 앱 실행할 때
     func configureMemberUI() {
         resetProperties()
-        loadingAnimationPlay()
         PostManager.shared.numberOfMyPosts(uid: Auth.auth().currentUser?.uid ?? "") { [weak self] numberOfMyPosts in
             if numberOfMyPosts == 0 {
                 self?.noPosts = true
@@ -213,18 +201,19 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
         fetchingMore = true
-        loadingAnimationPlay()
         
         PostManager.shared.fetchMyPosts(uid: uid, lastFetchedValue: self.lastFetchedValue) { [weak self] newPosts in
             if let newPosts = newPosts {
                 self?.posts.append(contentsOf: newPosts)
                 self?.lastFetchedValue = newPosts.last?.postID
+                if newPosts.count < fetchMyPostsqueryLimited {
+                    self?.endReached = true
+                }
             } else {
                 self?.endReached = true
             }
-            self?.fetchingMore = false
-            self?.loadingAnimationStop()
             self?.collectionView.reloadData()
+            self?.fetchingMore = false
         }
     }
     
@@ -285,7 +274,6 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
         navigationItem.rightBarButtonItems = []
         
         resetProperties()
-        loadingAnimationPlay()
         
         guard let uid = anotherUserUid else { return }
         
@@ -294,22 +282,9 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
                 let anotherUser = User(uid: uid, email: "", profileImageURL: url, nickname: nickname, introduction: introduction)
                 self?.user = anotherUser
                 self?.myWinesHeaderVM = MyWinesHeaderViewModel(user: anotherUser, posts: numberOfMyPosts)
-               
+                self?.beginBatchFetch()
             }
         }
-        
-        beginBatchFetch()
-    }
-    
-    func loadingAnimationPlay() {
-        isLoadingAnimationPlaying = true
-        loadingAnimationView.play()
-    }
-    
-    func loadingAnimationStop() {
-        loadingAnimationView.stop()
-        loadingAnimationView.removeFromSuperview()
-        isLoadingAnimationPlaying = false
     }
     
     // MARK: - Actions
@@ -361,10 +336,9 @@ class MyWinesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDataSource
 
-extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
+extension MyWinesViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         if anotherUserUid != nil {
             return 1
@@ -475,6 +449,40 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
+
+            self.navigationItem.title = self.myWinesHeaderVM?.nickname
+
+            guard let vm = self.myWinesHeaderVM else { return headerView }
+            
+            if anotherUserUid != nil || Auth.auth().currentUser?.uid != nil {
+                headerView.vm = vm
+                headerView.isMember = true
+            } else {
+                headerView.vm = vm
+                headerView.isMember = false
+            }
+
+            return headerView
+        } else {
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath) as! MyWinesFooterView
+
+            if fetchingMore {
+                footerView.loadingAnimationPlay()
+            } else {
+                footerView.loadingAnimationStop()
+            }
+
+            return footerView
+        }
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension MyWinesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let margin: CGFloat = 2
         let spacing: CGFloat = 2
@@ -516,7 +524,7 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if isLoadingAnimationPlaying {
+        if !endReached && fetchingMore {
             if section == 0 {
                 return CGSize(width: collectionView.frame.width, height: 100)
             } else {
@@ -526,7 +534,11 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
             return CGSize.zero
         }
     }
+}
     
+// MARK: - UICollectionViewDelegate
+
+extension MyWinesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? MyWinesCollectionViewCell else { return }
         let cellColor = cell.backColorView.backgroundColor        
@@ -560,42 +572,11 @@ extension MyWinesViewController: UICollectionViewDataSource, UICollectionViewDel
         }
         self.navigationController?.pushViewController(postDetailVC, animated: true)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyWinesHeaderView", for: indexPath) as! MyWinesHeaderView
+}
 
-            self.navigationItem.title = self.myWinesHeaderVM?.nickname
+// MARK: - UIScrollViewDelegate
 
-            guard let vm = self.myWinesHeaderVM else { return headerView }
-            
-            if anotherUserUid != nil || Auth.auth().currentUser?.uid != nil {
-                headerView.update(vm: vm, isMember: true)
-            } else {
-                headerView.update(vm: vm, isMember: false)
-            }
-
-            return headerView
-        } else {
-            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyWinesFooterView", for: indexPath)
-           
-            footerView.addSubview(loadingAnimationView)
-//            animationView.frame = CGRect(x: 0, y: 0, width: collectionView.bounds.width, height: 100)
-            
-            loadingAnimationView.translatesAutoresizingMaskIntoConstraints = false
-            
-            let constraints = [
-                loadingAnimationView.widthAnchor.constraint(equalToConstant: 100),
-                loadingAnimationView.heightAnchor.constraint(equalToConstant: 100),
-                loadingAnimationView.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
-                loadingAnimationView.centerYAnchor.constraint(equalTo: footerView.centerYAnchor)
-            ]
-            NSLayoutConstraint.activate(constraints)
-
-            return footerView
-        }
-    }
-    
+extension MyWinesViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 10 {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]

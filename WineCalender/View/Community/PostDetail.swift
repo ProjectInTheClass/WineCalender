@@ -329,10 +329,7 @@ extension PostDetail {
         navigationItem.backButtonTitle = ""
         let storyboard = UIStoryboard(name: "MyWines", bundle: nil)
         let myWinesVC = storyboard.instantiateViewController(identifier: "MyWinesVC") as! MyWinesViewController
-        myWinesVC.navigationItem.rightBarButtonItems = []
-        if Auth.auth().currentUser?.uid != postDetailData?.authorUID {
-            myWinesVC.anotherUserUid = postDetailData?.authorUID
-        }
+        myWinesVC.anotherUserUid = postDetailData?.authorUID
         navigationController?.pushViewController(myWinesVC, animated: true)
     }
 }

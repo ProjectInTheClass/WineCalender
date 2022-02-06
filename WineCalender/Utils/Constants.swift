@@ -7,6 +7,8 @@
 
 import UIKit
 
+let fetchMyPostsqueryLimited: UInt = 8
+
 let profileImagePlaceholder = UIImage(systemName: "person.circle.fill")
 
 let help: [Help] = [

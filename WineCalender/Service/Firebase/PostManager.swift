@@ -118,7 +118,7 @@ class PostManager {
     //For My Wines
     func fetchMyPosts(uid: String, lastFetchedValue: String?, completion: @escaping ([Post]?) -> Void){
         
-        let queryLimited: UInt = 8
+        let queryLimited: UInt = fetchMyPostsqueryLimited
         var queryRef: DatabaseQuery
         if lastFetchedValue == nil {
             queryRef = PostManager.shared.postRef.child(uid).queryOrdered(byChild: "postID").queryLimited(toLast: queryLimited)
