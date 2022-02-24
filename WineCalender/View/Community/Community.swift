@@ -50,6 +50,7 @@ class Community : UICollectionViewController {
 //        setupCollectionViewInsets()
         
         fetchPosts()
+        uploadUpdateDeleteNotiObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +60,21 @@ class Community : UICollectionViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: MyWinesViewController.uploadUpdateDelete, object: nil)
+    }
+    
     // MARK: - helpers
+    
+    func uploadUpdateDeleteNotiObserver() {
+        NotificationCenter.default.addObserver(forName: MyWinesViewController.uploadUpdateDelete, object: nil, queue: OperationQueue.main) { [weak self] (noti) in
+            self?.posts = []
+            self?.lastFetchedValue = nil
+            self?.endReached = false
+            self?.fetchPosts()
+        }
+    }
     
     func fetchPosts() {
         beginBatchFetch { [weak self] in
@@ -93,6 +108,7 @@ class Community : UICollectionViewController {
             var fetchCount = 0 {
                 didSet {
                     if snashotCount == fetchCount {
+                        self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
                         completion()
                     }
                 }
@@ -119,7 +135,6 @@ class Community : UICollectionViewController {
                     } else {
                         AuthenticationManager.shared.fetchUserProfile(uid: post.authorUID) { url, username in
                             self.posts.append((post,username,url))
-                            self.posts.sort{ $0.post.postingDate > $1.post.postingDate }
                             fetchCount += 1
                         }
                     }
