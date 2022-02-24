@@ -20,7 +20,7 @@ https://projectintheclass.github.io/WineCalender/
 
 ## 개발 환경
 
-* `Swift5`
+* `Swift 5`
 * `Xcode 12` `Xcode 13`
 * 최소 타겟 버전: `iOS 14.5`
 
