@@ -100,10 +100,11 @@ extension PostManager {
     }
     
     func fetchLikes(postUID: String, completion: @escaping (Result<[String], Error>) -> ()) {
-        guard let _ = Auth.auth().currentUser else {
-            completion(.failure(LikeError.failedToAuthenticateUser))
-            return
-        }
+        // MARK: TODO - 비회원도 like 개수는 보이게 일단 설정
+//        guard let _ = Auth.auth().currentUser else {
+//            completion(.failure(LikeError.failedToAuthenticateUser))
+//            return
+//        }
         
         PostManager.shared.likeRef.child(postUID).observeSingleEvent(of: .value) { snapshot in
             guard let dict = snapshot.value as? [String : Any] else {

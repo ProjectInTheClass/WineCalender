@@ -212,7 +212,7 @@ class AuthenticationManager {
     }
     
     ///Post, Comment Profile
-    func fetchUserProfile(uid: String, completion: @escaping (URL?, String) -> Void) {
+    func                 fetchUserProfile(uid: String, completion: @escaping (URL?, String) -> Void) {
         userRef.child(uid).observeSingleEvent(of: .value) { snapshot in
             guard let values = snapshot.value as? [String : String] else {
                 completion(nil, "")
