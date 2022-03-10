@@ -31,13 +31,15 @@ class WineDetailController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        [wineNameTF, categoryTF, varietyTF, countryTF, producerTF, vintageTF, priceTF, alcoholTF, aromaAndFlavor, sweetnessSC, tanninSC, bodySC, tastingNoteTV, ratingSC].forEach { view in
+        [wineNameTF, categoryTF, varietyTF, countryTF, producerTF, vintageTF, priceTF, alcoholTF, aromaAndFlavor, sweetnessSC, aciditySC, tanninSC, bodySC, tastingNoteTV, ratingSC].forEach { view in
             view?.isUserInteractionEnabled = false
         }
         
         [wineNameTF, categoryTF, varietyTF, countryTF, producerTF, vintageTF, priceTF, alcoholTF, aromaAndFlavor].forEach { textView in
             textView?.minimumFontSize = 1
         }
+        
+        tastingNoteTV.textColor = .black
         
         updateView()
     }
